@@ -1,0 +1,31 @@
+{
+  "name": "costonomy",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "^5.84.1",
+    "@tanstack/react-query-devtools": "^5.84.1",
+    "axios": "^1.11.0",
+    "bootstrap": "^5.3.7",
+    "date-fns": "^4.1.0",
+    "next": "15.4.5",
+    "react": "19.1.0",
+    "react-bootstrap": "^2.10.10",
+    "react-datepicker": "^8.4.0",
+    "react-dom": "19.1.0",
+    "react-icons": "^5.5.0",
+    "recharts": "^3.1.2"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "@tanstack/eslint-plugin-query": "^5.83.1",
+    "eslint": "^9",
+    "eslint-config-next": "15.4.5"
+  }
+}
