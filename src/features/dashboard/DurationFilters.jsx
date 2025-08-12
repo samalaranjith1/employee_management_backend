@@ -1,94 +1,69 @@
 "use client";
 import { useState, useEffect } from "react";
-import { ButtonGroup, Button, Row, Col, Card, Dropdown } from "react-bootstrap";
+import {
+  ButtonGroup,
+  Button,
+  Row,
+  Col,
+  Dropdown,
+  Container,
+} from "react-bootstrap";
 import { FaFilter } from "react-icons/fa";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { startOfWeek, startOfMonth, subDays } from "date-fns";
+import { useDashboardContext } from "@/contexts/DashboardContext";
+import { handleCustomChange, handlePreset } from "@/utils";
+import { presetOptions } from "@/constants";
 
-export default function DateFilter({ onChange }) {
+export default function DateFilter() {
+  const { startDate, endDate, setStartDate, setEndDate } =
+    useDashboardContext();
   const [active, setActive] = useState("today");
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
   const [showCalendar, setShowCalendar] = useState(false);
 
-  const handlePreset = (type) => {
-    setActive(type);
-    setShowCalendar(false);
-
-    const today = new Date();
-    let start, end;
-
-    switch (type) {
-      case "yesterday":
-        start = subDays(today, 1);
-        end = subDays(today, 1);
-        break;
-      case "thisweek":
-        start = startOfWeek(today, { weekStartsOn: 1 });
-        end = today;
-        break;
-      case "thismonth":
-        start = startOfMonth(today);
-        end = today;
-        break;
-      case "custom":
-        setShowCalendar(true);
-        return;
-      default: // today
-        start = today;
-        end = today;
-    }
-
-    setStartDate(start);
-    setEndDate(end);
-    if (onChange) onChange({ start, end });
+  const containerStyle = {
+    position: "relative",
+    position: "fixed-top",
   };
 
-  const handleCustomChange = (dates) => {
-    const [start, end] = dates;
-    setStartDate(start);
-    setEndDate(end);
+  const buttonStyle = {
+    borderRadius: "8px",
+  };
 
-    if (start && end) {
-      if (onChange) onChange({ start, end });
-      setShowCalendar(false); // ✅ Close calendar after selection
-    }
+  const dropdownToggleStyle = {
+    width: "100%",
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+  };
+
+  const dropdownMenuStyle = {
+    width: "100%",
+  };
+
+  const stateChanges = {
+    setActive,
+    setShowCalendar,
+    setStartDate,
+    setEndDate,
   };
 
   useEffect(() => {
-    handlePreset("today"); // default selection
+    handlePreset("today",stateChanges);
   }, []);
 
-  const presetOptions = [
-    { key: "today", label: "Today" },
-    { key: "yesterday", label: "Yesterday" },
-    { key: "thisweek", label: "This Week" },
-    { key: "thismonth", label: "This Month" },
-    { key: "custom", label: "Custom" },
-  ];
-
   return (
-    <Card
-      className="bg-white shadow-sm date-filter-card"
-      body
-      style={{
-        position: "relative",
-        position: "fixed-top",
-      }}
-    >
-      {/* Desktop view: Horizontal Button Group */}
-      <div className="d-none d-md-block">
+    <Container fluid style={containerStyle}>
+      {/* Desktop view */}
+      <div className="d-none d-md-block p-3">
         <ButtonGroup className="gap-2 flex-wrap">
           {presetOptions.map(({ key, label }) => (
             <Button
               key={key}
-              variant={active === key ? "success" : "outline-dark"}
-              className="border"
-              onClick={() => handlePreset(key)}
-              style={{
-                borderRadius: "8px", // Change to "50px" for pill-shaped buttons
-              }}
+              variant={active === key ? "success" : "outline-primary"}
+              className="border px-3"
+              onClick={() => handlePreset(key,stateChanges)}
+              style={buttonStyle}
               size="sm"
             >
               {label}
@@ -97,24 +72,27 @@ export default function DateFilter({ onChange }) {
         </ButtonGroup>
       </div>
 
-      {/* Mobile view: Dropdown with Filter icon */}
-      <div className="d-md-none">
+      {/* Mobile view */}
+      <div className="d-md-none p-2">
         <Dropdown>
           <Dropdown.Toggle
-            variant="outline-dark"
+            variant="outline-primary"
             id="dropdown-basic"
-            className="w-100 d-flex justify-content-between align-items-center"
+            style={dropdownToggleStyle}
+            className="d-flex justify-content-between align-items-center"
           >
-            {presetOptions.find((o) => o.key === active)?.label}
-            <FaFilter />
+            <span style={{ display: "inline-flex", alignItems: "center" }}>
+              <FaFilter style={{ marginRight: "10px" }} />
+              {presetOptions.find((o) => o.key === active)?.label}
+            </span>
           </Dropdown.Toggle>
 
-          <Dropdown.Menu className="w-100">
+          <Dropdown.Menu style={dropdownMenuStyle}>
             {presetOptions.map(({ key, label }) => (
               <Dropdown.Item
                 key={key}
                 active={active === key}
-                onClick={() => handlePreset(key)}
+                onClick={() => handlePreset(key,stateChanges)}
               >
                 {label}
               </Dropdown.Item>
@@ -124,18 +102,18 @@ export default function DateFilter({ onChange }) {
       </div>
 
       {showCalendar && (
-        <Row className="mt-3">
-          <Col>
+        <Row className="mt-3 d-flex justify-content-center">
+          <Col xs="auto" className="p-0 pt-1 bg-primary">
             <DatePicker
               selectsRange
-              startDate={startDate}
-              endDate={endDate}
-              onChange={handleCustomChange}
+              startDate={startDate ? new Date(startDate) : null}
+              endDate={endDate ? new Date(endDate) : null}
+              onChange={(dates)=>handleCustomChange(dates,stateChanges)}
               inline
             />
           </Col>
         </Row>
       )}
-    </Card>
+    </Container>
   );
 }

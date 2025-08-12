@@ -1,4 +1,5 @@
 "use client";
+import RecommendationsCard from "@/components/common/Cards/RecommendationsCard";
 import React, { useState, useEffect } from "react";
 import { Card } from "react-bootstrap";
 import { FaExclamationTriangle } from "react-icons/fa";
@@ -46,6 +47,7 @@ export default function PriceManagementRecommendations() {
     },
   ];
 
+  const textColor = "#0e87eb";
   const cardStyle = {
     background: "#fff",
     borderRadius: "15px",
@@ -61,7 +63,7 @@ export default function PriceManagementRecommendations() {
   };
 
   return (
-    <Card fluid className="m-2">
+    <Card className="m-2">
       <div style={containerStyle}>
         {/* Header */}
         <div className="d-flex align-items-center mb-3">
@@ -100,26 +102,14 @@ export default function PriceManagementRecommendations() {
           }}
         >
           {recommendations.map((rec, idx) => (
-            <div
+            <RecommendationsCard
+              idx={idx}
+              rec={rec}
               key={idx}
-              style={{
-                ...cardStyle,
-                width: isMobile ? "90vw" : `calc(25% - (3 * 15px / 4))`, // 4 cards with gaps on desktop
-              }}
-              className="rec-card"
-            >
-              <div
-                style={{
-                  fontWeight: "600",
-                  color: "#0e87eb",
-                  fontSize: "15px",
-                  marginBottom: "5px",
-                }}
-              >
-                {rec.title}
-              </div>
-              <div style={{ fontSize: "13px", color: "#333" }}>{rec.desc}</div>
-            </div>
+              cardStyle={cardStyle}
+              isMobile={isMobile}
+              textColor={textColor}
+            />
           ))}
         </div>
       </div>

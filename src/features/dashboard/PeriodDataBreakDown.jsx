@@ -1,5 +1,7 @@
 "use client";
 
+import PeriodBreakDownCard from "@/components/common/Cards/PeriodBreakDownCard";
+import PeriodDataBreakDownTable from "@/components/common/Table/PeriodDataBreakDownTable";
 import React, { useState, useRef, useEffect } from "react";
 import {
   Container,
@@ -17,7 +19,6 @@ import {
   FaChevronRight,
   FaExpand,
 } from "react-icons/fa";
-// import "./PeriodDataBreakdown.css"; // Assuming a separate CSS file for styling
 
 // Mock data to simulate fetching different time periods
 const mockData = {
@@ -216,7 +217,7 @@ export default function PeriodDataBreakdown() {
   };
 
   return (
-    <Card fluid className="bg-white p-2 card m-3">
+    <Container fluid className="bg-white p-2 card">
       <style>{hideScrollbarStyle}</style>
       <div className="d-flex justify-content-between align-items-center mb-3 p-2">
         <Row className="align-items-center">
@@ -233,7 +234,7 @@ export default function PeriodDataBreakdown() {
             </div>
           </Col>
         </Row>
-        <div className="d-flex  gap-2 align-items-center">
+        <div className="d-flex gap-2 align-items-center">
           <Col xs="auto" className="ms-auto ms-3">
             <FaExpand size={24} color="rgb(255,80,22)" />
           </Col>
@@ -269,83 +270,38 @@ export default function PeriodDataBreakdown() {
 
       {/* Card Slider Controls */}
       <div className="d-flex align-items-center mb-3">
-        <Button variant="light" onClick={() => handleScroll("left")}>
-          <FaChevronLeft />
-        </Button>
+        {/* Hide arrow buttons on mobile and when there are 4 or fewer cards */}
+        {!isMobile && data.cards.length > 4 && (
+          <Button variant="light" onClick={() => handleScroll("left")}>
+            <FaChevronLeft />
+          </Button>
+        )}
         <div
           ref={cardScrollRef}
           className="d-flex overflow-auto px-2 hide-scrollbar"
           style={{ scrollBehavior: "smooth", gap: "1rem" }}
         >
           {data.cards.map((card, idx) => (
-            <Card
+            <PeriodBreakDownCard
               key={idx}
-              className="flex-shrink-0"
-              style={{
-                width: isMobile ? "100%" : "23vw",
-                minWidth: isMobile ? "100%" : "23vw",
-                padding: "20px",
-                backgroundColor: "rgb(249, 222, 239)",
-              }}
-            >
-              <Card.Body>
-                <div className="d-flex justify-content-between align-items-start">
-                  <div>
-                    <Card.Title>{card.title}</Card.Title>
-                    <h4>{card.value}</h4>
-                  </div>
-                  <div className="text-end">
-                    <small className={`text-${card.color}`}>
-                      {card.change}
-                    </small>
-                  </div>
-                </div>
-              </Card.Body>
-            </Card>
+              card={card}
+              idx={idx}
+              isMobile={isMobile}
+            />
           ))}
         </div>
-        <Button variant="light" onClick={() => handleScroll("right")}>
-          <FaChevronRight />
-        </Button>
+        {/* Hide arrow buttons on mobile and when there are 4 or fewer cards */}
+        {!isMobile && data.cards.length > 4 && (
+          <Button variant="light" onClick={() => handleScroll("right")}>
+            <FaChevronRight />
+          </Button>
+        )}
       </div>
 
       {/* Table with Sticky Header */}
       <div style={{ maxHeight: "60vh", overflowY: "auto" }}>
-        <Table bordered hover className="m-0">
-          <thead style={{ position: "sticky", top: 0 }}>
-            <tr>
-              <th className="fw-bold">DATE</th>
-              <th className="fw-bold">SALES</th>
-              <th className="fw-bold">CONSUMPTION</th>
-              <th className="fw-bold">WASTE</th>
-              <th className="fw-bold">COST RATIO</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.table.map((row, idx) => (
-              <tr key={idx}>
-                <td>
-                  {row.date}
-                  {row.day && (
-                    <>
-                      <br />
-                      <small>{row.day}</small>
-                    </>
-                  )}
-                </td>
-                <td>{row.sales}</td>
-                <td>{row.consumption}</td>
-                <td>{row.waste}</td>
-                <td>
-                  <Badge bg="warning" text="dark">
-                    {row.ratio}
-                  </Badge>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
+        <PeriodDataBreakDownTable data={data} />
       </div>
-    </Card>
+    </Container>
   );
 }

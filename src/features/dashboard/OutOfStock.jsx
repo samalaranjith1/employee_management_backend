@@ -10,6 +10,8 @@ import {
   FaLayerGroup,
 } from "react-icons/fa";
 import "bootstrap/dist/css/bootstrap.min.css";
+import OutOfStockTopCards from "@/components/common/Cards/OutOfStockTopCards";
+import OutOfStockTable from "@/components/common/Table/OutOfStockTable";
 
 const InventoryDashboard = () => {
   const items = [
@@ -103,108 +105,117 @@ const InventoryDashboard = () => {
         overflow: "hidden",
       }}
     >
-      {/* Header */}
       <div
         style={{
-          background: "#F9FAFB",
-          padding: "0.8rem 1rem",
-          fontWeight: "bold",
-          display: "flex",
-          justifyContent: "space-between",
-          position: "sticky",
-          top: 0,
-          zIndex: 2,
+          border: "1px solid #e5e7eb",
+          borderRadius: "8px",
+          overflow: "hidden",
         }}
       >
-        <span>Item</span>
-        <span>MOQ</span>
-        <span>Stock</span>
-      </div>
+        {/* Header */}
+        <div
+          style={{
+            background: "#F9FAFB",
+            fontWeight: "bold",
+            display: "grid",
+            gridTemplateColumns: "60% 15% 25%",
+            padding: "0.8rem 1rem",
+            position: "sticky",
+            top: 0,
+            zIndex: 2,
+          }}
+        >
+          <span>Item</span>
+          <span style={{ textAlign: "center" }}>MOQ</span>
+          <span style={{ textAlign: "center" }}>Stock / Status</span>
+        </div>
 
-      {/* Body */}
-      <div
-        style={{
-          maxHeight: "60vh",
-          overflowY: "auto",
-          padding: "0.5rem 1rem",
-          background: "#fff",
-        }}
-      >
-        {data.map((item, idx) => (
-          <div
-            key={idx}
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              background: "#FDFDFD",
-              borderRadius: "10px",
-              padding: "0.8rem 1rem",
-              marginBottom: "0.5rem",
-              boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
-            }}
-          >
-            {/* Left: Details */}
-            <div style={{ flex: 1 }}>
-              <div style={{ fontWeight: "600", fontSize: "1rem" }}>
-                {item.name}
-              </div>
-              <div
-                style={{
-                  fontSize: "0.85rem",
-                  color: "#555",
-                  display: "flex",
-                  gap: "0.5rem",
-                }}
-              >
-                <span>{item.category}</span>
-                <span>•</span>
-                <span>{item.size}</span>
-                <span>•</span>
-                <span>{item.code}</span>
-              </div>
-              <div
-                style={{
-                  fontSize: "0.8rem",
-                  color: "#777",
-                  marginTop: "2px",
-                }}
-              >
-                Closing: {item.closing}
-              </div>
-            </div>
-
-            {/* Right: MOQ & Stock */}
+        {/* Body */}
+        <div
+          style={{
+            maxHeight: "60vh",
+            overflowY: "auto",
+            background: "#fff",
+          }}
+        >
+          {data.map((item, idx) => (
             <div
+              key={idx}
               style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "flex-end",
-                justifyContent: "center",
-                gap: "4px",
+                display: "grid",
+                gridTemplateColumns: "60% 15% 25%",
+                alignItems: "center",
+                padding: "0.6rem 1rem",
+                background: "#FDFDFD",
+                borderBottom: "1px solid #eee",
               }}
             >
-              <div>{item.moq}</div>
+              {/* Item details */}
               <div>
-                {item.stock}{" "}
+                <div style={{ fontWeight: "600", fontSize: "1rem" }}>
+                  {item.name}
+                </div>
+                <div
+                  style={{
+                    fontSize: "0.85rem",
+                    color: "#555",
+                    display: "flex",
+                    gap: "0.5rem",
+                    flexWrap: "wrap",
+                  }}
+                >
+                  <span>{item.category}</span>
+                  <span>•</span>
+                  <span>{item.size}</span>
+                  <span>•</span>
+                  <span>{item.code}</span>
+                </div>
+                <div
+                  style={{
+                    fontSize: "0.8rem",
+                    color: "#777",
+                    marginTop: "2px",
+                  }}
+                >
+                  Closing: {item.closing}
+                </div>
+              </div>
+
+              {/* MOQ */}
+              <div style={{ textAlign: "center" }}>{item.moq}</div>
+
+              {/* Stock + Status stacked */}
+              <div
+                style={{
+                  textAlign: "center",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  gap: "4px",
+                }}
+              >
+                <div>{item.stock}</div>
                 <span style={getBadgeStyle(item.status)}>{item.status}</span>
               </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
 
-      {/* Footer */}
-      <div
-        style={{
-          background: "#F9FAFB",
-          padding: "0.8rem 1rem",
-          fontWeight: "500",
-          position: "sticky",
-          bottom: 0,
-          zIndex: 2,
-        }}
-      >
-        Total Items: {data.length}
+        {/* Footer */}
+        <div
+          style={{
+            background: "#F9FAFB",
+            padding: "0.8rem 1rem",
+            fontWeight: "500",
+            position: "sticky",
+            bottom: 0,
+            zIndex: 2,
+            display: "flex",
+            justifyContent: "flex-end",
+          }}
+        >
+          Total Items: {data.length}
+        </div>
       </div>
     </div>
   );
@@ -221,78 +232,39 @@ const InventoryDashboard = () => {
   const iconStyle = { fontSize: "2rem", marginBottom: "0.5rem" };
 
   return (
-    <Card fluid className="m-2 p-2">
-      <Row className="p-3 align-items-center">
+    <Container fluid className="p-2">
+      <Row className="d-flex align-items-center justify-content-between mb-3">
         {/* Left section */}
-        <Col xs="auto" className="d-flex align-items-center">
+        <Col className="d-flex align-items-center">
           <div className="me-2">
             <FaBolt size={24} color="rgb(255,80,22)" />
           </div>
-          <div className="d-flex flex-column">
-            <div style={{ color: "rgb(255,80,22)" }}>Out of Stock</div>
+          <div className="d-flex flex-column mt-2">
+            <div style={{ color: "rgb(255,80,22)", fontWeight: "bold" }}>
+              Out of Stock
+            </div>
             <div>Monitor inventory levels and prevent stockouts</div>
           </div>
         </Col>
 
-        {/* Right section */}
-        <Col xs="auto" className="ms-auto">
+        {/* Right section with scroll buttons */}
+        <Col xs="auto" className="d-flex align-items-center ms-auto">
           <FaExpand size={24} color="rgb(255,80,22)" />
         </Col>
       </Row>
       {/* Top Cards */}
-      <div
-        style={{
-          display: "flex",
-          gap: "1rem",
-          overflowX: "auto",
-          padding: "1rem 0",
-        }}
-      >
-        <Card
-          className="top-card"
-          style={{ ...cardBase, background: "#FFE5E7", color: "#C62828" }}
-        >
-          <Card.Body>
-            <FaBoxOpen style={iconStyle} />
-            <h5 style={{ fontWeight: "bold" }}>Out of Stock</h5>
-            <h2 style={{ fontWeight: "bold" }}>3</h2>
-            <p>Zero inventory remaining</p>
-          </Card.Body>
-        </Card>
-        <Card
-          className="top-card"
-          style={{ ...cardBase, background: "#FFF0D5", color: "#E78C27" }}
-        >
-          <Card.Body>
-            <FaExclamationTriangle style={iconStyle} />
-            <h5 style={{ fontWeight: "bold" }}>Critical Items</h5>
-            <h2 style={{ fontWeight: "bold" }}>5</h2>
-            <p>Require immediate attention</p>
-          </Card.Body>
-        </Card>
-        <Card
-          className="top-card"
-          style={{ ...cardBase, background: "#FFF5D6", color: "#6D4C41" }}
-        >
-          <Card.Body>
-            <FaLayerGroup style={iconStyle} />
-            <h5 style={{ fontWeight: "bold" }}>Total Items</h5>
-            <h2 style={{ fontWeight: "bold" }}>12</h2>
-            <p>Tracking inventory levels</p>
-          </Card.Body>
-        </Card>
-      </div>
+      <OutOfStockTopCards cardBase={cardBase} iconStyle={iconStyle} />
 
       {/* Horizontal Card Tables */}
-      <Card className="p-3">
-        <Row>
+      <Card className="p-2">
+        <Row className="p-0">
           <Col md={6}>
             <h5 style={{ fontWeight: "bold" }}>Items</h5>
-            {renderHorizontalCardList(items)}
+            <OutOfStockTable data={items} getBadgeStyle={getBadgeStyle} />
           </Col>
           <Col md={6}>
             <h5 style={{ fontWeight: "bold" }}>Base Items</h5>
-            {renderHorizontalCardList(baseItems)}
+            <OutOfStockTable data={baseItems} getBadgeStyle={getBadgeStyle} />
           </Col>
         </Row>
       </Card>
@@ -305,7 +277,7 @@ const InventoryDashboard = () => {
           }
         }
       `}</style>
-    </Card>
+    </Container>
   );
 };
 

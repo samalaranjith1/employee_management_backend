@@ -1,5 +1,5 @@
 "use client";
-import { DashboardContexProvider } from "./DashboardContext";
+import { DashboardContextProvider } from "./DashboardContext";
 import { AuthProvider } from "./AuthContext";
 import { RoleProvider } from "./RoleContext";
 
@@ -7,7 +7,7 @@ export function GlobalDashboardProvider({ children }) {
   return (
     <AuthProvider>
       <RoleProvider>
-        <DashboardContexProvider>{children}</DashboardContexProvider>
+        <DashboardContextProvider>{children}</DashboardContextProvider>
       </RoleProvider>
     </AuthProvider>
   );

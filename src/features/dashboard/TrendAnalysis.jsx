@@ -65,15 +65,7 @@ export default function TrendAnalysis() {
   }, [view]);
 
   return (
-    <Card
-      style={{
-        backgroundColor: "#f8fafc", // light slate background
-        // padding: "20px",
-        borderRadius: "12px",
-        margin: "20px", // space from other components
-        boxShadow: "0 2px 6px rgba(0,0,0,0.05)",
-      }}
-    >
+    <Container fluid className="m-1">
       <Container fluid className="p-2 bg-white rounded shadow-sm">
         <Row className="mb-3 align-items-center">
           <Col>
@@ -135,6 +127,6 @@ export default function TrendAnalysis() {
           </Col>
         </Row>
       </Container>
-    </Card>
+    </Container>
   );
 }

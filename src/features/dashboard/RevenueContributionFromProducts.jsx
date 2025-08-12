@@ -1,7 +1,9 @@
 "use client";
 
+import RevenueContributionCards from "@/components/common/Cards/RevenueContributionCards";
+import RevenueContributionTable from "@/components/common/Table/RevenueContributionTable";
 import React from "react";
-import { Card, Col, Row, Table } from "react-bootstrap";
+import { Card, Col, Container, Row, Table } from "react-bootstrap";
 import {
   FaBolt,
   FaChartLine,
@@ -184,21 +186,21 @@ const RevenueContribution = () => {
   ];
 
   return (
-    <Card style={styles.container} className="m-2">
-      <Row className="p-3 align-items-center">
-        <Col xs="auto" className="d-flex align-items-center">
+    <Container fluid style={styles.container} className="p-2">
+      <Row className="d-flex align-items-center justify-content-between mb-3">
+        <Col className="d-flex align-items-center">
           <div className="me-2">
             <FaBolt size={24} color="rgb(255,80,22)" />
           </div>
-          <div className="d-flex flex-column">
-            <div style={{ color: "rgb(255,80,22)" }}>
+          <div className="d-flex flex-column mt-2">
+            <div style={{ color: "rgb(255,80,22)", fontWeight: "bold" }}>
               Revenue Contribution from Products
             </div>
             <div>Revenue Contribution from Products description</div>
           </div>
         </Col>
 
-        <Col xs="auto" className="ms-auto">
+        <Col xs="auto" className="d-flex align-items-center ms-auto">
           <FaExpand size={24} color="rgb(255,80,22)" />
         </Col>
       </Row>
@@ -206,58 +208,14 @@ const RevenueContribution = () => {
 
       <div style={styles.topCards} className="top-cards-container">
         {topCards.map((card, idx) => (
-          <div
-            key={idx}
-            className="top-card"
-            style={{
-              ...styles.topCard,
-              background: card.bg,
-              color: card.color,
-            }}
-          >
-            <div style={styles.icon}>{card.icon}</div>
-            <div style={styles.value}>{card.value}</div>
-            <div style={styles.title}>{card.title}</div>
-            <div style={styles.desc}>{card.description}</div>
-          </div>
+          <RevenueContributionCards card={card} idx={idx} key={idx}
+          styles={styles}/>
         ))}
       </div>
 
       {/* Table */}
-      <div style={styles.tableContainer}>
-        <Table hover>
-          <thead className="table-header-sticky">
-            <tr>
-              <th>Bucket</th>
-              <th>Products</th>
-              <th>Sales</th>
-              <th>Total Sales</th>
-              <th>Recommendation</th>
-            </tr>
-          </thead>
-          <tbody>
-            {tableData.map((row, idx) => (
-              <tr key={idx}>
-                <td>{row.bucket}</td>
-                <td>{row.products}</td>
-                <td>{row.sales}</td>
-                <td>{row.totalSales}</td>
-                <td>
-                  <span
-                    style={{
-                      ...styles.tag,
-                      background: row.tagColor,
-                      color: row.tagText,
-                    }}
-                  >
-                    {row.tag}
-                  </span>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
-      </div>
+      <RevenueContributionTable styles={styles}
+      tableData={tableData}/>
 
       {/* CSS for mobile swipe + width override, and the sticky header fix */}
       <style>
@@ -289,7 +247,7 @@ const RevenueContribution = () => {
           }
         `}
       </style>
-    </Card>
+    </Container>
   );
 };
 

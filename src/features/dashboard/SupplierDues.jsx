@@ -1,7 +1,8 @@
 "use client";
 
+import SupplierDuesTable from "@/components/common/Table/SupplierDuesTable";
 import React from "react";
-import { Card, Table, Badge, Row, Col } from "react-bootstrap";
+import { Card, Table, Badge, Row, Col, Container } from "react-bootstrap";
 import { FaRupeeSign, FaInfoCircle } from "react-icons/fa";
 
 const SupplierDues = () => {
@@ -175,7 +176,7 @@ const SupplierDues = () => {
   ];
 
   return (
-    <Card style={styles.mainCard} className="m-2 p-2 ">
+    <Container fluid style={styles.mainCard} className="m-2 p-2 ">
       {/* Header */}
       <div style={styles.header}>
         <div style={styles.headerLeft}>
@@ -201,39 +202,10 @@ const SupplierDues = () => {
       </div>
 
       {/* Table */}
-      <Table hover responsive className="mb-0">
-        <thead>
-          <tr>
-            <th style={styles.tableHeader}>Supplier</th>
-            <th style={styles.tableHeader}>This Month Due</th>
-            <th style={styles.tableHeader}>Last Month Due</th>
-            <th style={styles.tableHeader}>Total Due</th>
-            <th style={styles.tableHeader}>Items</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.map((row, idx) => (
-            <tr key={idx}>
-              <td>
-                <div style={styles.supplierName}>{row.supplier}</div>
-                <div className="d-flex align-items-center gap-1">
-                  <Badge style={styles.badge}>{row.category}</Badge>
-                  <span style={styles.locationText}>{row.location}</span>
-                </div>
-              </td>
-              <td style={styles.redAmount}>
-                ₹{row.thisMonth.toLocaleString()}
-              </td>
-              <td>
-                {row.lastMonth ? `₹${row.lastMonth.toLocaleString()}` : "—"}
-              </td>
-              <td style={styles.redAmount}>₹{row.total.toLocaleString()}</td>
-              <td>{row.items}</td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
-    </Card>
+      <div style={{ maxHeight: "65vh", overflowY: "auto" }}>
+        <SupplierDuesTable styles={styles} data={data}/>
+      </div>
+    </Container>
   );
 };
 
