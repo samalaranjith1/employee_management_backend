@@ -1,14 +1,32 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Card, Col, Row } from 'react-bootstrap';
 import { FaArrowUp, FaExclamationTriangle } from 'react-icons/fa';
 
-function ActionableCard({ data, isMobile, priorityColors, bgColor ,textColor}) {
+function ActionableCard({
+  data,
+  priorityColors,
+  bgColor,
+  textColor,
+  scrollRef,
+}) {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const updateMinWidth = () => {
+      setIsMobile(window.innerWidth < 700);
+    };
+    updateMinWidth();
+    window.addEventListener("resize", updateMinWidth);
+    return () => window.removeEventListener("resize", updateMinWidth);
+  }, []);
   return (
     <Card
+      ref={scrollRef}
       key={data.id}
       className="p-3 gap-1 card-item"
       style={{
-        minWidth: isMobile ? "90vw" : "23vw", // Adjusted width based on mobile/desktop
+        width: isMobile ? "90vw" : "23vw",
+        minWidth: "250px",
         flexShrink: 0,
         cursor: "pointer",
         borderTop: `8px solid ${priorityColors[`${data.priority}`]}`,

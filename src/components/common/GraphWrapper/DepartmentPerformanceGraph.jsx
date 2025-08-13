@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Card, Badge } from "react-bootstrap";
 import {
   BarChart,
@@ -17,6 +17,16 @@ import {
 } from "react-icons/fa";
 
 function DepartmentPerformanceGraph({ data }) {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const updateMinWidth = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    updateMinWidth();
+    window.addEventListener("resize", updateMinWidth);
+    return () => window.removeEventListener("resize", updateMinWidth);
+  }, []);
   return (
     <ResponsiveContainer width="100%" height={350}>
       <BarChart data={data}>

@@ -1,6 +1,7 @@
 "use client";
+import ComponentHeader from "@/components/common/ComponentHeader";
 import KitchenPurchaseByDepartmentTable from "@/components/common/Table/KitchenPurchaseByDepartmentTable";
-import React from "react";
+import React, { useRef } from "react";
 import { Table, Container, Row, Col } from "react-bootstrap";
 import { FaChartBar } from "react-icons/fa";
 
@@ -137,9 +138,19 @@ export default function DepartmentConsumption() {
     borderRadius: "0.65rem",
   };
 
+  const myScrollRef = useRef(null)
   return (
-    <Container fluid className="mt-4" style={{ background: "#fff" }}>
-      <Row className="mb-3">
+    <Container fluid className="mt-2" style={{ background: "#fff" }}>
+      <ComponentHeader
+        title={"Department Consumption"}
+        description={"Track Department sales, consumption and performance"}
+        titleColor={"fw-bold text-primary fs-4"}
+        isShowArrows={false}
+        scrollRef={myScrollRef}
+        isExpandable={true}
+        titleIcon={<FaChartBar className="me-2" color='blue' size={24}/>}
+      />
+      {/* <Row className="mb-3">
         <Col>
           <h4 className="fw-bold text-primary">
             <FaChartBar className="me-2" />
@@ -149,7 +160,7 @@ export default function DepartmentConsumption() {
             Track Department sales, consumption and performance
           </small>
         </Col>
-      </Row>
+      </Row> */}
 
       {/* Table Wrapper with scroll */}
       <div
@@ -159,7 +170,7 @@ export default function DepartmentConsumption() {
           position: "relative",
         }}
       >
-        <KitchenPurchaseByDepartmentTable data={data} badgeStyle={badgeStyle}/>
+        <KitchenPurchaseByDepartmentTable data={data} badgeStyle={badgeStyle} />
       </div>
     </Container>
   );

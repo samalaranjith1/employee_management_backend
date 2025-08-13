@@ -9,9 +9,10 @@ import {
 } from "react-icons/fa";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-function OutOfStockTopCards({ cardBase, iconStyle }) {
+function OutOfStockTopCards({ cardBase, iconStyle ,scrollRef}) {
   return (
     <div
+      ref={scrollRef}
       style={{
         display: "flex",
         gap: "1rem",

@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useRef } from "react";
 import { Container, Card, Row, Col } from "react-bootstrap";
 import {
   FaBolt,
@@ -12,6 +12,7 @@ import {
 import "bootstrap/dist/css/bootstrap.min.css";
 import OutOfStockTopCards from "@/components/common/Cards/OutOfStockTopCards";
 import OutOfStockTable from "@/components/common/Table/OutOfStockTable";
+import ComponentHeader from "@/components/common/ComponentHeader";
 
 const InventoryDashboard = () => {
   const items = [
@@ -230,11 +231,21 @@ const InventoryDashboard = () => {
   };
 
   const iconStyle = { fontSize: "2rem", marginBottom: "0.5rem" };
-
+const myScrollRef = useRef(null)
   return (
     <Container fluid className="p-2">
-      <Row className="d-flex align-items-center justify-content-between mb-3">
-        {/* Left section */}
+      <ComponentHeader
+        title={"Out of Stock"}
+        description={"Monitor inventory levels and prevent stockouts"}
+        titleColor={"rgb(255,79,22)"}
+        cardBgColor={"none"}
+        isShowArrows={true}
+        scrollRef={myScrollRef}
+        isExpandable={true}
+        titleIcon={""}
+        text={''}
+      />
+      {/* <Row className="d-flex align-items-center justify-content-between mb-3">
         <Col className="d-flex align-items-center">
           <div className="me-2">
             <FaBolt size={24} color="rgb(255,80,22)" />
@@ -247,13 +258,13 @@ const InventoryDashboard = () => {
           </div>
         </Col>
 
-        {/* Right section with scroll buttons */}
         <Col xs="auto" className="d-flex align-items-center ms-auto">
           <FaExpand size={24} color="rgb(255,80,22)" />
         </Col>
-      </Row>
+      </Row> */}
       {/* Top Cards */}
-      <OutOfStockTopCards cardBase={cardBase} iconStyle={iconStyle} />
+      <OutOfStockTopCards cardBase={cardBase} iconStyle={iconStyle}
+      scrollRef={myScrollRef} />
 
       {/* Horizontal Card Tables */}
       <Card className="p-2">

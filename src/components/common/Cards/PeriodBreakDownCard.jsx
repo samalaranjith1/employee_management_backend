@@ -1,15 +1,23 @@
-import React from 'react'
-import { Card } from 'react-bootstrap';
+import React from "react";
+import { Card } from "react-bootstrap";
 
-function PeriodBreakDownCard({idx, isMobile, card }) {
+function PeriodBreakDownCard({ idx, card, scrollRef }) {
   return (
     <Card
       key={idx}
+      ref={scrollRef}
       className="flex-shrink-0"
       style={{
-        width: isMobile ? "90vw" : "23vw",
-        minWidth: isMobile ? "90vw" : "23vw",
-        minWidth:'280px',
+        width:
+          typeof window !== "undefined" && window.innerWidth < 768
+            ? "90vw"
+            : "23vw",
+
+        minWidth:
+          typeof window !== "undefined" && window.innerWidth < 768
+            ? "90vw"
+            : "23vw",
+        minWidth: "280px",
         padding: "20px",
         backgroundColor: "rgb(249, 222, 239)",
       }}
@@ -29,4 +37,4 @@ function PeriodBreakDownCard({idx, isMobile, card }) {
   );
 }
 
-export default PeriodBreakDownCard
+export default PeriodBreakDownCard;

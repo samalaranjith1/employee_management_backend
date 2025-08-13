@@ -29,6 +29,9 @@ import SuppliersManagement from "@/features/dashboard/SuppliersManagement";
 import SupplierDuesThisMonth from "@/features/dashboard/SupplierDuesThisMonth";
 import SupplierDues from "@/features/dashboard/SupplierDues";
 import MainComponentHoldingCard from "@/components/common/MainComponentHoldingCard";
+import MobileBottomNav from "@/features/dashboard/MobileBottomNavBar";
+import ItemConsumptionDistribution from "@/features/dashboard/ItemConsumptionDistribution";
+import ProductPerformanceByPercentile from "@/features/dashboard/ProductPerformanceByPercentile";
 
 export default function Home() {
   const [queryClient] = useState(() => new QueryClient());
@@ -38,79 +41,89 @@ export default function Home() {
       <MainComponentHoldingCard>
         <DurationFilters />
       </MainComponentHoldingCard>
+      <div className="d-none d-md-inline">
+      {/* <div> */}
+        <MainComponentHoldingCard>
+          <ConsumptionSummarry />
+        </MainComponentHoldingCard>
+        <MainComponentHoldingCard>
+          <ActionableInsights />
+        </MainComponentHoldingCard>
+        <MainComponentHoldingCard>
+          <MonthSummary />
+        </MainComponentHoldingCard>
+        <MainComponentHoldingCard>
+          <TrendAnalysis />
+        </MainComponentHoldingCard>
+        <MainComponentHoldingCard>
+          <PeriodDataBreakDown />
+        </MainComponentHoldingCard>
+        <MainComponentHoldingCard>
+          <HourlyForecast />
+        </MainComponentHoldingCard>
+        <MainComponentHoldingCard>
+          <KitchenPurchaseByDepartment />
+        </MainComponentHoldingCard>
+        <MainComponentHoldingCard>
+          <DepartmentPerformanceAnalysis />
+        </MainComponentHoldingCard>
+        <MainComponentHoldingCard>
+          <DepartmentAndItemConsumption />
+        </MainComponentHoldingCard>
+        <MainComponentHoldingCard>
+          <ItemConsumptionEffieciency />
+        </MainComponentHoldingCard>
+        <MainComponentHoldingCard>
+          <ItemConsumptionDistribution />
+        </MainComponentHoldingCard>
+        <MainComponentHoldingCard>
+          <WastageAnalysis />
+        </MainComponentHoldingCard>
+        <MainComponentHoldingCard>
+          <CostReductionRecommendations />
+        </MainComponentHoldingCard>
+        <MainComponentHoldingCard>
+          <PriceChanges />
+        </MainComponentHoldingCard>
+        <MainComponentHoldingCard>
+          <PriceManagementRecommendations />
+        </MainComponentHoldingCard>
+        <MainComponentHoldingCard>
+          <OutOfStock />
+        </MainComponentHoldingCard>
+        <MainComponentHoldingCard>
+          <ImmediateActionsRequired />
+        </MainComponentHoldingCard>
+        <MainComponentHoldingCard>
+          <Recipes />
+        </MainComponentHoldingCard>
+        <MainComponentHoldingCard>
+          <MenuOptimizationRecommendations />
+        </MainComponentHoldingCard>
+        <MainComponentHoldingCard>
+          <TopSellingProducts />
+        </MainComponentHoldingCard>
+        <MainComponentHoldingCard>
+          <ProductPerformanceDetails />
+        </MainComponentHoldingCard>
+        <MainComponentHoldingCard>
+          <ProductPerformanceByPercentile />
+        </MainComponentHoldingCard>
+        <MainComponentHoldingCard>
+          <RevenueContributionFromProducts />
+        </MainComponentHoldingCard>
+        <MainComponentHoldingCard>
+          <SuppliersManagement />
+        </MainComponentHoldingCard>
+        <MainComponentHoldingCard>
+          <SupplierDuesThisMonth />
+        </MainComponentHoldingCard>
+        <MainComponentHoldingCard>
+          <SupplierDues />
+        </MainComponentHoldingCard>
+      </div>
       <MainComponentHoldingCard>
-        <ConsumptionSummarry />
-      </MainComponentHoldingCard>
-      <MainComponentHoldingCard>
-        <ActionableInsights />
-      </MainComponentHoldingCard>
-      <MainComponentHoldingCard>
-        <MonthSummary />
-      </MainComponentHoldingCard>
-      <MainComponentHoldingCard>
-        <TrendAnalysis />
-      </MainComponentHoldingCard>
-      <MainComponentHoldingCard>
-        <PeriodDataBreakDown />
-      </MainComponentHoldingCard>
-      <MainComponentHoldingCard>
-        <HourlyForecast />
-      </MainComponentHoldingCard>
-      <MainComponentHoldingCard>
-        <KitchenPurchaseByDepartment />
-      </MainComponentHoldingCard>
-      <MainComponentHoldingCard>
-        <DepartmentPerformanceAnalysis />
-      </MainComponentHoldingCard>
-      <MainComponentHoldingCard>
-        <DepartmentAndItemConsumption />
-      </MainComponentHoldingCard>
-      <MainComponentHoldingCard>
-        <ItemConsumptionEffieciency />
-      </MainComponentHoldingCard>
-      <MainComponentHoldingCard>
-        <WastageAnalysis />
-      </MainComponentHoldingCard>
-      <MainComponentHoldingCard>
-        <CostReductionRecommendations />
-      </MainComponentHoldingCard>
-      <MainComponentHoldingCard>
-        <PriceChanges />
-      </MainComponentHoldingCard>
-      <MainComponentHoldingCard>
-        <PriceManagementRecommendations />
-      </MainComponentHoldingCard>
-      <MainComponentHoldingCard>
-        <OutOfStock />
-      </MainComponentHoldingCard>
-      <MainComponentHoldingCard>
-        <ImmediateActionsRequired />
-      </MainComponentHoldingCard>
-      <MainComponentHoldingCard>
-        <Recipes />
-      </MainComponentHoldingCard>
-      <MainComponentHoldingCard>
-        <MenuOptimizationRecommendations />
-      </MainComponentHoldingCard>
-      <MainComponentHoldingCard>
-        <TopSellingProducts />
-      </MainComponentHoldingCard>
-      <MainComponentHoldingCard>
-        <ProductPerformanceDetails />
-      </MainComponentHoldingCard>
-      <MainComponentHoldingCard>
-        <RevenueContributionFromProducts />
-      </MainComponentHoldingCard>
-      <MainComponentHoldingCard>
-        <SuppliersManagement />
-        {/* inprogress */}
-      </MainComponentHoldingCard>
-      <MainComponentHoldingCard>
-        <SupplierDuesThisMonth />
-        {/* inprogress */}
-      </MainComponentHoldingCard>
-      <MainComponentHoldingCard>
-        <SupplierDues />
+        <MobileBottomNav />
       </MainComponentHoldingCard>
     </QueryClientProvider>
   );

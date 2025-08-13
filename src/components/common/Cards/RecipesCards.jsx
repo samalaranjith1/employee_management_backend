@@ -3,9 +3,9 @@
 import React from "react";
 import { Card} from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-function RecipesCards({ card ,idx}) {
+function RecipesCards({ card, idx }) {
   return (
-    <div className="top-card-wrapper" key={idx}>
+    <div className="top-card-wrapper" key={idx} >
       <Card
         style={{
           background: card.bg,

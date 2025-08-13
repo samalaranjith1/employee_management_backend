@@ -8,7 +8,7 @@ import {
   FaArrowUp,
   FaArrowDown,
   FaChartLine,
-  FaExclamationCircle,
+  FaExpand,
 } from "react-icons/fa";
 
 export default function PriceChanges() {
@@ -145,9 +145,14 @@ export default function PriceChanges() {
       background: "linear-gradient(135deg, #9333ea, #a855f7)",
       color: "#fff",
       borderRadius: "50%",
-      padding: "18px",
+      padding: "12px",
       fontSize: "2rem",
       boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
+      gap: "6px", // space between icons
     },
     sectionCard: {
       borderRadius: "12px",
@@ -209,6 +214,10 @@ export default function PriceChanges() {
           </div>
           {/* Floating Rupee Icon */}
           <div style={styles.rupeeIconWrapper}>
+            <div className="float-end">
+              <FaExpand color="#fff" size={24} />
+            </div>
+
             <FaRupeeSign />
           </div>
         </Card.Body>

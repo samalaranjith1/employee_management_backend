@@ -1,11 +1,10 @@
 "use client";
-import React from "react";
+import React, { useRef ,useState, useEffect } from "react";
 import { Container, Row, Col, Card, Badge } from "react-bootstrap";
-import {
-  FaPercentage,
-} from "react-icons/fa";
+import { FaPercentage } from "react-icons/fa";
 import DepartmentPerformanceCards from "@/components/common/Cards/DepartmentPerformanceCards";
 import DepartmentPerformanceGraph from "@/components/common/GraphWrapper/DepartmentPerformanceGraph";
+import ComponentHeader from "@/components/common/ComponentHeader";
 
 const data = [
   { name: "Kitchen", sales: 82000, consumption: 54000, cost: 61.2 },
@@ -19,10 +18,33 @@ const data = [
 ];
 
 const DepartmentPerformance = () => {
+  const myScrollRef = useRef(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const updateMinWidth = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    updateMinWidth();
+    window.addEventListener("resize", updateMinWidth);
+    return () => window.removeEventListener("resize", updateMinWidth);
+  }, []);
+
   return (
-    <Container fluid className="mt-2 p-3">
+    <Container fluid className="p-3 pt-2">
       {/* Header */}
-      <Row className="mb-4">
+      <ComponentHeader
+        title={"Department Performance Analysis"}
+        description={"Sales vs Consumption with cost efficiency tracking"}
+        titleColor={"#6f42c1 fs-4"}
+        cardBgColor={"none"}
+        isShowArrows={true}
+        scrollRef={myScrollRef}
+        isExpandable={true}
+        titleIcon={<FaPercentage color="#6f42c1" size={24} />}
+        text={"8 Departments"}
+      />
+      {/* <Row className="mb-4">
         <Col>
           <h4 className="fw-bold" style={{ color: "#6f42c1" }}>
             <FaPercentage className="me-2" />
@@ -37,13 +59,10 @@ const DepartmentPerformance = () => {
             8 Departments
           </Badge>
         </Col>
-      </Row>
+      </Row> */}
 
-      {/* Desktop: Cards Left | Graph Right */}
       <Row>
-        {/* Cards Column */}
         <DepartmentPerformanceCards />
-        {/* Graph Column */}
         <Col xs={12} lg={9}>
           <Card className="shadow-sm">
             <Card.Body>
@@ -53,7 +72,14 @@ const DepartmentPerformance = () => {
               <p className="text-muted">
                 Bars show sales & consumption values, line shows cost percentage
               </p>
-              <DepartmentPerformanceGraph data={data}/>
+              <div
+                style={{
+                  width: isMobile ? "95vw" : "100%",
+                  marginLeft: isMobile ? "-6vw" : "0",
+                }}
+              >
+                <DepartmentPerformanceGraph data={data} />
+              </div>
               {/* Cost Ratio Tags */}
               <div className="mt-3 d-none d-md-flex flex-wrap gap-3">
                 {data.map((dept) => (

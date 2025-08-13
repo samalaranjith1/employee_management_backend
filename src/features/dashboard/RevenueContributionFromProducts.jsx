@@ -1,8 +1,9 @@
 "use client";
 
 import RevenueContributionCards from "@/components/common/Cards/RevenueContributionCards";
+import ComponentHeader from "@/components/common/ComponentHeader";
 import RevenueContributionTable from "@/components/common/Table/RevenueContributionTable";
-import React from "react";
+import React, { useRef } from "react";
 import { Card, Col, Container, Row, Table } from "react-bootstrap";
 import {
   FaBolt,
@@ -184,10 +185,21 @@ const RevenueContribution = () => {
       tagText: "#dc2626",
     },
   ];
-
+const myScrollRef=useRef(null)
   return (
     <Container fluid style={styles.container} className="p-2">
-      <Row className="d-flex align-items-center justify-content-between mb-3">
+      <ComponentHeader
+        title={"Revenue Contribution from Products"}
+        description={"Revenue Contribution from Products description"}
+        titleColor={"rgb(255,79,22)"}
+        cardBgColor={"none"}
+        isShowArrows={true}
+        scrollRef={myScrollRef}
+        isExpandable={true}
+        titleIcon={""}
+        text={""}
+      />
+      {/* <Row className="d-flex align-items-center justify-content-between mb-3">
         <Col className="d-flex align-items-center">
           <div className="me-2">
             <FaBolt size={24} color="rgb(255,80,22)" />
@@ -203,19 +215,26 @@ const RevenueContribution = () => {
         <Col xs="auto" className="d-flex align-items-center ms-auto">
           <FaExpand size={24} color="rgb(255,80,22)" />
         </Col>
-      </Row>
+      </Row> */}
       {/* Top Cards */}
-
-      <div style={styles.topCards} className="top-cards-container">
+      <div
+        style={styles.topCards}
+        className="top-cards-container"
+        ref={myScrollRef}
+      >
         {topCards.map((card, idx) => (
-          <RevenueContributionCards card={card} idx={idx} key={idx}
-          styles={styles}/>
+          <RevenueContributionCards
+            card={card}
+            idx={idx}
+            key={idx}
+            styles={styles}
+            myScrollRef={myScrollRef}
+          />
         ))}
       </div>
 
       {/* Table */}
-      <RevenueContributionTable styles={styles}
-      tableData={tableData}/>
+      <RevenueContributionTable styles={styles} tableData={tableData} />
 
       {/* CSS for mobile swipe + width override, and the sticky header fix */}
       <style>

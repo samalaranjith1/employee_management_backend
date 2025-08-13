@@ -1,6 +1,7 @@
 "use client";
 
 import ActionableCard from "@/components/common/Cards/ActionableCard";
+import ComponentHeader from "@/components/common/ComponentHeader";
 import React, { useRef, useState, useEffect } from "react";
 import { Card, Row, Col, Button, Container } from "react-bootstrap";
 import {
@@ -122,56 +123,6 @@ const ActionableInsights = () => {
     },
   ];
 
-  const scrollContainerRef = useRef();
-  const [showScrollButtons, setShowScrollButtons] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-
-  // Define the gap value consistently
-  const CARD_GAP_REM = 1; // 1rem
-  const CARD_GAP_PX = 16; // Assuming 1rem = 16px, or calculate dynamically if needed
-
-  // Determine scroll amount dynamically
-  const getScrollAmount = () => {
-    if (scrollContainerRef.current) {
-      const firstCard = scrollContainerRef.current.querySelector(".card-item");
-      if (firstCard) {
-        const cardWidth = firstCard.offsetWidth;
-        return cardWidth + CARD_GAP_PX;
-      }
-    }
-    return 240; // Fallback
-  };
-
-  useEffect(() => {
-    const checkScrollAndMobile = () => {
-      const el = scrollContainerRef.current;
-      if (el) {
-        setIsMobile(window.innerWidth < 768); // Adjust breakpoint as needed
-
-        // Only show scroll buttons if content overflows
-        setShowScrollButtons(el.scrollWidth > el.clientWidth);
-      }
-    };
-
-    checkScrollAndMobile();
-    window.addEventListener("resize", checkScrollAndMobile);
-    return () => window.removeEventListener("resize", checkScrollAndMobile);
-  }, [cardsData]);
-
-  const slideLeft = () => {
-    scrollContainerRef.current.scrollBy({
-      left: -getScrollAmount(),
-      behavior: "smooth",
-    });
-  };
-
-  const slideRight = () => {
-    scrollContainerRef.current.scrollBy({
-      left: getScrollAmount(),
-      behavior: "smooth",
-    });
-  };
-
   const priorityColors = {
     high: "#FF3B30",
     medium: "#FFCC00",
@@ -183,49 +134,61 @@ const ActionableInsights = () => {
     low: "#e6f1fe",
   };
   const textColor = "black";
+const myScrollRef = useRef(null);
 
   return (
     <Container fluid className="shadow-sm">
       {cardsData && cardsData.length > 0 && (
-        <div className="d-flex justify-content-between align-items-center mb-3 p-2">
-          <Row className="align-items-center">
-            {/* Left section */}
-            <Col xs="auto" className="d-flex align-items-center">
-              <div className="me-2">
-                <FaBolt size={24} color="rgb(255,80,22)" />
-              </div>
-              <div className="d-flex flex-column">
-                <div style={{ color: "rgb(255,80,22)", fontWeight: "bold" }}>
-                  Actionable Insights
-                </div>
-                <div>Critical issues requiring immediate attention</div>
-              </div>
-            </Col>
-          </Row>
-          <div className="d-flex  gap-2 align-items-center">
-            {showScrollButtons && (
-              <>
-                <div>5 Active</div>
-                <div className="d-none d-md-flex">
-                  <Button
-                    size="sm"
-                    variant="light"
-                    className="me-1"
-                    onClick={slideLeft}
-                  >
-                    &lt;
-                  </Button>
-                  <Button size="sm" variant="light" onClick={slideRight}>
-                    &gt;
-                  </Button>
-                </div>
-                <Col xs="auto" className="ms-auto ms-3">
-                  <FaExpand size={24} color="rgb(255,80,22)" />
-                </Col>
-              </>
-            )}
-          </div>
-        </div>
+        <ComponentHeader
+          title={"Actionable Insights"}
+          description={"Critical issues requiring immediate attention"}
+          titleColor={"rgb(255,79,22)"}
+          cardBgColor={"none"}
+          isShowArrows={true}
+          scrollRef={myScrollRef}
+          isExpandable={true}
+          titleIcon={""}
+          text={"5 Active"}
+        />
+        // <div className="d-flex justify-content-between align-items-center mb-3 p-2">
+        //   <Row className="align-items-center">
+        //     {/* Left section */}
+        //     <Col xs="auto" className="d-flex align-items-center">
+        //       <div className="me-2">
+        //         <FaBolt size={24} color="rgb(255,80,22)" />
+        //       </div>
+        //       <div className="d-flex flex-column">
+        //         <div style={{ color: "rgb(255,80,22)", fontWeight: "bold" }}>
+        //           Actionable Insights
+        //         </div>
+        //         <div>Critical issues requiring immediate attention</div>
+        //       </div>
+        //     </Col>
+        //   </Row>
+        //   <div className="d-flex  gap-2 align-items-center">
+        //     {showScrollButtons && (
+        //       <>
+        //         <div>5 Active</div>
+        //         <div className="d-none d-md-flex">
+        //           <Button
+        //             size="sm"
+        //             variant="light"
+        //             className="me-1"
+        //             onClick={slideLeft}
+        //           >
+        //             &lt;
+        //           </Button>
+        //           <Button size="sm" variant="light" onClick={slideRight}>
+        //             &gt;
+        //           </Button>
+        //         </div>
+        //         <Col xs="auto" className="ms-auto ms-3">
+        //           <FaExpand size={24} color="rgb(255,80,22)" />
+        //         </Col>
+        //       </>
+        //     )}
+        //   </div>
+        // </div>
       )}
 
       {cardsData && cardsData.length > 0 && (
@@ -236,10 +199,10 @@ const ActionableInsights = () => {
           }}
         >
           <div
-            ref={scrollContainerRef}
-            className="d-flex mt-2"
+            ref={myScrollRef}
+            className="d-flex mt-2 gap-2 mb-2"
             style={{
-              gap: `${CARD_GAP_REM}rem`, // Use the defined gap
+              gap: `1rem`, // Use the defined gap
               paddingBottom: "0.5rem",
               overflowX: "auto",
               msOverflowStyle: "none", // IE, Edge
@@ -249,9 +212,9 @@ const ActionableInsights = () => {
           >
             {cardsData.map((data, index) => (
               <ActionableCard
+                scrollRef={myScrollRef}
                 key={index}
                 data={data}
-                isMobile={isMobile}
                 priorityColors={priorityColors}
                 bgColor={bgColor}
                 textColor={textColor}

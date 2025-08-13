@@ -1,6 +1,7 @@
 "use client";
 
 import PeriodBreakDownCard from "@/components/common/Cards/PeriodBreakDownCard";
+import ComponentHeader from "@/components/common/ComponentHeader";
 import PeriodDataBreakDownTable from "@/components/common/Table/PeriodDataBreakDownTable";
 import React, { useState, useRef, useEffect } from "react";
 import {
@@ -192,55 +193,19 @@ const hideScrollbarStyle = `
 
 export default function PeriodDataBreakdown() {
   const [activeTab, setActiveTab] = useState("Daily");
-  const cardScrollRef = useRef(null);
-  const [isMobile, setIsMobile] = useState(false);
   const data = mockData[activeTab] || { cards: [], table: [] }; // Handle cases where data is missing
 
-  // Effect to check for mobile screen size on mount and resize
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
-
-  const handleScroll = (direction) => {
-    if (cardScrollRef.current) {
-      const scrollAmount = direction === "left" ? -250 : 250;
-      cardScrollRef.current.scrollBy({
-        left: scrollAmount,
-        behavior: "smooth",
-      });
-    }
-  };
-
+const myScrollRef = useRef(null); 
   return (
     <Container fluid className="bg-white p-2 card">
       <style>{hideScrollbarStyle}</style>
-      <div className="d-flex justify-content-between align-items-center mb-3 p-2">
-        <Row className="align-items-center">
-          {/* Left section */}
-          <Col xs="auto" className="d-flex align-items-center">
-            <div className="me-2">
-              <FaBolt size={24} color="rgb(255,80,22)" />
-            </div>
-            <div className="d-flex flex-column">
-              <div style={{ color: "rgb(255,80,22)" }}>
-                Period Data Breakdown
-              </div>
-              <div>Detailed metrics across different time periods</div>
-            </div>
-          </Col>
-        </Row>
-        <div className="d-flex gap-2 align-items-center">
-          <Col xs="auto" className="ms-auto ms-3">
-            <FaExpand size={24} color="rgb(255,80,22)" />
-          </Col>
-        </div>
-      </div>
-
+      <ComponentHeader
+        title={"Period Data Breakdown"}
+        description={"Detailed metrics across different time periods"}
+        isShowArrows={true}
+        scrollRef={myScrollRef}
+        isExpandable={true}
+      />
       {/* Tabs */}
       <div className="d-flex justify-content-center mb-3">
         <ButtonGroup
@@ -270,32 +235,15 @@ export default function PeriodDataBreakdown() {
 
       {/* Card Slider Controls */}
       <div className="d-flex align-items-center mb-3">
-        {/* Hide arrow buttons on mobile and when there are 4 or fewer cards */}
-        {!isMobile && data.cards.length > 4 && (
-          <Button variant="light" onClick={() => handleScroll("left")}>
-            <FaChevronLeft />
-          </Button>
-        )}
         <div
-          ref={cardScrollRef}
+          ref={myScrollRef}
           className="d-flex overflow-auto px-2 hide-scrollbar"
           style={{ scrollBehavior: "smooth", gap: "1rem" }}
         >
           {data.cards.map((card, idx) => (
-            <PeriodBreakDownCard
-              key={idx}
-              card={card}
-              idx={idx}
-              isMobile={isMobile}
-            />
+            <PeriodBreakDownCard key={idx} card={card} idx={idx} />
           ))}
         </div>
-        {/* Hide arrow buttons on mobile and when there are 4 or fewer cards */}
-        {!isMobile && data.cards.length > 4 && (
-          <Button variant="light" onClick={() => handleScroll("right")}>
-            <FaChevronRight />
-          </Button>
-        )}
       </div>
 
       {/* Table with Sticky Header */}

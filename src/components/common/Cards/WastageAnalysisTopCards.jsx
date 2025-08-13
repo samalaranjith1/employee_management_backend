@@ -1,15 +1,17 @@
 import React from "react";
 import { FaBox, FaCalendarAlt, FaExclamationTriangle, FaShoppingBag } from "react-icons/fa";
 
-function WastageAnalysisTopCards({ statCard }) {
+function WastageAnalysisTopCards({ statCard, myScrollRef }) {
   return (
     <div
+      ref={myScrollRef}
       style={{
         display: "flex",
         gap: "15px",
         overflowX: "auto",
         scrollbarWidth: "none",
         msOverflowStyle: "none",
+        minWidth:'280px'
       }}
     >
       {statCard(

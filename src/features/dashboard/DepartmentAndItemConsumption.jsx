@@ -1,5 +1,6 @@
 "use client";
-import React from "react";
+import ComponentHeader from "@/components/common/ComponentHeader";
+import React, { useRef } from "react";
 import { Row, Col, Card } from "react-bootstrap";
 import { FaShoppingCart, FaUtensils } from "react-icons/fa";
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
@@ -55,16 +56,30 @@ export default function DepartmentItemConsumption() {
   const totalConsumption = consumptionData.reduce((sum, d) => sum + d.value, 0);
 
   const formatCurrency = (num) => `₹${num.toLocaleString("en-IN")}`;
+const myScrollRef = useRef(null);
 
   return (
-    <div className="p-3" style={{ backgroundColor: "#f8fafc" }}>
-      <h5 className="fw-bold text-primary mb-1">
+    <div className="p-2" style={{ backgroundColor: "#f8fafc" }}>
+      <ComponentHeader
+        title={"Department and Item Consumption"}
+        description={
+          "Comprehensive breakdown of purchases and consumption patterns"
+        }
+        titleColor={"text-primary fs-4"}
+        cardBgColor={"none"}
+        isShowArrows={true}
+        scrollRef={myScrollRef}
+        isExpandable={true}
+        titleIcon={<FaShoppingCart color="rgb(13,110,253)" size={24} />}
+        text={""}
+      />
+      {/* <h5 className="fw-bold text-primary mb-1">
         <FaShoppingCart className="me-2" />
         Department and Item Consumption
       </h5>
       <p className="text-muted small">
         Comprehensive breakdown of purchases and consumption patterns
-      </p>
+      </p> */}
 
       <Row>
         {/* Purchase Distribution */}

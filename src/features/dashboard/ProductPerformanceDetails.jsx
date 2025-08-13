@@ -1,6 +1,7 @@
 "use client";
 
-import React from "react";
+import ComponentHeader from "@/components/common/ComponentHeader";
+import React, { useRef } from "react";
 import { Card, Table } from "react-bootstrap";
 import { FaCube } from "react-icons/fa";
 
@@ -131,25 +132,34 @@ const ProductPerformanceDetails = () => {
       marginPercent: "60.0%",
     },
   ];
-
+const myScrollRef = useRef(null)
   return (
     <Card
       className="m-2 p-3 bg-white rounded shadow-sm d-flex flex-column"
       style={{ height: "100%" }}
     >
       {/* Header */}
-      <div className="d-flex align-items-center mb-3 flex-shrink-0">
+      <ComponentHeader
+        title={"Product Performance Details"}
+        description={""}
+        titleColor={"fw-bold mb-0 text-primary"}
+        cardBgColor={"none"}
+        isShowArrows={false}
+        scrollRef={myScrollRef}
+        isExpandable={true}
+        titleIcon={<FaCube size={20}/>}
+        text={""}
+      />
+      {/* <div className="d-flex align-items-center mb-3 flex-shrink-0">
         {" "}
-        {/* flex-shrink-0 to prevent shrinking */}
         <div style={styles.iconCircle} className="me-2">
           <FaCube size={20} />
         </div>
         <h6 className="fw-bold mb-0 text-primary">
           Product Performance Details
         </h6>
-      </div>
+      </div> */}
 
-      {/* Table - Now wrapped in a dedicated scroll container */}
       <div style={styles.tableScrollContainer}>
         <Table hover responsive className="align-middle mb-0">
           <thead>

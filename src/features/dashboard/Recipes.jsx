@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useRef } from "react";
 import { Card, Row, Col, Container } from "react-bootstrap";
 import {
   FaArrowUp,
@@ -12,6 +12,7 @@ import {
 import "bootstrap/dist/css/bootstrap.min.css";
 import RecipesCards from "@/components/common/Cards/RecipesCards";
 import RecipesTable from "@/components/common/Table/RecipesTable";
+import ComponentHeader from "@/components/common/ComponentHeader";
 
 const RecipesDashboard = () => {
   const topCards = [
@@ -136,9 +137,23 @@ const RecipesDashboard = () => {
     },
   ];
 
+  const myScrollRef= useRef(null)
   return (
-    <Container fluid className="m-2 p-2">
-      <Row className="d-flex align-items-center justify-content-between mb-3 p-1">
+    <Container fluid className="mt-0  p-2">
+      <ComponentHeader
+        title={"Recipes"}
+        description={
+          "Analyze product profitability and optimize menu offerings"
+        }
+        titleColor={"rgb(255,79,22)"}
+        cardBgColor={"none"}
+        isShowArrows={true}
+        scrollRef={myScrollRef}
+        isExpandable={true}
+        titleIcon={""}
+        text={""}
+      />
+      {/* <Row className="d-flex align-items-center justify-content-between mb-3 p-1">
         <Col className="d-flex align-items-center">
           <div className="me-2">
             <FaBolt size={24} color="rgb(255,80,22)" />
@@ -151,12 +166,22 @@ const RecipesDashboard = () => {
           </div>
         </Col>
 
-        {/* Right section with scroll buttons */}
         <Col xs="auto" className="d-flex align-items-center ms-auto">
           <FaExpand size={24} color="rgb(255,80,22)" />
         </Col>
-      </Row>
-      <Card
+      </Row> */}
+      {/* <Row
+        ref={myScrollRef}
+        className="d-flex flex-nowrap overflow-auto gap-3"
+        style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+      >
+        {topCards.map((card, idx) => (
+          <RecipesCards card={card} idx={idx} key={idx} />
+        ))}
+      </Row> */}
+
+      <div
+        ref={myScrollRef}
         className="m-0 p-3"
         style={{
           border: "none",
@@ -186,7 +211,7 @@ const RecipesDashboard = () => {
             />
           </Col>
         </Row>
-      </Card>
+      </div>
 
       <style>{`
         .top-cards-container {

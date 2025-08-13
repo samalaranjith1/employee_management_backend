@@ -1,8 +1,9 @@
 
 "use client";
 import WastageAnalysisTopCards from "@/components/common/Cards/WastageAnalysisTopCards";
+import ComponentHeader from "@/components/common/ComponentHeader";
 import WastageAnalysisTable from "@/components/common/Table/WastageAnalysisTable";
-import React from "react";
+import React, { useRef } from "react";
 import { useState, useEffect } from "react";
 import {  Card } from "react-bootstrap";
 import {
@@ -162,19 +163,32 @@ export default function WastageAnalysis() {
     overflowY: "auto",
   };
 
+  const myScrollRef = useRef(null);
   return (
     <Card style={{ background: "#fff" }} className="p-2">
-      <div className="mt-2">
+      <ComponentHeader
+        title={"Wastage Analysis"}
+        description={"Track and minimize food waste across all categories"}
+        titleColor={"#0aa4b3 fs-4"}
+        cardBgColor={"none"}
+        isShowArrows={true}
+        scrollRef={myScrollRef}
+        isExpandable={true}
+        titleIcon={<FaTrashAlt color="#0aa4b3" size={24} />}
+        text={""}
+      />
+      {/* <div className="mt-2">
         <h5 style={{ fontWeight: "600", color: "#0aa4b3" }}>
           <FaTrashAlt className="me-2" /> Wastage Analysis
         </h5>
         <p style={{ fontSize: "13px", color: "#666" }}>
           Track and minimize food waste across all categories
         </p>
-      </div>
+      </div> */}
 
       {/* Stat Cards */}
-      <WastageAnalysisTopCards statCard={statCard} />
+      <WastageAnalysisTopCards statCard={statCard}
+      scrollRef={myScrollRef} />
 
       {/* Hide scrollbar for Webkit */}
       <style>

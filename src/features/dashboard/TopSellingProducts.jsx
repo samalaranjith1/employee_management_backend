@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Container, Row, Col, Card } from "react-bootstrap";
 import { FaStar, FaBoxOpen, FaChartLine, FaShoppingCart } from "react-icons/fa";
 
@@ -8,6 +8,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import TopSellingProductsCards from "@/components/common/Cards/TopSellingProductsCards";
 import TopSellingProductsGraph from "@/components/common/GraphWrapper/TopSellingProductsGraph";
 import TopSellingProductsTable from "@/components/common/Table/TopSellingProductsTable";
+import ComponentHeader from "@/components/common/ComponentHeader";
 
 const TopSellingProducts = () => {
   const topCards = [
@@ -73,23 +74,45 @@ const TopSellingProducts = () => {
       }
     };
   });
-
+const myScrollRef= useRef(null)
   return (
     <Container fluid style={{ padding: 16 }}>
       {/* Header */}
-      <div className="mb-3">
+      <ComponentHeader
+        title={"Top Selling Products"}
+        description={"Analyze best-performing menu items and sales trends"}
+        titleColor={"rgba(91, 46, 234, 1) fs-4"}
+        cardBgColor={"none"}
+        isShowArrows={true}
+        scrollRef={myScrollRef}
+        isExpandable={true}
+        titleIcon={<FaChartLine color="#5B2EEA" size={24} />}
+        text={""}
+      />
+      {/* <div className="mb-3">
         <h3 style={{ color: "#5B2EEA", fontWeight: 700 }}>
           Top Selling Products
         </h3>
         <small className="text-muted">
           Analyze best-performing menu items and sales trends
         </small>
-      </div>
+      </div> */}
 
       {/* Top cards row */}
-      <Row className="g-3 mb-4 top-card-row flex-nowrap overflow-auto">
+      <Row
+        ref={myScrollRef}
+        className="g-3 mb-4 top-card-row flex-nowrap overflow-auto"
+        style={{
+          scrollbarWidth: "none",
+          msOverflowStyle: "none",
+        }}
+      >
         {topCards.map((card, idx) => (
-          <TopSellingProductsCards card={card} key={idx} idx={idx} />
+          <TopSellingProductsCards
+            card={card}
+            key={idx}
+            idx={idx}
+          />
         ))}
       </Row>
 

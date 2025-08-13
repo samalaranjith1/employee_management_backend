@@ -1,10 +1,10 @@
 import React from 'react'
 import { Col, Card } from "react-bootstrap";
 
-function TopSellingProductsCards({card}) {
+function TopSellingProductsCards({ card }) {
   return (
     <Col key={card.id} xs="auto" className="top-card-col">
-      <Card
+      <div
         style={{
           background: card.bg,
           borderRadius: 12,
@@ -62,7 +62,7 @@ function TopSellingProductsCards({card}) {
             {card.icon}
           </div>
         </div>
-      </Card>
+      </div>
     </Col>
   );
 }

@@ -1,34 +1,17 @@
 "use client";
 
-import React from "react";
-import { Card, Row, Col, Table, Badge } from "react-bootstrap";
+import ComponentHeader from "@/components/common/ComponentHeader";
+import React, { useRef } from "react";
+import { Card, Row, Col } from "react-bootstrap";
 import { FaTruck, FaCalendarAlt, FaShoppingCart } from "react-icons/fa";
-import {
-  PieChart,
-  Pie,
-  Cell,
-  ResponsiveContainer,
-  Tooltip,
-  Sector,
-} from "recharts";
+import PurchaseDistributionGraph from "@/components/common/GraphWrapper/PurchaseDistributionGraph";
+import SupplierDetailsTable from "@/components/common/Table/SupplierDetailsTable";
 
 const SupplierManagement = () => {
   const styles = {
     container: {
       padding: "1rem",
       backgroundColor: "#f8fafc",
-    },
-    header: {
-      display: "flex",
-      alignItems: "center",
-      gap: "0.5rem",
-      fontWeight: "600",
-      fontSize: "1.25rem",
-      color: "#1e40af",
-    },
-    subText: {
-      fontSize: "0.9rem",
-      color: "#64748b",
     },
     sectionCard: {
       borderRadius: "12px",
@@ -123,20 +106,21 @@ const SupplierManagement = () => {
     },
   ];
 
+  const myScrollRef = useRef(null);
+
   return (
     <Card style={styles.container} className="m-2">
-      {/* Page Header */}
-      <div>
-        <div style={styles.header}>
-          <FaTruck size={20} />
-          Supplier Management
-        </div>
-        <div style={styles.subText}>
-          Track purchases, payments, and supplier relationships
-        </div>
-      </div>
+      <ComponentHeader
+        title={"Supplier Management"}
+        description={"Track purchases, payments, and supplier relationships"}
+        titleColor={"rgba(26, 59, 228, 1) fs-4"}
+        cardBgColor={"none"}
+        isShowArrows={false}
+        scrollRef={myScrollRef}
+        isExpandable={true}
+        titleIcon={<FaTruck size={20} color="rgba(26,59,228,1)" />}
+      />
 
-      {/* Section */}
       <Card style={styles.sectionCard}>
         <Card.Body>
           <div className="d-flex align-items-center mb-3">
@@ -146,7 +130,6 @@ const SupplierManagement = () => {
             <div className="ms-2 fw-semibold">Purchase from Suppliers</div>
           </div>
 
-          {/* Purchase Card */}
           <div style={styles.purchaseCard} className="mb-4">
             <div>
               <div style={{ fontSize: "0.9rem", color: "#334155" }}>
@@ -169,88 +152,12 @@ const SupplierManagement = () => {
             </div>
           </div>
 
-          {/* Chart + Table */}
           <Row>
             <Col md={6}>
-              <div className="fw-semibold mb-2">Purchase Distribution</div>
-              {/* Added a class to the wrapper div for CSS targeting */}
-              <Card className="p-3">
-                <div className="chart-wrapper">
-                  <ResponsiveContainer width="100%" height={200}>
-                    {/* Added class to PieChart component to target its SVG elements */}
-                    <PieChart className="pie-chart-no-outline">
-                      <Pie
-                        data={pieData}
-                        innerRadius={50}
-                        outerRadius={80}
-                        paddingAngle={2}
-                        dataKey="value"
-                        isAnimationActive={true}
-                      >
-                        {pieData.map((entry, index) => (
-                          <Cell key={`cell-${index}`} fill={entry.color} />
-                        ))}
-                      </Pie>
-                      <Tooltip
-                        formatter={(value, name) => [`${value} units`, name]}
-                        contentStyle={{
-                          backgroundColor: "#fff",
-                          border: "none", // Explicitly removed the border
-                          borderRadius: "8px",
-                        }}
-                      />
-                    </PieChart>
-                  </ResponsiveContainer>
-                </div>
-                <div style={styles.pieLegend}>
-                  {pieData.map((item, idx) => (
-                    <div style={styles.legendItem} key={idx}>
-                      <div
-                        style={{
-                          ...styles.legendDot,
-                          backgroundColor: item.color,
-                        }}
-                      ></div>
-                      {item.name}
-                    </div>
-                  ))}
-                </div>
-              </Card>
+              <PurchaseDistributionGraph pieData={pieData} styles={styles} />
             </Col>
             <Col md={6}>
-              <div className="fw-semibold mb-2">Supplier Details</div>
-              <Table hover responsive>
-                <thead>
-                  <tr>
-                    <th>Supplier</th>
-                    <th>Purchase</th>
-                    <th>Items</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {supplierData.map((row, idx) => (
-                    <tr key={idx}>
-                      <td>
-                        <div className="fw-semibold">{row.supplier}</div>
-                        <div className="d-flex gap-1">
-                          <Badge bg="light" text="dark">
-                            {row.category}
-                          </Badge>
-                          <span
-                            style={{ color: "#64748b", fontSize: "0.85rem" }}
-                          >
-                            {row.location}
-                          </span>
-                        </div>
-                      </td>
-                      <td style={{ color: "#16a34a", fontWeight: "600" }}>
-                        {row.purchase}
-                      </td>
-                      <td>{row.items}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </Table>
+              <SupplierDetailsTable supplierData={supplierData} />
             </Col>
           </Row>
         </Card.Body>

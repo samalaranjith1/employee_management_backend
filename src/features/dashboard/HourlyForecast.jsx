@@ -1,12 +1,13 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Container, Row, Col, Card, Dropdown } from "react-bootstrap";
 import { FaClock, FaArrowRight, FaChartLine } from "react-icons/fa";
 
 import HourlyForecastGraph from "@/components/common/GraphWrapper/HourlyForecastGraph";
 import HourlyForecastFilterCard from "@/components/common/FilterComponent/HourlyForecastFilterCard";
+import ComponentHeader from "@/components/common/ComponentHeader";
 
 // Mock data for products, metrics, and data points
 const mockProductData = {
@@ -105,35 +106,21 @@ export default function HourlyForecast() {
       />
     );
   };
+const myScrollRef = useRef(null); 
 
   return (
-    <Container fluid className='mt-3'>
-        {/* Header */}
-        <Row className="mb-4 d-flex align-items-center">
-          <Col xs={12} md={6}>
-            <div className="d-flex align-items-center">
-              <FaClock className="h-6 w-6 me-2 text-primary" />
-              <div>
-                <h1 className="h5 fw-bold text-dark mb-0">Hourly Forecast</h1>
-                <p
-                  className="text-secondary mb-0"
-                  style={{ fontSize: "0.875rem" }}
-                >
-                  Real-time predictions for today's performance
-                </p>
-              </div>
-            </div>
-          </Col>
-          <Col xs={12} md={6} className="text-md-end mt-2 mt-md-0">
-            <span className="text-secondary me-3">Today's Forecast</span>
-            <button className="btn btn-light rounded-circle">
-              <FaArrowRight />
-            </button>
-          </Col>
-        </Row>
-
-        {/* Main Content */}
-        <HourlyForecastFilterCard 
+    <Container fluid className="mt-3">
+      {/* Header */}
+      <ComponentHeader
+        title={"Hourly Forecast"}
+        description={"Real-time predictions for today's performance"}
+        isShowArrows={false}
+        scrollRef={myScrollRef}
+        isExpandable={true}
+        text={`Today's Forecast →`}
+      />
+      {/* Main Content */}
+      <HourlyForecastFilterCard
         products={products}
         metrics={metrics}
         selectedProduct={selectedProduct}
@@ -142,7 +129,7 @@ export default function HourlyForecast() {
         setSelectedProduct={setSelectedProduct}
         currentData={currentData}
         renderGraph={renderGraph}
-        />
+      />
       <style>{`
         body {
           font-family: 'Inter', sans-serif;

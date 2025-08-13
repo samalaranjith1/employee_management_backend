@@ -19,6 +19,7 @@ import {
   Col,
   Card,
 } from "react-bootstrap";
+import { FaBolt, FaExpand } from "react-icons/fa";
 
 const dailyData = [
   { name: "Dec 1", Sales: 45, Consumption: 29, Opening: 33, Closing: 14 },
@@ -67,25 +68,36 @@ export default function TrendAnalysis() {
   return (
     <Container fluid className="m-1">
       <Container fluid className="p-2 bg-white rounded shadow-sm">
-        <Row className="mb-3 align-items-center">
-          <Col>
-            <h4 className="mb-1">📈 Trend Analysis</h4>
-            <p className="text-muted mb-0">
-              Sales, consumption, and inventory trends over time
-            </p>
+        <Row className="d-flex align-items-center justify-content-between mb-3">
+          {/* Left section */}
+          <Col className="d-flex align-items-center">
+            <div className="me-2">
+              <FaBolt size={24} color="rgb(255,80,22)" />
+            </div>
+            <div className="d-flex flex-column mt-2">
+              <div style={{ color: "rgb(255,80,22)", fontWeight: "bold" }}>
+                📈 Trend Analysis
+              </div>
+              <div>Sales, consumption, and inventory trends over time</div>
+            </div>
           </Col>
-          <Col xs="auto">
-            <ButtonGroup>
-              {["Daily", "Weekly", "Monthly"].map((type) => (
-                <Button
-                  key={type}
-                  variant={view === type ? "primary" : "outline-secondary"}
-                  onClick={() => setView(type)}
-                >
-                  {type}
-                </Button>
-              ))}
-            </ButtonGroup>
+
+          {/* Right section with scroll buttons */}
+          <Col xs="auto" className="d-flex align-items-center ms-auto gap-2">
+            <div className="d-none d-md-flex">
+              <ButtonGroup>
+                {["Daily", "Weekly", "Monthly"].map((type) => (
+                  <Button
+                    key={type}
+                    variant={view === type ? "primary" : "outline-secondary"}
+                    onClick={() => setView(type)}
+                  >
+                    {type}
+                  </Button>
+                ))}
+              </ButtonGroup>
+            </div>
+            <FaExpand size={24} color="rgb(255,80,22)" />
           </Col>
         </Row>
 

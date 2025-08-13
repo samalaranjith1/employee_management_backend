@@ -12,6 +12,8 @@ return (
       height: "65vh", // fixed height for the whole table container
       display: "flex",
       flexDirection: "column",
+      width:'110%',
+      marginLeft:'-20px'
     }}
   >
     <h5 style={{ fontWeight: "600", marginBottom: "1rem" }}>{title}</h5>

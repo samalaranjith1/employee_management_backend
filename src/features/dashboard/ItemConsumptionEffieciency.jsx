@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useRef } from "react";
 import {  Row, Col, Badge } from "react-bootstrap";
 import {
   FaExclamationTriangle,
@@ -13,6 +13,7 @@ import {
 
 import ItemConsumptionEfficiencyCard from "@/components/common/Cards/ItemConsumptionEfficiencyCard";
 import ItemConsumptionEffieciencyTable from "@/components/common/Table/ItemConsumptionEffieciencyTable";
+import ComponentHeader from "@/components/common/ComponentHeader";
 
 const ItemConsumptionEfficiency = () => {
   const summaryCards = [
@@ -253,12 +254,24 @@ const ItemConsumptionEfficiency = () => {
         return null;
     }
   };
-
+const myScrollRef = useRef(null);
   return (
     <div className="mt-2 p-2">
       {/* Header Row */}
-      <Row className="d-flex align-items-center justify-content-between mb-3">
-        {/* Left section */}
+      <ComponentHeader
+        title={"Item Consumption Efficiency"}
+        description={
+          "Monitor wastage patterns and consumption inefficiencies across menu items"
+        }
+        titleColor={"rgb(255,79,22)"}
+        cardBgColor={"none"}
+        isShowArrows={true}
+        scrollRef={myScrollRef}
+        isExpandable={true}
+        titleIcon={""}
+        text={""}
+      />
+      {/* <Row className="d-flex align-items-center justify-content-between mb-3">
         <Col className="d-flex align-items-center">
           <div className="me-2">
             <FaBolt size={24} color="rgb(255,80,22)" />
@@ -275,14 +288,17 @@ const ItemConsumptionEfficiency = () => {
           </div>
         </Col>
 
-        {/* Right section with scroll buttons */}
         <Col xs="auto" className="d-flex align-items-center ms-auto">
           <FaExpand size={24} color="rgb(255,80,22)" />
         </Col>
-      </Row>
+      </Row> */}
 
       {/* Summary Cards - scrollable on mobile */}
-      <ItemConsumptionEfficiencyCard summaryCards={summaryCards} />
+      
+      <ItemConsumptionEfficiencyCard
+        summaryCards={summaryCards}
+        scrollRef={myScrollRef}
+      />
       {/* Table */}
       <ItemConsumptionEffieciencyTable
         tableData={tableData}

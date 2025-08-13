@@ -2,7 +2,7 @@
 import RecommendationsCard from "@/components/common/Cards/RecommendationsCard";
 import React, { useState, useEffect } from "react";
 import { Card } from "react-bootstrap";
-import { FaExclamationTriangle } from "react-icons/fa";
+import { FaExclamationTriangle, FaExpand } from "react-icons/fa";
 
 export default function MenuOptimizationRecommendations() {
   const [isMobile, setIsMobile] = useState(false);
@@ -47,7 +47,7 @@ export default function MenuOptimizationRecommendations() {
     },
   ];
 
-  const textColor="#0e87eb";
+  const textColor = "#0e87eb";
   const cardStyle = {
     background: "#fff",
     borderRadius: "15px",
@@ -63,7 +63,7 @@ export default function MenuOptimizationRecommendations() {
   };
 
   return (
-    <Card fluid className="m-2">
+    <Card className="m-2">
       <div style={containerStyle}>
         {/* Header */}
         <div className="d-flex align-items-center mb-3">
@@ -88,6 +88,9 @@ export default function MenuOptimizationRecommendations() {
               Strategic actions to improve overall profitability
             </div>
           </div>
+          <div className="ms-auto">
+            <FaExpand color="#0e87eb" size={24} />
+          </div>
         </div>
 
         {/* Horizontal Scrollable Cards */}
@@ -105,6 +108,7 @@ export default function MenuOptimizationRecommendations() {
             <RecommendationsCard
               idx={idx}
               rec={rec}
+              key={idx}
               cardStyle={cardStyle}
               isMobile={isMobile}
               textColor={textColor}

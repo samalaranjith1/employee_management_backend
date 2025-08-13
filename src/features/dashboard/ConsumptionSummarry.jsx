@@ -11,17 +11,16 @@ import {
 } from "react-icons/fa";
 import "bootstrap/dist/css/bootstrap.min.css";
 import ConsumptionCard from "@/components/common/Cards/ConsumptionCard";
+import ComponentHeader from "@/components/common/ComponentHeader";
 
 function ConsumptionCarousel({ cards, scrollContainerRef }) {
-  const CARD_GAP_PX = 16; // Assuming 1rem = 16px
-
   return (
     <>
       <div
         ref={scrollContainerRef}
         className="d-flex"
         style={{
-          gap: `${CARD_GAP_PX}px`,
+          gap: `16px`,
           paddingBottom: "0.5rem",
           overflowX: "auto",
           msOverflowStyle: "none",
@@ -151,11 +150,21 @@ export default function ConsumptionSummarry() {
 
   if (isLoading) return <p>Loading users...</p>;
   if (isError) return <p>Error: {error.message}</p>;
+const myScrollRef = useRef(null);
 
   return (
     <Container fluid>
-      <Row className="d-flex align-items-center justify-content-between mb-3">
-        {/* Left section */}
+      <ComponentHeader
+        title={"Consumption Summary"}
+        description={"Real-time consumption metrics and performance indicators"}
+        titleColor={"rgb(255,92,0)"}
+        cardBgColor={"none"}
+        isShowArrows={true}
+        scrollRef={myScrollRef}
+        isExpandable={true}
+        titleIcon={""}
+      />
+      {/* <Row className="d-flex align-items-center justify-content-between mb-3">
         <Col className="d-flex align-items-center">
           <div className="me-2">
             <FaBolt size={24} color="rgb(255,80,22)" />
@@ -168,7 +177,6 @@ export default function ConsumptionSummarry() {
           </div>
         </Col>
 
-        {/* Right section with scroll buttons */}
         <Col xs="auto" className="d-flex align-items-center ms-auto">
           <div className="d-none d-md-flex">
             {showScrollButtons && (
@@ -194,11 +202,8 @@ export default function ConsumptionSummarry() {
           </div>
           <FaExpand size={24} color="rgb(255,80,22)" />
         </Col>
-      </Row>
-      <ConsumptionCarousel
-        cards={cardsData}
-        scrollContainerRef={scrollContainerRef}
-      />
+      </Row>  */}
+      <ConsumptionCarousel cards={cardsData} scrollContainerRef={myScrollRef} />
     </Container>
   );
 }

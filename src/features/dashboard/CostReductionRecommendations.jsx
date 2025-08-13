@@ -2,7 +2,7 @@
 import RecommendationsCard from "@/components/common/Cards/RecommendationsCard";
 import React, { useState, useEffect } from "react";
 import { Card } from "react-bootstrap";
-import { FaExclamationTriangle } from "react-icons/fa";
+import { FaExclamationTriangle, FaExpand } from "react-icons/fa";
 
 export default function CostReductionRecommendations() {
   const [isMobile, setIsMobile] = useState(false);
@@ -81,6 +81,9 @@ export default function CostReductionRecommendations() {
             <div style={{ fontSize: "13px", color: "#666" }}>
               Actions to minimize wastage and optimize costs
             </div>
+          </div>
+          <div className="ms-auto">
+            <FaExpand color="#9c27b0" size={24} />
           </div>
         </div>
 

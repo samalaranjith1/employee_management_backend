@@ -1,25 +1,35 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import { Card } from "react-bootstrap";
 
-function ItemConsumptionEfficiencyCard({ summaryCards }) {
+function ItemConsumptionEfficiencyCard({ summaryCards, scrollRef }) {
+   const [isMobile, setIsMobile] = useState(false);
+
+   useEffect(() => {
+     const updateMinWidth = () => {
+       setIsMobile(window.innerWidth < 768);
+     };
+     updateMinWidth();
+     window.addEventListener("resize", updateMinWidth);
+     return () => window.removeEventListener("resize", updateMinWidth);
+   }, []);
   return (
     <div
-      className="summary-cards-container"
+      ref={scrollRef}
+      className="d-flex gap-3 mb-4"
       style={{
-        display: "grid",
-        gridAutoFlow: "column",
-        gap: "1rem",
         overflowX: "auto",
-        WebkitOverflowScrolling: "touch",
-        paddingBottom: "0.5rem",
+        scrollbarWidth: "none", // For Firefox
+        msOverflowStyle: "none", // For IE/Edge
       }}
     >
       {summaryCards.map((card, idx) => (
         <div
           key={idx}
-          className="summary-card-wrapper"
+          className="card-item"
           style={{
-            minWidth: "90vw", // Mobile swipe width
+            flex: "0 0 auto",
+            width: isMobile ? "90vw" : "23vw",
           }}
         >
           <Card
@@ -57,26 +67,6 @@ function ItemConsumptionEfficiencyCard({ summaryCards }) {
           </Card>
         </div>
       ))}
-
-      <style jsx>{`
-        /* Mobile default: horizontal scroll */
-        .summary-cards-container {
-          gridautoflow: column;
-        }
-
-        /* Desktop: fixed 4-column grid */
-        @media (min-width: 768px) {
-          .summary-cards-container {
-            display: grid;
-            gridautoflow: unset;
-            gridtemplatecolumns: repeat(4, 1fr);
-            overflow-x: visible;
-          }
-          .summary-card-wrapper {
-            min-width: auto !important;
-          }
-        }
-      `}</style>
     </div>
   );
 }
