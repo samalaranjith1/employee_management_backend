@@ -62,18 +62,16 @@ const TopSellingProducts = () => {
     { name: "Tandoori Chi...", sales: 150, margin: 95 },
     { name: "Masala Chai", sales: 60, margin: 30 },
   ];
-  const [isMobile, setIsMobile] = useState(false);
-  useEffect(() => {
-    const checkScrollAndMobile = () => {
-      const el = scrollContainerRef.current;
-      if (el) {
-        setIsMobile(window.innerWidth < 768); // Adjust breakpoint as needed
+ const [isMobile, setIsMobile] = useState("0");
 
-        // Only show scroll buttons if content overflows
-        setShowScrollButtons(el.scrollWidth > el.clientWidth);
-      }
+  useEffect(() => {
+    const updateMinWidth = () => {
+      setIsMobile(window.innerWidth < 768);
     };
-  });
+    updateMinWidth();
+    window.addEventListener("resize", updateMinWidth);
+    return () => window.removeEventListener("resize", updateMinWidth);
+  }, []);
 const myScrollRef= useRef(null)
   return (
     <Container fluid style={{ padding: 16 }}>
@@ -154,7 +152,7 @@ const myScrollRef= useRef(null)
             </div>
             <div
               style={{
-                width: isMobile ? "140%" : "100%",
+                width: isMobile ? "110vw" : "100%",
                 marginLeft: isMobile ? "-40px" : "0px",
                 height: 340,
               }}

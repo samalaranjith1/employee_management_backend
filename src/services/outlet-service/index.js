@@ -1,70 +1,140 @@
-// hooks/useServiceMutation.js
-import {
-  useMutation,
-  useQueryClient,
-  useQuery,
-  UseQueryOptions,
-} from "@tanstack/react-query";
-import axios from "@/services/axiosInstance"; // ✅ using centralized instance
+import {useApiQuery, useApiMutation } from "../apiHooks";
 
-const basePath = 'https://flavourheaven.in/costonomy-services/outlet'
-export function useServiceMutation(method, options = {}) {
-  const queryClient = useQueryClient();
-
-  return useMutation({
-    mutationFn: async ({ endpoint, payload }) => {
-      const { data } = await axios({
-        url: `${basePath}${endpoint}`,
-        method,
-        data: payload,
-      });
-      return data;
-    },
-    onSuccess: (data, variables, context) => {
-      if (options.invalidateKeys) {
-        options.invalidateKeys.forEach((key) => {
-          queryClient.invalidateQueries({ queryKey: [key] });
-        });
-      }
-      if (options.onSuccess) {
-        options.onSuccess(data, variables, context);
-      }
-    },
-    ...options,
+// Single Outlet
+export function useOutlet(id, params) {
+  return useApiQuery({
+    key: ["outlet", id, params],
+    endpoint: `outlet/${id}`,
+    params,
   });
 }
 
-export function useOutletServiceQuery(endpoint) {
-  return useQuery({
-    queryKey: [endpoint],
-    queryFn: async () => {
-      const { data } = await axios.get(`${basePath}${endpoint}`);
-      return data;
-    },
-    // ...options,
+// Summary
+export function useOutletSummary(id, params) {
+  return useApiQuery({
+    key: ["outletSummary", id, params],
+    endpoint: `outlet/${id}/summary`,
+    params,
   });
 }
 
-// import { useServiceMutation } from "@/hooks/useServiceMutation";
+export function useOutletWeeklySummary(id, params) {
+  return useApiQuery({
+    key: ["outletWeeklySummary", id, params],
+    endpoint: `outlet/${id}/summary/weekly`,
+    params,
+  });
+}
 
-// export default function CreateUser() {
-//   const createUserMutation = useServiceMutation("/api/users", "POST", {
-//     invalidateKeys: ["users"], // Refresh users list after creation
-//     onSuccess: () => {
-//       console.log("User created successfully!");
+export function useOutletSameDaySummary(id, params) {
+  return useApiQuery({
+    key: ["outletSameDaySummary", id, params],
+    endpoint: `outlet/${id}/summary/sameday`,
+    params,
+  });
+}
+
+export function useOutletMonthlySummary(id, params) {
+  return useApiQuery({
+    key: ["outletMonthlySummary", id, params],
+    endpoint: `outlet/${id}/summary/monthly`,
+    params,
+  });
+}
+
+export function useOutletDailySummary(id, params) {
+  return useApiQuery({
+    key: ["outletDailySummary", id, params],
+    endpoint: `outlet/${id}/summary/daily`,
+    params,
+  });
+}
+
+// MTD Metrics
+export function useOutletMtdMetrics(id, params) {
+  return useApiQuery({
+    key: ["outletMtdMetrics", id, params],
+    endpoint: `outlet/${id}/mtdmetrics`,
+    params,
+  });
+}
+
+// Actionable Insights
+export function useOutletActionableInsights(id, params) {
+  return useApiQuery({
+    key: ["outletActionableInsights", id, params],
+    endpoint: `outlet/${id}/actionableinsights`,
+    params,
+  });
+}
+
+
+// // Read
+// export function useUsersList(filters) {
+//   return useApiQuery({
+//     key: ["users", filters],
+//     endpoint: "/users",
+//     params: filters,
+//   });
+// }
+
+// // Create
+// export function useCreateUser() {
+//   return useApiMutation({
+//     method: "post",
+//     endpoint: "/users",
+//     options: {
+//       invalidateKeys: [["users"]],
 //     },
 //   });
+// }
 
-//   const handleCreate = () => {
-//     createUserMutation.mutate({
-//       endpoint: "", // No extra endpoint
-//       payload: { name: "John Doe", email: "john@example.com" },
-//     });
-//   };
+// // Update
+// export function useUpdateUser(id) {
+//   return useApiMutation({
+//     method: "put",
+//     endpoint: `/users/${id}`,
+//     options: {
+//       invalidateKeys: [["users"]],
+//     },
+//   });
+// }
+
+// // Delete
+// export function useDeleteUser(id) {
+//   return useApiMutation({
+//     method: "delete",
+//     endpoint: `/users/${id}`,
+//     options: {
+//       invalidateKeys: [["users"]],
+//     },
+//   });
+// }
+
+// function UsersList() {
+//   const { data: users, isLoading } = useUsersList({ page: 1 });
+//   const createUser = useCreateUser();
+//   const updateUser = useUpdateUser(1);
+//   const deleteUser = useDeleteUser(2);
+
+//   if (isLoading) return <p>Loading...</p>;
 
 //   return (
-//     <button onClick={handleCreate} disabled={createUserMutation.isLoading}>
-//       Create User
-//     </button>
+//     <>
+//       <ul>
+//         {users?.map((u) => (
+//           <li key={u.id}>{u.name}</li>
+//         ))}
+//       </ul>
+
+//       <button onClick={() => createUser.mutate({ name: "New User" })}>
+//         Add
+//       </button>
+//       <button onClick={() => updateUser.mutate({ name: "Updated Name" })}>
+//         Update
+//       </button>
+//       <button onClick={() => deleteUser.mutate()}>Delete</button>
+//     </>
 //   );
 // }
+

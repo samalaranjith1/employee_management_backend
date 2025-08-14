@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Card } from "react-bootstrap";
 
 export default function ConsumptionCard({
@@ -9,13 +10,23 @@ export default function ConsumptionCard({
   bgColor,
   rows,
 }) {
+   const [isMobile, setIsMobile] = useState(false);
+
+   useEffect(() => {
+     const updateMinWidth = () => {
+       setIsMobile(window.innerWidth < 768);
+     };
+     updateMinWidth();
+     window.addEventListener("resize", updateMinWidth);
+     return () => window.removeEventListener("resize", updateMinWidth);
+   }, []);
   return (
     <Card
       className="p-3 card-item"
       style={{
         backgroundColor: bgColor,
         color: textColor,
-        minWidth: "30vw",
+        minWidth: isMobile ? "90vw":"30vw",
         flexShrink: 0,
         borderRadius: "12px",
         boxShadow: "0 4px 12px rgba(0,0,0,0.1)",

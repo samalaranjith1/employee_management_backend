@@ -42,7 +42,7 @@ export default function Home() {
         <DurationFilters />
       </MainComponentHoldingCard>
       <div className="d-none d-md-inline">
-      {/* <div> */}
+        {/* <div> */}
         <MainComponentHoldingCard>
           <ConsumptionSummarry />
         </MainComponentHoldingCard>
@@ -122,9 +122,7 @@ export default function Home() {
           <SupplierDues />
         </MainComponentHoldingCard>
       </div>
-      <MainComponentHoldingCard>
-        <MobileBottomNav />
-      </MainComponentHoldingCard>
+      <MobileBottomNav />
     </QueryClientProvider>
   );
 }

@@ -1,7 +1,7 @@
-"use client"
-import React from 'react'
+"use client";
+import React, { useEffect, useState } from "react";
 import { Card, Col, Row, Dropdown } from "react-bootstrap";
-import { FaChartLine } from 'react-icons/fa';
+import { FaChartLine } from "react-icons/fa";
 
 function HourlyForecastFilterCard({
   products,
@@ -13,6 +13,16 @@ function HourlyForecastFilterCard({
   setSelectedProduct,
   renderGraph,
 }) {
+  const [isMobile, setIsMobile] = useState("0");
+
+  useEffect(() => {
+    const updateMinWidth = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    updateMinWidth();
+    window.addEventListener("resize", updateMinWidth);
+    return () => window.removeEventListener("resize", updateMinWidth);
+  }, []);
   return (
     <Row>
       {/* Filters and Cards Sidebar */}
@@ -122,7 +132,12 @@ function HourlyForecastFilterCard({
                 </div>
               </div>
             </div>
-            <div className="position-relative text-center">{renderGraph()}</div>
+            <div
+              className="position-relative text-center"
+              style={{ width: isMobile?"98vw":'100%', marginLeft:isMobile?"-40px" :'0px'}}
+            >
+              {renderGraph()}
+            </div>
           </Card.Body>
         </Card>
 
@@ -141,4 +156,4 @@ function HourlyForecastFilterCard({
   );
 }
 
-export default HourlyForecastFilterCard
+export default HourlyForecastFilterCard;

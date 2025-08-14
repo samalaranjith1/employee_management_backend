@@ -44,31 +44,59 @@ export default function MobileBottomNav() {
       case "home":
         return (
           <>
-            <ConsumptionSummarry />
-            <ActionableInsights />
-            <MonthSummary />
-            <TrendAnalysis />
-            <PeriodDataBreakDown />
-            <HourlyForecast />
+            <MainComponentHoldingCard>
+              <ConsumptionSummarry />
+            </MainComponentHoldingCard>
+            <MainComponentHoldingCard>
+              <ActionableInsights />
+            </MainComponentHoldingCard>
+            <MainComponentHoldingCard>
+              <MonthSummary />
+            </MainComponentHoldingCard>
+            <MainComponentHoldingCard>
+              <TrendAnalysis />
+            </MainComponentHoldingCard>
+            <MainComponentHoldingCard>
+              <PeriodDataBreakDown />
+            </MainComponentHoldingCard>
+            <MainComponentHoldingCard>
+              <HourlyForecast />
+            </MainComponentHoldingCard>
           </>
         );
       case "items":
         return (
           <>
-            <ItemConsumptionEffieciency />
-            <DepartmentAndItemConsumption/>
-            <PriceChanges />
-            <PriceManagementRecommendations />
-            <OutOfStock />
-            <SuppliersManagement />
+            <MainComponentHoldingCard>
+              <ItemConsumptionEffieciency />
+            </MainComponentHoldingCard>
+            <MainComponentHoldingCard>
+              <DepartmentAndItemConsumption />
+            </MainComponentHoldingCard>
+            <MainComponentHoldingCard>
+              <PriceChanges />
+            </MainComponentHoldingCard>
+            <MainComponentHoldingCard>
+              <PriceManagementRecommendations />
+            </MainComponentHoldingCard>
+            <MainComponentHoldingCard>
+              <OutOfStock />
+            </MainComponentHoldingCard>
+            <MainComponentHoldingCard>
+              <SuppliersManagement />
+            </MainComponentHoldingCard>
             {/* <ImmediateActionsRequired /> */}
           </>
         );
       case "products":
         return (
           <>
-            <TopSellingProducts />
-            <Recipes />
+            <MainComponentHoldingCard>
+              <TopSellingProducts />
+            </MainComponentHoldingCard>
+            <MainComponentHoldingCard>
+              <Recipes />
+            </MainComponentHoldingCard>
             {/* <MenuOptimizationRecommendations />
             <ProductPerformanceDetails />
             <RevenueContributionFromProducts /> */}
@@ -77,15 +105,23 @@ export default function MobileBottomNav() {
       case "departments":
         return (
           <>
-            <KitchenPurchaseByDepartment />
-            <DepartmentPerformanceAnalysis />
-            <DepartmentAndItemConsumption />
+            <MainComponentHoldingCard>
+              <KitchenPurchaseByDepartment />
+            </MainComponentHoldingCard>
+            <MainComponentHoldingCard>
+              <DepartmentPerformanceAnalysis />
+            </MainComponentHoldingCard>
+            <MainComponentHoldingCard>
+              <DepartmentAndItemConsumption />
+            </MainComponentHoldingCard>
           </>
         );
       case "actionable":
         return (
           <>
-          <ActionableInsights/>
+            <MainComponentHoldingCard>
+              <ActionableInsights />
+            </MainComponentHoldingCard>
           </>
         );
       default:
