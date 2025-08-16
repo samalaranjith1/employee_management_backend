@@ -1,15 +1,9 @@
 "use client";
-import ProductPerformanceSummaryCards from "@/components/common/Cards/ProductPerformanceSummaryCards";
+import ProductPerformanceSummaryCards from "@/components/common/card/ProductPerformanceSummaryCards";
 import ComponentHeader from "@/components/common/ComponentHeader";
-import ProductPerformanceTable from "@/components/common/Table/ProductPerformanceTable";
-import React, { useEffect, useRef, useState } from "react";
-import { Container, Card, Badge, Table, Button } from "react-bootstrap";
-import {
-  FaClock,
-  FaExpand,
-  FaChevronLeft,
-  FaChevronRight,
-} from "react-icons/fa";
+import ProductPerformanceTable from "@/components/common/Tables/ProductPerformanceTable";
+import React, { useRef } from "react";
+import { Container } from "react-bootstrap";
 
 export default function ProductPerformanceByPercentile() {
   const summary = [
@@ -265,7 +259,7 @@ export default function ProductPerformanceByPercentile() {
       />
 
       {/* Table */}
-      <ProductPerformanceTable data={tableData} />
+      <ProductPerformanceTable data={tableData}  />
     </Container>
   );
 }

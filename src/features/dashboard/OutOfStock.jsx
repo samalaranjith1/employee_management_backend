@@ -10,12 +10,52 @@ import {
   FaLayerGroup,
 } from "react-icons/fa";
 import "bootstrap/dist/css/bootstrap.min.css";
-import OutOfStockTopCards from "@/components/common/Cards/OutOfStockTopCards";
-import OutOfStockTable from "@/components/common/Table/OutOfStockTable";
+import OutOfStockTopCards from "@/components/common/card/OutOfStockTopCards";
+import OutOfStockTable from "@/components/common/Tables/OutOfStockTable";
 import ComponentHeader from "@/components/common/ComponentHeader";
 
 const InventoryDashboard = () => {
   const items = [
+    {
+      name: "Chicken Breast",
+      moq: "50 kg",
+      stock: "2 kg",
+      status: "Critical",
+      category: "Poultry",
+      size: "1 KG",
+      code: "#1040",
+      closing: "2025-01-10",
+    },
+    {
+      name: "Chicken Breast",
+      moq: "50 kg",
+      stock: "2 kg",
+      status: "Critical",
+      category: "Poultry",
+      size: "1 KG",
+      code: "#1040",
+      closing: "2025-01-10",
+    },
+    {
+      name: "Chicken Breast",
+      moq: "50 kg",
+      stock: "2 kg",
+      status: "Critical",
+      category: "Poultry",
+      size: "1 KG",
+      code: "#1040",
+      closing: "2025-01-10",
+    },
+    {
+      name: "Chicken Breast",
+      moq: "50 kg",
+      stock: "2 kg",
+      status: "Critical",
+      category: "Poultry",
+      size: "1 KG",
+      code: "#1040",
+      closing: "2025-01-10",
+    },
     {
       name: "Chicken Breast",
       moq: "50 kg",
@@ -49,6 +89,36 @@ const InventoryDashboard = () => {
   ];
 
   const baseItems = [
+    {
+      name: "Basmati Rice",
+      moq: "100 kg",
+      stock: "5 kg",
+      status: "Critical",
+      category: "Grains",
+      size: "1 KG",
+      code: "#192",
+      closing: "2025-01-11",
+    },
+    {
+      name: "Basmati Rice",
+      moq: "100 kg",
+      stock: "5 kg",
+      status: "Critical",
+      category: "Grains",
+      size: "1 KG",
+      code: "#192",
+      closing: "2025-01-11",
+    },
+    {
+      name: "Basmati Rice",
+      moq: "100 kg",
+      stock: "5 kg",
+      status: "Critical",
+      category: "Grains",
+      size: "1 KG",
+      code: "#192",
+      closing: "2025-01-11",
+    },
     {
       name: "Basmati Rice",
       moq: "100 kg",

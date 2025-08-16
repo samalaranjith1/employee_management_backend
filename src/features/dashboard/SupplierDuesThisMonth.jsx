@@ -11,6 +11,7 @@ import {
   Tooltip,
   Sector,
 } from "recharts";
+import SupplierDetailsTableMonth from "@/components/common/Tables/SupplierDetailsTableMonth";
 
 const SupplierDuesThisMonth = () => {
   const styles = {
@@ -77,6 +78,34 @@ const SupplierDuesThisMonth = () => {
         { name: "Spice World Ltd.", value: 145000, color: "#ef4444" },
       ],
       suppliersList: [
+        {
+          supplier: "Fresh Vegetables Co.",
+          category: "Vegetables",
+          location: "Mumbai",
+          purchase: 185000,
+          items: 325,
+        },
+        {
+          supplier: "Fresh Vegetables Co.",
+          category: "Vegetables",
+          location: "Mumbai",
+          purchase: 185000,
+          items: 325,
+        },
+        {
+          supplier: "Fresh Vegetables Co.",
+          category: "Vegetables",
+          location: "Mumbai",
+          purchase: 185000,
+          items: 325,
+        },
+        {
+          supplier: "Fresh Vegetables Co.",
+          category: "Vegetables",
+          location: "Mumbai",
+          purchase: 185000,
+          items: 325,
+        },
         {
           supplier: "Fresh Vegetables Co.",
           category: "Vegetables",
@@ -281,36 +310,7 @@ const SupplierDuesThisMonth = () => {
           </Col>
           <Col md={6}>
             <div className="fw-semibold mb-2">Top Suppliers</div>
-            <Table hover responsive>
-              <thead>
-                <tr>
-                  <th style={styles.stickyHeader}>Supplier</th>
-                  <th style={styles.stickyHeader}>Purchase</th>
-                  <th style={styles.stickyHeader}>Items</th>
-                </tr>
-              </thead>
-              <tbody>
-                {data.suppliersList.map((row, idx) => (
-                  <tr key={idx}>
-                    <td>
-                      <div className="fw-semibold">{row.supplier}</div>
-                      <div className="d-flex gap-1">
-                        <Badge bg="light" text="dark">
-                          {row.category}
-                        </Badge>
-                        <span style={{ color: "#64748b", fontSize: "0.85rem" }}>
-                          {row.location}
-                        </span>
-                      </div>
-                    </td>
-                    <td style={{ color: "#16a34a", fontWeight: "600" }}>
-                      ₹{row.purchase.toLocaleString()}
-                    </td>
-                    <td>{row.items}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
+            <SupplierDetailsTableMonth supplierData={data} />
           </Col>
         </Row>
       </Card>

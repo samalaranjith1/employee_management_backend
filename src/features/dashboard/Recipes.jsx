@@ -10,8 +10,8 @@ import {
   FaBolt,
 } from "react-icons/fa";
 import "bootstrap/dist/css/bootstrap.min.css";
-import RecipesCards from "@/components/common/Cards/RecipesCards";
-import RecipesTable from "@/components/common/Table/RecipesTable";
+import RecipesCards from "@/components/common/card/RecipesCards";
+import RecipesTable from "@/components/common/Tables/RecipesTable";
 import ComponentHeader from "@/components/common/ComponentHeader";
 
 const RecipesDashboard = () => {
@@ -153,32 +153,6 @@ const RecipesDashboard = () => {
         titleIcon={""}
         text={""}
       />
-      {/* <Row className="d-flex align-items-center justify-content-between mb-3 p-1">
-        <Col className="d-flex align-items-center">
-          <div className="me-2">
-            <FaBolt size={24} color="rgb(255,80,22)" />
-          </div>
-          <div className="d-flex flex-column mt-2">
-            <div style={{ color: "rgb(255,80,22)", fontWeight: "bold" }}>
-              Recipes
-            </div>
-            <div>Analyze product profitability and optimize menu offerings</div>
-          </div>
-        </Col>
-
-        <Col xs="auto" className="d-flex align-items-center ms-auto">
-          <FaExpand size={24} color="rgb(255,80,22)" />
-        </Col>
-      </Row> */}
-      {/* <Row
-        ref={myScrollRef}
-        className="d-flex flex-nowrap overflow-auto gap-3"
-        style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-      >
-        {topCards.map((card, idx) => (
-          <RecipesCards card={card} idx={idx} key={idx} />
-        ))}
-      </Row> */}
 
       <div
         ref={myScrollRef}

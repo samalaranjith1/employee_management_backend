@@ -1,5 +1,5 @@
 "use client";
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Navbar,
   Nav,
@@ -26,21 +26,45 @@ export default function Header() {
   const [showMobileSearch, setShowMobileSearch] = useState(false);
   const [showNavPanel, setShowNavPanel] = useState(false);
   const [showProfilePanel, setShowProfilePanel] = useState(false);
+  const [hoveredTab, setHoveredTab] = useState(null);
+  const [activeTab, setActiveTab] = useState("/"); // default active page
+  const [isMobile, setMobile] = useState("0");
 
   const toggleMobileSearch = () => setShowMobileSearch((prev) => !prev);
-  const [minWidth, setMinWidth] = useState("0");
 
+  // Update window width for responsive design
   useEffect(() => {
-    const updateMinWidth = () => {
-      setMinWidth(window.innerWidth < 900);
-    };
+    const updateMinWidth = () => setMobile(window.innerWidth < 900);
     updateMinWidth();
     window.addEventListener("resize", updateMinWidth);
     return () => window.removeEventListener("resize", updateMinWidth);
   }, []);
 
+  // Update active tab based on current URL
+  useEffect(() => {
+    setActiveTab(window.location.pathname);
+  }, []);
+
+  const handleNavClick = (path) => {
+    setActiveTab(path);
+    window.location.href = path; // simple navigation, can replace with next/router if using Next.js
+  };
+
+  const navItems = [
+    { path: "/", label: "Home" },
+    { path: "/insights", label: "Actionable Insights" },
+  ];
+
   return (
-    <Navbar bg="light" expand="lg" className="px-3 shadow-sm fixed-top">
+    <Navbar
+      bg="light"
+      expand="lg"
+      className="px-3 shadow-sm fixed-top"
+      style={{
+        background: "linear-gradient(90deg, #f4e5daff, #ffb347)", // choose option
+        color: "#fff",
+      }}
+    >
       <Container fluid className="align-items-center justify-content-between">
         {/* Left Section: Menu & Brand */}
         <div className="d-flex align-items-center gap-3">
@@ -68,12 +92,34 @@ export default function Header() {
           className="d-none d-md-flex justify-content-center align-items-center"
         >
           <Nav className="d-flex flex-row gap-4">
-            <Nav.Link href="/" className="fw-medium text-dark">
-              Home
-            </Nav.Link>
-            <Nav.Link href="/insights" className="fw-medium text-dark">
-              Actionable Insights
-            </Nav.Link>
+            {navItems.map((item) => (
+              <Nav.Link
+                key={item.path}
+                onClick={() => handleNavClick(item.path)}
+                onMouseEnter={() => setHoveredTab(item.path)}
+                onMouseLeave={() => setHoveredTab(null)}
+                style={{
+                  cursor: "pointer",
+                  fontWeight: 600,
+                  color:
+                    activeTab === item.path
+                      ? "#ff5016"
+                      : hoveredTab === item.path
+                      ? "#ff8a50"
+                      : "#333",
+                  borderBottom:
+                    activeTab === item.path
+                      ? "2px solid #ff5016"
+                      : hoveredTab === item.path
+                      ? "2px solid #ff8a50"
+                      : "2px solid transparent",
+                  transition: "all 0.2s ease",
+                  paddingBottom: "4px",
+                }}
+              >
+                {item.label}
+              </Nav.Link>
+            ))}
           </Nav>
         </Col>
 
@@ -86,8 +132,8 @@ export default function Header() {
               placeholder="Search..."
               className="me-2"
               style={{
-                minWidth: minWidth < 900 ? "100px" : "0",
-                marginLeft: minWidth < 900 ? "-50px" : "0",
+                minWidth: isMobile < 900 ? "100px" : "0",
+                marginLeft: isMobile < 900 ? "-50px" : "0",
               }}
             />
           </Form>
@@ -104,7 +150,7 @@ export default function Header() {
           {/* Outlet Dropdown */}
           <Dropdown align="end" className="d-none d-lg-flex">
             <Dropdown.Toggle
-              variant="outline-warning"
+              variant="outline-dark"
               className="d-flex align-items-center gap-2"
             >
               <FaMapMarkerAlt style={{ color: "rgb(255, 92, 0)" }} />

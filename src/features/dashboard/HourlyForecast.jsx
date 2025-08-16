@@ -130,17 +130,6 @@ const myScrollRef = useRef(null);
         currentData={currentData}
         renderGraph={renderGraph}
       />
-      <style>{`
-        body {
-          font-family: 'Inter', sans-serif;
-        }
-        .dot {
-          height: 10px;
-          width: 10px;
-          border-radius: 50%;
-          display: inline-block;
-        }
-      `}</style>
     </Container>
   );
 }

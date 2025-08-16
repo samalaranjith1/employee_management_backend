@@ -1,8 +1,8 @@
 "use client";
-import ItemConsumptionDistributionCard from "@/components/common/Cards/ItemConsumptionDistributionCard";
+import ItemConsumptionDistributionCard from "@/components/common/card/ItemConsumptionDistributionCard";
 import ComponentHeader from "@/components/common/ComponentHeader";
-import ItemConsumptionDistributionTable from "@/components/common/Table/ItemConsumptionDistributionTable";
-import ProductPerformanceTable from "@/components/common/Table/ProductPerformanceTable";
+import ItemConsumptionDistributionTable from "@/components/common/Tables/ItemConsumptionDistributionTable";
+import ProductPerformanceTable from "@/components/common/Tables/ProductPerformanceTable";
 import React, { useRef, useState, useEffect } from "react";
 import { Container, Card, Table, Badge } from "react-bootstrap";
 import {
@@ -34,6 +34,42 @@ export default function ItemConsumptionDistribution() {
   ];
 
   const data = [
+    {
+      percentile: "80 Percentile",
+      items: 2,
+      percentItems: "1.6%",
+      value: 16366.02,
+      percentValue: "18.1%",
+      classification: "High Consumption",
+      color: "red",
+    },
+    {
+      percentile: "80 Percentile",
+      items: 2,
+      percentItems: "1.6%",
+      value: 16366.02,
+      percentValue: "18.1%",
+      classification: "High Consumption",
+      color: "red",
+    },
+    {
+      percentile: "80 Percentile",
+      items: 2,
+      percentItems: "1.6%",
+      value: 16366.02,
+      percentValue: "18.1%",
+      classification: "High Consumption",
+      color: "red",
+    },
+    {
+      percentile: "80 Percentile",
+      items: 2,
+      percentItems: "1.6%",
+      value: 16366.02,
+      percentValue: "18.1%",
+      classification: "High Consumption",
+      color: "red",
+    },
     {
       percentile: "80 Percentile",
       items: 2,
@@ -141,35 +177,7 @@ const myScrollRef = useRef(null);
         titleIcon={<FaClock color="rgb(255,79,22)" size={24} />}
         text={""}
       />
-      {/* <div className="d-flex align-items-center justify-content-between mb-3">
-        <div className="d-flex align-items-center">
-          <FaClock size={20} className="me-2 text-danger" />
-          <h5 className="fw-bold mb-0">Item Consumption Distribution</h5>
-        </div>
-        <div className="d-flex align-items-center gap-2">
-          {showArrows && (
-            <div className="d-none d-md-flex gap-2">
-              <FaChevronLeft
-                size={16}
-                className="text-muted"
-                style={{ cursor: "pointer" }}
-                onClick={() => scroll("left")}
-              />
-              <FaChevronRight
-                size={16}
-                className="text-muted"
-                style={{ cursor: "pointer" }}
-                onClick={() => scroll("right")}
-              />
-            </div>
-          )}
-          <FaExpand
-            size={18}
-            className="text-muted"
-            style={{ cursor: "pointer" }}
-          />
-        </div>
-      </div> */}
+
       {/* Cards */}
       <ItemConsumptionDistributionCard
         summary={summary}

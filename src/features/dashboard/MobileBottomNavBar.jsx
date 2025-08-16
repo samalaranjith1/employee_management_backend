@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { Navbar, Nav } from "react-bootstrap";
 import {
   FaHome,
@@ -36,13 +36,23 @@ import SupplierDues from "@/features/dashboard/SupplierDues";
 import MainComponentHoldingCard from "@/components/common/MainComponentHoldingCard";
 import ConsumptionSummarry from "./ConsumptionSummarry";
 
+
 export default function MobileBottomNav() {
   const [activeTab, setActiveTab] = useState("home");
 
+  const scrollRefs = {
+    home: useRef(null),
+    items: useRef(null),
+    products: useRef(null),
+    departments: useRef(null),
+    actionable: useRef(null),
+  };
+
   const renderTabContent = () => {
-    switch (activeTab) {
-      case "home":
-        return (
+    const tabs = [
+      {
+        key: "home",
+        content: (
           <>
             <MainComponentHoldingCard>
               <ConsumptionSummarry />
@@ -63,9 +73,11 @@ export default function MobileBottomNav() {
               <HourlyForecast />
             </MainComponentHoldingCard>
           </>
-        );
-      case "items":
-        return (
+        ),
+      },
+      {
+        key: "items",
+        content: (
           <>
             <MainComponentHoldingCard>
               <ItemConsumptionEffieciency />
@@ -85,11 +97,12 @@ export default function MobileBottomNav() {
             <MainComponentHoldingCard>
               <SuppliersManagement />
             </MainComponentHoldingCard>
-            {/* <ImmediateActionsRequired /> */}
           </>
-        );
-      case "products":
-        return (
+        ),
+      },
+      {
+        key: "products",
+        content: (
           <>
             <MainComponentHoldingCard>
               <TopSellingProducts />
@@ -97,13 +110,12 @@ export default function MobileBottomNav() {
             <MainComponentHoldingCard>
               <Recipes />
             </MainComponentHoldingCard>
-            {/* <MenuOptimizationRecommendations />
-            <ProductPerformanceDetails />
-            <RevenueContributionFromProducts /> */}
           </>
-        );
-      case "departments":
-        return (
+        ),
+      },
+      {
+        key: "departments",
+        content: (
           <>
             <MainComponentHoldingCard>
               <KitchenPurchaseByDepartment />
@@ -115,18 +127,32 @@ export default function MobileBottomNav() {
               <DepartmentAndItemConsumption />
             </MainComponentHoldingCard>
           </>
-        );
-      case "actionable":
-        return (
-          <>
-            <MainComponentHoldingCard>
-              <ActionableInsights />
-            </MainComponentHoldingCard>
-          </>
-        );
-      default:
-        return null;
-    }
+        ),
+      },
+      {
+        key: "actionable",
+        content: (
+          <MainComponentHoldingCard>
+            <ActionableInsights />
+          </MainComponentHoldingCard>
+        ),
+      },
+    ];
+
+    return tabs.map(({ key, content }) => (
+      <div
+        key={key}
+        ref={scrollRefs[key]}
+        style={{
+          display: activeTab === key ? "block" : "none",
+          overflowY: "auto",
+          flex: 1,
+          paddingBottom: "60px",
+        }}
+      >
+        {content}
+      </div>
+    ));
   };
 
   const navItems = [
@@ -147,7 +173,7 @@ export default function MobileBottomNav() {
 
   return (
     <div
-      className="d-md-none" // Hide in desktop
+      className="d-md-none"
       style={{
         height: "100vh",
         display: "flex",
@@ -155,16 +181,7 @@ export default function MobileBottomNav() {
         background: "#f8f9fa",
       }}
     >
-      {/* Scrollable Tab Content */}
-      <div
-        style={{
-          flex: 1,
-          overflowY: "auto",
-          paddingBottom: "60px", // space for bottom navbar
-        }}
-      >
-        {renderTabContent()}
-      </div>
+      {renderTabContent()}
 
       {/* Bottom Navbar */}
       <Navbar
@@ -174,7 +191,7 @@ export default function MobileBottomNav() {
           background: "#fff",
           borderTop: "1px solid #ddd",
           padding: "0.3rem 0",
-          zIndex: 999999, // Max z-index
+          zIndex: 999999,
         }}
       >
         {navItems.map(({ key, icon, label }) => (

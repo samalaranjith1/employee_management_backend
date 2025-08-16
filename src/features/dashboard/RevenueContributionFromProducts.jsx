@@ -1,8 +1,8 @@
 "use client";
 
-import RevenueContributionCards from "@/components/common/Cards/RevenueContributionCards";
+import RevenueContributionCards from "@/components/common/card/RevenueContributionCards";
 import ComponentHeader from "@/components/common/ComponentHeader";
-import RevenueContributionTable from "@/components/common/Table/RevenueContributionTable";
+import RevenueContributionTable from "@/components/common/Tables/RevenueContributionTable";
 import React, { useRef } from "react";
 import { Card, Col, Container, Row, Table } from "react-bootstrap";
 import {
@@ -199,23 +199,7 @@ const myScrollRef=useRef(null)
         titleIcon={""}
         text={""}
       />
-      {/* <Row className="d-flex align-items-center justify-content-between mb-3">
-        <Col className="d-flex align-items-center">
-          <div className="me-2">
-            <FaBolt size={24} color="rgb(255,80,22)" />
-          </div>
-          <div className="d-flex flex-column mt-2">
-            <div style={{ color: "rgb(255,80,22)", fontWeight: "bold" }}>
-              Revenue Contribution from Products
-            </div>
-            <div>Revenue Contribution from Products description</div>
-          </div>
-        </Col>
 
-        <Col xs="auto" className="d-flex align-items-center ms-auto">
-          <FaExpand size={24} color="rgb(255,80,22)" />
-        </Col>
-      </Row> */}
       {/* Top Cards */}
       <div
         style={styles.topCards}
@@ -237,35 +221,7 @@ const myScrollRef=useRef(null)
       <RevenueContributionTable styles={styles} tableData={tableData} />
 
       {/* CSS for mobile swipe + width override, and the sticky header fix */}
-      <style>
-        {`
-          .top-cards-container {
-            -webkit-overflow-scrolling: touch;
-          }
-          .top-card {
-            flex: 0 0 30vw;
-          }
-          @media (max-width: 768px) {
-            .top-card {
-              flex: 0 0 90vw !important;
-            }
-          }
 
-          /* New CSS for the sticky header */
-          .table-header-sticky {
-            position: sticky;
-            top: 0;
-            background: #fff;
-            z-index: 10;
-            box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.1);
-          }
-          
-          /* Ensures the header cells within the sticky header are styled correctly */
-          .table-header-sticky th {
-            font-weight: 600;
-          }
-        `}
-      </style>
     </Container>
   );
 };

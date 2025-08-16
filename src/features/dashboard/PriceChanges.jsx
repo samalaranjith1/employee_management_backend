@@ -1,6 +1,6 @@
 "use client";
 
-import PriceChangesTable from "@/components/common/Table/PriceChangesTable";
+import PriceChangesTable from "@/components/common/Tables/PriceChangesTable";
 import React from "react";
 import { Container, Row, Col, Card, Table } from "react-bootstrap";
 import {

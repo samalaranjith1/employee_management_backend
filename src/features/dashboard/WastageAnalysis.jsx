@@ -1,8 +1,8 @@
 
 "use client";
-import WastageAnalysisTopCards from "@/components/common/Cards/WastageAnalysisTopCards";
+import WastageAnalysisTopCards from "@/components/common/card/WastageAnalysisTopCards";
 import ComponentHeader from "@/components/common/ComponentHeader";
-import WastageAnalysisTable from "@/components/common/Table/WastageAnalysisTable";
+import WastageAnalysisTable from "@/components/common/Tables/WastageAnalysisTable";
 import React, { useRef } from "react";
 import { useState, useEffect } from "react";
 import {  Card } from "react-bootstrap";
@@ -177,14 +177,6 @@ export default function WastageAnalysis() {
         titleIcon={<FaTrashAlt color="#0aa4b3" size={24} />}
         text={""}
       />
-      {/* <div className="mt-2">
-        <h5 style={{ fontWeight: "600", color: "#0aa4b3" }}>
-          <FaTrashAlt className="me-2" /> Wastage Analysis
-        </h5>
-        <p style={{ fontSize: "13px", color: "#666" }}>
-          Track and minimize food waste across all categories
-        </p>
-      </div> */}
 
       {/* Stat Cards */}
       <WastageAnalysisTopCards statCard={statCard}

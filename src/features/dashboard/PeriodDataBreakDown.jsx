@@ -1,8 +1,8 @@
 "use client";
 
-import PeriodBreakDownCard from "@/components/common/Cards/PeriodBreakDownCard";
+import PeriodBreakDownCard from "@/components/common/card/PeriodBreakDownCard";
 import ComponentHeader from "@/components/common/ComponentHeader";
-import PeriodDataBreakDownTable from "@/components/common/Table/PeriodDataBreakDownTable";
+import PeriodDataBreakDownTable from "@/components/common/Tables/PeriodDataBreakDownTable";
 import React, { useState, useRef, useEffect } from "react";
 import {
   Container,

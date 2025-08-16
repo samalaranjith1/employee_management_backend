@@ -11,8 +11,8 @@ import {
   FaExpand,
 } from "react-icons/fa";
 
-import ItemConsumptionEfficiencyCard from "@/components/common/Cards/ItemConsumptionEfficiencyCard";
-import ItemConsumptionEffieciencyTable from "@/components/common/Table/ItemConsumptionEffieciencyTable";
+import ItemConsumptionEfficiencyCard from "@/components/common/card/ItemConsumptionEfficiencyCard";
+import ItemConsumptionEffieciencyTable from "@/components/common/Tables/ItemConsumptionEffieciencyTable";
 import ComponentHeader from "@/components/common/ComponentHeader";
 
 const ItemConsumptionEfficiency = () => {
@@ -271,30 +271,8 @@ const myScrollRef = useRef(null);
         titleIcon={""}
         text={""}
       />
-      {/* <Row className="d-flex align-items-center justify-content-between mb-3">
-        <Col className="d-flex align-items-center">
-          <div className="me-2">
-            <FaBolt size={24} color="rgb(255,80,22)" />
-          </div>
-          <div className="d-flex flex-column mt-2">
-            <div style={{ color: "rgb(255,80,22)", fontWeight: "bold" }}>
-              Item Consumption Efficiency
-            </div>
-            <div>
-              {" "}
-              Monitor wastage patterns and consumption inefficiencies across
-              menu items
-            </div>
-          </div>
-        </Col>
-
-        <Col xs="auto" className="d-flex align-items-center ms-auto">
-          <FaExpand size={24} color="rgb(255,80,22)" />
-        </Col>
-      </Row> */}
 
       {/* Summary Cards - scrollable on mobile */}
-      
       <ItemConsumptionEfficiencyCard
         summaryCards={summaryCards}
         scrollRef={myScrollRef}

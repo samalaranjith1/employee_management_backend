@@ -1,6 +1,6 @@
 "use client";
 
-import ActionableCard from "@/components/common/Cards/ActionableCard";
+import ActionableCard from "@/components/common/card/////////ActionableCard";
 import ComponentHeader from "@/components/common/ComponentHeader";
 import React, { useRef, useState, useEffect } from "react";
 import { Card, Row, Col, Button, Container } from "react-bootstrap";
@@ -150,45 +150,6 @@ const myScrollRef = useRef(null);
           titleIcon={""}
           text={"5 Active"}
         />
-        // <div className="d-flex justify-content-between align-items-center mb-3 p-2">
-        //   <Row className="align-items-center">
-        //     {/* Left section */}
-        //     <Col xs="auto" className="d-flex align-items-center">
-        //       <div className="me-2">
-        //         <FaBolt size={24} color="rgb(255,80,22)" />
-        //       </div>
-        //       <div className="d-flex flex-column">
-        //         <div style={{ color: "rgb(255,80,22)", fontWeight: "bold" }}>
-        //           Actionable Insights
-        //         </div>
-        //         <div>Critical issues requiring immediate attention</div>
-        //       </div>
-        //     </Col>
-        //   </Row>
-        //   <div className="d-flex  gap-2 align-items-center">
-        //     {showScrollButtons && (
-        //       <>
-        //         <div>5 Active</div>
-        //         <div className="d-none d-md-flex">
-        //           <Button
-        //             size="sm"
-        //             variant="light"
-        //             className="me-1"
-        //             onClick={slideLeft}
-        //           >
-        //             &lt;
-        //           </Button>
-        //           <Button size="sm" variant="light" onClick={slideRight}>
-        //             &gt;
-        //           </Button>
-        //         </div>
-        //         <Col xs="auto" className="ms-auto ms-3">
-        //           <FaExpand size={24} color="rgb(255,80,22)" />
-        //         </Col>
-        //       </>
-        //     )}
-        //   </div>
-        // </div>
       )}
 
       {cardsData && cardsData.length > 0 && (

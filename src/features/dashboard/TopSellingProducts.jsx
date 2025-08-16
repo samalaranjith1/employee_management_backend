@@ -5,9 +5,9 @@ import { Container, Row, Col, Card } from "react-bootstrap";
 import { FaStar, FaBoxOpen, FaChartLine, FaShoppingCart } from "react-icons/fa";
 
 import "bootstrap/dist/css/bootstrap.min.css";
-import TopSellingProductsCards from "@/components/common/Cards/TopSellingProductsCards";
+import TopSellingProductsCards from "@/components/common/card/TopSellingProductsCards";
 import TopSellingProductsGraph from "@/components/common/GraphWrapper/TopSellingProductsGraph";
-import TopSellingProductsTable from "@/components/common/Table/TopSellingProductsTable";
+import TopSellingProductsTable from "@/components/common/Tables/TopSellingProductsTable";
 import ComponentHeader from "@/components/common/ComponentHeader";
 
 const TopSellingProducts = () => {
@@ -87,14 +87,6 @@ const myScrollRef= useRef(null)
         titleIcon={<FaChartLine color="#5B2EEA" size={24} />}
         text={""}
       />
-      {/* <div className="mb-3">
-        <h3 style={{ color: "#5B2EEA", fontWeight: 700 }}>
-          Top Selling Products
-        </h3>
-        <small className="text-muted">
-          Analyze best-performing menu items and sales trends
-        </small>
-      </div> */}
 
       {/* Top cards row */}
       <Row
@@ -166,31 +158,6 @@ const myScrollRef= useRef(null)
           <TopSellingProductsTable />
         </Col>
       </Row>
-
-      <style>{`
-        /* Make top card row behave like horizontal cards on mobile */
-        .top-card-row {
-          flex-wrap: nowrap;
-        }
-        .top-card-col {
-          flex: 0 0 auto;
-        }
-        @media (max-width: 767px) {
-          .top-card-col {
-            width: 90vw;
-          }
-        }
-        @media (min-width: 768px) and (max-width: 1199px) {
-          .top-card-col {
-            width: 25vw;
-          }
-        }
-        @media (min-width: 1200px) {
-          .top-card-col {
-            width: 23vw;
-          }
-        }
-      `}</style>
     </Container>
   );
 };

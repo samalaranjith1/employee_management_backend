@@ -5,7 +5,7 @@ import React, { useRef } from "react";
 import { Card, Row, Col } from "react-bootstrap";
 import { FaTruck, FaCalendarAlt, FaShoppingCart } from "react-icons/fa";
 import PurchaseDistributionGraph from "@/components/common/GraphWrapper/PurchaseDistributionGraph";
-import SupplierDetailsTable from "@/components/common/Table/SupplierDetailsTable";
+import SupplierDetailsTable from "@/components/common/Tables/SupplierDetailsTable";
 
 const SupplierManagement = () => {
   const styles = {
@@ -70,6 +70,33 @@ const SupplierManagement = () => {
 
   const supplierData = [
     {
+      supplier: "Fresh Vegetables Co.",
+      category: "Vegetables",
+      location: "Mumbai",
+      purchase: "₹85,000",
+      items: 125,
+    },
+    {
+      supplier: "Fresh Vegetables Co.",
+      category: "Vegetables",
+      location: "Mumbai",
+      purchase: "₹85,000",
+      items: 125,
+    },
+    {
+      supplier: "Fresh Vegetables Co.",
+      category: "Vegetables",
+      location: "Mumbai",
+      purchase: "₹85,000",
+      items: 125,
+    },
+    {
+      supplier: "Fresh Vegetables Co.",
+      category: "Vegetables",
+      location: "Mumbai",
+      purchase: "₹85,000",
+      items: 125,
+    },    {
       supplier: "Fresh Vegetables Co.",
       category: "Vegetables",
       location: "Mumbai",

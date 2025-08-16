@@ -32,6 +32,9 @@ import MainComponentHoldingCard from "@/components/common/MainComponentHoldingCa
 import MobileBottomNav from "@/features/dashboard/MobileBottomNavBar";
 import ItemConsumptionDistribution from "@/features/dashboard/ItemConsumptionDistribution";
 import ProductPerformanceByPercentile from "@/features/dashboard/ProductPerformanceByPercentile";
+import TopConsumedItems from "@/features/dashboard/TopConsumedItems";
+import DepartmentConsumption from "@/features/dashboard/KitchenPurchaseByDepartment";
+import DepartmentConsumptionChart from "@/features/dashboard/DepartmentConsumptionChart";
 
 export default function Home() {
   const [queryClient] = useState(() => new QueryClient());
@@ -71,7 +74,13 @@ export default function Home() {
           <DepartmentAndItemConsumption />
         </MainComponentHoldingCard>
         <MainComponentHoldingCard>
+          <DepartmentConsumptionChart />
+        </MainComponentHoldingCard>
+        <MainComponentHoldingCard>
           <ItemConsumptionEffieciency />
+        </MainComponentHoldingCard>
+        <MainComponentHoldingCard>
+          <TopConsumedItems />
         </MainComponentHoldingCard>
         <MainComponentHoldingCard>
           <ItemConsumptionDistribution />

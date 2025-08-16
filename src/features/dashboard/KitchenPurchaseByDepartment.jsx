@@ -1,6 +1,6 @@
 "use client";
 import ComponentHeader from "@/components/common/ComponentHeader";
-import KitchenPurchaseByDepartmentTable from "@/components/common/Table/KitchenPurchaseByDepartmentTable";
+import KitchenPurchaseByDepartmentTable from "@/components/common/Tables/KitchenPurchaseByDepartmentTable";
 import React, { useRef } from "react";
 import { Table, Container, Row, Col } from "react-bootstrap";
 import { FaChartBar } from "react-icons/fa";
@@ -150,17 +150,6 @@ export default function DepartmentConsumption() {
         isExpandable={true}
         titleIcon={<FaChartBar className="me-2" color='blue' size={24}/>}
       />
-      {/* <Row className="mb-3">
-        <Col>
-          <h4 className="fw-bold text-primary">
-            <FaChartBar className="me-2" />
-            Department Consumption
-          </h4>
-          <small className="text-muted">
-            Track Department sales, consumption and performance
-          </small>
-        </Col>
-      </Row> */}
 
       {/* Table Wrapper with scroll */}
       <div

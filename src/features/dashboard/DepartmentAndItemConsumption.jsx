@@ -73,13 +73,6 @@ const myScrollRef = useRef(null);
         titleIcon={<FaShoppingCart color="rgb(13,110,253)" size={24} />}
         text={""}
       />
-      {/* <h5 className="fw-bold text-primary mb-1">
-        <FaShoppingCart className="me-2" />
-        Department and Item Consumption
-      </h5>
-      <p className="text-muted small">
-        Comprehensive breakdown of purchases and consumption patterns
-      </p> */}
 
       <Row>
         {/* Purchase Distribution */}

@@ -150,15 +150,6 @@ const myScrollRef = useRef(null)
         titleIcon={<FaCube size={20}/>}
         text={""}
       />
-      {/* <div className="d-flex align-items-center mb-3 flex-shrink-0">
-        {" "}
-        <div style={styles.iconCircle} className="me-2">
-          <FaCube size={20} />
-        </div>
-        <h6 className="fw-bold mb-0 text-primary">
-          Product Performance Details
-        </h6>
-      </div> */}
 
       <div style={styles.tableScrollContainer}>
         <Table hover responsive className="align-middle mb-0">

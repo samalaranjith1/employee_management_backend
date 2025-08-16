@@ -10,7 +10,7 @@ import {
   FaCoffee,
 } from "react-icons/fa";
 import "bootstrap/dist/css/bootstrap.min.css";
-import ConsumptionCard from "@/components/common/Cards/ConsumptionCard";
+import ConsumptionCard from "@/components/common/card/ConsumptionCard";
 import ComponentHeader from "@/components/common/ComponentHeader";
 
 export default function ConsumptionSummarry() {

@@ -4,7 +4,7 @@ import React, { useRef, useState, useEffect } from "react";
 import { Card, Row, Col, Button, Dropdown, Badge } from "react-bootstrap";
 import { FaBolt, FaExpand, FaCaretUp, FaCaretDown } from "react-icons/fa"; // Added FaCaretUp, FaCaretDown for trend icons
 import { format, startOfMonth, endOfMonth } from "date-fns";
-import MTDCard from "@/components/common/Cards/MTDCard";
+import MTDCard from "@/components/common/card/MTDCard";
 
 const MonthSummary = () => {
   const cardsData = [
