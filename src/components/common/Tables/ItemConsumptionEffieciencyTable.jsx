@@ -1,3 +1,4 @@
+
 "use client";
 import React from "react";
 import { Table, Badge } from "react-bootstrap";
@@ -34,7 +35,7 @@ function ItemConsumptionEffieciencyTable({ tableData, wasteBadge }) {
                   style={{
                     position: "sticky",
                     top: 0,
-                    background: "#f8f9fa", // same as .table-light
+                    background: "#f8f9fa",
                     zIndex: 2,
                   }}
                 >
@@ -46,10 +47,19 @@ function ItemConsumptionEffieciencyTable({ tableData, wasteBadge }) {
           <tbody>
             {tableData.map((row, idx) => (
               <tr key={idx}>
-                <td>{row.item}</td>
                 <td>
-                  <Badge bg="light" text="dark">
-                    {row.region}
+                  <div style={{ display: "flex", flexDirection: "column" }}>
+                    <span style={{ fontWeight: "500" }}>{row.item}</span>
+                    <small style={{ color: "#6c757d" }}>
+                      {row.dept} • {row.unitQuantity}
+                      {row.unit} • ₹{row.unitPrice}
+                    </small>
+                  </div>
+                </td>
+                <td>
+                  <Badge bg="white"  text="primary">
+                    {/* Prefer `row.dept` (string) instead of `row.department` (object) */}
+                    {row.dept || (row.department?.name ?? "-")}
                   </Badge>
                 </td>
                 <td>{row.consumed}</td>
@@ -77,7 +87,9 @@ function ItemConsumptionEffieciencyTable({ tableData, wasteBadge }) {
                   </Badge>
                 </td>
                 <td>{row.cost}</td>
-                <td>{wasteBadge(row.wasteType)}</td>
+                <td>
+                  {wasteBadge ? wasteBadge(row.wasteType) : row.wasteType}
+                </td>
               </tr>
             ))}
           </tbody>

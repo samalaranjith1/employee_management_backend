@@ -2,13 +2,14 @@
 import React from "react";
 import CommonCard from "./CommonCard";
 
-export default function RecipesCards({ card, idx }) {
+export default function RecipesCards({ card, idx, widthDesktop }) {
   return (
     <CommonCard
       key={idx}
       bgColor={card.bg}
       textColor={card.textColor}
       style={{ padding: "1rem", height: "100%" }}
+      widthDesktop={widthDesktop}
     >
       <div className="d-flex justify-content-between align-items-center">
         <div style={{ fontSize: "1.5rem" }}>{card.icon}</div>

@@ -45,7 +45,7 @@ export default function SupplierDetailsTableMonth({ supplierData }) {
             </tr>
           </thead>
           <tbody>
-            {supplierData.suppliersList.map((row, idx) => (
+            {supplierData.map((row, idx) => (
               <tr key={idx}>
                 <td>
                   <div className="fw-semibold">{row.supplier}</div>

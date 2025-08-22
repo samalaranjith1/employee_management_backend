@@ -10,7 +10,7 @@ export default function PurchaseDistributionGraph({ pieData, styles }) {
       <div className="fw-semibold mb-2">Purchase Distribution</div>
       <Card className="p-3">
         <div className="chart-wrapper">
-          <ResponsiveContainer width="100%" height={200}>
+          <ResponsiveContainer width="100%" height={350}>
             <PieChart className="pie-chart-no-outline">
               <Pie
                 data={pieData}
@@ -36,7 +36,7 @@ export default function PurchaseDistributionGraph({ pieData, styles }) {
           </ResponsiveContainer>
         </div>
         <div style={styles.pieLegend}>
-          {pieData.map((item, idx) => (
+          {pieData.slice(0,5).map((item, idx) => (
             <div style={styles.legendItem} key={idx}>
               <div
                 style={{

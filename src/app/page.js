@@ -1,6 +1,4 @@
 "use client";
-import Image from "next/image";
-import styles from "./page.module.css";
 import DurationFilters from "@/features/dashboard/DurationFilters";
 import ConsumptionSummarry from "@/features/dashboard/ConsumptionSummarry";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -38,14 +36,15 @@ import DepartmentConsumptionChart from "@/features/dashboard/DepartmentConsumpti
 
 export default function Home() {
   const [queryClient] = useState(() => new QueryClient());
+
   return (
     <QueryClientProvider client={queryClient}>
       <div className="mt-4 pt-5"></div>
       <MainComponentHoldingCard>
         <DurationFilters />
       </MainComponentHoldingCard>
-      <div className="d-none d-md-inline">
-        {/* <div> */}
+      {/* <div className="d-none d-md-inline"> */}
+      <div>
         <MainComponentHoldingCard>
           <ConsumptionSummarry />
         </MainComponentHoldingCard>
@@ -63,6 +62,7 @@ export default function Home() {
         </MainComponentHoldingCard>
         <MainComponentHoldingCard>
           <HourlyForecast />
+          {/* pending service call integration */}
         </MainComponentHoldingCard>
         <MainComponentHoldingCard>
           <KitchenPurchaseByDepartment />
@@ -129,6 +129,7 @@ export default function Home() {
         </MainComponentHoldingCard>
         <MainComponentHoldingCard>
           <SupplierDues />
+          {/* Pending service call not availbale integration */}
         </MainComponentHoldingCard>
       </div>
       <MobileBottomNav />

@@ -37,7 +37,7 @@ export default function ActionableCard({
         </Col>
         <Col className="text-danger fw-semibold d-flex align-items-center gap-1">
           <FaExclamationTriangle />{" "}
-          {data.priority.charAt(0).toUpperCase() + data.priority.slice(1)}{" "}
+          {data.priority?.charAt(0).toUpperCase() + data.priority?.slice(1)}{" "}
           Priority
         </Col>
       </Row>

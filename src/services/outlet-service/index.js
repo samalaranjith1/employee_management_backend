@@ -1,3 +1,4 @@
+import { consumptionSummaryFormatter } from "@/utils/data_formatters/dashboardFormatter";
 import {useApiQuery, useApiMutation } from "../apiHooks";
 
 // Single Outlet
@@ -6,6 +7,7 @@ export function useOutlet(id, params) {
     key: ["outlet", id, params],
     endpoint: `outlet/${id}`,
     params,
+    select: (data) => consumptionSummaryFormatter(data),
   });
 }
 
@@ -15,6 +17,7 @@ export function useOutletSummary(id, params) {
     key: ["outletSummary", id, params],
     endpoint: `outlet/${id}/summary`,
     params,
+    select: (raw) => consumptionSummaryFormatter(raw),
   });
 }
 

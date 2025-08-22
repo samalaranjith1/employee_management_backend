@@ -14,7 +14,7 @@ export default function RecommendationsCard({
       key={idx}
       style={{
         ...cardStyle,
-        width: isMobile ? "90vw" : `calc(25% - (3 * 15px / 4))`,
+        width: isMobile ? "86vw" : `calc(25% - (3 * 15px / 4))`,
       }}
     >
       <div className="d-flex justify-content-between align-items-center">

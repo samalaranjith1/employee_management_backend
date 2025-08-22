@@ -5,7 +5,8 @@ import {
   useQuery,
   UseQueryOptions,
 } from "@tanstack/react-query";
-import axios from "./axiosInstance";
+// import axios from "./axiosInstance";
+import axios from "axios";
 
 const basePath = 'https://flavourheaven.in/costonomy-services/'
 
@@ -109,7 +110,6 @@ export function useApiMutation({
 //   const createUserMutation = useServiceMutation("/api/users", "POST", {
 //     invalidateKeys: ["users"], // Refresh users list after creation
 //     onSuccess: () => {
-//       console.log("User created successfully!");
 //     },
 //   });
 

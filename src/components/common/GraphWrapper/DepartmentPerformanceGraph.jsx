@@ -31,9 +31,9 @@ function DepartmentPerformanceGraph({ data }) {
     <ResponsiveContainer width="100%" height={350}>
       <BarChart data={data}>
         <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
+        <XAxis dataKey="title" />
         <YAxis
-          yAxisId="left"
+          yAxisId="left" 
           orientation="left"
           stroke="#8884d8"
           tickFormatter={(v) => `₹${(v / 1000).toFixed(0)}K`}

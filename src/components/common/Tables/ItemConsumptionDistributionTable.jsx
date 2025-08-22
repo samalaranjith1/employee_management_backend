@@ -1,3 +1,4 @@
+
 "use client";
 import React from "react";
 import { Table, Badge } from "react-bootstrap";
@@ -81,3 +82,133 @@ export default function ItemConsumptionDistributionTable({ data }) {
     </BaseSurface>
   );
 }
+
+// "use client";
+// import React from "react";
+// import { Table, Badge } from "react-bootstrap";
+// import BaseSurface from "./BaseSurface";
+
+// export default function ItemConsumptionDistributionTable({ data }) {
+//   const classificationColors = {
+//     GREEN: { bg: "#d4f6e7", color: "#2a9d8f" },
+//     ORANGE: { bg: "#fff3d4", color: "#f4a261" },
+//     RED: { bg: "#fceaea", color: "#e76f51" },
+//     Unclassified: { bg: "#eee", color: "#444" },
+//   };
+
+//   const barColors = {
+//     GREEN: "#27ae60",
+//     ORANGE: "#f4a261",
+//     RED: "#e76f51",
+//     Unclassified: "#95a5a6",
+//   };
+
+//   return (
+//     <BaseSurface
+//       containerStyle={{
+//         borderRadius: 12,
+//         boxShadow: "0 0 10px rgb(0 0 0 / 0.05)",
+//       }}
+//       bodyStyle={{
+//         padding: 0,
+//       }}
+//     >
+//       <div
+//         style={{
+//           maxHeight: "65vh",
+//           overflowY: "auto",
+//           overflowX: "auto",
+//         }}
+//       >
+//         <Table
+//           hover
+//           className="mb-0"
+//           style={{ minWidth: 900, backgroundColor: "#fff7f0" }}
+//         >
+//           <thead
+//             style={{
+//               backgroundColor: "#fff2e8",
+//               position: "sticky",
+//               top: 0,
+//               zIndex: 2,
+//             }}
+//           >
+//             <tr>
+//               <th style={{ color: "#d85e00", fontWeight: 600 }}>Percentile</th>
+//               <th style={{ fontWeight: 600 }}>Items Sold</th>
+//               <th style={{ fontWeight: 600 }}>Items %</th>
+//               <th style={{ fontWeight: 600 }}>Net Sales</th>
+//               <th style={{ fontWeight: 600 }}>Efficiency %</th>
+//               <th style={{ fontWeight: 600 }}>Classification</th>
+//             </tr>
+//           </thead>
+//           <tbody>
+//             {data.map(
+//               (
+//                 {
+//                   percentile,
+//                   items,
+//                   percentItems,
+//                   value,
+//                   percentValue,
+//                   classification,
+//                   color,
+//                 },
+//                 idx
+//               ) => {
+//                 const classColor = classificationColors[classification] || {
+//                   bg: "#eee",
+//                   color: "#444",
+//                 };
+
+//                 return (
+//                   <tr
+//                     key={idx}
+//                     style={{
+//                       backgroundColor: idx % 2 === 0 ? "#fff8f0" : "white",
+//                     }}
+//                   >
+//                     <td
+//                       className="d-flex align-items-center gap-2"
+//                       style={{ fontWeight: 600 }}
+//                     >
+//                       <div
+//                         style={{
+//                           width: 8,
+//                           height: 28,
+//                           backgroundColor:
+//                             barColors[classification] || "#27ae60",
+//                           borderRadius: 4,
+//                         }}
+//                       />
+//                       {percentile}
+//                     </td>
+//                     <td style={{ fontWeight: "bold" }}>{items}</td>
+//                     <td>{percentItems}</td>
+//                     <td>₹{value}</td>
+//                     <td style={{ color: "#7f3fff", fontWeight: 600 }}>
+//                       {percentValue}
+//                     </td>
+//                     <td>
+//                       <Badge
+//                         style={{
+//                           backgroundColor: classColor.bg,
+//                           color: classColor.color,
+//                           fontWeight: 600,
+//                           padding: "4px 10px",
+//                           borderRadius: "10px",
+//                         }}
+//                       >
+//                         {classification}
+//                       </Badge>
+//                     </td>
+//                   </tr>
+//                 );
+//               }
+//             )}
+//           </tbody>
+//         </Table>
+//       </div>
+//     </BaseSurface>
+//   );
+// } 

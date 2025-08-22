@@ -7,7 +7,7 @@ export default function ProductPerformanceTable({ data }) {
   const classificationColors = {
     "Top Performers": { bg: "#d4f6e7", color: "#2a9d8f" },
     "Moderate Performers": { bg: "#fff3d4", color: "#f4a261" },
-    "Low Performers": { bg: "#fceaea", color: "#e76f51" },
+    "Low Performers": { bg: "#c29898ff", color: "#e76f51" },
   };
 
   const barColors = {
