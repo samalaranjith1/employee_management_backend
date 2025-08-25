@@ -4,7 +4,7 @@ import React, { useRef } from "react";
 import { Container } from "react-bootstrap";
 import ComponentHeader from "@/components/common/ComponentHeader";
 import RevenueContributionCards from "@/components/common/card/RevenueContributionCards";
-import RevenueContributionTable from "@/components/common/Tables/RevenueContributionTable";
+import RevenueContributionTable from "@/components/common/TablesSort/RevenueContributionTable";
 import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer";
 import { useDashboardContext } from "@/contexts/DashboardContext";
 import { useProductsSalesDistribution } from "@/services/product-service";
@@ -110,7 +110,7 @@ export default RevenueContribution;
 // import { Container } from "react-bootstrap";
 // import ComponentHeader from "@/components/common/ComponentHeader";
 // import RevenueContributionCards from "@/components/common/card/RevenueContributionCards";
-// import RevenueContributionTable from "@/components/common/Tables/RevenueContributionTable";
+// import RevenueContributionTable from "@/components/common/TablesSort/RevenueContributionTable";
 // import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer";
 // import { useDashboardContext } from "@/contexts/DashboardContext";
 // import { useProductsSalesDistribution } from "@/services/product-service";
@@ -233,7 +233,7 @@ export default RevenueContribution;
 
 // import RevenueContributionCards from "@/components/common/card/RevenueContributionCards";
 // import ComponentHeader from "@/components/common/ComponentHeader";
-// import RevenueContributionTable from "@/components/common/Tables/RevenueContributionTable";
+// import RevenueContributionTable from "@/components/common/TablesSort/RevenueContributionTable";
 // import React, { useRef } from "react";
 // import { Card, Col, Container, Row, Table } from "react-bootstrap";
 // import {

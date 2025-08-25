@@ -47,7 +47,7 @@ const ActionableInsights = () => {
           cardsData &&
           cardsData.length > 0 && (
             <>
-              <ComponentHeader
+              {/* <ComponentHeader
                 title={"Actionable Insights"}
                 description={"Critical issues requiring immediate attention"}
                 titleColor={"rgb(255,79,22)"}
@@ -57,7 +57,7 @@ const ActionableInsights = () => {
                 isExpandable={true}
                 titleIcon={""}
                 text={`${cardsData.length} Active`}
-              />
+              /> */}
               <div
                 style={{
                   overflow: "hidden",

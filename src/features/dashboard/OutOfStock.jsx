@@ -4,7 +4,7 @@ import React, { useRef } from "react";
 import { Container, Card, Row, Col } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import OutOfStockTopCards from "@/components/common/card/OutOfStockTopCards";
-import OutOfStockTable from "@/components/common/Tables/OutOfStockTable";
+import OutOfStockTable from "@/components/common/TablesSort/OutOfStockTable";
 import ComponentHeader from "@/components/common/ComponentHeader";
 import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer";
 import { useDashboardContext } from "@/contexts/DashboardContext";
@@ -119,7 +119,7 @@ export default function InventoryDashboard() {
 // import { Container, Card, Row, Col } from "react-bootstrap";
 // import "bootstrap/dist/css/bootstrap.min.css";
 // import OutOfStockTopCards from "@/components/common/card/OutOfStockTopCards";
-// import OutOfStockTable from "@/components/common/Tables/OutOfStockTable";
+// import OutOfStockTable from "@/components/common/TablesSort/OutOfStockTable";
 // import ComponentHeader from "@/components/common/ComponentHeader";
 
 // const InventoryDashboard = () => {

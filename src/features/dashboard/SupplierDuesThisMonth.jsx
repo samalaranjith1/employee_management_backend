@@ -5,7 +5,7 @@ import { Card, Row, Col, Dropdown } from "react-bootstrap";
 import { FaCalendarAlt, FaShoppingCart } from "react-icons/fa";
 import { startOfMonth, endOfMonth, format } from "date-fns";
 import ComponentHeader from "@/components/common/ComponentHeader";
-import SupplierDetailsTableMonth from "@/components/common/Tables/SupplierDetailsTableMonth";
+import SupplierDetailsTableMonth from "@/components/common/TablesSort/SupplierDetailsTableMonth";
 import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer";
 import { useSuppliersUsageMTD } from "@/services/supplier-service";
 import { supplierManagementDataFormatter } from "@/utils/data_formatters/dashboardFormatter";
@@ -198,7 +198,7 @@ export default SupplierDuesThisMonth;
 // import { Card, Row, Col, Dropdown } from "react-bootstrap";
 // import { FaCalendarAlt, FaShoppingCart } from "react-icons/fa";
 
-// import SupplierDetailsTableMonth from "@/components/common/Tables/SupplierDetailsTableMonth";
+// import SupplierDetailsTableMonth from "@/components/common/TablesSort/SupplierDetailsTableMonth";
 // import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer";
 // import { useDashboardContext } from "@/contexts/DashboardContext";
 // import { supplierManagementDataFormatter } from "@/utils/data_formatters/dashboardFormatter";
@@ -441,7 +441,7 @@ export default SupplierDuesThisMonth;
 //   Tooltip,
 //   Sector,
 // } from "recharts";
-// import SupplierDetailsTableMonth from "@/components/common/Tables/SupplierDetailsTableMonth";
+// import SupplierDetailsTableMonth from "@/components/common/TablesSort/SupplierDetailsTableMonth";
 
 // const SupplierDuesThisMonth = () => {
 //   const styles = {

@@ -56,3 +56,60 @@ export const handleCustomChange = (dates, stateChanges) => {
     setShowCalendar(false);
   }
 };
+
+// utils/sortUtils.js
+
+// ✅ Helper: detect and normalize different value types
+function parseValue(val) {
+  if (val === null || val === undefined) return "";
+
+  // ✅ Handle numbers with locale formatting (e.g. "12,345.67", "12.345,67", "₹12,345")
+  if (typeof val === "string") {
+    const cleaned = val.replace(/[^0-9.,-]/g, ""); // keep digits, comma, dot, minus
+
+    // Check for thousand separators style (e.g. 12,345.67 or 12.345,67)
+    if (/^\d{1,3}([,. ]\d{3})+([,.]\d+)?$/.test(cleaned)) {
+      // normalize: remove thousand separators, unify decimal point
+      const normalized = cleaned
+        .replace(/\s/g, "") // remove spaces
+        .replace(/\.(?=\d{3}(\D|$))/g, "") // remove dots as thousands sep
+        .replace(/,(?=\d{3}(\D|$))/g, "") // remove commas as thousands sep
+        .replace(",", "."); // final decimal point
+      const num = parseFloat(normalized);
+      if (!isNaN(num)) return num;
+    }
+
+    // If simpler case: "12,345" → "12345"
+    const num = parseFloat(cleaned.replace(/,/g, ""));
+    if (!isNaN(num)) return num;
+  }
+
+  // ✅ Try Date
+  const date = new Date(val);
+  if (!isNaN(date.getTime()) && typeof val !== "boolean") {
+    return date.getTime();
+  }
+
+  // ✅ Try Number (raw)
+  const num = parseFloat(val);
+  if (!isNaN(num) && isFinite(num)) {
+    return num;
+  }
+
+  // ✅ Fallback String
+  return String(val).toLowerCase();
+}
+
+// ✅ Sort function
+export function sortData(data, key, direction = "asc") {
+  if (!Array.isArray(data)) return [];
+
+  return [...data].sort((a, b) => {
+    const aVal = parseValue(a[key]);
+    const bVal = parseValue(b[key]);
+
+    if (aVal < bVal) return direction === "asc" ? -1 : 1;
+    if (aVal > bVal) return direction === "asc" ? 1 : -1;
+    return 0;
+  });
+}

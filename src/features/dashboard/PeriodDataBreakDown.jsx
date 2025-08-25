@@ -11,7 +11,7 @@ import {
 import { periodDataBreakdownFormatter } from "@/utils/data_formatters/dashboardFormatter";
 import { Button, ButtonGroup, Card, Container } from "react-bootstrap";
 import { subDays, subWeeks, subMonths, format } from "date-fns";
-import PeriodDataBreakDownTable from "@/components/common/Tables/PeriodDataBreakDownTable";
+import PeriodDataBreakDownTable from "@/components/common/TablesSort/PeriodDataBreakDownTable";
 import PeriodBreakDownCard from "@/components/common/Cards/PeriodBreakDownCard";
 import { FaHistory } from "react-icons/fa";
 
@@ -142,10 +142,13 @@ export default function PeriodDataBreakdown() {
                 <PeriodBreakDownCard key={idx} card={card} idx={idx} />
               ))}
             </div>
-
             {/* Table */}
-            <div style={{ maxHeight: "60vh", overflowY: "auto" }}>
-              <PeriodDataBreakDownTable data={{ table }} />
+            <div style={{ maxHeight: "60vh", overflow: "auto" }}>
+              {/* Pass the height to the table so the header can stick */}
+              <PeriodDataBreakDownTable
+                data={{ table }}
+                containerStyle={{ maxHeight: "60vh", overflowY: "auto" }}
+              />
             </div>
           </>
         )}
@@ -158,7 +161,7 @@ export default function PeriodDataBreakdown() {
 
 // import PeriodBreakDownCard from "@/components/common/card/PeriodBreakDownCard";
 // import ComponentHeader from "@/components/common/ComponentHeader";
-// import PeriodDataBreakDownTable from "@/components/common/Tables/PeriodDataBreakDownTable";
+// import PeriodDataBreakDownTable from "@/components/common/TablesSort/PeriodDataBreakDownTable";
 // import React, { useState, useRef, useEffect } from "react";
 // import {
 //   Container,

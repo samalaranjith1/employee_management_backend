@@ -10,7 +10,7 @@ import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer
 import { useDashboardContext } from "@/contexts/DashboardContext";
 import { consumptionDistributionDataFormatter } from "@/utils/data_formatters/dashboardFormatter";
 import { useProductsUsageList } from "@/services/product-service";
-import ItemConsumptionDistributionTable from "@/components/common/Tables/ItemConsumptionDistributionTable";
+import ItemConsumptionDistributionTable from "@/components/common/TablesSort/ItemConsumptionDistributionTable";
 
 export default function ItemConsumptionDistribution() {
   const { startDate, endDate } = useDashboardContext();
@@ -72,8 +72,8 @@ export default function ItemConsumptionDistribution() {
 // "use client";
 // import ItemConsumptionDistributionCard from "@/components/common/card/ItemConsumptionDistributionCard";
 // import ComponentHeader from "@/components/common/ComponentHeader";
-// import ItemConsumptionDistributionTable from "@/components/common/Tables/ItemConsumptionDistributionTable";
-// import ProductPerformanceTable from "@/components/common/Tables/ProductPerformanceTable";
+// import ItemConsumptionDistributionTable from "@/components/common/TablesSort/ItemConsumptionDistributionTable";
+// import ProductPerformanceTable from "@/components/common/TablesSort/ProductPerformanceTable";
 // import React, { useRef, useState, useEffect } from "react";
 // import { Container, Card, Table, Badge } from "react-bootstrap";
 // import {

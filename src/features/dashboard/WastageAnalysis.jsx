@@ -6,7 +6,7 @@ import { FaTrashAlt } from "react-icons/fa";
 
 import ComponentHeader from "@/components/common/ComponentHeader";
 import WastageAnalysisTopCards from "@/components/common/card/WastageAnalysisTopCards";
-import WastageAnalysisTable from "@/components/common/Tables/WastageAnalysisTable";
+import WastageAnalysisTable from "@/components/common/TablesSort/WastageAnalysisTable";
 import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer";
 import { useDashboardContext } from "@/contexts/DashboardContext";
 import { useWasteSummary } from "@/services/waste-management-service";
@@ -126,7 +126,7 @@ export default function WastageAnalysis() {
 // "use client";
 // import WastageAnalysisTopCards from "@/components/common/card/WastageAnalysisTopCards";
 // import ComponentHeader from "@/components/common/ComponentHeader";
-// import WastageAnalysisTable from "@/components/common/Tables/WastageAnalysisTable";
+// import WastageAnalysisTable from "@/components/common/TablesSort/WastageAnalysisTable";
 // import React, { useRef } from "react";
 // import { useState, useEffect } from "react";
 // import {  Card } from "react-bootstrap";

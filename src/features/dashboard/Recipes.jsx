@@ -4,7 +4,7 @@ import React, { useRef } from "react";
 import { Row, Col, Container } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import RecipesCards from "@/components/common/card/RecipesCards";
-import RecipesTable from "@/components/common/Tables/RecipesTable";
+import RecipesTable from "@/components/common/TablesSort/RecipesTable";
 import ComponentHeader from "@/components/common/ComponentHeader";
 import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer";
 import { useProductsRecipesSummary } from "@/services/product-service";
@@ -106,7 +106,7 @@ export default RecipesDashboard;
 // import { Row, Col, Container } from "react-bootstrap";
 // import "bootstrap/dist/css/bootstrap.min.css";
 // import RecipesCards from "@/components/common/card/RecipesCards";
-// import RecipesTable from "@/components/common/Tables/RecipesTable";
+// import RecipesTable from "@/components/common/TablesSort/RecipesTable";
 // import ComponentHeader from "@/components/common/ComponentHeader";
 // import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer";
 // import { useProductsRecipesSummary } from "@/services/product-service";
@@ -229,7 +229,7 @@ export default RecipesDashboard;
 // } from "react-icons/fa";
 // import "bootstrap/dist/css/bootstrap.min.css";
 // import RecipesCards from "@/components/common/card/RecipesCards";
-// import RecipesTable from "@/components/common/Tables/RecipesTable";
+// import RecipesTable from "@/components/common/TablesSort/RecipesTable";
 // import ComponentHeader from "@/components/common/ComponentHeader";
 
 // const RecipesDashboard = () => {

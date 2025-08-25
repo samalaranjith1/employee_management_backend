@@ -1,6 +1,6 @@
 "use client";
 import ComponentHeader from "@/components/common/ComponentHeader";
-import ProductPerformanceTable from "@/components/common/Tables/ProductPerformanceTable";
+import ProductPerformanceTable from "@/components/common/TablesSort/ProductPerformanceTable";
 import React, { useRef } from "react";
 import { Container } from "react-bootstrap";
 import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer";
@@ -69,7 +69,7 @@ export default function ProductPerformanceByPercentile() {
 // "use client";
 // import ProductPerformanceSummaryCards from "@/components/common/card/ProductPerformanceSummaryCards";
 // import ComponentHeader from "@/components/common/ComponentHeader";
-// import ProductPerformanceTable from "@/components/common/Tables/ProductPerformanceTable";
+// import ProductPerformanceTable from "@/components/common/TablesSort/ProductPerformanceTable";
 // import React, { useRef } from "react";
 // import { Container } from "react-bootstrap";
 

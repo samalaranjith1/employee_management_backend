@@ -8,6 +8,7 @@ import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer
 import { useDashboardContext } from "@/contexts/DashboardContext";
 import { useProductsUsageList } from "@/services/product-service";
 import { productPerformanceDetailsDataFormmatter } from "@/utils/data_formatters/dashboardFormatter";
+import ProductDetailsTable from "@/components/common/TablesSort/ProductDetailsTable";
 
 const ProductPerformanceDetails = () => {
   const { startDate, endDate } = useDashboardContext();
@@ -83,66 +84,9 @@ const ProductPerformanceDetails = () => {
       >
         {(rowsData, refetch) => (
           <div style={styles.tableScrollContainer} ref={myScrollRef}>
-            <Table hover responsive className="align-middle mb-0">
-              <thead>
-                <tr>
-                  <th style={styles.stickyTh} className="text-primary">
-                    Product
-                  </th>
-                  <th style={styles.stickyTh} className="text-primary">
-                    #Items
-                  </th>
-                  <th style={styles.stickyTh} className="text-primary">
-                    Net Sales
-                  </th>
-                  <th style={styles.stickyTh} className="text-primary">
-                    Discount
-                  </th>
-                  <th style={styles.stickyTh} className="text-primary">
-                    Tax
-                  </th>
-                  <th style={styles.stickyTh} className="text-primary">
-                    Making Cost
-                  </th>
-                  <th style={styles.stickyTh} className="text-primary">
-                    Margin
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {rowsData?.map((row, idx) => (
-                  <tr key={idx}>
-                    <td>
-                      <div className="fw-bold">{row.product}</div>
-                      <small className="text-muted">{row.details}</small>
-                    </td>
-                    <td className="fw-bold">{row.items}</td>
-                    <td className="text-success fw-bold">{row.netSales}</td>
-                    <td className="text-danger fw-bold">{row.discount}</td>
-                    <td className="text-info fw-bold">{row.tax}</td>
-                    <td className="text-danger fw-bold">{row.makingCost}</td>
-                    <td>
-                      <div className="text-success fw-bold">{row.margin}</div>
-                      <span
-                        style={{
-                          ...styles.badge,
-                          backgroundColor:
-                            parseFloat(row.marginPercent) >= 60
-                              ? "#d1fae5"
-                              : "#fef3c7",
-                          color:
-                            parseFloat(row.marginPercent) >= 60
-                              ? "#16a34a"
-                              : "#d97706",
-                        }}
-                      >
-                        {row.marginPercent}
-                      </span>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
+            <ProductDetailsTable 
+              rowsData={rowsData}
+               styles={styles}/>
           </div>
         )}
       </ServiceRenderer>

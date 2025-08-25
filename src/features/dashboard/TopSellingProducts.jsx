@@ -7,7 +7,7 @@ import { FaStar, FaBoxOpen, FaChartLine, FaShoppingCart } from "react-icons/fa";
 import "bootstrap/dist/css/bootstrap.min.css";
 import TopSellingProductsCards from "@/components/common/card/TopSellingProductsCards";
 import TopSellingProductsGraph from "@/components/common/GraphWrapper/TopSellingProductsGraph";
-import TopSellingProductsTable from "@/components/common/Tables/TopSellingProductsTable";
+import TopSellingProductsTable from "@/components/common/TablesSort/TopSellingProductsTable";
 import ComponentHeader from "@/components/common/ComponentHeader";
 import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer";
 import { useDashboardContext } from "@/contexts/DashboardContext";
@@ -150,7 +150,7 @@ export default TopSellingProducts;
 // import "bootstrap/dist/css/bootstrap.min.css";
 // import TopSellingProductsCards from "@/components/common/card/TopSellingProductsCards";
 // import TopSellingProductsGraph from "@/components/common/GraphWrapper/TopSellingProductsGraph";
-// import TopSellingProductsTable from "@/components/common/Tables/TopSellingProductsTable";
+// import TopSellingProductsTable from "@/components/common/TablesSort/TopSellingProductsTable";
 // import ComponentHeader from "@/components/common/ComponentHeader";
 
 // const TopSellingProducts = () => {

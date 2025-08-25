@@ -1,6 +1,6 @@
 "use client";
 
-import SupplierDuesTable from "@/components/common/Tables/SupplierDuesTable";
+import SupplierDuesTable from "@/components/common/TablesSort/SupplierDuesTable";
 import React from "react";
 import { Container } from "react-bootstrap";
 import { FaRupeeSign, FaInfoCircle } from "react-icons/fa";
