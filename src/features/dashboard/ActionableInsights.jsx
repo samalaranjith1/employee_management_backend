@@ -1,12 +1,12 @@
 "use client";
 
-import ActionableCard from "@/components/common/card/ActionableCard";
 import ComponentHeader from "@/components/common/ComponentHeader";
 import { useDashboardContext } from "@/contexts/DashboardContext";
 import { useOutletActionableInsights } from "@/services/outlet-service";
 import React, { useRef } from "react";
 import { Container } from "react-bootstrap";
 import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer";
+import ActionableCard from "@/components/common/dashboard/card/ActionableCard";
 
 const ActionableInsights = () => {
   const { startDate, endDate } = useDashboardContext();

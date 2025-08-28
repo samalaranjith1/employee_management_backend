@@ -11,8 +11,8 @@ import {
 import { periodDataBreakdownFormatter } from "@/utils/data_formatters/dashboardFormatter";
 import { Button, ButtonGroup, Card, Container } from "react-bootstrap";
 import { subDays, subWeeks, subMonths, format } from "date-fns";
-import PeriodDataBreakDownTable from "@/components/common/TablesSort/PeriodDataBreakDownTable";
-import PeriodBreakDownCard from "@/components/common/Cards/PeriodBreakDownCard";
+import PeriodDataBreakDownTable from "@/components/common/dashboard/TablesSort/PeriodDataBreakDownTable";
+import PeriodBreakDownCard from "@/components/common/dashboard/card/PeriodBreakDownCard";
 import { FaHistory } from "react-icons/fa";
 
 // Hook selector

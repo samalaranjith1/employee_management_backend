@@ -11,7 +11,7 @@ import {
 } from "react-icons/fa";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import PriceChangesTable from "@/components/common/TablesSort/PriceChangesTable";
+import PriceChangesTable from "@/components/common/dashboard/TablesSort/PriceChangesTable";
 import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer";
 import { useDashboardContext } from "@/contexts/DashboardContext";
 import { useItemsPriceChangeSummary } from "@/services/item-service";

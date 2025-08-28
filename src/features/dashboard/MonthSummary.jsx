@@ -5,7 +5,7 @@ import { Card, Row, Col, Button, Dropdown } from "react-bootstrap";
 import { FaBolt, FaExpand } from "react-icons/fa";
 import { format, startOfMonth, endOfMonth } from "date-fns";
 
-import MTDCard from "@/components/common/card/MTDCard";
+import MTDCard from "@/components/common/dashboard/card/MTDCard";
 import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer";
 import { monthSummaryFormatter } from "@/utils/data_formatters/dashboardFormatter";
 import { useOutletMtdMetrics } from "@/services/outlet-service";

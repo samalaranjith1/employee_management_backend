@@ -3,8 +3,8 @@
 import React, { useRef } from "react";
 import { Badge } from "react-bootstrap";
 
-import ItemConsumptionEfficiencyCard from "@/components/common/card/ItemConsumptionEfficiencyCard";
-import ItemConsumptionEffieciencyTable from "@/components/common/TablesSort/ItemConsumptionEffieciencyTable";
+import ItemConsumptionEfficiencyCard from "@/components/common/dashboard/card/ItemConsumptionEfficiencyCard";
+import ItemConsumptionEffieciencyTable from "@/components/common/dashboard/TablesSort/ItemConsumptionEffieciencyTable";
 import ComponentHeader from "@/components/common/ComponentHeader";
 import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer";
 import { useItemsUsageListDepartments } from "@/services/item-service";

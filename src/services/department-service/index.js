@@ -8,6 +8,15 @@ export function useDepartment(id, params) {
   });
 }
 
+//department products
+export function useDepartmentProductsList(id, params) {
+  return useApiQuery({
+    key: ["departments", id, params],
+    endpoint: `/departments/${id}/products`,
+    params,
+  });
+}
+
 // Summary
 export function useDepartmentSummary(id, params) {
   return useApiQuery({

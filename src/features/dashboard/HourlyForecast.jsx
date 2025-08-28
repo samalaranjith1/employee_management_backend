@@ -5,7 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Container, Row, Col, Card, Dropdown } from "react-bootstrap";
 import { FaClock, FaArrowRight, FaChartLine } from "react-icons/fa";
 
-import HourlyForecastGraph from "@/components/common/GraphWrapper/HourlyForecastGraph";
+import HourlyForecastGraph from "@/components/common/dashboard/GraphWrapper/HourlyForecastGraph";
 import HourlyForecastFilterCard from "@/components/common/FilterComponent/HourlyForecastFilterCard";
 import ComponentHeader from "@/components/common/ComponentHeader";
 

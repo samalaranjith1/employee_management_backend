@@ -1,13 +1,13 @@
 "use client";
 import ComponentHeader from "@/components/common/ComponentHeader";
-import ProductPerformanceTable from "@/components/common/TablesSort/ProductPerformanceTable";
+import ProductPerformanceTable from "@/components/common/dashboard/TablesSort/ProductPerformanceTable";
 import React, { useRef } from "react";
 import { Container } from "react-bootstrap";
 import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer";
 import { useDashboardContext } from "@/contexts/DashboardContext";
 import { useProductsSalesDistribution } from "@/services/product-service";
 import { productPerformancePercentileTableFormatter } from "@/utils/data_formatters/dashboardFormatter";
-import ProductPerformanceSummaryCards from "@/components/common/card/ProductPerformanceSummaryCards";
+import ProductPerformanceSummaryCards from "@/components/common/dashboard/card/ProductPerformanceSummaryCards";
 
 export default function ProductPerformanceByPercentile() {
   const { startDate, endDate } = useDashboardContext();

@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { DashboardContextProvider } from "./DashboardContext";
+import { DepartmentContextProvider } from "./DepartmentContext";
 import { AuthProvider } from "./AuthContext";
 import { RoleProvider } from "./RoleContext";
 
@@ -12,7 +13,9 @@ export function GlobalDashboardProvider({ children }) {
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
         <RoleProvider>
-          <DashboardContextProvider>{children}</DashboardContextProvider>
+          <DashboardContextProvider>
+            <DepartmentContextProvider>{children}</DepartmentContextProvider>
+          </DashboardContextProvider>
         </RoleProvider>
       </AuthProvider>
     </QueryClientProvider>

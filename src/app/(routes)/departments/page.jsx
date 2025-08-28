@@ -1,0 +1,101 @@
+"use client";
+import React, { useEffect, useState } from "react";
+import { Container } from "react-bootstrap";
+import { FaBullseye, FaBox, FaUsers, FaExchangeAlt } from "react-icons/fa";
+
+import DepartmentHeader from "@/features/departments/DepartmentHeader";
+import DepartmentCards from "@/features/departments/DepartmentCards";
+import DepartmentFilters from "@/features/departments/DepartmentFilters";
+import DepartmentTabs from "@/features/departments/DepartmentTabs";
+import DepartmentContent from "@/features/departments/DepartmentContent";
+import DepartmentClosingCanvas from "@/features/departments/DepartmentClosingCanvas";
+import { useDepartmentContext } from "@/contexts/DepartmentContext";
+import { useDashboardContext } from "@/contexts/DashboardContext";
+
+function DepartmentPage() {
+  const [showCanvas, setShowCanvas] = useState(false);
+  const [activeKey, setActiveKey] = useState("home");
+  const [durationFilter, setDurationFilter] = useState("today");
+  const {startDate,endDate,setStartDate,setEndDate} =useDepartmentContext()
+  const {  setStartDate:setStartDateDashboard, setEndDate:setEndDateDashboard } =
+    useDashboardContext();
+    useEffect(()=>{
+      setStartDateDashboard(startDate);
+      setEndDateDashboard(endDate);
+    },[startDate,endDate])
+
+
+  const rawData = {
+    department: "North Indian",
+    cards: [
+      {
+        title: "Goal",
+        value: "30% of Sale",
+        icon: <FaBullseye />,
+        color: "#4CAF50",
+      },
+      { title: "Products", value: "156", icon: <FaBox />, color: "#1976D2" },
+      { title: "Team", value: "3", icon: <FaUsers />, color: "#FF9800" },
+      {
+        title: "Type",
+        value: "Purchase and Sale",
+        icon: <FaExchangeAlt />,
+        color: "#9C27B0",
+      },
+    ],
+  };
+
+  const navTabs = [
+    "Home",
+    "Actionable Insights",
+    "Products",
+    "Sales",
+    "Consumption",
+    "Closing",
+    "Sales-Forecast",
+    "Consumption-Forecast",
+  ];
+
+  return (
+    <div
+      style={{ background: "#f9fafc", minHeight: "100vh" }}
+      className="mt-5 pt-2"
+    >
+      <DepartmentHeader
+        department={rawData.department}
+        onManageClick={() => setShowCanvas(true)}
+      />
+      <Container fluid className="mt-4">
+        <DepartmentCards cards={rawData.cards} />
+        <DepartmentFilters
+          durationFilter={durationFilter}
+          setDurationFilter={setDurationFilter}
+          startDate={startDate}
+          setStartDate={setStartDate}
+          endDate={endDate}
+          setEndDate={setEndDate}
+          navTabs={navTabs}
+          activeKey={activeKey}
+          setActiveKey={setActiveKey}
+        />
+        <DepartmentTabs
+          navTabs={navTabs}
+          activeKey={activeKey}
+          setActiveKey={setActiveKey}
+        />
+        <DepartmentContent
+          activeKey={activeKey}
+          durationFilter={durationFilter}
+          startDate={startDate}
+          endDate={endDate}
+        />
+      </Container>
+      <DepartmentClosingCanvas
+        show={showCanvas}
+        onClose={() => setShowCanvas(false)}
+      />
+    </div>
+  );
+}
+
+export default DepartmentPage;

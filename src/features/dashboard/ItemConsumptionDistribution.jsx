@@ -4,13 +4,13 @@ import React, { useRef } from "react";
 import { Container } from "react-bootstrap";
 import { FaClock } from "react-icons/fa";
 
-import ItemConsumptionDistributionCard from "@/components/common/card/ItemConsumptionDistributionCard";
+import ItemConsumptionDistributionCard from "@/components/common/dashboard/card/ItemConsumptionDistributionCard";
 import ComponentHeader from "@/components/common/ComponentHeader";
 import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer";
 import { useDashboardContext } from "@/contexts/DashboardContext";
 import { consumptionDistributionDataFormatter } from "@/utils/data_formatters/dashboardFormatter";
 import { useProductsUsageList } from "@/services/product-service";
-import ItemConsumptionDistributionTable from "@/components/common/TablesSort/ItemConsumptionDistributionTable";
+import ItemConsumptionDistributionTable from "@/components/common/dashboard/TablesSort/ItemConsumptionDistributionTable";
 
 export default function ItemConsumptionDistribution() {
   const { startDate, endDate } = useDashboardContext();

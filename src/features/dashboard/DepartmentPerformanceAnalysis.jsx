@@ -3,8 +3,8 @@
 import React, { useRef, useState, useEffect } from "react";
 import { Container, Row, Col, Card, Badge } from "react-bootstrap";
 import { FaPercentage } from "react-icons/fa";
-import DepartmentPerformanceCards from "@/components/common/Cards/DepartmentPerformanceCards";
-import DepartmentPerformanceGraph from "@/components/common/GraphWrapper/DepartmentPerformanceGraph";
+import DepartmentPerformanceCards from "@/components/common/dashboard/card/DepartmentPerformanceCards";
+import DepartmentPerformanceGraph from "@/components/common/dashboard/GraphWrapper/DepartmentPerformanceGraph";
 import ComponentHeader from "@/components/common/ComponentHeader";
 import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer";
 import { useDepartmentsUsageList } from "@/services/department-service";

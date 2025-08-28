@@ -5,9 +5,9 @@ import { Container, Row, Col, Card } from "react-bootstrap";
 import { FaStar, FaBoxOpen, FaChartLine, FaShoppingCart } from "react-icons/fa";
 
 import "bootstrap/dist/css/bootstrap.min.css";
-import TopSellingProductsCards from "@/components/common/card/TopSellingProductsCards";
-import TopSellingProductsGraph from "@/components/common/GraphWrapper/TopSellingProductsGraph";
-import TopSellingProductsTable from "@/components/common/TablesSort/TopSellingProductsTable";
+import TopSellingProductsCards from "@/components/common/dashboard/card/TopSellingProductsCards";
+import TopSellingProductsGraph from "@/components/common/dashboard/GraphWrapper/TopSellingProductsGraph";
+import TopSellingProductsTable from "@/components/common/dashboard/TablesSort/TopSellingProductsTable";
 import ComponentHeader from "@/components/common/ComponentHeader";
 import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer";
 import { useDashboardContext } from "@/contexts/DashboardContext";

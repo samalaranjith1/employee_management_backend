@@ -3,8 +3,8 @@
 import React, { useRef } from "react";
 import { Container } from "react-bootstrap";
 import ComponentHeader from "@/components/common/ComponentHeader";
-import RevenueContributionCards from "@/components/common/card/RevenueContributionCards";
-import RevenueContributionTable from "@/components/common/TablesSort/RevenueContributionTable";
+import RevenueContributionCards from "@/components/common/dashboard/card/RevenueContributionCards";
+import RevenueContributionTable from "@/components/common/dashboard/TablesSort/RevenueContributionTable";
 import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer";
 import { useDashboardContext } from "@/contexts/DashboardContext";
 import { useProductsSalesDistribution } from "@/services/product-service";

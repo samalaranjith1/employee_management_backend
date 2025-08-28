@@ -8,7 +8,7 @@ import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer
 import { useDashboardContext } from "@/contexts/DashboardContext";
 import { useProductsUsageList } from "@/services/product-service";
 import { productPerformanceDetailsDataFormmatter } from "@/utils/data_formatters/dashboardFormatter";
-import ProductDetailsTable from "@/components/common/TablesSort/ProductDetailsTable";
+import ProductDetailsTable from "@/components/common/dashboard/TablesSort/ProductDetailsTable";
 
 const ProductPerformanceDetails = () => {
   const { startDate, endDate } = useDashboardContext();

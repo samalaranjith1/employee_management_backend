@@ -25,6 +25,22 @@ export const handlePreset = (type, stateChanges) => {
       start = startOfMonth(today);
       end = today;
       break;
+    case "this_week":
+      // get first day of current week (Monday)
+      const firstDay = new Date(today);
+      const day = firstDay.getDay(); // Sunday = 0
+      const diff = day === 0 ? -6 : 1 - day; // adjust Sunday to Monday start
+      firstDay.setDate(today.getDate() + diff);
+      start = firstDay;
+      end = today;
+      setShowCalendar(false);
+      break;
+    case "this_month":
+      const firstDayMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+      start = firstDayMonth;
+      end = today;
+      setShowCalendar(false);
+      break;
     case "custom":
       setShowCalendar(true);
       return;

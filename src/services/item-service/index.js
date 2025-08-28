@@ -117,6 +117,14 @@ export function useItemsUsageListDepartments(params) {
   });
 }
 
+export function useItemsConsumptionClsoingTotal(params) {
+  return useApiQuery({
+    key: ["items-consumption-closing-total", params],
+    endpoint: `/items/consumption/closing/total`,
+    params,
+  });
+}
+
 // Purchase
 export function useItemsPurchaseMTDList(params) {
   return useApiQuery({
@@ -125,6 +133,7 @@ export function useItemsPurchaseMTDList(params) {
     params,
   });
 }
+
 export function useItemsPurchaseList(params) {
   return useApiQuery({
     key: ["items-purchase-list", params],

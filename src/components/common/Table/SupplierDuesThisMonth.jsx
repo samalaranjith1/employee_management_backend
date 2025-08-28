@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { Card, Row, Col, Dropdown } from "react-bootstrap";
 import { FaCalendarAlt, FaShoppingCart } from "react-icons/fa";
-import MonthlyPurchaseDistributionGraph from "../GraphWrapper/MonthlyPurchaseDistributionGraph";
+import MonthlyPurchaseDistributionGraph from "../dashboard/GraphWrapper/MonthlyPurchaseDistributionGraph";
 import TopSellersTable from "../Tables/MonthlyPurchaseDistributionGraph";
 
 export default function SupplierDuesThisMonth() {

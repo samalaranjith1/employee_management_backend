@@ -3,8 +3,8 @@
 import React, { useRef } from "react";
 import { Container, Card, Row, Col } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import OutOfStockTopCards from "@/components/common/card/OutOfStockTopCards";
-import OutOfStockTable from "@/components/common/TablesSort/OutOfStockTable";
+import OutOfStockTopCards from "@/components/common/dashboard/card/OutOfStockTopCards";
+import OutOfStockTable from "@/components/common/dashboard/TablesSort/OutOfStockTable";
 import ComponentHeader from "@/components/common/ComponentHeader";
 import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer";
 import { useDashboardContext } from "@/contexts/DashboardContext";

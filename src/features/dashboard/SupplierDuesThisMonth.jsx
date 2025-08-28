@@ -5,11 +5,11 @@ import { Card, Row, Col, Dropdown } from "react-bootstrap";
 import { FaCalendarAlt, FaShoppingCart } from "react-icons/fa";
 import { startOfMonth, endOfMonth, format } from "date-fns";
 import ComponentHeader from "@/components/common/ComponentHeader";
-import SupplierDetailsTableMonth from "@/components/common/TablesSort/SupplierDetailsTableMonth";
+import SupplierDetailsTableMonth from "@/components/common/dashboard/TablesSort/SupplierDetailsTableMonth";
 import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer";
 import { useSuppliersUsageMTD } from "@/services/supplier-service";
 import { supplierManagementDataFormatter } from "@/utils/data_formatters/dashboardFormatter";
-import PurchaseDistributionGraph from "@/components/common/GraphWrapper/PurchaseDistributionGraph";
+import PurchaseDistributionGraph from "@/components/common/dashboard/GraphWrapper/PurchaseDistributionGraph";
 
 const styles = {
   container: { padding: "1rem", backgroundColor: "#f8fafc" },

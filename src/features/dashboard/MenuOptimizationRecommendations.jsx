@@ -1,5 +1,5 @@
 "use client";
-import RecommendationsCard from "@/components/common/card/RecommendationsCard";
+import RecommendationsCard from "@/components/common/dashboard/card/RecommendationsCard";
 import React, { useState, useEffect, useRef } from "react";
 import { Card } from "react-bootstrap";
 import { FaExclamationTriangle } from "react-icons/fa";

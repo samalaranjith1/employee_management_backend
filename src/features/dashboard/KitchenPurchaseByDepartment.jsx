@@ -4,7 +4,7 @@ import React, { useRef } from "react";
 import { Container } from "react-bootstrap";
 import { FaChartBar } from "react-icons/fa";
 import ComponentHeader from "@/components/common/ComponentHeader";
-import KitchenPurchaseByDepartmentTable from "@/components/common/TablesSort/KitchenPurchaseByDepartmentTable";
+import KitchenPurchaseByDepartmentTable from "@/components/common/dashboard/TablesSort/KitchenPurchaseByDepartmentTable";
 import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer";
 import { useDashboardContext } from "@/contexts/DashboardContext";
 import { useDepartmentsUsageList } from "@/services/department-service";

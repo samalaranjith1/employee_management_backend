@@ -43,20 +43,20 @@ export function consumptionSummaryFormatter(data) {
   return [
     {
       title: "CONSUMPTION %",
-      percentage: `${data.current.consumptionPercentage.toFixed(0)}%`,
+      percentage: `${data.current?.consumptionPercentage?.toFixed(0)}%`,
       percentageChange: "+2.1%", // you can calculate if API gives trend data
       icon: <FaUtensils size={36} color="#bc4b00" />,
       textColor: "#bc4b00",
       bgColor: "rgb(255,247,237)",
       rows: [
-        { label: "Sale", value: `₹${data.current.netSales.toLocaleString()}` },
+        { label: "Sale", value: `₹${data?.current?.netSales?.toLocaleString()}` },
         {
           label: "Consumption",
-          value: `₹${data.current.consumptionValue.toLocaleString()}`,
+          value: `₹${data.current?.consumptionValue?.toLocaleString()}`,
         },
         {
           label: "Net Consumption",
-          value: `₹${data.current.netConsumptionValue.toLocaleString()} (${data.current.netConsumptionPercentage.toFixed(
+          value: `₹${data.current?.netConsumptionValue?.toLocaleString()} (${data.current?.netConsumptionPercentage?.toFixed(
             0
           )}%)`,
         },
@@ -64,7 +64,7 @@ export function consumptionSummaryFormatter(data) {
     },
     {
       title: "CONSUMPTION",
-      percentage: `₹${data.current.consumptionValue.toLocaleString()}`,
+      percentage: `₹${data.current?.consumptionValue?.toLocaleString()}`,
       percentageChange: "-1.5%", // example
       icon: <FaChartLine size={36} color="#1d40af" />,
       textColor: "#1d40af",
@@ -72,21 +72,21 @@ export function consumptionSummaryFormatter(data) {
       rows: [
         {
           label: "Opening Stock",
-          value: `₹${data.current.consumptionOpeningValue.toLocaleString()}`,
+          value: `₹${data.current?.consumptionOpeningValue?.toLocaleString()}`,
         },
         {
           label: "Closing Stock",
-          value: `₹${data.current.consumptionClosingValue.toLocaleString()}`,
+          value: `₹${data.current?.consumptionClosingValue?.toLocaleString()}`,
         },
         {
           label: "Net Consumption",
-          value: `₹${data.current.netConsumptionValue.toLocaleString()}`,
+          value: `₹${data.current?.netConsumptionValue?.toLocaleString()}`,
         },
       ],
     },
     {
       title: "NET SALES",
-      percentage: `₹${data.current.netSales.toLocaleString()}`,
+      percentage: `₹${data.current?.netSales.toLocaleString()}`,
       percentageChange: "+8.3%", // example
       icon: <FaCoffee size={36} color="#5b21b6" />,
       textColor: "#5b21b6",
@@ -94,20 +94,20 @@ export function consumptionSummaryFormatter(data) {
       rows: [
         {
           label: "Total Sales",
-          value: `₹${data.current.totalSales.toLocaleString()}`,
+          value: `₹${data.current?.totalSales.toLocaleString()}`,
         },
         {
           label: "Discount",
-          value: `₹${data.current.discount.toLocaleString()}`,
+          value: `₹${data.current?.discount.toLocaleString()}`,
         },
-        { label: "Tax", value: `₹${data.current.tax.toLocaleString()}` },
+        { label: "Tax", value: `₹${data?.current?.tax.toLocaleString()}` },
         {
           label: "Dine in",
-          value: `₹${data.current.dineInSales?.toLocaleString()}`,
+          value: `₹${data.current?.dineInSales?.toLocaleString()}`,
         },
         {
           label: "Online",
-          value: `₹${data.current.onlineSales?.toLocaleString()}`,
+          value: `₹${data.current?.onlineSales?.toLocaleString()}`,
         },
       ],
     },
@@ -147,12 +147,12 @@ export function monthSummaryFormatter(data) {
       rows: [
         {
           label: "COGS",
-          value: formatCurrency(data.current.purchaseValue),
+          value: formatCurrency(data.current?.purchaseValue),
           variant: "danger",
         },
         {
           label: "Fixed Cost",
-          value: formatCurrency(data.current.fixedCost),
+          value: formatCurrency(data.current?.fixedCost),
           variant: "secondary",
         },
       ],
@@ -160,18 +160,18 @@ export function monthSummaryFormatter(data) {
     {
       title: "SALES",
       percentageChange: "+12.4%",
-      value: formatCurrency(data.current.netSales),
+      value: formatCurrency(data.current?.netSales),
       trend: "up",
       trendColor: "primary",
       rows: [
         {
           label: "Dine in",
-          value: formatCurrency(data.current.dineInSales),
+          value: formatCurrency(data.current?.dineInSales),
           variant: "success",
         },
         {
           label: "Online",
-          value: formatCurrency(data.current.onlineSales),
+          value: formatCurrency(data.current?.onlineSales),
           variant: "secondary",
         },
       ],
@@ -179,23 +179,23 @@ export function monthSummaryFormatter(data) {
     {
       title: "NET CONSUMPTION",
       percentageChange: "-3.2%",
-      value: formatCurrency(data.current.netConsumptionValue),
+      value: formatCurrency(data.current?.netConsumptionValue),
       trend: "down",
       trendColor: "primary",
       rows: [
         {
           label: "Opening",
-          value: formatCurrency(data.current.consumptionOpeningValue),
+          value: formatCurrency(data.current?.consumptionOpeningValue),
           variant: "success",
         },
         {
           label: "Consumption",
-          value: formatCurrency(data.current.consumptionValue),
+          value: formatCurrency(data.current?.consumptionValue),
           variant: "danger",
         },
         {
           label: "Closing",
-          value: formatCurrency(data.current.consumptionClosingValue),
+          value: formatCurrency(data.current?.consumptionClosingValue),
           variant: "secondary",
         },
       ],
@@ -335,7 +335,7 @@ export function trendAnalysisFormatter(data, view) {
           : format(parseISO(item.startDate), "MMM d"),
 
       Sales: item.netSales ?? 0,
-      Consumption: item.consumptionValue ?? 0,
+      Consumption: item?.consumptionValue ?? 0,
       Opening: item.consumptionOpeningValue ?? 0,
       Closing: item.consumptionClosingValue ?? 0,
       consumptionPercentage: item.consumptionPercentage ?? 0,

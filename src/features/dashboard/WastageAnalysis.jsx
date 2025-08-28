@@ -5,8 +5,8 @@ import { Card } from "react-bootstrap";
 import { FaTrashAlt } from "react-icons/fa";
 
 import ComponentHeader from "@/components/common/ComponentHeader";
-import WastageAnalysisTopCards from "@/components/common/card/WastageAnalysisTopCards";
-import WastageAnalysisTable from "@/components/common/TablesSort/WastageAnalysisTable";
+import WastageAnalysisTopCards from "@/components/common/dashboard/card/WastageAnalysisTopCards";
+import WastageAnalysisTable from "@/components/common/dashboard/TablesSort/WastageAnalysisTable";
 import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer";
 import { useDashboardContext } from "@/contexts/DashboardContext";
 import { useWasteSummary } from "@/services/waste-management-service";

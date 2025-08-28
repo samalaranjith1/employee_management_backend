@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Card } from "react-bootstrap";
 import { FaExclamationTriangle } from "react-icons/fa";
-import RecommendationsCard from "@/components/common/card/RecommendationsCard";
+import RecommendationsCard from "@/components/common/dashboard/card/RecommendationsCard";
 import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer";
 import { useDashboardContext } from "@/contexts/DashboardContext";
 import ComponentHeader from "@/components/common/ComponentHeader";
