@@ -12,7 +12,7 @@ export const handlePreset = (type, stateChanges) => {
   const today = new Date();
   let start, end;
 
-  switch (type) {
+  switch (type.replace(' ','').toLowerCase()) {
     case "yesterday":
       start = subDays(today, 1);
       end = subDays(today, 1);

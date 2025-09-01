@@ -11,7 +11,6 @@ import DepartmentSalesForcecast from "./SalesForecast/DepartmentSalesForcecast";
 
 function DepartmentContent({ activeKey, dateFilter }) {
   const {startDate,endDate} = useDepartmentContext()
-  console.log(startDate,endDate,"ramarama")
   return (
     <div
       style={{
