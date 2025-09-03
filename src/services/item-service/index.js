@@ -9,6 +9,14 @@ export function useItem(id, params) {
   });
 }
 
+export function useItemHealth(id, params) {
+  return useApiQuery({
+    key: ["item", id, params],
+    endpoint: `/items/${id}/health`,
+    params,
+  });
+}
+
 // Summaries
 export function useItemSummary(id, params) {
   return useApiQuery({

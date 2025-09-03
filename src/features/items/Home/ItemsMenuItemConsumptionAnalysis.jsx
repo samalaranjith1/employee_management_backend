@@ -1,19 +1,14 @@
 "use client";
 
 import React from "react";
-import { Row, Col, Card, Table } from "react-bootstrap";
+import { Card, Row, Col, Table, Badge } from "react-bootstrap";
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
-import { productsMenuItemListConsumptionDistributionDataFormatter } from "@/utils/data_formatters/itemsPageDataFormatter";
+import { menuItemConsumptionAnalysisDataFormatter } from "@/utils/data_formatters/itemsPageDataFormatter";
 import { useItemProductsList } from "@/services/item-service";
 import { useItemsContext } from "@/contexts/ItemsContext";
 import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer";
 
-const COLORS = [
-  "#4A90E2", "#F5A623", "#D0021B", "#7ED321", "#9013FE",
-  "#50E3C2", "#B8E986", "#F8E71C", "#BD10E0", "#417505",
-];
-
-const ItemsProductsMenuItemListConsumptionDistribution = () => {
+export default function ItemsMenuItemConsumptionAnalysis() {
   const { startDate, endDate } = useItemsContext();
 
   return (
@@ -21,90 +16,118 @@ const ItemsProductsMenuItemListConsumptionDistribution = () => {
       queryHook={useItemProductsList}
       queryKey={["itemProductsList", { startdt: startDate, enddt: endDate }]}
       queryFn={() =>
-        useItemProductsList({ startdt: startDate, enddt: endDate }).queryFn
+        useItemProductsList({
+          startdt: startDate,
+          enddt: endDate,
+        }).queryFn
       }
       queryArgs={[75,{ startdt: startDate, enddt: endDate,outlet:1,userId:7 }]}
-      formatter={productsMenuItemListConsumptionDistributionDataFormatter}
+      formatter={menuItemConsumptionAnalysisDataFormatter}
       shimmerCount={1}
     >
-      {({ menuItems, chartData }) => (
-        <Row className="g-3">
-          {/* Left Section: Menu Items */}
-          <Col md={6}>
-            <Card className="shadow-sm border-0 rounded-3">
-              <Card.Header className="bg-light border-0">
-                <h6 className="mb-0 fw-bold">Menu Items List</h6>
-                <small className="text-muted">Complete recipe usage data</small>
-              </Card.Header>
-              <Card.Body>
-                <Table responsive borderless className="align-middle">
-                  <thead>
-                    <tr className="text-muted small">
+      {(formattedData) => {
+        // Prepare chart data
+        const chartData = formattedData.map((d) => ({
+          name: d.name,
+          value: parseInt(d.totalConsumption),
+        }));
+
+        const COLORS = [
+          "#4e79a7",
+          "#59a14f",
+          "#f28e2c",
+          "#e15759",
+          "#76b7b2",
+          "#edc949",
+        ];
+
+        return (
+          <Card
+            className="p-3 shadow-sm"
+            style={{ borderRadius: "12px", background: "#fff" }}
+          >
+            <h5 className="fw-bold mb-2">Menu Item Consumption Analysis</h5>
+            <p className="text-muted small">
+              Item consumption breakdown by menu items with quantity distribution
+            </p>
+
+            <Row>
+              {/* Left Section - Table */}
+              <Col md={7}>
+                <Table hover responsive className="align-middle">
+                  <thead className="bg-light">
+                    <tr>
                       <th>Menu Item</th>
                       <th>Recipe</th>
-                      <th>Consumption</th>
+                      <th>Total Consumption</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {menuItems.map((item) => (
+                    {formattedData.map((item) => (
                       <tr key={item.id}>
-                        <td className="fw-semibold">
-                          {item.icon} {item.name}
-                          <div className="text-muted small">{item.items} Items</div>
+                        <td>
+                          <div className="d-flex align-items-center">
+                            {item.icon}
+                            <span className="ms-2">{item.name}</span>
+                            <Badge bg="light" text="secondary" className="ms-2">
+                              {item.itemsSold} items
+                            </Badge>
+                          </div>
                         </td>
                         <td>
-                          <span className="text-primary">{item.recipeQty}</span>
-                          <div className="text-muted small">{item.recipePrice}</div>
+                          <div>
+                            <span className="fw-bold text-primary">
+                              {item.recipeQty}
+                            </span>
+                            <div className="text-muted small">
+                              {item.recipePrice}
+                            </div>
+                          </div>
                         </td>
                         <td>
-                          <span className="text-success">{item.consumptionQty}</span>
-                          <div className="text-muted small">{item.consumptionPrice}</div>
+                          <div>
+                            <span className="fw-bold text-success">
+                              {item.totalConsumption}
+                            </span>
+                            <div className="text-muted small">
+                              {item.totalConsumptionPrice}
+                            </div>
+                          </div>
                         </td>
                       </tr>
                     ))}
                   </tbody>
                 </Table>
-              </Card.Body>
-            </Card>
-          </Col>
+              </Col>
 
-          {/* Right Section: Consumption Distribution */}
-          <Col md={6}>
-            <Card className="shadow-sm border-0 rounded-3">
-              <Card.Header className="bg-light border-0">
-                <h6 className="mb-0 fw-bold">Consumption Distribution</h6>
-                <small className="text-muted">
-                  Visual breakdown of top performers
-                </small>
-              </Card.Header>
-              <Card.Body>
-                <div style={{ width: "100%", height: 250 }}>
-                  <ResponsiveContainer>
-                    <PieChart>
-                      <Pie
-                        data={chartData}
-                        dataKey="value"
-                        nameKey="name"
-                        innerRadius={60}
-                        outerRadius={90}
-                        paddingAngle={3}
-                      >
-                        {chartData.map((_, index) => (
-                          <Cell
-                            key={`cell-${index}`}
-                            fill={COLORS[index % COLORS.length]}
-                          />
-                        ))}
-                      </Pie>
-                      <Tooltip />
-                    </PieChart>
-                  </ResponsiveContainer>
-                </div>
-                <div className="mt-3">
-                  {chartData.map((item, index) => (
+              {/* Right Section - Chart */}
+              <Col md={5} className="d-flex flex-column align-items-center">
+                <h6 className="fw-bold">Consumption Distribution</h6>
+                <ResponsiveContainer width="100%" height={250}>
+                  <PieChart>
+                    <Pie
+                      data={chartData}
+                      cx="50%"
+                      cy="50%"
+                      labelLine={false}
+                      outerRadius={90}
+                      dataKey="value"
+                    >
+                      {chartData.map((entry, index) => (
+                        <Cell
+                          key={`cell-${index}`}
+                          fill={COLORS[index % COLORS.length]}
+                        />
+                      ))}
+                    </Pie>
+                    <Tooltip />
+                  </PieChart>
+                </ResponsiveContainer>
+                <div className="mt-3 w-100">
+                  {chartData.map((d, i) => (
                     <div
-                      key={index}
-                      className="d-flex justify-content-between small mb-2"
+                      key={i}
+                      className="d-flex justify-content-between small"
                     >
                       <span>
                         <span
@@ -112,47 +135,32 @@ const ItemsProductsMenuItemListConsumptionDistribution = () => {
                             display: "inline-block",
                             width: 10,
                             height: 10,
-                            backgroundColor: COLORS[index % COLORS.length],
                             borderRadius: "50%",
-                            marginRight: 8,
+                            backgroundColor: COLORS[i % COLORS.length],
+                            marginRight: 6,
                           }}
-                        ></span>
-                        {item.name}
+                        />
+                        {d.name}
                       </span>
-                      <span className="fw-semibold">{item.value} gm</span>
+                      <span>{d.value} gm</span>
                     </div>
                   ))}
                 </div>
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
-      )}
+              </Col>
+            </Row>
+          </Card>
+        );
+      }}
     </ServiceRenderer>
   );
-};
-
-export default ItemsProductsMenuItemListConsumptionDistribution;
+}
 
 // import React from "react";
-// import { Row, Col, Card, Table } from "react-bootstrap";
+// import { Card, Row, Col, Table, Badge } from "react-bootstrap";
 // import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
-// import { productsMenuItemListConsumptionDistributionDataFormatter } from "@/utils/data_formatters/itemsPageDataFormatter";
+// import { menuItemConsumptionAnalysisDataFormatter } from "@/utils/data_formatters/itemsPageDataFormatter";
 
-// const COLORS = [
-//   "#4A90E2",
-//   "#F5A623",
-//   "#D0021B",
-//   "#7ED321",
-//   "#9013FE",
-//   "#50E3C2",
-//   "#B8E986",
-//   "#F8E71C",
-//   "#BD10E0",
-//   "#417505",
-// ];
-
-// const ItemsProductsMenuItemListConsumptionDistribution = ({
+// export default function ItemsMenuItemCnnsumptionAnalysis({
 //   apiResponse = {
 //     etag: "396775277",
 //     itemId: "75",
@@ -297,9 +305,9 @@ export default ItemsProductsMenuItemListConsumptionDistribution;
 //           categoryId: 0,
 //           categoryName: null,
 //           price: 369,
-//           makingCost: 163,
-//           costPercentage: 44.17,
-//           marginPercentage: 55.83,
+//           makingCost: 164,
+//           costPercentage: 44.44,
+//           marginPercentage: 55.56,
 //           veg: false,
 //           imageUrl: null,
 //           preparationTime: 0,
@@ -609,9 +617,9 @@ export default ItemsProductsMenuItemListConsumptionDistribution;
 //           categoryId: 0,
 //           categoryName: null,
 //           price: 399,
-//           makingCost: 164,
-//           costPercentage: 41.1,
-//           marginPercentage: 58.9,
+//           makingCost: 165,
+//           costPercentage: 41.35,
+//           marginPercentage: 58.65,
 //           veg: false,
 //           imageUrl: null,
 //           preparationTime: 0,
@@ -713,9 +721,9 @@ export default ItemsProductsMenuItemListConsumptionDistribution;
 //           categoryId: 0,
 //           categoryName: null,
 //           price: 179,
-//           makingCost: 47,
-//           costPercentage: 26.26,
-//           marginPercentage: 73.74,
+//           makingCost: 37,
+//           costPercentage: 20.67,
+//           marginPercentage: 79.33,
 //           veg: false,
 //           imageUrl: null,
 //           preparationTime: 0,
@@ -1545,9 +1553,9 @@ export default ItemsProductsMenuItemListConsumptionDistribution;
 //           categoryId: 0,
 //           categoryName: null,
 //           price: 219,
-//           makingCost: 92,
-//           costPercentage: 42.01,
-//           marginPercentage: 57.99,
+//           makingCost: 91,
+//           costPercentage: 41.55,
+//           marginPercentage: 58.45,
 //           veg: false,
 //           imageUrl: null,
 //           preparationTime: 0,
@@ -1753,9 +1761,9 @@ export default ItemsProductsMenuItemListConsumptionDistribution;
 //           categoryId: 0,
 //           categoryName: null,
 //           price: 199,
-//           makingCost: 74,
-//           costPercentage: 37.19,
-//           marginPercentage: 62.81,
+//           makingCost: 76,
+//           costPercentage: 38.19,
+//           marginPercentage: 61.81,
 //           veg: false,
 //           imageUrl: null,
 //           preparationTime: 0,
@@ -1805,9 +1813,9 @@ export default ItemsProductsMenuItemListConsumptionDistribution;
 //           categoryId: 0,
 //           categoryName: null,
 //           price: 219,
-//           makingCost: 78,
-//           costPercentage: 35.62,
-//           marginPercentage: 64.38,
+//           makingCost: 77,
+//           costPercentage: 35.16,
+//           marginPercentage: 64.84,
 //           veg: false,
 //           imageUrl: null,
 //           preparationTime: 0,
@@ -1857,9 +1865,9 @@ export default ItemsProductsMenuItemListConsumptionDistribution;
 //           categoryId: 0,
 //           categoryName: null,
 //           price: 349,
-//           makingCost: 136,
-//           costPercentage: 38.97,
-//           marginPercentage: 61.03,
+//           makingCost: 134,
+//           costPercentage: 38.4,
+//           marginPercentage: 61.6,
 //           veg: false,
 //           imageUrl: null,
 //           preparationTime: 0,
@@ -2262,115 +2270,126 @@ export default ItemsProductsMenuItemListConsumptionDistribution;
 //       },
 //     ],
 //   },
-// }) => {
-//   const { menuItems, chartData } =
-//     productsMenuItemListConsumptionDistributionDataFormatter(apiResponse);
+// }) {
+//   const formattedData = menuItemConsumptionAnalysisDataFormatter(apiResponse);
+
+//   // Chart data
+//   const chartData = formattedData.map((d) => ({
+//     name: d.name,
+//     value: parseInt(d.totalConsumption),
+//   }));
+
+//   const COLORS = [
+//     "#4e79a7",
+//     "#59a14f",
+//     "#f28e2c",
+//     "#e15759",
+//     "#76b7b2",
+//     "#edc949",
+//   ];
 
 //   return (
-//     <Row className="g-3">
-//       {/* Left Section: Menu Items */}
-//       <Col md={6}>
-//         <Card className="shadow-sm border-0 rounded-3">
-//           <Card.Header className="bg-light border-0">
-//             <h6 className="mb-0 fw-bold">Menu Items List</h6>
-//             <small className="text-muted">Complete recipe usage data</small>
-//           </Card.Header>
-//           <Card.Body>
-//             <Table responsive borderless className="align-middle">
-//               <thead>
-//                 <tr className="text-muted small">
-//                   <th>Menu Item</th>
-//                   <th>Recipe</th>
-//                   <th>Consumption</th>
-//                 </tr>
-//               </thead>
-//               <tbody>
-//                 {menuItems.map((item, index) => (
-//                   <tr key={item.id}>
-//                     <td className="fw-semibold">
-//                       {item.icon} {item.name}
-//                       <div className="text-muted small">{item.items} Items</div>
-//                     </td>
-//                     <td>
-//                       <span className="text-primary">{item.recipeQty}</span>
+//     <Card
+//       className="p-3 shadow-sm"
+//       style={{ borderRadius: "12px", background: "#fff" }}
+//     >
+//       <h5 className="fw-bold mb-2">Menu Item Consumption Analysis</h5>
+//       <p className="text-muted small">
+//         Item consumption breakdown by menu items with quantity distribution
+//       </p>
+
+//       <Row>
+//         {/* Left Section - Table */}
+//         <Col md={7}>
+//           <Table hover responsive className="align-middle">
+//             <thead className="bg-light">
+//               <tr>
+//                 <th>Menu Item</th>
+//                 <th>Recipe</th>
+//                 <th>Total Consumption</th>
+//               </tr>
+//             </thead>
+//             <tbody>
+//               {formattedData.map((item, idx) => (
+//                 <tr key={item.id}>
+//                   <td>
+//                     <div className="d-flex align-items-center">
+//                       {item.icon}
+//                       <span className="ms-2">{item.name}</span>
+//                       <Badge bg="light" text="secondary" className="ms-2">
+//                         {item.itemsSold} items
+//                       </Badge>
+//                     </div>
+//                   </td>
+//                   <td>
+//                     <div>
+//                       <span className="fw-bold text-primary">
+//                         {item.recipeQty}
+//                       </span>
 //                       <div className="text-muted small">{item.recipePrice}</div>
-//                     </td>
-//                     <td>
-//                       <span className="text-success">
-//                         {item.consumptionQty}
+//                     </div>
+//                   </td>
+//                   <td>
+//                     <div>
+//                       <span className="fw-bold text-success">
+//                         {item.totalConsumption}
 //                       </span>
 //                       <div className="text-muted small">
-//                         {item.consumptionPrice}
+//                         {item.totalConsumptionPrice}
 //                       </div>
-//                     </td>
-//                   </tr>
-//                 ))}
-//               </tbody>
-//             </Table>
-//           </Card.Body>
-//         </Card>
-//       </Col>
-
-//       {/* Right Section: Consumption Distribution */}
-//       <Col md={6}>
-//         <Card className="shadow-sm border-0 rounded-3">
-//           <Card.Header className="bg-light border-0">
-//             <h6 className="mb-0 fw-bold">Consumption Distribution</h6>
-//             <small className="text-muted">
-//               Visual breakdown of top performers
-//             </small>
-//           </Card.Header>
-//           <Card.Body>
-//             <div style={{ width: "100%", height: 250 }}>
-//               <ResponsiveContainer>
-//                 <PieChart>
-//                   <Pie
-//                     data={chartData}
-//                     dataKey="value"
-//                     nameKey="name"
-//                     innerRadius={60}
-//                     outerRadius={90}
-//                     paddingAngle={3}
-//                   >
-//                     {chartData.map((entry, index) => (
-//                       <Cell
-//                         key={`cell-${index}`}
-//                         fill={COLORS[index % COLORS.length]}
-//                       />
-//                     ))}
-//                   </Pie>
-//                   <Tooltip />
-//                 </PieChart>
-//               </ResponsiveContainer>
-//             </div>
-//             <div className="mt-3">
-//               {chartData.map((item, index) => (
-//                 <div
-//                   key={index}
-//                   className="d-flex justify-content-between small mb-2"
-//                 >
-//                   <span>
-//                     <span
-//                       style={{
-//                         display: "inline-block",
-//                         width: 10,
-//                         height: 10,
-//                         backgroundColor: COLORS[index % COLORS.length],
-//                         borderRadius: "50%",
-//                         marginRight: 8,
-//                       }}
-//                     ></span>
-//                     {item.name}
-//                   </span>
-//                   <span className="fw-semibold">{item.value} gm</span>
-//                 </div>
+//                     </div>
+//                   </td>
+//                 </tr>
 //               ))}
-//             </div>
-//           </Card.Body>
-//         </Card>
-//       </Col>
-//     </Row>
-//   );
-// };
+//             </tbody>
+//           </Table>
+//         </Col>
 
-// export default ItemsProductsMenuItemListConsumptionDistribution;
+//         {/* Right Section - Chart */}
+//         <Col md={5} className="d-flex flex-column align-items-center">
+//           <h6 className="fw-bold">Consumption Distribution</h6>
+//           <ResponsiveContainer width="100%" height={250}>
+//             <PieChart>
+//               <Pie
+//                 data={chartData}
+//                 cx="50%"
+//                 cy="50%"
+//                 labelLine={false}
+//                 outerRadius={90}
+//                 dataKey="value"
+//               >
+//                 {chartData.map((entry, index) => (
+//                   <Cell
+//                     key={`cell-${index}`}
+//                     fill={COLORS[index % COLORS.length]}
+//                   />
+//                 ))}
+//               </Pie>
+//               <Tooltip />
+//             </PieChart>
+//           </ResponsiveContainer>
+//           <div className="mt-3 w-100">
+//             {chartData.map((d, i) => (
+//               <div key={i} className="d-flex justify-content-between small">
+//                 <span>
+//                   <span
+//                     style={{
+//                       display: "inline-block",
+//                       width: 10,
+//                       height: 10,
+//                       borderRadius: "50%",
+//                       backgroundColor: COLORS[i % COLORS.length],
+//                       marginRight: 6,
+//                     }}
+//                   />
+//                   {d.name}
+//                 </span>
+//                 <span>{d.value} gm</span>
+//               </div>
+//             ))}
+//           </div>
+//         </Col>
+//       </Row>
+//     </Card>
+//   );
+// }

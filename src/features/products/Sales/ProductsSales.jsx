@@ -8,6 +8,78 @@ import { useProductSummaryMonthly } from "@/services/product-service";
 import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer";
 import { useProductsContext } from "@/contexts/ProductsContext";
 
+// 🔹 Sub-component for rendering table
+const ProductsSalesTable = ({ apiData }) => {
+  const rows = useMemo(
+    () => salesDataFormatter(apiData?.list ?? []),
+    [apiData?.etag, apiData?.list]
+  );
+
+  return (
+    <div className="p-3 bg-white rounded shadow-sm">
+      {/* Header */}
+      <div className="d-flex justify-content-between align-items-center mb-3">
+        <h5 className="fw-bold text-dark m-0">Product Sales Report</h5>
+        <Button
+          size="sm"
+          className="d-flex align-items-center"
+          style={{ background: "#FF6A00", borderColor: "#FF6A00" }}
+        >
+          <FaDownload className="me-2" /> Export
+        </Button>
+      </div>
+
+      {/* Table */}
+      <Table bordered hover responsive className="align-middle">
+        <thead className="table-light">
+          <tr>
+            <th>Date</th>
+            <th>Total Sales</th>
+            <th>Net Sales</th>
+            <th>Discount</th>
+            <th>Tax</th>
+            <th>Items Sold</th>
+            <th>Orders</th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((row, idx) => (
+            <tr key={idx}>
+              <td className="text-muted" style={{ whiteSpace: "pre-line" }}>
+                {row.date}
+              </td>
+              <td className="fw-semibold text-dark">
+                {row.totalSales.icon}
+                {row.totalSales.value}
+              </td>
+              <td className="fw-semibold text-dark">
+                {row.netSales.icon}
+                {row.netSales.value}
+              </td>
+              <td className="fw-semibold text-dark">
+                {row.discount.icon}
+                {row.discount.value}
+              </td>
+              <td className="fw-semibold text-dark">
+                {row.tax.icon}
+                {row.tax.value}
+              </td>
+              <td className="fw-semibold text-dark">
+                {row.itemsSold.icon}
+                {row.itemsSold.value}
+              </td>
+              <td className="fw-semibold text-dark">
+                {row.orders.icon}
+                {row.orders.value}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
+    </div>
+  );
+};
+
 const ProductsSales = () => {
   const { startDate, endDate } = useProductsContext();
 
@@ -24,79 +96,7 @@ const ProductsSales = () => {
       ]}
       shimmerCount={1}
     >
-      {(apiData) => {
-        const rows = useMemo(
-          () => salesDataFormatter(apiData?.list ?? []),
-          [apiData?.etag, apiData?.list]
-        );
-
-        return (
-          <div className="p-3 bg-white rounded shadow-sm">
-            {/* Header */}
-            <div className="d-flex justify-content-between align-items-center mb-3">
-              <h5 className="fw-bold text-dark m-0">Product Sales Report</h5>
-              <Button
-                size="sm"
-                className="d-flex align-items-center"
-                style={{ background: "#FF6A00", borderColor: "#FF6A00" }}
-              >
-                <FaDownload className="me-2" /> Export
-              </Button>
-            </div>
-
-            {/* Table */}
-            <Table bordered hover responsive className="align-middle">
-              <thead className="table-light">
-                <tr>
-                  <th>Date</th>
-                  <th>Total Sales</th>
-                  <th>Net Sales</th>
-                  <th>Discount</th>
-                  <th>Tax</th>
-                  <th>Items Sold</th>
-                  <th>Orders</th>
-                </tr>
-              </thead>
-              <tbody>
-                {rows.map((row, idx) => (
-                  <tr key={idx}>
-                    <td
-                      className="text-muted"
-                      style={{ whiteSpace: "pre-line" }}
-                    >
-                      {row.date}
-                    </td>
-                    <td className="fw-semibold text-dark">
-                      {row.totalSales.icon}
-                      {row.totalSales.value}
-                    </td>
-                    <td className="fw-semibold text-dark">
-                      {row.netSales.icon}
-                      {row.netSales.value}
-                    </td>
-                    <td className="fw-semibold text-dark">
-                      {row.discount.icon}
-                      {row.discount.value}
-                    </td>
-                    <td className="fw-semibold text-dark">
-                      {row.tax.icon}
-                      {row.tax.value}
-                    </td>
-                    <td className="fw-semibold text-dark">
-                      {row.itemsSold.icon}
-                      {row.itemsSold.value}
-                    </td>
-                    <td className="fw-semibold text-dark">
-                      {row.orders.icon}
-                      {row.orders.value}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
-          </div>
-        );
-      }}
+      {(apiData) => <ProductsSalesTable apiData={apiData} />}
     </ServiceRenderer>
   );
 };

@@ -4,8 +4,8 @@ import ItemsTrendAnalysis from './ItemsTrendAnalysis'
 import ItemsDepartmentAnalyticsTable from './ItemsDepartmentAnalyticsTable';
 import ItemsDepartmentAnalytics from './ItemsDepartmentAnalytics';
 import ItemsDepartmentDistributionChart from './ItemsDepartmentDistributionChart';
-import ItemsMenuItemCnnsumptionAnalysis from './ItemsMenuItemCnnsumptionAnalysis';
 import ItemsConsumptionAnalyticsOverview from './ItemsConsumptionAnalyticsOverview';
+import ItemsMenuItemConsumptionAnalysis from './ItemsMenuItemConsumptionAnalysis';
 
 function LandingPage() {
   return (
@@ -21,10 +21,11 @@ function LandingPage() {
     >
       <ItemsSummaryOverview />
       <ItemsTrendAnalysis />
+      {/* for below api is not avilable */}
       <ItemsDepartmentAnalyticsTable />
       <ItemsDepartmentAnalytics />
       <ItemsDepartmentDistributionChart />
-      <ItemsMenuItemCnnsumptionAnalysis />
+      <ItemsMenuItemConsumptionAnalysis />
       <ItemsConsumptionAnalyticsOverview />
     </div>
   );

@@ -12,6 +12,7 @@ function LandingPage() {
       <ItemsConsumptionTrendAnalysis />
       <ItemsConsumptionDepartmentAnalytics />
       <ItemsConsumptionDepartmentDistributionChart />
+      {/* api is not available for below component */}
       <MenuItemConsumptionAnalytics />
     </div>
   )

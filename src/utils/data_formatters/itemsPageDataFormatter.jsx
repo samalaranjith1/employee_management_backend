@@ -60,12 +60,12 @@ export const summeryOverviewDataFormatter = (apiData) => {
         rows: [
           {
             label: "Purchase Amount",
-            value: `₹${summary.purchaseValue || 22125}`,
+            value: `₹${summary.purchaseValue}`,
           },
           { label: "Tax Amount", value: "₹0" },
           {
             label: "Total Amount",
-            value: `₹${summary.purchaseValue || 22125}`,
+            value: `₹${summary.purchaseValue}`,
           },
         ],
       },
@@ -75,9 +75,9 @@ export const summeryOverviewDataFormatter = (apiData) => {
         icon: <FaCreditCard className="me-2" />,
         bg: "#E9FFF3",
         rows: [
-          { label: "Payment Amount", value: "₹1,20,425" },
-          { label: "Tax Amount", value: "₹0" },
-          { label: "Total Amount", value: "₹1,20,425" },
+          { label: "Payment Amount", value: "Needs to check" },
+          { label: "Tax Amount", value: "Needs to check" },
+          { label: "Total Amount", value: "Needs to check" },
         ],
       },
       {
@@ -86,9 +86,9 @@ export const summeryOverviewDataFormatter = (apiData) => {
         icon: <FaFileInvoiceDollar className="me-2" />,
         bg: "#FFE9E9",
         rows: [
-          { label: "Total Dues", value: "₹2,30,000" },
-          { label: "This month", value: "₹40,000" },
-          { label: "Other", value: "₹1,90,000" },
+          { label: "Total Dues", value: "Needs to check" },
+          { label: "This month", value: "Needs to check" },
+          { label: "Other", value: "Needs to check" },
         ],
       },
       {
@@ -110,8 +110,9 @@ export const summeryOverviewDataFormatter = (apiData) => {
         icon: <FaShoppingCart className="me-2" />,
         bg: "#E9F3FF",
         rows: [
+          // Needs to check
           { label: "Quantity", value: `${217500} ${item.unit}` },
-          { label: "Value", value: "₹34,191" },
+          { label: "Value", value: "Needs to check" },
         ],
       },
       {
@@ -132,35 +133,35 @@ export const summeryOverviewDataFormatter = (apiData) => {
       {
         id: "currentStock",
         label: "Current Stock",
-        value: "200,000 GM",
+        value: "Needs to check",
         icon: <FaBoxes className="me-2" />,
         bg: "#F3FFF8",
       },
       {
         id: "stockValue",
         label: "Stock Value",
-        value: "₹30,100",
+        value: "Needs to check",
         icon: <FaRupeeSign className="me-2" />,
         bg: "#F3FFF8",
       },
       {
         id: "margin",
         label: "Margin",
-        value: "70.66%",
+        value: "Needs to check",
         icon: <FaPercentage className="me-2" />,
         bg: "#F3FFF8",
       },
       {
         id: "saleConsumptionGM",
         label: "Sale - Consumption",
-        value: "3698 GM",
+        value: "Needs to check",
         icon: <FaArrowRight className="me-2" />,
         bg: "#F3FFF8",
       },
       {
         id: "saleConsumptionRs",
         label: "Sale - Consumption",
-        value: "₹589",
+        value: "Needs to check",
         icon: <FaArrowRight className="me-2" />,
         bg: "#F3FFF8",
       },
@@ -206,7 +207,7 @@ export const departmentAnalyticsTableDataFornatter = (data) => {
 // utils/departmentDataFormatter.js
 
 export const departmentAnalyticsDataFormatter = (apiData) => {
-  return apiData.list.map((item) => {
+  return apiData?.list?.map((item) => {
     const departmentName = item?.department?.name || "N/A";
 
     return {
@@ -214,25 +215,25 @@ export const departmentAnalyticsDataFormatter = (apiData) => {
       department: departmentName,
       opening: {
         label: `${item.consumptionOpeningValue} GM`,
-        value: `₹${item.consumptionOpeningValue * 1.5}`,
+        value: `₹${(item.consumptionOpeningValue * 1.5)?.toFixed(2)}`,
         textColor: "#2F80ED",
         bgColor: "rgba(47, 128, 237, 0.08)", // light blue tint
       },
       consumption: {
         label: `${item.consumptionValue} GM`,
-        value: `₹${item.consumptionValue * 0.72}`,
+        value: `₹${(item.consumptionValue * 0.72)?.toFixed(2)}`,
         textColor: "#EB5757",
         bgColor: "rgba(235, 87, 87, 0.08)", // light red tint
       },
       closing: {
         label: `${item.consumptionClosingValue} GM`,
-        value: `₹${item.consumptionClosingValue * 1.38}`,
+        value: `₹${(item.consumptionClosingValue * 1.38)?.toFixed(2)}`,
         textColor: "#27AE60",
         bgColor: "rgba(39, 174, 96, 0.08)", // light green tint
       },
       netConsumption: {
         label: `${item.netConsumptionValue} GM`,
-        value: `₹${item.netConsumptionValue}`,
+        value: `₹${item.netConsumptionValue?.toFixed(2)}`,
         textColor: "#EB5757",
         bgColor: "rgba(235, 87, 87, 0.08)",
       },
@@ -267,9 +268,8 @@ export const departmentDistributionChartDataFormatter = (
     FaFish,
   ];
 
-  const total = apiResponse.list.reduce((acc, d) => acc + d[selectedKey], 0);
-
-  const formatted = apiResponse.list.map((item, idx) => {
+  const total = apiResponse?.list?.reduce((acc, d) => acc + d[selectedKey], 0);
+  const formatted = apiResponse?.list?.map((item, idx) => {
     const Icon = iconList[idx % iconList.length];
     return {
       id: item.id,
@@ -543,8 +543,8 @@ export const consumptionSummaryOverViewDataFormatter = (data) => {
   ];
 };
 
-export function consumptionTrendAnalysisDataFormatter(apiData = []) {
-  return apiData.map((item) => {
+export function consumptionTrendAnalysisDataFormatter(apiData) {
+  return apiData?.list.map((item) => {
     const date = new Date(item.dt).toLocaleDateString("en-US", {
       day: "numeric",
       month: "short",
@@ -595,7 +595,7 @@ export function consumptionTrendAnalysisDataFormatter(apiData = []) {
 export function consumptionDepartmentAnalyticsDataFormatter(apiData) {
   if (!apiData || !apiData.list) return [];
 
-  return apiData.list.map((item) => {
+  return apiData?.list?.map((item) => {
     const departmentName = item?.department?.name || "N/A";
     return {
       id: item.id,
@@ -744,11 +744,20 @@ export const productsMenuItemListConsumptionDistributionDataFormatter = (apiResp
 //price trends tab
 export const priceTrendsDataFormatter = (apiResponse) => {
   if (!apiResponse || !apiResponse.list) return [];
+  const cardsData = {
+    currentPrice: apiResponse?.currentPrice?.price,
+    lowestPrice: apiResponse?.lowestPrice?.price,
+    highestPrice: apiResponse?.highestPrice?.price,
+    percentageOfChange: apiResponse?.percentageOfChange,
+  };
 
-  return apiResponse.list.map((entry, index) => {
-    const prevPrice = index > 0 ? apiResponse.list[index - 1].price : entry.price;
+  const data = apiResponse.list.map((entry, index) => {
+    const prevPrice =
+      index > 0 ? apiResponse.list[index - 1].price : entry.price;
     const priceDiff = entry.price - prevPrice;
-    const changePercent = prevPrice ? ((priceDiff / prevPrice) * 100).toFixed(2) : 0;
+    const changePercent = prevPrice
+      ? ((priceDiff / prevPrice) * 100).toFixed(2)
+      : 0;
 
     let trendIcon = <FaMinus color="#6c757d" />;
     let trendText = "Stable";
@@ -770,14 +779,23 @@ export const priceTrendsDataFormatter = (apiResponse) => {
       trendText,
     };
   });
+  return {cardsData,data}
 };
 
 //stock trends tab
 export const stockTrendsDataFormatter = (apiResponse) => {
   if (!apiResponse || !apiResponse.list) return [];
-
-  return apiResponse.list.map((entry, index) => {
-    const prevQty = index > 0 ? apiResponse.list[index - 1].leftOverStockQuantity : entry.leftOverStockQuantity;
+    const cardsData = {
+      currentStock: apiResponse?.currentStock,
+      currentPrice: apiResponse?.currentPrice,
+      totalPurchase: apiResponse?.totalPurchase,
+      totalConsumption: apiResponse?.totalConsumption,
+    };
+  const data = apiResponse?.list.map((entry, index) => {
+    const prevQty =
+      index > 0
+        ? apiResponse.list[index - 1].leftOverStockQuantity
+        : entry.leftOverStockQuantity;
     const diff = entry.leftOverStockQuantity - prevQty;
 
     let trendIcon = <FaMinus className="text-secondary" />;
@@ -803,6 +821,7 @@ export const stockTrendsDataFormatter = (apiResponse) => {
       trendColor,
     };
   });
+  return {cardsData,data}
 };
 
 
