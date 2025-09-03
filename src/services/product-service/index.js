@@ -73,7 +73,13 @@ export function useProductIngredients(id, params) {
     params,
   });
 }
-
+export function useProductIngredientsUsage(id, params) {
+  return useApiQuery({
+    key: ["products", id, "ingredients", params],
+    endpoint: `/products/${id}/ingredients/usage`,
+    params,
+  });
+}
 export function useProductDirectIngredients(id, params) {
   return useApiQuery({
     key: ["products", id, "directingredients", params],

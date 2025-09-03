@@ -12,7 +12,6 @@ function DepartmentPage() {
   const [durationFilter, setDurationFilter] = useState("Today");
 
   const { startDate, endDate, setStartDate, setEndDate } = useSuppliersContext();
-  console.log(startDate, endDate,'ramarama');
   const {
     setStartDate: setStartDateDashboard,
     setEndDate: setEndDateDashboard,
