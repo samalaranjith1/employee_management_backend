@@ -48,6 +48,15 @@ export function useSupplierSummaryDaily(id, params) {
   });
 }
 
+export function useSupplierSummarySameDay(id, params) {
+  return useApiQuery({
+    key: ["suppliers", id, "summary", "daily", params],
+    endpoint: `/suppliers/${id}/summary/sameday`,
+    params,
+    enabled: !!id,
+  });
+}
+
 export function useSuppliersUsage(params) {
   return useApiQuery({
     key: ["suppliers", "usage", params],

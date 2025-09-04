@@ -1,11 +1,12 @@
 "use client";
 
 import React, { useRef } from "react";
-import { Card, Row, Col } from "react-bootstrap";
 import { suppliersSummaryOverViewDataFormatter } from "@/utils/data_formatters/suppliersDataFormatter";
 import { useSupplierSummary } from "@/services/supplier-service";
 import { useSuppliersContext } from "@/contexts/SuppliersContext";
 import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer";
+import ComponentHeader from "@/components/common/ComponentHeader";
+import SuppliersSummaryOverViewCards from "@/components/common/suppliers/cards/Home/SuppliersSummaryOverViewCards";
 
 const SuppliersSummaryOverView = () => {
   const { startDate, endDate } = useSuppliersContext();
@@ -13,7 +14,21 @@ const SuppliersSummaryOverView = () => {
 
   return (
     <div className="p-3">
-      {/* ✅ ServiceRenderer handles fetching, loading, errors, no data */}
+      <ComponentHeader
+        title={"Summary Overview"}
+        description={"Real-time consumption metrics and performance indicators"}
+        titleColor={"rgb(30,30,30)"}
+        cardBgColor={"none"}
+        isShowArrows={true}
+        scrollRef={scrollRef}
+        isExpandable={true}
+        titleIcon={
+          <span role="img" aria-label="chart">
+            📊
+          </span>
+        }
+      />
+
       <ServiceRenderer
         queryHook={useSupplierSummary}
         queryKey={["supplierSummary", { startdt: startDate, enddt: endDate }]}
@@ -23,12 +38,13 @@ const SuppliersSummaryOverView = () => {
             enddt: endDate,
           }).queryFn
         }
-        queryArgs={[3,
+        queryArgs={[
+          3,
           {
             startdt: startDate,
             enddt: endDate,
-            outlet:1,
-            userId:7
+            outlet: 1,
+            userId: 7,
           },
         ]}
         formatter={suppliersSummaryOverViewDataFormatter}
@@ -38,91 +54,20 @@ const SuppliersSummaryOverView = () => {
           const { summaryCards } = formattedData;
 
           return (
-            <>
-              {/* Header */}
-              <div className="d-flex align-items-center mb-3">
-                <div
-                  className="d-flex align-items-center justify-content-center me-2"
-                  style={{
-                    backgroundColor: "#FF5B22",
-                    borderRadius: "8px",
-                    width: "32px",
-                    height: "32px",
-                  }}
-                >
-                  <span role="img" aria-label="chart">
-                    📊
-                  </span>
-                </div>
-                <div>
-                  <h6 className="mb-0 fw-semibold" style={{ color: "#212529" }}>
-                    Summary Overview
-                  </h6>
-                  <small style={{ color: "#6C757D", fontSize: "13px" }}>
-                    Real-time consumption metrics and performance indicators
-                  </small>
-                </div>
-              </div>
-
-              {/* Summary Cards */}
-              <Row>
-                {summaryCards.map((card) => (
-                  <Col md={4} key={card.id}>
-                    <Card
-                      className="shadow-sm border-0 mb-3"
-                      style={{
-                        backgroundColor: card.bgColor,
-                        borderRadius: "12px",
-                      }}
-                    >
-                      <Card.Body>
-                        <div className="d-flex align-items-center mb-3">
-                          <div
-                            className="d-flex align-items-center justify-content-center"
-                            style={{
-                              backgroundColor: card.iconBg,
-                              borderRadius: "6px",
-                              width: "28px",
-                              height: "28px",
-                            }}
-                          >
-                            {card.icon}
-                          </div>
-                          <span
-                            className="ms-2 fw-semibold"
-                            style={{ color: "#212529", fontSize: "14px" }}
-                          >
-                            {card.title}
-                          </span>
-                        </div>
-
-                        {card.fields.map((field, idx) => (
-                          <div
-                            key={idx}
-                            className="d-flex justify-content-between mb-2"
-                          >
-                            <span
-                              style={{ fontSize: "13px", color: "#6C757D" }}
-                            >
-                              {field.label}
-                            </span>
-                            <span
-                              className={field.bold ? "fw-bold" : ""}
-                              style={{
-                                fontSize: "14px",
-                                color: "#212529",
-                              }}
-                            >
-                              {field.value}
-                            </span>
-                          </div>
-                        ))}
-                      </Card.Body>
-                    </Card>
-                  </Col>
-                ))}
-              </Row>
-            </>
+            <div
+              ref={scrollRef}
+              className="d-flex"
+              style={{
+                gap: "16px",
+                paddingBottom: "0.5rem",
+                overflowX: "auto",
+                msOverflowStyle: "none",
+                scrollbarWidth: "none",
+                WebkitOverflowScrolling: "touch",
+              }}
+            >
+              <SuppliersSummaryOverViewCards summaryCards={summaryCards} />
+            </div>
           );
         }}
       </ServiceRenderer>
@@ -131,6 +76,141 @@ const SuppliersSummaryOverView = () => {
 };
 
 export default SuppliersSummaryOverView;
+
+//working code before code split
+// "use client";
+
+// import React, { useRef } from "react";
+// import { Card, Row, Col } from "react-bootstrap";
+// import { suppliersSummaryOverViewDataFormatter } from "@/utils/data_formatters/suppliersDataFormatter";
+// import { useSupplierSummary } from "@/services/supplier-service";
+// import { useSuppliersContext } from "@/contexts/SuppliersContext";
+// import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer";
+
+// const SuppliersSummaryOverView = () => {
+//   const { startDate, endDate } = useSuppliersContext();
+//   const scrollRef = useRef(null);
+
+//   return (
+//     <div className="p-3">
+//       {/* ✅ ServiceRenderer handles fetching, loading, errors, no data */}
+//       <ServiceRenderer
+//         queryHook={useSupplierSummary}
+//         queryKey={["supplierSummary", { startdt: startDate, enddt: endDate }]}
+//         queryFn={() =>
+//           useSupplierSummary({
+//             startdt: startDate,
+//             enddt: endDate,
+//           }).queryFn
+//         }
+//         queryArgs={[3,
+//           {
+//             startdt: startDate,
+//             enddt: endDate,
+//             outlet:1,
+//             userId:7
+//           },
+//         ]}
+//         formatter={suppliersSummaryOverViewDataFormatter}
+//         shimmerCount={3}
+//       >
+//         {(formattedData) => {
+//           const { summaryCards } = formattedData;
+
+//           return (
+//             <>
+//               {/* Header */}
+//               <div className="d-flex align-items-center mb-3">
+//                 <div
+//                   className="d-flex align-items-center justify-content-center me-2"
+//                   style={{
+//                     backgroundColor: "#FF5B22",
+//                     borderRadius: "8px",
+//                     width: "32px",
+//                     height: "32px",
+//                   }}
+//                 >
+//                   <span role="img" aria-label="chart">
+//                     📊
+//                   </span>
+//                 </div>
+//                 <div>
+//                   <h6 className="mb-0 fw-semibold" style={{ color: "#212529" }}>
+//                     Summary Overview
+//                   </h6>
+//                   <small style={{ color: "#6C757D", fontSize: "13px" }}>
+//                     Real-time consumption metrics and performance indicators
+//                   </small>
+//                 </div>
+//               </div>
+
+//               {/* Summary Cards */}
+//               <Row>
+//                 {summaryCards.map((card) => (
+//                   <Col md={4} key={card.id}>
+//                     <Card
+//                       className="shadow-sm border-0 mb-3"
+//                       style={{
+//                         backgroundColor: card.bgColor,
+//                         borderRadius: "12px",
+//                       }}
+//                     >
+//                       <Card.Body>
+//                         <div className="d-flex align-items-center mb-3">
+//                           <div
+//                             className="d-flex align-items-center justify-content-center"
+//                             style={{
+//                               backgroundColor: card.iconBg,
+//                               borderRadius: "6px",
+//                               width: "28px",
+//                               height: "28px",
+//                             }}
+//                           >
+//                             {card.icon}
+//                           </div>
+//                           <span
+//                             className="ms-2 fw-semibold"
+//                             style={{ color: "#212529", fontSize: "14px" }}
+//                           >
+//                             {card.title}
+//                           </span>
+//                         </div>
+
+//                         {card.fields.map((field, idx) => (
+//                           <div
+//                             key={idx}
+//                             className="d-flex justify-content-between mb-2"
+//                           >
+//                             <span
+//                               style={{ fontSize: "13px", color: "#6C757D" }}
+//                             >
+//                               {field.label}
+//                             </span>
+//                             <span
+//                               className={field.bold ? "fw-bold" : ""}
+//                               style={{
+//                                 fontSize: "14px",
+//                                 color: "#212529",
+//                               }}
+//                             >
+//                               {field.value}
+//                             </span>
+//                           </div>
+//                         ))}
+//                       </Card.Body>
+//                     </Card>
+//                   </Col>
+//                 ))}
+//               </Row>
+//             </>
+//           );
+//         }}
+//       </ServiceRenderer>
+//     </div>
+//   );
+// };
+
+// export default SuppliersSummaryOverView;
 
 // import React from "react";
 // import { Card, Row, Col } from "react-bootstrap";

@@ -1,23 +1,13 @@
 "use client";
 
 import React from "react";
-import { Card, Table, Row, Col } from "react-bootstrap";
-import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
+import { Card, Row, Col } from "react-bootstrap";
 import { rawMaterialPurchaseAnalysisDataFormatter } from "@/utils/data_formatters/suppliersDataFormatter";
 import { useSuppliersContext } from "@/contexts/SuppliersContext";
 import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer";
 import { useItemsPurchaseList } from "@/services/item-service";
-
-const COLORS = [
-  "#4285F4",
-  "#34A853",
-  "#FBBC05",
-  "#EA4335",
-  "#9C27B0",
-  "#00ACC1",
-  "#F4511E",
-  "#7CB342",
-];
+import RawMaterialPurchaseAnalysisTable from "@/components/common/suppliers/TableSort/Home/RawMaterialPurchaseAnalysisTable";
+import RawMaterialPurchaseAnalysisGraph from "@/components/common/suppliers/GraphWrapper/Home/RawMaterialPurchaseAnalysisGraph";
 
 const RawMaterialPurchaseAnalysis = () => {
   const { startDate, endDate } = useSuppliersContext();
@@ -32,14 +22,13 @@ const RawMaterialPurchaseAnalysis = () => {
           enddt: endDate,
         }).queryFn
       }
-      queryArgs={[{ startdt: startDate, enddt: endDate ,outlet:1,userId:7}]}
+      queryArgs={[{ startdt: startDate, enddt: endDate, outlet: 1, userId: 7 }]}
       formatter={rawMaterialPurchaseAnalysisDataFormatter}
       shimmerCount={1}
     >
       {(formattedData) => {
         const { items, totalPurchaseValue, cardMeta } = formattedData;
 
-        // Pie chart data
         const pieData = items.map((i) => ({
           name: i.name,
           value: i.value,
@@ -74,69 +63,12 @@ const RawMaterialPurchaseAnalysis = () => {
               <Row>
                 {/* Table */}
                 <Col md={7}>
-                  <Table borderless responsive className="align-middle">
-                    <thead>
-                      <tr style={{ color: "#6B7280", fontSize: "14px" }}>
-                        <th>Item</th>
-                        <th>Purchase Qty</th>
-                        <th>Purchase Value</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {items.map((item) => (
-                        <tr key={item.key} style={{ fontSize: "14px" }}>
-                          <td>
-                            <div
-                              className="fw-semibold"
-                              style={{ color: "#1A1A1A" }}
-                            >
-                              {item.name}
-                            </div>
-                            <div style={{ color: "#6B7280", fontSize: "12px" }}>
-                              {item.type}. {item.unitInfo}
-                            </div>
-                          </td>
-                          <td style={{ color: "#1A1A1A" }}>{item.quantity}</td>
-                          <td style={{ color: "#1A1A1A" }}>
-                            ₹{item.value.toLocaleString("en-IN")}
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </Table>
+                  <RawMaterialPurchaseAnalysisTable items={items} />
                 </Col>
 
                 {/* Pie Chart */}
-                <Col md={5} className="d-flex flex-column align-items-center">
-                  <h6
-                    className="fw-semibold mb-3"
-                    style={{ color: "#1A1A1A", fontSize: "14px" }}
-                  >
-                    Purchase Distribution
-                  </h6>
-                  <ResponsiveContainer width="100%" height={220}>
-                    <PieChart>
-                      <Pie
-                        data={pieData}
-                        cx="50%"
-                        cy="50%"
-                        labelLine={false}
-                        innerRadius={60}
-                        outerRadius={80}
-                        dataKey="value"
-                      >
-                        {pieData.map((entry, index) => (
-                          <Cell
-                            key={`cell-${index}`}
-                            fill={COLORS[index % COLORS.length]}
-                          />
-                        ))}
-                      </Pie>
-                      <Tooltip
-                        formatter={(val) => `₹${val.toLocaleString("en-IN")}`}
-                      />
-                    </PieChart>
-                  </ResponsiveContainer>
+                <Col md={5}>
+                  <RawMaterialPurchaseAnalysisGraph pieData={pieData} />
                 </Col>
               </Row>
 
