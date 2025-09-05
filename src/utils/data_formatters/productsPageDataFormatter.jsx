@@ -132,7 +132,7 @@ export const productSummaryOverViewDataFormatter = (apiData) => {
 };
 
 export const productsTrendAnalysisDataFormatter = (apiData) => {
-    const formatTrendData =  apiData.list.map((item) => ({
+    const formatTrendData =  apiData.list?.map((item) => ({
         date: new Date(item.dt).toLocaleDateString("en-US", {
           month: "short",
           day: "numeric",
@@ -168,14 +168,14 @@ export const productsTrendAnalysisDataFormatter = (apiData) => {
       color: "#06b6d4", // Cyan
     },
     itemsSold: {
-      value: item.itemsSold,
+      value: `${item.itemsSold}`, // ✅ Force string
       icon: <FaBox color="#8b5cf6" />,
-      color: "#8b5cf6", // Violet
+      color: "#8b5cf6",
     },
     orders: {
-      value: item.orders,
+      value: `${item.orders}`, // ✅ Same fix here
       icon: <FaShoppingCart color="#ef4444" />,
-      color: "#ef4444", // Red
+      color: "#ef4444",
     },
   }));
   return { trendData:formatTrendData, tableData:formatTableData };
@@ -264,34 +264,41 @@ export const salesDataFormatter = (list) => {
 export const productsIngredientsDataFormatter = (ingredient) => {
   const { item, unitPrice, ingredientQuantity, ingredientPrice } = ingredient;
 
+  const rawItemType = item?.itemType || "--";
+  const rawIngredient = item?.alias || item?.name || "--";
+  const rawItemPrice = unitPrice ?? 0;
+  const rawQuantity = ingredientQuantity ?? 0;
+  const rawTotalPrice = ingredientPrice ?? 0;
+
   return {
+    // Raw fields for sorting
+    itemTypeRaw: rawItemType,
+    ingredientRaw: rawIngredient,
+    itemPriceRaw: rawItemPrice,
+    quantityRaw: rawQuantity,
+    totalPriceRaw: rawTotalPrice,
+
+    // Display fields for rendering
     itemType: (
       <span className="d-flex align-items-center text-muted">
-        <FaStore className="me-2 text-primary" /> {item?.itemType || "--"}
+        <FaStore className="me-2 text-primary" /> {rawItemType}
       </span>
     ),
     ingredient: (
       <span className="fw-semibold text-dark">
         <FaUtensils className="me-2 text-success" />
-        {item?.alias || item?.name || "--"}
+        {rawIngredient}
       </span>
     ),
-    itemPrice: (
-      <span className="text-dark">₹{unitPrice?.toFixed(2) || "--"}</span>
-    ),
-    quantity: (
-      <span className="text-dark">
-        {ingredientQuantity || 0}
-      </span>
-    ),
+    itemPrice: <span className="text-dark">₹{rawItemPrice.toFixed(2)}</span>,
+    quantity: <span className="text-dark">{rawQuantity}</span>,
     totalPrice: (
       <span className="fw-semibold text-success">
-        ₹{ingredientPrice?.toFixed(2) || "0.00"}
+        ₹{rawTotalPrice.toFixed(2)}
       </span>
     ),
   };
 };
-
 //cost tab
 export const productsCostDataFormatter = (apiData) => {
   if (!apiData) return { summaryCards: [], ingredients: [] };

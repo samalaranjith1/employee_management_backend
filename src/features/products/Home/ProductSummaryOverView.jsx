@@ -81,7 +81,6 @@ export default function ProductSummaryOverView() {
                 </Col>
               ))}
             </Row>
-
             {/* Footer Metrics */}
             <Row className="g-3">
               {(formatted.footer || []).map((f, i) => (

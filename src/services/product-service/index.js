@@ -41,6 +41,13 @@ export function useProductSummaryDaily(id, params) {
     params,
   });
 }
+export function useProductSummarySameDay(id, params) {
+  return useApiQuery({
+    key: ["products", id, "summary-daily", params],
+    endpoint: `/products/${id}/summary/sameday`,
+    params,
+  });
+}
 
 export function useProductSalesForecastOfDay(id, params) {
   return useApiQuery({
