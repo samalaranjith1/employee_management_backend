@@ -169,20 +169,34 @@ export const summeryOverviewDataFormatter = (apiData) => {
   };
 };
 
+
 export function trendAnalysisDataFormatter(apiData) {
-  return apiData.list.map((item) => {
-    return {
-      date: new Date(item.dt).toLocaleDateString("en-US", {
-        month: "short",
-        day: "numeric",
-      }),
-      opening: item.startingStockValue || 0,
-      consumption: item.consumptionQuantity || 0,
-      closing: item.purchaseClosingQuantity || 0,
-      consumptionValue: item.consumptionValue || 0,
-    };
-  });
+  console.log(apiData.list, "ramarama");
+
+  const chartData = apiData.list.map((item) => ({
+    date: new Date(item.dt).toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+    }),
+    opening: item.startingStockValue || 0,
+    consumption: item.consumptionQuantity || 0,
+    closing: item.purchaseClosingQuantity || 0,
+    consumptionValue: item.consumptionValue || 0,
+  }));
+  const tableData = apiData?.list.map((item) => ({
+    ...item,
+    dateIcon: <FaCalendarAlt className="me-2 text-success" />,
+    openingIcon: <FaBoxOpen className="me-1 text-primary" />,
+    consumptionIcon: <FaFireAlt className="me-1 text-warning" />,
+    closingIcon: <FaChartLine className="me-1 text-success" />,
+    netConsumptionIcon: <FaBurn className="me-1 text-danger" />,
+    saleIcon: <FaShoppingCart className="me-1 text-purple" />,
+  }));
+
+  console.log("chartData", chartData);
+  return {chartData,tableData}; // ✅ important!
 }
+
 
 export function getTrendIcon(value) {
   if (value > 0) return <FaArrowUp color="green" />;
