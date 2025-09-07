@@ -1,35 +1,90 @@
 "use client";
 import React from "react";
 import CommonCard from "./CommonCard";
+// Import necessary icons. Assuming FaArrowTrendUp and FaArrowTrendDown from fa6
+// If you are using an older version of react-icons/fa, you might need FaChartLine, FaArrowUp, FaArrowDown
+import { FaArrowTrendUp, FaArrowTrendDown } from "react-icons/fa6";
 
 export default function RecipesCards({ card, idx, widthDesktop }) {
+  // Function to render a single data row with label and right-aligned value
+  const renderDataRow = (label, value) => (
+    <div
+      className="d-flex justify-content-between"
+      style={{ margin: "0.25rem 0", color: card.textColor }}
+    >
+      <p style={{ margin: 0 }}>{label}</p>
+      <p style={{ margin: 0 }}>
+        <strong style={{ color: card.textColor }}>{value}</strong>
+      </p>
+    </div>
+  );
+
   return (
     <CommonCard
       key={idx}
       bgColor={card.bg}
-      textColor={card.textColor}
-      style={{ padding: "1rem", height: "100%" }}
+      style={{ padding: "1.5rem", height: "100%", borderRadius: "1rem" }}
       widthDesktop={widthDesktop}
     >
+      {/* Header (Icon and Label) */}
       <div className="d-flex justify-content-between align-items-center">
-        <div style={{ fontSize: "1.5rem" }}>{card.icon}</div>
+        {/* Icon Container with Rotation */}
+        <span
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            width: "2rem",
+            height: "2rem",
+            borderRadius: "0.75rem",
+            backgroundColor: card.iconBg,
+            boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+            transform: "rotate(-45deg)",
+          }}
+        >
+          {/* Icon rotated back to be upright */}
+          {card.icon}
+        </span>
+
+        {/* Label */}
         <span
           style={{
             fontSize: "0.8rem",
             padding: "4px 8px",
             borderRadius: "8px",
-            background: `${card.labelColor}20`,
-            color: card.labelColor,
+            backgroundColor: card.labelColor,
+            color: "#FFFFFF",
             fontWeight: "500",
           }}
         >
           {card.label}
         </span>
       </div>
-      <h6 style={{ marginTop: "1rem", fontWeight: "600" }}>{card.title}</h6>
-      <p style={{ margin: 0 }}>Products: {card.products}</p>
-      <p style={{ margin: 0 }}>Total Sales: {card.sales}</p>
-      <p style={{ margin: 0 }}>Share: {card.share}</p>
+
+      {/* Title */}
+      <h6
+        style={{
+          marginTop: "10px",
+          fontWeight: "600",
+          color: card.textColor,
+        }}
+      >
+        {card.title}
+      </h6>
+
+      {/* Separator Line */}
+      <div
+        style={{
+          height: "1px",
+          backgroundColor: `${card.textColor}30`, // Use a lighter version of text color for the line
+          // margin: "1rem 0",
+        }}
+      />
+
+      {/* Data Rows (Products, Sales, Shares) */}
+      {renderDataRow("Products", card.products)}
+      {renderDataRow("Total Sales", card.sales)}
+      {renderDataRow("Shares", card.share)}
     </CommonCard>
   );
 }

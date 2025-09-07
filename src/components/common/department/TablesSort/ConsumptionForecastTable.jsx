@@ -4,12 +4,9 @@ import React from "react";
 import { Table } from "react-bootstrap";
 import { TableControls } from "@/components/common/TableControls";
 import { useTableControls } from "@/components/hooks/useTableControls";
-import {
-  useTableSort,
-} from "@/components/hooks/useTableSort";
+import { useTableSort } from "@/components/hooks/useTableSort";
 
 export default function ConsumptionForecastTable({ tableData = [] }) {
-  // 🔹 Columns for table + Excel export
   const columns = [
     { key: "day", header: "DAY", width: 20 },
     { key: "name", header: "ITEM", width: 30 },
@@ -17,11 +14,9 @@ export default function ConsumptionForecastTable({ tableData = [] }) {
     { key: "totalPrice", header: "TOTAL PRICE", width: 20 },
   ];
 
-  // 🔹 Table sorting
   const { sortedData, sortKey, direction, handleSort } =
     useTableSort(tableData);
 
-  // 🔹 Filters config (dynamic)
   const filtersConfig = {
     day: [
       "All",
@@ -35,7 +30,6 @@ export default function ConsumptionForecastTable({ tableData = [] }) {
     ],
   };
 
-  // 🔹 Table controls hook
   const {
     searchTerm,
     setSearchTerm,
@@ -50,13 +44,11 @@ export default function ConsumptionForecastTable({ tableData = [] }) {
     filtersConfig,
   });
 
-  // 🔹 Render sort arrow for table headers
   const renderSortArrow = (key) =>
     sortKey === key ? (direction === "asc" ? " ↑" : " ↓") : "";
 
   return (
     <div>
-      {/* 🔹 Controls */}
       <TableControls
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
@@ -64,13 +56,18 @@ export default function ConsumptionForecastTable({ tableData = [] }) {
         setFilters={setFilters}
         filtersConfig={filtersConfig}
         handleExport={handleExport}
-        searchable={true} // show search
-        filterable={true} // show filters
-        exportable={true} // show export button
+        searchable
+        filterable
+        exportable
       />
 
-      {/* 🔹 Table */}
-      <div style={{ maxHeight: "65vh", overflowY: "auto", overflowX: "auto" }}>
+      <div
+        style={{
+          maxHeight: "65vh",
+          overflowY: "auto",
+          overflowX: "auto",
+        }}
+      >
         <Table hover className="align-middle mb-0 text-nowrap">
           <thead>
             <tr>
@@ -80,12 +77,16 @@ export default function ConsumptionForecastTable({ tableData = [] }) {
                   onClick={() => handleSort(col.key)}
                   style={{
                     cursor: "pointer",
-                    fontWeight: "600",
+                    fontWeight: 600,
                     fontSize: "0.85rem",
                     textTransform: "uppercase",
                     color: "#555",
                     padding: "12px 16px",
                     borderBottom: "1px solid #eee",
+                    position: "sticky", // 🔹 make sticky
+                    top: 0, // 🔹 stick to top
+                    background: "#fafafa", // 🔹 background for visibility
+                    zIndex: 10, // 🔹 ensure above table rows
                   }}
                 >
                   {col.header}
@@ -125,6 +126,7 @@ export default function ConsumptionForecastTable({ tableData = [] }) {
     </div>
   );
 }
+
 // "use client";
 
 // import React, { useState, useMemo } from "react";

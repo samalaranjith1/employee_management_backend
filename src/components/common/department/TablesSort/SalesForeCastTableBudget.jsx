@@ -134,6 +134,37 @@ export default function SalesForeCastTableBudget({ tableData = [] }) {
               </tr>
             )}
           </tbody>
+          <tfoot>
+            <tr
+              style={{
+                fontWeight: 700,
+                position: "sticky",
+                bottom: 0,
+                backgroundColor: "#fafafa",
+                borderTop: "2px solid #eee",
+              }}
+            >
+              <td style={{ padding: "12px 16px" }}>Total</td>
+              <td style={{ padding: "12px 16px" }}>
+                <FaRupeeSign />{" "}
+                {Math.round(
+                  filteredData.reduce((sum, row) => sum + row.budget, 0)
+                ).toLocaleString()}
+              </td>
+              <td style={{ padding: "12px 16px" }}>
+                <FaRupeeSign />{" "}
+                {Math.round(
+                  filteredData.reduce((sum, row) => sum + row.sales, 0)
+                ).toLocaleString()}
+              </td>
+              <td style={{ padding: "12px 16px" }}>
+                {filteredData.reduce((sum, row) => sum + row.orders, 0)}
+              </td>
+              <td style={{ padding: "12px 16px" }}>
+                {filteredData.reduce((sum, row) => sum + row.items, 0)}
+              </td>
+            </tr>
+          </tfoot>
         </Table>
       </div>
     </div>

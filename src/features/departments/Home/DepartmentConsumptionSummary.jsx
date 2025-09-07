@@ -5,7 +5,7 @@ import { Card, Row, Col } from "react-bootstrap";
 import { IconChartBar } from "@tabler/icons-react";
 import { useDepartmentContext } from "@/contexts/DepartmentContext";
 import { useDepartmentSummary } from "@/services/department-service";
-import { departmentConsumptionSummarryDataFormmatter } from "@/utils/data_formatters/departmentPage";
+import { departmentConsumptionSummaryDataFormatter  } from "@/utils/data_formatters/departmentPage";
 import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer";
 import ConsumptionSummaryCards from "@/components/common/department/cards/ConsumptionSummaryCards";
 
@@ -30,7 +30,7 @@ export default function DepartmentConsumptionSummary({ departmentId }) {
         departmentId,
         { startdt: startDate, enddt: endDate, outlet: 1, userId: 7 },
       ]}
-      formatter={departmentConsumptionSummarryDataFormmatter}
+      formatter={departmentConsumptionSummaryDataFormatter }
       shimmerCount={3}
     >
       {(cards) => (

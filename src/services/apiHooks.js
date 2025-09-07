@@ -8,7 +8,7 @@ import {
 // import axios from "./axiosInstance";
 import axios from "axios";
 
-const basePath = 'https://flavourheaven.in/costonomy-services/'
+const basePath = "https://flavourheaven.in/costonomy-services/";
 
 export function useApiQuery({
   key, // Array query key

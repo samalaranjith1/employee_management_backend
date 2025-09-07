@@ -44,36 +44,48 @@ function TopSellingProductsTable({ revenueSummary = [] }) {
 
       <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
         {sort.sortedData.map((item, idx) => (
-          <div key={idx} style={cardStyle}>
-            {/* Title row (with optional % symbol) */}
-            <div
-              style={{
-                fontSize: 13,
-                color: "#7b7b8a",
-                display: "flex",
-                justifyContent: item.title.toLowerCase().includes("margin %")
-                  ? "space-between"
-                  : "flex-start",
-              }}
-            >
-              <span>{item.title}</span>
-              {item.title.toLowerCase().includes("margin %") && <span>%</span>}
-            </div>
+          <div
+            key={idx}
+            style={{ ...cardStyle, backgroundColor: `${item.bgColor}` }}
+          >
+            <div className="d-flex">
+              <div>
+                <div
+                  style={{
+                    fontSize: 13,
+                    color: "#7b7b8a",
+                    display: "flex",
+                    justifyContent: item.title
+                      .toLowerCase()
+                      .includes("margin %")
+                      ? "space-between"
+                      : "flex-start",
+                  }}
+                >
+                  <span>{item.title}</span>
+                  {item.title.toLowerCase().includes("margin %") && (
+                    <span>%</span>
+                  )}
+                </div>
 
-            {/* Amount */}
-            <div
-              style={{
-                fontSize: 22,
-                fontWeight: 800,
-                color: "#5B2EEA",
-                marginTop: 6,
-              }}
-            >
-              {item.amount}
-            </div>
+                {/* Amount */}
+                <div
+                  style={{
+                    fontSize: 22,
+                    fontWeight: 800,
+                    color: "#5B2EEA",
+                    marginTop: 6,
+                  }}
+                >
+                  {item.amount}
+                </div>
 
-            {/* Subtitle */}
-            <div style={{ fontSize: 12, color: "#9aa0b0" }}>{item.sub}</div>
+                {/* Subtitle */}
+                <div style={{ fontSize: 12, color: "#9aa0b0" }}>{item.sub}</div>
+              </div>
+
+              <div className="p-2 m-2 ps-5" style={{fontSize:"24px"}}>{item.icon}</div>
+            </div>
           </div>
         ))}
       </div>

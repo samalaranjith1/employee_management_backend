@@ -1,5 +1,15 @@
 import { FaBox, FaBoxOpen, FaClipboardList, FaCube, FaExclamationTriangle, FaFileAlt, FaPercent, FaShoppingCart, FaTags, FaTrash } from "react-icons/fa";
-import { FaUtensils, FaChartLine } from "react-icons/fa";
+import {
+  FaUtensils,
+  FaChartLine,
+  FaArrowUp,
+  FaArrowDown,
+  FaPercentage,
+  FaChartBar,
+  FaRupeeSign,
+  FaTrashAlt,
+} from "react-icons/fa";
+import { formatDate } from "..";
 
 // utils/formatMenuItems.js
 export function productsDataFormatter(rawData) {
@@ -57,14 +67,14 @@ export function salesDataFormatter(rawData) {
     {
       label: "Net Sales",
       value: formatCurrency(
-        rawData.list.reduce((acc, item) => acc + item.sales.netSales, 0)
+        rawData.list?.reduce((acc, item) => acc + item.sales.netSales, 0)
       ),
       icon: <FaShoppingCart />
     },
     {
       label: "Discount",
       value: formatCurrency(
-        rawData.list.reduce((acc, item) => acc + item.sales.discount, 0)
+        rawData.list?.reduce((acc, item) => acc + item.sales.discount, 0)
       ),
       icon: <FaTags />
     },
@@ -221,10 +231,10 @@ export function departmentSalesForeCastBudgetDataFormatter(apiResponse) {
   ];
 
   // Format table data
-  const tableData = list.map(item => ({
+  const tableData = list.map((item) => ({
     day: item.day,
     budget: item.budgetAgainstTotalSales,
-    sales: item.avgTotalSales,
+    sales: item.avgNetSales,
     orders: item.avgOrders,
     items: Math.round(item.avgTotalSales / 100), // approximate
   }));
@@ -302,8 +312,8 @@ export const departmentConsumptionForecastDataFormatter = (apiResponse) => {
     unit: item.product.pieceUnit || "-",
     unitQuantity: item.product.pieceQuantity || 1,
     unitPrice: item.product.price || 0,
-    quantity: item.avgItemsSold || 0,
-    totalPrice: item.avgTotalSales || 0,
+    quantity: item.quantity || 0,
+    totalPrice: item.totalPrice || 0,
   }));
 
   return { topCardsData, tableData };
@@ -311,7 +321,79 @@ export const departmentConsumptionForecastDataFormatter = (apiResponse) => {
 
 // home tab
 // ✅ Data formatter for Department Consumption Summary
-export const departmentConsumptionSummarryDataFormmatter = (data) => {
+// export const departmentConsumptionSummarryDataFormmatter = (data) => {
+//   if (!data || !data.summary) return [];
+
+//   const { summary } = data;
+
+//   const safeNumber = (num, fraction = 0) =>
+//     typeof num === "number" && !isNaN(num) ? num.toFixed(fraction) : "0";
+
+//   const safeCurrency = (num) =>
+//     typeof num === "number" && !isNaN(num) ? `₹${num.toLocaleString()}` : "₹0";
+
+//   return [
+//     {
+//       id: "consumptionPercentage",
+//       title: "Consumption %",
+//       value: `${safeNumber(summary.consumptionPercentage, 0)}%`,
+//       change: +15.2, // placeholder – replace with API field if available
+//       icon: <FaUtensils size={28} />,
+//       bg: "#FFF6ED",
+//       textColor: "#FF6A00",
+//       stats: [
+//         { label: "Sale", value: safeCurrency(summary.netSales) },
+//         { label: "Consumption", value: safeCurrency(summary.consumptionValue) },
+//         {
+//           label: `Net Consumption (${safeNumber(
+//             summary.netConsumptionPercentage,
+//             0
+//           )}%)`,
+//           value: safeCurrency(summary.netConsumptionValue),
+//         },
+//       ],
+//     },
+//     {
+//       id: "consumption",
+//       title: "Consumption",
+//       value: safeCurrency(summary.consumptionValue),
+//       change: -2.1,
+//       icon: <FaShoppingCart size={28} />,
+//       bg: "#F0F7FF",
+//       textColor: "#007BFF",
+//       stats: [
+//         {
+//           label: "Opening Stock",
+//           value: safeCurrency(summary.consumptionOpeningValue),
+//         },
+//         {
+//           label: "Closing Stock",
+//           value: safeCurrency(summary.consumptionClosingValue),
+//         },
+//         {
+//           label: "Net Consumption",
+//           value: safeCurrency(summary.netConsumptionValue),
+//         },
+//       ],
+//     },
+//     {
+//       id: "netSales",
+//       title: "Net Sales",
+//       value: safeCurrency(summary.netSales),
+//       change: +15.2,
+//       icon: <FaChartLine size={28} />,
+//       bg: "#FAF5FF",
+//       textColor: "#9C27B0",
+//       stats: [
+//         { label: "Total Sales", value: safeCurrency(summary.totalSales) },
+//         { label: "Discount", value: safeCurrency(summary.discount) },
+//         { label: "Tax", value: safeCurrency(summary.tax) },
+//       ],
+//     },
+//   ];
+// };
+
+export const departmentConsumptionSummaryDataFormatter = (data) => {
   if (!data || !data.summary) return [];
 
   const { summary } = data;
@@ -327,7 +409,7 @@ export const departmentConsumptionSummarryDataFormmatter = (data) => {
       id: "consumptionPercentage",
       title: "Consumption %",
       value: `${safeNumber(summary.consumptionPercentage, 0)}%`,
-      change: +15.2, // placeholder – replace with API field if available
+      change: +15.2, // Placeholder for demo
       icon: <FaUtensils size={28} />,
       bg: "#FFF6ED",
       textColor: "#FF6A00",
@@ -382,3 +464,244 @@ export const departmentConsumptionSummarryDataFormmatter = (data) => {
     },
   ];
 };
+
+// export const departmentHealthDataFormatter = (data) => {
+//   if (!data) return [];
+
+//   const formatCurrency = (val) =>
+//     `₹${val?.toLocaleString("en-IN", { maximumFractionDigits: 0 })}`;
+
+//   const getCard = (label, dataset, color) => {
+//     const isPositive = dataset?.consumptionPercentage < 100;
+//     return {
+//       title: label,
+//       percentage: `${dataset?.consumptionPercentage?.toFixed(0) || 0}%`,
+//       percentageColor: color,
+//       icon: isPositive ? (
+//         <FaArrowUp color={color} />
+//       ) : (
+//         <FaArrowDown color="red" />
+//       ),
+//       sale: formatCurrency(dataset?.netSales || 0),
+//       consumption: formatCurrency(dataset?.consumptionValue || 0),
+//       netConsumption: `${dataset?.netConsumptionPercentage?.toFixed(0) || 0}%`,
+//       color,
+//     };
+//   };
+
+//   return [
+//     getCard("Today", data.today, "#FF5C00"),
+//     getCard("Yesterday", data.yesterday, "#FF0000"),
+//     getCard("This Week", data.thisWeek, "#007BFF"),
+//     getCard("Last Week", data.lastWeek, "#9C27B0"),
+//     getCard("This Month", data.thisMonth, "#388E3C"),
+//   ];
+// };
+
+// utils/trendDataFormatter.js
+
+export const departmentHealthDataFormatter = (data) => {
+  if (!data) return [];
+
+  const formatCurrency = (val) =>
+    `₹${val?.toLocaleString("en-IN", { maximumFractionDigits: 0 })}`;
+
+  const getCard = (label, dataset, color) => {
+    const isPositive = dataset?.consumptionPercentage < 100;
+    return {
+      title: label,
+      percentage: `${dataset?.consumptionPercentage?.toFixed(0) || 0}%`,
+      icon: isPositive ? <FaArrowUp /> : <FaArrowDown color="#FF0000" />,
+      sale: formatCurrency(dataset?.netSales || 0),
+      consumption: formatCurrency(dataset?.consumptionValue || 0),
+      netConsumption: `${dataset?.netConsumptionPercentage?.toFixed(0) || 0}%`,
+      color,
+    };
+  };
+
+  return [
+    getCard("Today", data.today, "#FF5C00"),
+    getCard("Yesterday", data.yesterday, "#FF0000"),
+    getCard("This Week", data.thisWeek, "#007BFF"),
+    getCard("Last Week", data.lastWeek, "#9C27B0"),
+    getCard("This Month", data.thisMonth, "#388E3C"),
+  ];
+};
+
+export const departmentTrendAnalysisDataFormatter = (apiResponse) => {
+  if (!apiResponse || !apiResponse.list) return [];
+  const trendData = apiResponse.list.map((item) => ({
+    date: item.dt, // X-axis
+    sales: item.netSales || 0,
+    consumption: item.consumptionValue || 0,
+    opening: item.consumptionOpeningValue || 0,
+    closing: item.consumptionClosingValue || 0,
+    consumptionPercentage: item.consumptionPercentage,
+  }));
+
+  return trendData
+};
+
+// departmentPeriodFormatter.js
+export function departmentPeriodDropDownDataFormatter(data) {
+  if (!data) return { cards: [], table: [] };
+
+  const totalSales = data?.list?.reduce((sum, d) => sum + (d.totalSales || 0), 0);
+  const totalConsumption = data?.list?.reduce((sum, d) => sum + (d.consumptionValue || 0), 0);
+  const totalWaste = 1245; // mock from screenshot, adjust once real field is available
+  const avgSales = totalSales / data.length;
+
+  const cards = [
+    {
+      title: "Cost Ratio",
+      value: `${((totalConsumption / totalSales) * 100).toFixed(1)}%`,
+      icon: <FaPercentage size={20} color="#fff" />,
+      iconBg: "#16a34a",
+      bg: "#f0fdf4"
+    },
+    {
+      title: "Average Daily Sales",
+      value: `₹${Math.round(avgSales).toLocaleString()}`,
+      icon: <FaChartBar size={20} color="#fff" />,
+      iconBg: "#7c3aed",
+      bg: "#f5f3ff"
+    },
+    {
+      title: "Avg. Daily Consumption",
+      value: `₹${Math.round(totalConsumption / data.length).toLocaleString()}`,
+      icon: <FaRupeeSign size={20} color="#fff" />,
+      iconBg: "#2563eb",
+      bg: "#eff6ff"
+    },
+    {
+      title: "Average Daily Waste",
+      value: `₹${totalWaste.toLocaleString()}`,
+      icon: <FaTrashAlt size={20} color="#fff" />,
+      iconBg: "#f97316",
+      bg: "#fff7ed"
+    }
+  ];
+
+  const table = data.list.map((item, idx) => {
+    const costRatio = ((item.consumptionValue / item.totalSales) * 100) || 0;
+    const costColor = costRatio > 50 ? "#16a34a" : costRatio > 30 ? "#f97316" : "#dc2626";
+
+    return {
+      index: idx + 1,
+      date: formatDate(item.dt),
+      day: formatDate(item.dt),
+      sales: item.totalSales,
+      consumption: item.consumptionValue,
+      waste: 0, // Add actual waste field if available
+      costRatio,
+      costColor,
+      isToday: formatDate(item.dt),
+    };
+  });
+
+  return { cards, table };
+}
+
+// export const itemConsumptionEfficiencyDataFormatter = (data) => {
+//   return {
+// summaryCards: [
+//   {
+//     label: "Total ITEMS",
+//     value: data.list.length,
+//     bgLight: "#f0f7ff", // light blue background
+//     bgSolid: "#1976d2", // solid blue for icon
+//     icon: <FaShoppingCart />,
+//   },
+//   {
+//     label: "Critical Items",
+//     value: data.redItems,
+//     bgLight: "#e8f5e9", // light green
+//     bgSolid: "#388e3c", // solid green
+//     icon: <FaExclamationTriangle />,
+//   },
+//   {
+//     label: "Total Waste",
+//     value: `₹${data.burn}`,
+//     bgLight: "#fff3e0", // light orange
+//     bgSolid: "#f4511e", // solid orange
+//     icon: <FaTrashAlt />,
+//   },
+//   {
+//     label: "Avg Waste Percentage",
+//     value: `${data.avgBurn}%`,
+//     bgLight: "#f3e5f5", // light purple
+//     bgSolid: "#8e24aa", // solid purple
+//     icon: <FaChartLine />,
+//   },
+// ],
+//     tableData: data?.list.map((item, idx) => ({
+//     id: item.id || idx,
+//     name: item.item?.name || "-",
+//     department: item.department?.name || "-",
+//     consumed: item.consumptionQuantity || 0,
+//     consumedUnit: item.item?.unit || "",
+//     sales: item.saleQuantity || 0,
+//     salesUnit: item.item?.unit || "",
+//     difference: item.quantityDifference || 0,
+//     differenceUnit: item.item?.unit || "",
+//     waste: Number(
+//       ((item.quantityDifference / (item.saleQuantity || 1)) * 100).toFixed(1)
+//     ),
+//     costImpact: item.burn || 0,
+//     status: item.status || "green",
+//     price: item.item?.price || 0,
+//   }))
+//   };
+// };
+export const itemConsumptionEfficiencyDataFormatter = (data) => {
+  return {
+    summaryCards: [
+      {
+        label: "Total ITEMS",
+        value: data.list.length,
+        bgLight: "#eaf3fd", // pastel blue
+        bgSolid: "#228be6", // solid blue
+        icon: <FaShoppingCart />,
+      },
+      {
+        label: "Critical Items",
+        value: data.redItems,
+        bgLight: "#e7f6ea", // light mint green
+        bgSolid: "#34c988", // solid green
+        icon: <FaExclamationTriangle />,
+      },
+      {
+        label: "Total Waste",
+        value: `₹${parseFloat(data.burn).toLocaleString()}`,
+        bgLight: "#fff5e5", // pastel orange
+        bgSolid: "#ff944d", // solid orange
+        icon: <FaTrashAlt />,
+      },
+      {
+        label: "Avg Waste Percentage",
+        value: `${data.avgBurn}%`,
+        bgLight: "#f5eefc", // pastel purple
+        bgSolid: "#b197fc", // solid purple
+        icon: <FaChartLine />,
+      },
+    ],
+    tableData: data?.list.map((item, idx) => ({
+      id: item.id || idx,
+      name: item.item?.name || "-",
+      department: item.department?.name || "-",
+      consumed: item.consumptionQuantity || 0,
+      consumedUnit: item.item?.unit || "",
+      sales: item.saleQuantity || 0,
+      salesUnit: item.item?.unit || "",
+      difference: item.quantityDifference || 0,
+      differenceUnit: item.item?.unit || "",
+      waste: Number(
+        ((item.quantityDifference / (item.saleQuantity || 1))).toFixed(1)
+      ),
+      costImpact: Number(item.burn || 0).toLocaleString(),
+      status: item.status || "green",
+      price: item.item?.price || 0,
+    })),
+  };
+};
+

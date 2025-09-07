@@ -10,6 +10,7 @@ import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer
 import { useProductsRecipesSummary } from "@/services/product-service";
 import { recipesDataFormatter } from "@/utils/data_formatters/dashboardFormatter";
 import { useDashboardContext } from "@/contexts/DashboardContext";
+import { FaChartLine, FaExclamationTriangle } from "react-icons/fa";
 
 const RecipesDashboard = () => {
   const myScrollRef = useRef(null);
@@ -22,7 +23,7 @@ const RecipesDashboard = () => {
         description={
           "Analyze product profitability and optimize menu offerings"
         }
-        titleColor={"rgb(255,79,22)"}
+        titleColor={"rgba(22, 20, 20, 1)"}
         cardBgColor={"none"}
         isShowArrows={true}
         scrollRef={myScrollRef}
@@ -71,21 +72,48 @@ const RecipesDashboard = () => {
               }}
             >
               {recipesData?.topCards?.map((card, idx) => (
-                <RecipesCards card={card} idx={idx} key={idx} widthDesktop={'30vw'}/>
+                <RecipesCards
+                  card={card}
+                  idx={idx}
+                  key={idx}
+                  widthDesktop={"30vw"}
+                />
               ))}
             </div>
-
             <Row className="mt-4">
+              {/* Loss Making Products Section */}
               <Col md={6} className="mb-4">
+                <div className="card-header border-0 pb-2 p-1 d-flex justify-content-between align-items-center" style={{backgroundColor:"rgb(240,240,240"}}>
+                  <div>
+                    <h6 className="card-title mb-0">Loss Making Products</h6>
+                    <p className="card-text text-muted mb-0">
+                      Monitor inventory levels and prevent stockouts
+                    </p>
+                  </div>
+                  <div>
+                    <FaExclamationTriangle color="#FF6347" size={24} />
+                  </div>
+                </div>
                 <RecipesTable
-                  title={"Loss Making Products"}
                   data={recipesData?.lossProducts || []}
                   bgColor={"#FFF5F5"}
                 />
               </Col>
+
+              {/* Profitable Products Section */}
               <Col md={6} className="mb-4">
+                <div className="card-header border-0 pb-2 p-1 d-flex justify-content-between align-items-center" style={{backgroundColor:"rgb(240,240,240"}}>
+                  <div>
+                    <h6 className="card-title mb-0">Profitable Products</h6>
+                    <p className="card-text text-muted mb-0">
+                      Monitor inventory levels and prevent stockouts
+                    </p>
+                  </div>
+                  <div>
+                    <FaChartLine color="#32CD32" size={24} />
+                  </div>
+                </div>
                 <RecipesTable
-                  title={"Profitable Products"}
                   data={recipesData?.profitProducts || []}
                   bgColor={"#F0FFF4"}
                 />

@@ -42,7 +42,6 @@ const ItemsPriceTrends = () => {
       {({ data, cardsData }) => (
         <Container fluid className="p-4 bg-white rounded shadow-sm">
           {/* Top Summary Section */}
-          {console.log(data, "ramarama")}
           <Row className="mb-4 text-center">
             <Col md={3}>
               <Card

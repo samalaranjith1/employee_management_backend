@@ -77,7 +77,6 @@ export default function ItemsTrendAnalysis() {
       >
         {(data) => (
           <>
-            {console.log(data?.tableData, "ramarama")}
             <ItemsTrendAnalysisGraph
               chartData={data?.chartData}
               filter={filter}

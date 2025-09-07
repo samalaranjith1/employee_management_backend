@@ -8,6 +8,15 @@ export function useDepartment(id, params) {
   });
 }
 
+//health
+export function useDepartmentHealth(id, params) {
+  return useApiQuery({
+    key: ["departments", id, params],
+    endpoint: `/departments/${id}/health`,
+    params,
+  });
+}
+
 //department products
 export function useDepartmentProductsList(id, params) {
   return useApiQuery({
@@ -41,7 +50,13 @@ export function useDepartmentSummaryMonthly(id, params) {
     params,
   });
 }
-
+export function useDepartmentSummarySameDay(id, params) {
+  return useApiQuery({
+    key: ["departments", id, "summary-sameday", params],
+    endpoint: `/departments/${id}/summary/sameday`,
+    params,
+  });
+}
 export function useDepartmentSummaryDaily(id, params) {
   return useApiQuery({
     key: ["departments", id, "summary-daily", params],

@@ -13,16 +13,22 @@ import MenuOptimizationRecommendations from '@/features/dashboard/MenuOptimizati
 import TopSellingProducts from '@/features/dashboard/TopSellingProducts';
 import ProductPerformanceDetails from '@/features/dashboard/ProductPerformanceDetails';
 import DepartmentConsumptionSummary from './DepartmentConsumptionSummary';
+import DepartmentTrendAnalysis from './DepartmentTrendAnlysis';
+import DepartmentPeriodDropDown from './DepartmentPeriodDropDown';
+import ItemConsumptionEfficiency1 from "./ItemConsumptionEfficiency";
 
 function DepartmentHome() {
   return <div>
     <DepartmentConsumptionSummary />
-    <ConsumptionSummarry />
+    {/* <ConsumptionSummarry /> */}
     <DepartmentHealth />
-    <TrendAnalysis />
-    <PeriodDataBreakdown />
+    <DepartmentTrendAnalysis />
+    <DepartmentPeriodDropDown/>
+    <ItemConsumptionEfficiency1 />
+    {/* <TrendAnalysis /> */}
+    {/* <PeriodDataBreakdown /> */}
     <HourlyForecast />
-    <ItemConsumptionEfficiency />
+    {/* <ItemConsumptionEfficiency /> */}
     <TopConsumedItems />
     <WastageAnalysis />
     <CostReductionRecommendations />

@@ -1,4 +1,4 @@
-export const BASE_URL = "https://flavourheaven.in/costonomy-services";
+export const BASE_URL = "https://flavourheaven.in/Costonomy-services";
 
 // export const USER_SERVICE_URL = "user-service";
 export const USER_SERVICE_URL = "/user";

@@ -22,6 +22,7 @@ import {
   FaStar,
   FaShoppingCart,
   FaWallet,
+  FaTrashAlt,
 } from "react-icons/fa";
 import {
   format,
@@ -38,6 +39,7 @@ import {
 } from "date-fns";
 
 import { formatCurrency } from "@/constants";
+import { FaArrowTrendDown, FaArrowTrendUp } from "react-icons/fa6";
 
 export function consumptionSummaryFormatter(data) {
   return [
@@ -640,20 +642,35 @@ export function itemConsumptionEfficiencyDataFormatter(data) {
 
   return { summaryCards, tableData };
 }
-
 export function topConsumedItemsDataFormatter(apiData) {
-  if (!apiData || !apiData.list) return [];
-  return apiData.list
-    .filter((item) => item?.consumptionValue > 0) // keep only positive values
-    .map((item) => ({
-      name: item.item?.name || "Unknown",
-      category: item.item?.categoryName || "Uncategorized",
-      value: item.consumptionValue ?? 0,
-      percent: null, // not available in API
-      color: getRandomColor(),
-      change: null, // not available in API
-    }));
+  if (!apiData || !apiData.list) return { data: [], total: 0 };
+  const filteredData = apiData.list.filter((item) => item?.consumptionValue > 0);
+  const totalValue = filteredData.reduce((sum, item) => sum + item.consumptionValue, 0);
+
+  const data = filteredData.map((item) => ({
+    name: item.item?.name || "Unknown",
+    category: item.item?.categoryName || "Uncategorized",
+    value: Math.round(item.consumptionValue),
+  }));
+
+  return {
+    data,
+    total: totalValue,
+  };
 }
+// export function topConsumedItemsDataFormatter(apiData) {
+//   if (!apiData || !apiData.list) return [];
+//   return apiData.list
+//     .filter((item) => item?.consumptionValue > 0) // keep only positive values
+//     .map((item) => ({
+//       name: item.item?.name || "Unknown",
+//       category: item.item?.categoryName || "Uncategorized",
+//       value: item.consumptionValue ?? 0,
+//       percent: null, // not available in API
+//       color: getRandomColor(),
+//       change: null, // not available in API
+//     }));
+// }
 
 export const consumptionDistributionDataFormatter = (apiData) => {
   if (!apiData) {
@@ -722,36 +739,40 @@ export const consumptionDistributionDataFormatter = (apiData) => {
 
 export function wastageAnalysisDataFormatter(data) {
   // ✅ Cards Data
-  const cardsData = [
-    {
-      bg: "linear-gradient(135deg,#9de8d4,#7cd1b8)",
-      icon: <FaExclamationTriangle />,
-      title: data.totalWastage?.label ?? "Total Wastage",
-      value: data.totalWastage?.amount ?? 0,
-      sub: "",
-    },
-    {
-      bg: "linear-gradient(135deg,#99dff5,#64c7e4)",
-      icon: <FaBox />,
-      title: data.rawMaterial?.label ?? "Raw Material",
-      value: data.rawMaterial?.amount ?? 0,
-      sub: `${data.rawMaterial?.count ?? 0} items`,
-    },
-    {
-      bg: "linear-gradient(135deg,#a9b8ff,#7b8efc)",
-      icon: <FaCalendarAlt />,
-      title: data.expiredItems?.label ?? "Expired Items",
-      value: data.expiredItems?.amount ?? 0,
-      sub: `${data.expiredItems?.count ?? 0} items`,
-    },
-    {
-      bg: "linear-gradient(135deg,#b79cff,#9a7cf5)",
-      icon: <FaShoppingBag />,
-      title: data.expiredProducts?.label ?? "Expired Products",
-      value: data.expiredProducts?.amount ?? 0,
-      sub: `${data.expiredProducts?.count ?? 0} products`,
-    },
-  ];
+const cardsData = [
+  {
+    title: data.totalWastage?.label ?? "Total Wastage",
+    value: data.totalWastage?.amount ?? 0,
+    sub: "",
+    bgLight: "#e8f9f3",
+    bgSolid: "#1abc9c",
+    icon: <FaTrashAlt />,
+  },
+  {
+    title: data.rawMaterial?.label ?? "Raw Material",
+    value: data.rawMaterial?.amount ?? 0,
+    sub: `(${data.rawMaterial?.count ?? 0} Items)`,
+    bgLight: "#e8f5e9",
+    bgSolid: "#2ecc71",
+    icon: <FaBoxOpen />,
+  },
+  {
+    title: data.expiredItems?.label ?? "Expired Items",
+    value: data.expiredItems?.amount ?? 0,
+    sub: `(${data.expiredItems?.count ?? 0} Items)`,
+    bgLight: "#fff3e0",
+    bgSolid: "#e67e22",
+    icon: <FaExclamationTriangle />,
+  },
+  {
+    title: data.expiredProducts?.label ?? "Expired Products",
+    value: data.expiredProducts?.amount ?? 0,
+    sub: `(${data.expiredProducts?.count ?? 0} Items)`,
+    bgLight: "#f3e5f5",
+    bgSolid: "#9b59b6",
+    icon: <FaTimesCircle />,
+  },
+];
 
   // ✅ Raw Material Wastage
   const rawMaterialWastage =
@@ -915,7 +936,7 @@ export function recipesDataFormatter(data) {
       sales: data.profitableProducts?.sales ?? 0,
       share: data.profitableProducts?.share ?? "0%",
       label: "High Margin",
-      icon: <FaArrowUp />,
+      icon: <FaArrowTrendUp />,
       bg: "#E6F8EE",
       labelColor: "#28A745",
       textColor: "#1E4620",
@@ -926,7 +947,7 @@ export function recipesDataFormatter(data) {
       sales: data.moderateProducts?.sales ?? 0,
       share: data.moderateProducts?.share ?? "0%",
       label: "Medium Margin",
-      icon: <FaMinus />,
+      icon: <FaArrowTrendUp />,
       bg: "#FFF8E1",
       labelColor: "#F4B400",
       textColor: "#4E3B00",
@@ -937,7 +958,7 @@ export function recipesDataFormatter(data) {
       sales: data.lossMakingProducts?.sales ?? 0,
       share: data.lossMakingProducts?.share ?? "0%",
       label: "Low Margin",
-      icon: <FaArrowDown />,
+      icon: <FaArrowTrendDown />,
       bg: "#FFE6E6",
       labelColor: "#D32F2F",
       textColor: "#5C0000",
@@ -1006,7 +1027,7 @@ export function topSellingProductsDataFormatter(data) {
       value: data.highMarginProducts,
       subtitle: "Top 50% products",
       icon: <FaStar />,
-      bg: "#F6F7F9",
+      bg: "#cefbeeff",
       iconBg: "#6C7A86",
       color: "#222831",
     },
@@ -1016,7 +1037,7 @@ export function topSellingProductsDataFormatter(data) {
       value: data.mediumMarginProducts,
       subtitle: "Next 40% products",
       icon: <FaChartLine />,
-      bg: "#E9FFF3",
+      bg: "#f7fad4ff",
       iconBg: "#07A875",
       color: "#0F6A43",
     },
@@ -1026,9 +1047,9 @@ export function topSellingProductsDataFormatter(data) {
       value: data.lowMarginProducts,
       subtitle: "Bottom 10% products",
       icon: <FaShoppingCart />,
-      bg: "#FFF6E6",
+      bg: "#fae0e2ff",
       iconBg: "#F29F05",
-      color: "#8A4B00",
+      color: "#8a0007ff",
     },
   ];
 
@@ -1046,19 +1067,22 @@ export function topSellingProductsDataFormatter(data) {
       title: "Total Revenue",
       amount: data.totalSales || 0,
       sub: "From top selling items",
-      icon: <FaRupeeSign />,
+      icon: <FaRupeeSign color="#03b678"/>,
+      bgColor: "#f0fff0",
     },
     {
       title: "Total Margin",
       amount: data.totalMargin ?? "N/A", // not available
       sub: "Net profit generated",
-      icon: <FaWallet />,
+      icon: <FaWallet color="#2370f6" />,
+      bgColor: "#eef5fe",
     },
     {
       title: "Avg Margin %",
       amount: data.avgMarginPct ?? "N/A", // not available
       sub: "Overall profitability",
-      icon: <FaPercent />,
+      icon: <FaPercent color="#9936e9" />,
+      bgColor: "#faf6ff",
     },
   ];
 

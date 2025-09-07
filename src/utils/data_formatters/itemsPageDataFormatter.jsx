@@ -171,8 +171,6 @@ export const summeryOverviewDataFormatter = (apiData) => {
 
 
 export function trendAnalysisDataFormatter(apiData) {
-  console.log(apiData.list, "ramarama");
-
   const chartData = apiData.list.map((item) => ({
     date: new Date(item.dt).toLocaleDateString("en-US", {
       month: "short",

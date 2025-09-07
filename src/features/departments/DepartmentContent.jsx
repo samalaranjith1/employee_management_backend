@@ -8,6 +8,7 @@ import DepartmentHome from "./Home/DepartmentHome";
 import DepartmentProducts from "./Products/DepartmentProducts";
 import DepartmentSales from "./Sales/DepartmentSales";
 import DepartmentSalesForcecast from "./SalesForecast/DepartmentSalesForcecast";
+import ActionableInsights from "../dashboard/ActionableInsights";
 
 function DepartmentContent({ activeKey, dateFilter }) {
   const {startDate,endDate} = useDepartmentContext()
@@ -24,9 +25,13 @@ function DepartmentContent({ activeKey, dateFilter }) {
         width: "100%",
       }}
     >
+      {console.log(activeKey,'ramarama')}
       {/* Scrollable content */}
       <div style={{ flexGrow: 1, overflowY: "auto" }}>
         {activeKey.toLowerCase() === "home" && <DepartmentHome />}
+        {activeKey.toLowerCase() === "actionable-insights" && (
+          <ActionableInsights />)
+        }
         {activeKey.toLowerCase() === "products" && <DepartmentProducts />}
         {activeKey.toLowerCase() === "sales" && <DepartmentSales />}
         {activeKey.toLowerCase() === "consumption" && <DepartmentConsumption />}
