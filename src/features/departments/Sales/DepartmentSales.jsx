@@ -57,14 +57,7 @@ export default function DepartmentSales() {
             </div>
 
             {/* ✅ Vertical scrollable table */}
-            <div
-              className="pt-2"
-              style={{
-                maxHeight: "65vh",
-                overflowY: "auto",
-                position: "relative",
-              }}
-            >
+            <div className="pt-2">
               <SalesTable products={data.products} />
             </div>
           </>

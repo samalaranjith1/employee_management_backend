@@ -16,7 +16,7 @@ export default function DepartmentSalesForecastBudget() {
   const { startDate, endDate } = useDepartmentContext();
   return (
     <Container fluid className="mt-2" style={{ background: "#fff" }}>
-      <ComponentHeader
+      {/* <ComponentHeader
         title={"Sales Forecast Budget"}
         description={"Daily budget and sales tracking"}
         titleColor={"fw-bold text-primary fs-4"}
@@ -24,7 +24,7 @@ export default function DepartmentSalesForecastBudget() {
         scrollRef={myScrollRef}
         isExpandable={true}
         titleIcon={<FaChartLine className="me-2" color="blue" size={24} />}
-      />
+      /> */}
 
       <ServiceRenderer
         queryHook={useDepartmentsBudgetDailyList}
@@ -32,12 +32,12 @@ export default function DepartmentSalesForecastBudget() {
         queryArgs={[
           // { startdt: "2025-06-06", enddt: "2025-08-27", outlet: 1, userId: 7 },
           { startdt: startDate, enddt: endDate, outlet: 1, userId: 7 },
-        ]} 
+        ]}
         formatter={departmentSalesForeCastBudgetDataFormatter}
       >
         {(data) => (
           <>
-            {/* Horizontal scrollable top cards */}
+            {/* Horizontal scrollable top cards
             <div
               ref={myScrollRef}
               className="d-flex mb-3"
@@ -53,16 +53,9 @@ export default function DepartmentSalesForecastBudget() {
               {data.topCardsData.map((card, i) => (
                 <SalesForeCastCards key={i} {...card} />
               ))}
-            </div>
+            </div> */}
 
-            {/* Vertical scrollable table */}
-            <div
-              style={{
-                maxHeight: "65vh",
-                overflowY: "auto",
-                position: "relative",
-              }}
-            >
+            <div>
               <SalesForeCastTableBudget tableData={data.tableData} />
             </div>
           </>

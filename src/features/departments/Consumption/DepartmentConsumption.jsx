@@ -11,7 +11,6 @@ import React, { useRef } from "react";
 import { Container } from "react-bootstrap";
 import { FaExclamationTriangle } from "react-icons/fa";
 
-
 export default function DepartmentConsumption() {
   const myScrollRef = useRef(null);
   const { startDate, endDate } = useDepartmentContext();
@@ -35,7 +34,7 @@ export default function DepartmentConsumption() {
         queryKey={["departmentConsumption"]}
         queryArgs={[
           { startdt: "2025-06-06", enddt: "2025-08-01", outlet: 1, userId: 7 },
-        //   { startdt: startDate, enddt: endDate, outlet: 1, userId: 7 },
+          //   { startdt: startDate, enddt: endDate, outlet: 1, userId: 7 },
         ]}
         formatter={departmentConcumptionDataFormatter}
       >
@@ -58,14 +57,7 @@ export default function DepartmentConsumption() {
             </div>
 
             {/* ✅ Vertical scrollable table */}
-            <div
-              className="pt-2"
-              style={{
-                maxHeight: "65vh",
-                overflowY: "auto",
-                position: "relative",
-              }}
-            >
+            <div className="pt-2">
               <ConsumptionTable tableData={data.tableData} />
             </div>
           </>

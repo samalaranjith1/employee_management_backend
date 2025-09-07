@@ -6,9 +6,8 @@ import ComponentHeader from "@/components/common/ComponentHeader";
 import ConsumptionForecastTable from "@/components/common/department/TablesSort/ConsumptionForecastTable";
 import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer";
 import { useDepartmentContext } from "@/contexts/DepartmentContext";
-import { useProductsSalesForecastList } from "@/services/product-service"; // or your department consumption API
+import { useProductsSalesForecastList } from "@/services/product-service";
 import { departmentConsumptionForecastDataFormatter } from "@/utils/data_formatters/departmentPage";
-import { FaUtensils } from "react-icons/fa";
 
 export default function DepartmentConsumptionForeCast() {
   const myScrollRef = useRef(null);
@@ -16,7 +15,8 @@ export default function DepartmentConsumptionForeCast() {
 
   return (
     <Container fluid className="mt-2" style={{ background: "#fff" }}>
-      <ComponentHeader
+      {/* Optional Header */}
+      {/* <ComponentHeader
         title={"Consumption Forecast"}
         description={"Daily consumption forecast by item"}
         titleColor={"fw-bold text-primary fs-4"}
@@ -24,10 +24,10 @@ export default function DepartmentConsumptionForeCast() {
         scrollRef={myScrollRef}
         isExpandable={true}
         titleIcon={<FaUtensils className="me-2" color="blue" size={24} />}
-      />
+      /> */}
 
       <ServiceRenderer
-        queryHook={useProductsSalesForecastList} // replace with actual consumption API hook if different
+        queryHook={useProductsSalesForecastList}
         queryKey={["consumptionForecast"]}
         queryArgs={[
           { startdt: startDate, enddt: endDate, outlet: 1, userId: 7 },
@@ -35,13 +35,7 @@ export default function DepartmentConsumptionForeCast() {
         formatter={departmentConsumptionForecastDataFormatter}
       >
         {(data) => (
-          <div
-            style={{
-              maxHeight: "65vh",
-              overflowY: "auto",
-              position: "relative",
-            }}
-          >
+          <div>
             <ConsumptionForecastTable tableData={data.tableData} />
           </div>
         )}
@@ -49,6 +43,7 @@ export default function DepartmentConsumptionForeCast() {
     </Container>
   );
 }
+
 // "use client";
 
 // import { departmentConsumptionForecastDataFormatter } from "@/utils/data_formatters/departmentPage";

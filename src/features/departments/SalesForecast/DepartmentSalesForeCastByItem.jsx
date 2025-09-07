@@ -16,7 +16,7 @@ export default function DepartmentSalesForecastByItem() {
 
   return (
     <Container fluid className="mt-2" style={{ background: "#fff" }}>
-      <ComponentHeader
+      {/* <ComponentHeader
         title={"Sales Forecast by Item"}
         description={"Daily sales forecast by item"}
         titleColor={"fw-bold text-primary fs-4"}
@@ -24,7 +24,7 @@ export default function DepartmentSalesForecastByItem() {
         scrollRef={myScrollRef}
         isExpandable={true}
         titleIcon={<FaChartLine className="me-2" color="blue" size={24} />}
-      />
+      /> */}
 
       <ServiceRenderer
         queryHook={useProductsSalesForecastList}
@@ -36,14 +36,7 @@ export default function DepartmentSalesForecastByItem() {
       >
         {(data) => (
           <>
-            {/* Vertical scrollable table */}
-            <div
-              style={{
-                maxHeight: "65vh",
-                overflowY: "auto",
-                position: "relative",
-              }}
-            >
+            <div>
               <SalesForeCastByItemTable tableData={data.tableData} />
             </div>
           </>

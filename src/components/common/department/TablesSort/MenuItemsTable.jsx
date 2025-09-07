@@ -1,15 +1,14 @@
 "use client";
+
 import React from "react";
 import { Table, Badge } from "react-bootstrap";
 import { BaseSurface } from "../../dashboard/TablesSort";
 import { useTableSort } from "@/components/hooks/useTableSort";
+import { useTableControls } from "@/components/hooks/useTableControls";
+import { TableControls } from "@/components/common/TableControls";
 
 function MenuItemsTable({ data }) {
-  const { sortedData, sortKey, direction, handleSort } = useTableSort(data);
-
-  const renderSortArrow = (key) =>
-    sortKey === key ? (direction === "asc" ? " ↑" : " ↓") : "";
-
+  // 🔹 Columns definition
   const columns = [
     { key: "item", label: "ITEM" },
     { key: "price", label: "SELLING PRICE" },
@@ -19,20 +18,65 @@ function MenuItemsTable({ data }) {
     { key: "pieces", label: "PIECES" },
   ];
 
+  // 🔹 Sorting hook
+  const { sortedData, sortKey, direction, handleSort } = useTableSort(data);
+
+  const renderSortArrow = (key) =>
+    sortKey === key ? (direction === "asc" ? " ↑" : " ↓") : "";
+
+  // 🔹 Filters config: filter by item
+const filtersConfig = {
+  name: ["All", ...Array.from(new Set(data.map((d) => d.name)))],
+};
+
+
+  // 🔹 Table controls: search, filter, export
+  const {
+    searchTerm,
+    setSearchTerm,
+    filters,
+    setFilters,
+    filteredData,
+    handleExport,
+  } = useTableControls({
+    data: sortedData,
+    columns,
+    searchFields: ["name"],
+    filtersConfig,
+  });
+
   return (
-    <BaseSurface maxHeight="65vh">
+    <div>
+      {/* 🔹 Search + Filter + Export Controls */}
+      <TableControls
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+        filters={filters}
+        setFilters={setFilters}
+        filtersConfig={filtersConfig}
+        handleExport={handleExport}
+        searchable={true}
+        filterable={true}
+        exportable={true}
+      />
+
+      {/* 🔹 Table */}
       <div
         style={{
-          maxHeight: "60vh",
+          maxHeight: "65vh",
           overflowY: "auto",
           overflowX: "auto",
-
-          /* 🔑 Hide scrollbar cross-browser */
-          scrollbarWidth: "none", // Firefox
-          msOverflowStyle: "none", // IE/Edge
+          scrollbarWidth: "none",
+          msOverflowStyle: "none",
         }}
         className="hide-scrollbar"
       >
+        <style jsx>{`
+          .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+          }
+        `}</style>
+
         <Table
           bordered={false}
           hover
@@ -65,94 +109,266 @@ function MenuItemsTable({ data }) {
             </tr>
           </thead>
           <tbody>
-            {sortedData.map((item) => (
-              <tr key={item.id} style={{ borderBottom: "1px solid #eee" }}>
-                {/* Item Column */}
-                <td style={{ padding: "14px 16px" }}>
-                  <div style={{ fontWeight: 600, color: "#222" }}>
-                    {item.name}
-                  </div>
-                  <div className="d-flex gap-2 mt-2">
-                    <Badge
-                      bg="light"
-                      text="dark"
-                      style={{
-                        border: "1px solid #ddd",
-                        fontSize: "0.75rem",
-                        padding: "4px 8px",
-                        borderRadius: "6px",
-                      }}
-                    >
-                      {item.variation}
-                    </Badge>
-                    <Badge
-                      bg={item.veg ? "success" : "warning"}
-                      text="dark"
-                      style={{
-                        fontSize: "0.75rem",
-                        padding: "4px 8px",
-                        borderRadius: "6px",
-                      }}
-                    >
-                      {item.veg ? "Veg" : "Non-Veg"}
-                    </Badge>
-                  </div>
-                </td>
+            {filteredData.length > 0 ? (
+              filteredData.map((item) => (
+                <tr key={item.id} style={{ borderBottom: "1px solid #eee" }}>
+                  {/* Item */}
+                  <td style={{ padding: "14px 16px" }}>
+                    <div style={{ fontWeight: 600, color: "#222" }}>
+                      {item.name}
+                    </div>
+                    <div className="d-flex gap-2 mt-2">
+                      <Badge
+                        bg="light"
+                        text="dark"
+                        style={{
+                          border: "1px solid #ddd",
+                          fontSize: "0.75rem",
+                          padding: "4px 8px",
+                          borderRadius: "6px",
+                        }}
+                      >
+                        {item.variation}
+                      </Badge>
+                      <Badge
+                        bg={item.veg ? "success" : "warning"}
+                        text="dark"
+                        style={{
+                          fontSize: "0.75rem",
+                          padding: "4px 8px",
+                          borderRadius: "6px",
+                        }}
+                      >
+                        {item.veg ? "Veg" : "Non-Veg"}
+                      </Badge>
+                    </div>
+                  </td>
 
-                {/* Price */}
-                <td
-                  style={{
-                    fontWeight: 600,
-                    color: "#2d2d2d",
-                    fontSize: "0.95rem",
-                    padding: "14px 16px",
-                  }}
-                >
-                  {item.price}
-                </td>
-
-                {/* Making Cost */}
-                <td style={{ color: "#444", padding: "14px 16px" }}>
-                  {item.makingCost}
-                </td>
-
-                {/* Margin */}
-                <td style={{ color: "#444", padding: "14px 16px" }}>
-                  {item.margin}
-                </td>
-
-                {/* Margin % */}
-                <td style={{ padding: "14px 16px" }}>
-                  <Badge
-                    bg="danger"
+                  {/* Price */}
+                  <td
                     style={{
-                      borderRadius: "16px",
-                      padding: "6px 14px",
                       fontWeight: 600,
-                      fontSize: "0.8rem",
+                      color: "#2d2d2d",
+                      fontSize: "0.95rem",
+                      padding: "14px 16px",
                     }}
                   >
-                    {item.marginPercentage}
-                  </Badge>
-                </td>
+                    {item.price}
+                  </td>
 
-                {/* Pieces */}
-                <td style={{ padding: "14px 16px" }}>
-                  <div style={{ fontWeight: 600 }}>{item.pieces.count}</div>
-                  <div style={{ fontSize: "12px", color: "#666" }}>
-                    {item.pieces.label}
-                  </div>
+                  {/* Making Cost */}
+                  <td style={{ color: "#444", padding: "14px 16px" }}>
+                    {item.makingCost}
+                  </td>
+
+                  {/* Margin */}
+                  <td style={{ color: "#444", padding: "14px 16px" }}>
+                    {item.margin}
+                  </td>
+
+                  {/* Margin % */}
+                  <td style={{ padding: "14px 16px" }}>
+                    <Badge
+                      bg="danger"
+                      style={{
+                        borderRadius: "16px",
+                        padding: "6px 14px",
+                        fontWeight: 600,
+                        fontSize: "0.8rem",
+                      }}
+                    >
+                      {item.marginPercentage}
+                    </Badge>
+                  </td>
+
+                  {/* Pieces */}
+                  <td style={{ padding: "14px 16px" }}>
+                    <div style={{ fontWeight: 600 }}>{item.pieces.count}</div>
+                    <div style={{ fontSize: "12px", color: "#666" }}>
+                      {item.pieces.label}
+                    </div>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td
+                  colSpan={columns.length}
+                  style={{
+                    textAlign: "center",
+                    padding: "20px",
+                    color: "#888",
+                    fontStyle: "italic",
+                  }}
+                >
+                  No items available
                 </td>
               </tr>
-            ))}
+            )}
           </tbody>
         </Table>
       </div>
-    </BaseSurface>
+    </div>
   );
 }
 
 export default MenuItemsTable;
+
+// "use client";
+// import React from "react";
+// import { Table, Badge } from "react-bootstrap";
+// import { BaseSurface } from "../../dashboard/TablesSort";
+// import { useTableSort } from "@/components/hooks/useTableSort";
+
+// function MenuItemsTable({ data }) {
+//   const { sortedData, sortKey, direction, handleSort } = useTableSort(data);
+
+//   const renderSortArrow = (key) =>
+//     sortKey === key ? (direction === "asc" ? " ↑" : " ↓") : "";
+
+//   const columns = [
+//     { key: "item", label: "ITEM" },
+//     { key: "price", label: "SELLING PRICE" },
+//     { key: "makingCost", label: "MAKING COST" },
+//     { key: "margin", label: "MARGIN" },
+//     { key: "marginPercentage", label: "MARGIN %" },
+//     { key: "pieces", label: "PIECES" },
+//   ];
+
+//   return (
+//     <BaseSurface maxHeight="65vh">
+//       <div
+//         style={{
+//           maxHeight: "60vh",
+//           overflowY: "auto",
+//           overflowX: "auto",
+
+//           /* 🔑 Hide scrollbar cross-browser */
+//           scrollbarWidth: "none", // Firefox
+//           msOverflowStyle: "none", // IE/Edge
+//         }}
+//         className="hide-scrollbar"
+//       >
+//         <Table
+//           bordered={false}
+//           hover
+//           className="align-middle mb-0"
+//           style={{ minWidth: "950px", tableLayout: "fixed" }}
+//         >
+//           <thead>
+//             <tr>
+//               {columns.map((col) => (
+//                 <th
+//                   key={col.key}
+//                   onClick={() => handleSort(col.key)}
+//                   style={{
+//                     background: "#fafafa",
+//                     fontWeight: 600,
+//                     fontSize: "0.85rem",
+//                     textTransform: "uppercase",
+//                     color: "#555",
+//                     position: "sticky",
+//                     top: 0,
+//                     zIndex: 2,
+//                     cursor: "pointer",
+//                     padding: "12px 16px",
+//                   }}
+//                 >
+//                   {col.label}
+//                   {renderSortArrow(col.key)}
+//                 </th>
+//               ))}
+//             </tr>
+//           </thead>
+//           <tbody>
+//             {sortedData.map((item) => (
+//               <tr key={item.id} style={{ borderBottom: "1px solid #eee" }}>
+//                 {/* Item Column */}
+//                 <td style={{ padding: "14px 16px" }}>
+//                   <div style={{ fontWeight: 600, color: "#222" }}>
+//                     {item.name}
+//                   </div>
+//                   <div className="d-flex gap-2 mt-2">
+//                     <Badge
+//                       bg="light"
+//                       text="dark"
+//                       style={{
+//                         border: "1px solid #ddd",
+//                         fontSize: "0.75rem",
+//                         padding: "4px 8px",
+//                         borderRadius: "6px",
+//                       }}
+//                     >
+//                       {item.variation}
+//                     </Badge>
+//                     <Badge
+//                       bg={item.veg ? "success" : "warning"}
+//                       text="dark"
+//                       style={{
+//                         fontSize: "0.75rem",
+//                         padding: "4px 8px",
+//                         borderRadius: "6px",
+//                       }}
+//                     >
+//                       {item.veg ? "Veg" : "Non-Veg"}
+//                     </Badge>
+//                   </div>
+//                 </td>
+
+//                 {/* Price */}
+//                 <td
+//                   style={{
+//                     fontWeight: 600,
+//                     color: "#2d2d2d",
+//                     fontSize: "0.95rem",
+//                     padding: "14px 16px",
+//                   }}
+//                 >
+//                   {item.price}
+//                 </td>
+
+//                 {/* Making Cost */}
+//                 <td style={{ color: "#444", padding: "14px 16px" }}>
+//                   {item.makingCost}
+//                 </td>
+
+//                 {/* Margin */}
+//                 <td style={{ color: "#444", padding: "14px 16px" }}>
+//                   {item.margin}
+//                 </td>
+
+//                 {/* Margin % */}
+//                 <td style={{ padding: "14px 16px" }}>
+//                   <Badge
+//                     bg="danger"
+//                     style={{
+//                       borderRadius: "16px",
+//                       padding: "6px 14px",
+//                       fontWeight: 600,
+//                       fontSize: "0.8rem",
+//                     }}
+//                   >
+//                     {item.marginPercentage}
+//                   </Badge>
+//                 </td>
+
+//                 {/* Pieces */}
+//                 <td style={{ padding: "14px 16px" }}>
+//                   <div style={{ fontWeight: 600 }}>{item.pieces.count}</div>
+//                   <div style={{ fontSize: "12px", color: "#666" }}>
+//                     {item.pieces.label}
+//                   </div>
+//                 </td>
+//               </tr>
+//             ))}
+//           </tbody>
+//         </Table>
+//       </div>
+//     </BaseSurface>
+//   );
+// }
+
+// export default MenuItemsTable;
 
 // "use client";
 // import React from "react";

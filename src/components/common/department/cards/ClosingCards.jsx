@@ -7,7 +7,7 @@ export default function ClosingCards({ title, value, icon, color }) {
   return (
     <CommonCard
       style={{
-        minWidth: "45vw",
+        minWidth: "46vw",
         flexShrink: 0,
         borderRadius: "12px",
         boxShadow: "0 4px 12px rgba(0,0,0,0.1)",

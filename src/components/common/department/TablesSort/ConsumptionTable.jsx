@@ -33,9 +33,9 @@ export default function ConsumptionTable({ tableData = [] }) {
   ];
 
   return (
-    <BaseSurface maxHeight="65vh">
+    <div>
       <div
-        style={{ maxHeight: "60vh", overflow: "auto" }}
+        style={{ maxHeight: "65vh", overflow: "auto" }}
         className="hide-scrollbar"
       >
         <Table
@@ -139,6 +139,6 @@ export default function ConsumptionTable({ tableData = [] }) {
           </tbody>
         </Table>
       </div>
-    </BaseSurface>
+    </div>
   );
 }

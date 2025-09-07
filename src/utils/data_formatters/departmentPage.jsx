@@ -135,8 +135,12 @@ export function departmentConcumptionDataFormatter(apiResponse) {
       (item.quantityDifference / item.netConsumptionQuantity) * 100;
     if (!isFinite(wastePercent)) wastePercent = 0;
 
+    const difference = item.netConsumptionQuantity - item.saleQuantity;
+
     return {
       id: item.id,
+
+      // display values
       itemDetails: `${item.item.name} (${item.item.unitQuantity} ${item.item.unit})`,
       subCategory: item.item.categoryName,
       department: item.department.name,
@@ -144,14 +148,17 @@ export function departmentConcumptionDataFormatter(apiResponse) {
         item.netConsumptionQuantity
       } ${item.item.unit.toLowerCase()}`,
       salesQuantity: item.saleQuantity,
-      difference: `${(item.netConsumptionQuantity - item.saleQuantity).toFixed(
-        1
-      )} ${item.item.unit.toLowerCase()}`,
-      wastePercent: wastePercent.toFixed(1),
-      wastePercentNum: wastePercent, // numeric value for sorting
+      difference: `${difference.toFixed(1)} ${item.item.unit.toLowerCase()}`,
+      wastePercent: `${wastePercent.toFixed(1)}%`,
       costImpact: `₹${item.burn.toFixed(2)}`,
-      costImpactNum: item.burn, // numeric value for sorting
       status: item.status, // red, orange, green
+
+      // raw numeric values for sorting
+      consumedNum: item.netConsumptionQuantity,
+      salesQuantityNum: item.saleQuantity,
+      differenceNum: difference,
+      wastePercentNum: wastePercent,
+      costImpactNum: item.burn,
     };
   });
 

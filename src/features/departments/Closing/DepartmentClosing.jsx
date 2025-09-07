@@ -17,7 +17,7 @@ export default function DepartmentClosing() {
 
   return (
     <Container fluid className="mt-2" style={{ background: "#fff" }}>
-      <ComponentHeader
+      {/* <ComponentHeader
         title={"Department Closing"}
         description={"Track department closing, item totals and prices"}
         titleColor={"fw-bold text-primary fs-4"}
@@ -27,7 +27,7 @@ export default function DepartmentClosing() {
         titleIcon={
           <FaExclamationTriangle className="me-2" color="red" size={24} />
         }
-      />
+      /> */}
 
       <ServiceRenderer
         queryHook={useItemsConsumptionClsoingTotal}
@@ -59,14 +59,7 @@ export default function DepartmentClosing() {
             </div>
 
             {/* ✅ Vertical scrollable Closing Table */}
-            <div
-              className="pt-2 scrollbar-hidden"
-              style={{
-                maxHeight: "65vh",
-                overflowY: "auto",
-                position: "relative",
-              }}
-            >
+            <div>
               <ClosingTable tableData={data.tableData} />
             </div>
           </>
