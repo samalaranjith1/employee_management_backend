@@ -70,8 +70,8 @@ export default function ItemsMenuItemConsumptionAnalysisTable({
 
           {/* Table Body */}
           <tbody>
-            {sortedData.map((item) => (
-              <tr key={item.id}>
+            {sortedData.map((item,index) => (
+              <tr key={item.id ?? `row-${index}`}>
                 <td>
                   <div className="d-flex align-items-center">
                     {item.icon}

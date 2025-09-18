@@ -103,8 +103,8 @@ export default function DepartmentConsumptionChart() {
         formatter={departmentConsumptionPieChartFormatter}
         shimmerCount={2}
       >
-        {(chartData) => {
-          const { data, total } = chartData;
+        {(data) => {
+          const { chartData, total } = data;
           return (
             <Card style={styles.card}>
               {/* Header */}
@@ -152,7 +152,7 @@ export default function DepartmentConsumptionChart() {
                           <span
                             style={{ color: "#6c757d", fontSize: "0.8rem" }}
                           >
-                            {((item.value / total) * 100).toFixed(1)}%
+                            {((item.percentage ) * 100).toFixed(1)}%
                           </span>
                         </div>
                       </div>

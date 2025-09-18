@@ -52,6 +52,9 @@ const ItemsPriceTrends = () => {
                 <h4 className="fw-bold text-primary">
                   ₹{cardsData.currentPrice}
                 </h4>
+                <h6 className="fw-bold text-primary">
+                  {cardsData.curentPriceSub}
+                </h6>
               </Card>
             </Col>
             <Col md={3}>
@@ -63,6 +66,9 @@ const ItemsPriceTrends = () => {
                 <h4 className="fw-bold text-warning">
                   ₹{cardsData.highestPrice}
                 </h4>
+                <h6 className="fw-bold text-warning">
+                  {cardsData.highestPriceSub}
+                </h6>
               </Card>
             </Col>
             <Col md={3}>
@@ -74,6 +80,9 @@ const ItemsPriceTrends = () => {
                 <h4 className="fw-bold text-danger">
                   ₹{cardsData.lowestPrice}
                 </h4>
+                <h6 className="fw-bold text-danger">
+                  {cardsData.lowestPriceSub}
+                </h6>
               </Card>
             </Col>
             <Col md={3}>
@@ -85,6 +94,9 @@ const ItemsPriceTrends = () => {
                 <h4 className="fw-bold text-success">
                   {cardsData?.percentageOfChange}%
                 </h4>
+                <h6 className="fw-bold text-success">
+                  {cardsData.percentageOfChangeSub}
+                </h6>
               </Card>
             </Col>
           </Row>

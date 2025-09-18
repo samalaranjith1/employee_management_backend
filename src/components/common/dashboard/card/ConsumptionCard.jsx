@@ -42,9 +42,9 @@ export default function ConsumptionCard({
             {title}
           </h6>
           <h4 className="fw-bold mb-0">{percentage}</h4>
-          <span className="text-success fw-bold" style={{ fontSize: "0.9rem" }}>
+          {/* <span className="text-success fw-bold" style={{ fontSize: "0.9rem" }}>
             {percentageChange}
-          </span>
+          </span> */}
         </div>
         <div>{icon}</div>
       </div>

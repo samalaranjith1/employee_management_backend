@@ -6,7 +6,7 @@ import { Row, Col, Card } from "react-bootstrap";
 import { productsIngredientAnalyticsDataFormatter } from "@/utils/data_formatters/productsPageDataFormatter";
 import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer";
 import { useProductsContext } from "@/contexts/ProductsContext";
-import { useProductIngredients } from "@/services/product-service";
+import {  useProductIngredientsUsage } from "@/services/product-service";
 
 import ProductsIngreidentAnalysisTable from "@/components/common/products/TableSort/ProductsIngreidentAnalysisTable";
 import ProductsIngreidentAnalysisGraph from "@/components/common/products/GraphWrapper/ProductsIngreidentAnalysisGraph";
@@ -16,10 +16,10 @@ export default function ProductsIngreidentAnalysis() {
 
   return (
     <ServiceRenderer
-      queryHook={useProductIngredients}
+      queryHook={ useProductIngredientsUsage}
       queryKey={["productIngredients", { startdt: startDate, enddt: endDate }]}
       queryFn={() =>
-        useProductIngredients({ startdt: startDate, enddt: endDate }).queryFn
+         useProductIngredientsUsage({ startdt: startDate, enddt: endDate }).queryFn
       }
       queryArgs={[100, { startdt: startDate, enddt: endDate }]}
       formatter={productsIngredientAnalyticsDataFormatter}

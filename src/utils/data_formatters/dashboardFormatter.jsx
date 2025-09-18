@@ -103,14 +103,14 @@ export function consumptionSummaryFormatter(data) {
           value: `₹${data.current?.discount.toLocaleString()}`,
         },
         { label: "Tax", value: `₹${data?.current?.tax.toLocaleString()}` },
-        {
-          label: "Dine in",
-          value: `₹${data.current?.dineInSales?.toLocaleString()}`,
-        },
-        {
-          label: "Online",
-          value: `₹${data.current?.onlineSales?.toLocaleString()}`,
-        },
+        // {
+        //   label: "Dine in",
+        //   value: `₹${data.current?.dineInSales?.toLocaleString()}`,
+        // },
+        // {
+        //   label: "Online",
+        //   value: `₹${data.current?.onlineSales?.toLocaleString()}`,
+        // },
       ],
     },
   ];
@@ -558,15 +558,17 @@ const getRandomColor = () =>
 export const departmentConsumptionPieChartFormatter = (apiData) => {
   if (!apiData || !apiData.list) return [];
 
-  return apiData.list
+  const chartData = apiData.list
     .filter((item) => Number(item?.netSales) > 0) // keep only items with sales > 0
     .map((item, index) => ({
       name: item?.department?.name || `Dept ${index + 1}`,
       value: Number(item?.netSales || 0),
-      percentage: Number(item?.consumptionPercentage || 0),
+      percentage: Number(item?.netSales / apiData.netSales || 0),
       totalSales: Number(apiData?.totalSales || 0),
       color: getRandomColor(),
     }));
+
+  return {chartData,total:apiData?.netSales}
 };
 
 const formatNumber = (value, unit = "", fraction = 1) => {
@@ -672,6 +674,70 @@ export function topConsumedItemsDataFormatter(apiData) {
 //     }));
 // }
 
+// export const consumptionDistributionDataFormatter = (apiData) => {
+//   if (!apiData) {
+//     return {
+//       summaryCards: [],
+//       tableData: [],
+//     };
+//   }
+
+//   // ✅ Top Summary Cards
+//   const summaryCards = [
+//     {
+//       label: "Total Items",
+//       value: apiData.totalProducts ?? 0,
+//       amount: "₹90,417", // not available in API
+//       color: "#E8F0FF",
+//     },
+//     {
+//       label: "High Consumption",
+//       value: apiData.highMarginProducts ?? 0,
+//       amount: "₹62,498", // not available in API
+//       color: "#E8F8F0",
+//     },
+//     {
+//       label: "Medium Consumption",
+//       value: apiData.mediumMarginProducts ?? 0,
+//       amount: "₹18,317", // not available in API
+//       color: "#FFF8E1",
+//     },
+//     {
+//       label: "Low Consumption",
+//       value: apiData.lowMarginProducts ?? 0,
+//       amount: "₹9,601", // not available in API
+//       color: "#FFEAEA",
+//     },
+//     // Optional extra category if available
+//     ...(apiData.extraCategory
+//       ? [
+//           {
+//             label: "Extra Category",
+//             value: apiData.extraCategory.count ?? 0,
+//             amount: "₹4,210", // not available in API
+//             color: "#E8F0FF",
+//           },
+//         ]
+//       : []),
+//   ];
+
+//   // ✅ Table Data
+//   const tableData =
+//     apiData.list?.map((item) => ({
+//       percentile: `${item.percentileLabel || item.marginPercentage || "N/A"}`,
+//       items: item.sales?.itemsSold ?? 0,
+//       percentItems: item.sales?.percentItems ?? "N/A", // not available in API
+//       value: item.sales?.netSales ?? 0,
+//       percentValue: item?.efficiency ?? "N/A",
+//       classification: item.status || "Unclassified",
+//       color: item.status,
+//     })) ?? [];
+
+//   return {
+//     summaryCards,
+//     tableData,
+//   };
+// };
 export const consumptionDistributionDataFormatter = (apiData) => {
   if (!apiData) {
     return {
@@ -684,51 +750,61 @@ export const consumptionDistributionDataFormatter = (apiData) => {
   const summaryCards = [
     {
       label: "Total Items",
-      value: apiData.totalProducts ?? 0,
-      amount: "₹90,417", // not available in API
+      value: apiData.itemCount ?? 0,
+      amount: apiData.consumptionValue
+        ? `₹${apiData.consumptionValue.toLocaleString()}`
+        : "₹0",
       color: "#E8F0FF",
     },
     {
       label: "High Consumption",
-      value: apiData.highMarginProducts ?? 0,
-      amount: "₹62,498", // not available in API
+      value: apiData.high?.count ?? 0,
+      amount: apiData.high?.value
+        ? `₹${apiData.high.value.toLocaleString()}`
+        : "₹0",
       color: "#E8F8F0",
     },
     {
       label: "Medium Consumption",
-      value: apiData.mediumMarginProducts ?? 0,
-      amount: "₹18,317", // not available in API
+      value: apiData.medium?.count ?? 0,
+      amount: apiData.medium?.value
+        ? `₹${apiData.medium.value.toLocaleString()}`
+        : "₹0",
       color: "#FFF8E1",
     },
     {
       label: "Low Consumption",
-      value: apiData.lowMarginProducts ?? 0,
-      amount: "₹9,601", // not available in API
+      value: apiData.low?.count ?? 0,
+      amount: apiData.low?.value
+        ? `₹${apiData.low.value.toLocaleString()}`
+        : "₹0",
       color: "#FFEAEA",
     },
-    // Optional extra category if available
-    ...(apiData.extraCategory
-      ? [
-          {
-            label: "Extra Category",
-            value: apiData.extraCategory.count ?? 0,
-            amount: "₹4,210", // not available in API
-            color: "#E8F0FF",
-          },
-        ]
-      : []),
   ];
 
   // ✅ Table Data
   const tableData =
     apiData.list?.map((item) => ({
-      percentile: `${item.percentileLabel || item.marginPercentage || "N/A"}`,
-      items: item.sales?.itemsSold ?? 0,
-      percentItems: item.sales?.percentItems ?? "N/A", // not available in API
-      value: item.sales?.netSales ?? 0,
-      percentValue: item?.efficiency ?? "N/A",
-      classification: item.status || "Unclassified",
-      color: item.status,
+      percentile: item.bucketName || `${item.bucket} Percentile`,
+      items: item.items ?? 0,
+      percentItems:
+        item.itemsPercentage !== undefined
+          ? `${item.itemsPercentage.toFixed(2)}%`
+          : "N/A",
+      value: item.consumptionValue ?? 0,
+      percentValue:
+        item.consumptionPercentage !== undefined
+          ? `${item.consumptionPercentage.toFixed(2)}%`
+          : "N/A",
+      classification: item.classification || "Unclassified",
+      color:
+        item.classification === "High Consumption"
+          ? "#4CAF50"
+          : item.classification === "Medium Consumption"
+          ? "#FFC107"
+          : item.classification === "Low Consumption"
+          ? "#F44336"
+          : "#9E9E9E",
     })) ?? [];
 
   return {
@@ -736,6 +812,7 @@ export const consumptionDistributionDataFormatter = (apiData) => {
     tableData,
   };
 };
+
 
 export function wastageAnalysisDataFormatter(data) {
   // ✅ Cards Data
@@ -1057,7 +1134,7 @@ export function topSellingProductsDataFormatter(data) {
   const chartData = (data.list || []).map((item) => ({
     name: item.product?.name || "Unknown",
     sales: item.sales?.netSales || 0,
-    margin: item.margin || 0,
+    margin: item.marginPercentage || 0,
   }));
 
   // --- Revenue Summary ---
@@ -1067,7 +1144,7 @@ export function topSellingProductsDataFormatter(data) {
       title: "Total Revenue",
       amount: data.totalSales || 0,
       sub: "From top selling items",
-      icon: <FaRupeeSign color="#03b678"/>,
+      icon: <FaRupeeSign color="#03b678" />,
       bgColor: "#f0fff0",
     },
     {
@@ -1079,7 +1156,7 @@ export function topSellingProductsDataFormatter(data) {
     },
     {
       title: "Avg Margin %",
-      amount: data.avgMarginPct ?? "N/A", // not available
+      amount: data.marginPercentage ?? "N/A", // not available
       sub: "Overall profitability",
       icon: <FaPercent color="#9936e9" />,
       bgColor: "#faf6ff",
@@ -1212,13 +1289,12 @@ export function supplierManagementDataFormatter(data) {
       supplierData: [],
     };
   }
-
   // Top Card
   const cardData = [
     {
       label: "Total Purchase",
       value: formatCurrency(data.totalAmount ?? 0),
-      sub: `from ${data.list.length} suppliers`,
+      suppliers: data.suppliers,
     },
   ];
 

@@ -1,5 +1,12 @@
 import { useApiQuery, useApiMutation } from "../apiHooks";
 
+export function useItemList(params) {
+  return useApiQuery({
+    key: ["items-list",  params],
+    endpoint: `/items/list`,
+    params,
+  });
+}
 
 export function useItem(id, params) {
   return useApiQuery({
@@ -46,7 +53,6 @@ export function useItemSummaryDaily(id, params) {
     params,
   });
 }
-useItemSummarySameDay;
 export function useItemSummarySameDay(id, params) {
   return useApiQuery({
     key: ["item-summary-daily", id, params],

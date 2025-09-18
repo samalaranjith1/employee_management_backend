@@ -6,7 +6,7 @@ import ComponentHeader from "@/components/common/ComponentHeader";
 import ConsumptionForecastTable from "@/components/common/department/TablesSort/ConsumptionForecastTable";
 import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer";
 import { useDepartmentContext } from "@/contexts/DepartmentContext";
-import { useProductsSalesForecastList } from "@/services/product-service";
+import { useItemsConsumptionForecastList } from "@/services/item-service";
 import { departmentConsumptionForecastDataFormatter } from "@/utils/data_formatters/departmentPage";
 
 export default function DepartmentConsumptionForeCast() {
@@ -27,7 +27,7 @@ export default function DepartmentConsumptionForeCast() {
       /> */}
 
       <ServiceRenderer
-        queryHook={useProductsSalesForecastList}
+        queryHook={useItemsConsumptionForecastList}
         queryKey={["consumptionForecast"]}
         queryArgs={[
           { startdt: startDate, enddt: endDate, outlet: 1, userId: 7 },

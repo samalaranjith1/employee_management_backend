@@ -1,194 +1,326 @@
 "use client";
 
-import React, { useMemo } from "react";
-import { Card, Table, ButtonGroup, Button } from "react-bootstrap";
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  Tooltip,
-  CartesianGrid,
-  ResponsiveContainer,
-  Label,
-} from "recharts";
+import React, { useEffect, useState } from "react";
 import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer";
-import { purchaseTrendAnalysisDataFormatter } from "@/utils/data_formatters/itemsPageDataFormatter";
-import { useItemSummaryDaily } from "@/services/item-service";
+import {
+  useItemSummaryDaily,
+  useItemSummarySameDay,
+  useItemSummaryWeekly,
+  useItemSummaryMonthly,
+} from "@/services/item-service";
 import { useItemsContext } from "@/contexts/ItemsContext";
+import { purchaseTrendAnalysisDataFormatter } from "@/utils/data_formatters/itemsPageDataFormatter";
+import { subDays, subWeeks, subMonths, format } from "date-fns";
+import ItemsPurchaseTrendAnalysisGraph from "@/components/common/items/GraphWrapper/ItemsPurchaseTrendAnalysisGraph";
+import ItemsPurchaseTrendAnalysisTable from "@/components/common/items/TableSort/ItemsPurchaseTrendAnalysisTable";
 
 export default function ItemsPurchaseTrendAnalysis() {
   const { startDate, endDate } = useItemsContext();
+  const [filter, setFilter] = useState("daily");
+  const [startDateCS, setStartDateCS] = useState("");
+  const [endDateCS, setEndDateCS] = useState("");
+
+  // 🔹 Select hook dynamically
+  const useDataFetchMethod = (view) => {
+    switch (view) {
+      case "daily":
+        return useItemSummaryDaily;
+      case "sameday":
+        return useItemSummarySameDay;
+      case "weekly":
+        return useItemSummaryWeekly;
+      case "monthly":
+        return useItemSummaryMonthly;
+      default:
+        return useItemSummaryDaily;
+    }
+  };
+
+  const SelectedHook = useDataFetchMethod(filter);
+
+  // 🔹 Compute date range dynamically
+  const getDateRange = (view) => {
+    const today = new Date();
+    let startDatetemp;
+
+    switch (view) {
+      case "daily":
+        startDatetemp = subDays(today, 7);
+        break;
+      case "weekly":
+        startDatetemp = subWeeks(today, 5);
+        break;
+      case "monthly":
+        startDatetemp = subMonths(today, 5);
+        break;
+      case "sameday":
+        startDatetemp = subWeeks(today, 5);
+        break;
+      default:
+        startDatetemp = today;
+    }
+
+    setStartDateCS(format(startDatetemp, "yyyy-MM-dd"));
+    setEndDateCS(format(today, "yyyy-MM-dd"));
+  };
+
+  useEffect(() => {
+    getDateRange(filter);
+  }, [filter]);
 
   return (
-    <ServiceRenderer
-      queryHook={useItemSummaryDaily}
-      queryKey={["itemSummaryDaily", { startdt: startDate, enddt: endDate }]}
-      queryFn={() =>
-        useItemSummaryDaily({ startdt: startDate, enddt: endDate }).queryFn
-      }
-      queryArgs={[75,{ startdt: startDate, enddt: endDate }]}
-      formatter={(data) => purchaseTrendAnalysisDataFormatter(data?.list || [])}
-      shimmerCount={2}
-    >
-      {({ chartData, tableData }) => (
-        <div className="p-3 trend-analysis">
-          {/* Chart Card */}
-          <Card className="shadow-sm border-0 mb-4 rounded-4">
-            <Card.Body>
-              <div className="d-flex justify-content-between align-items-center mb-3">
-                <div>
-                  <h5 className="fw-bold mb-0">Purchase Trend Analysis</h5>
-                  <small className="text-muted">
-                    Purchase amounts and average pricing trends over time
-                  </small>
-                </div>
-                <ButtonGroup>
-                  <Button className="tab-btn active">Daily</Button>
-                  <Button className="tab-btn">Same Days</Button>
-                  <Button className="tab-btn">Weekly</Button>
-                  <Button className="tab-btn">Monthly</Button>
-                </ButtonGroup>
-              </div>
+    <div className="trend-analysis">
+      <ServiceRenderer
+        queryHook={SelectedHook}
+        queryKey={["itemTrendAnalysis", filter, startDateCS, endDateCS]}
+        queryArgs={[
+          75,
+          { startdt: startDateCS, enddt: endDateCS, userId: 7, outlet: 1 },
+        ]}
+        formatter={(data) =>
+          purchaseTrendAnalysisDataFormatter(data?.list || [])
+        }
+        shimmerCount={2}
+      >
+        {({ chartData, tableData }) => (
+          <>
+            {/* Graph Part */}
+            <ItemsPurchaseTrendAnalysisGraph
+              chartData={chartData}
+              filter={filter}
+              setFilter={setFilter}
+            />
 
-              <div style={{ width: "100%", height: 280 }}>
-                <ResponsiveContainer>
-                  <LineChart data={chartData}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#eee" />
-                    <XAxis dataKey="date" stroke="#888" />
-                    <YAxis
-                      yAxisId="left"
-                      orientation="left"
-                      stroke="#3b82f6"
-                      tickFormatter={(v) => `₹${v}`}
-                    >
-                      <Label
-                        value="Purchase Amount"
-                        angle={-90}
-                        position="insideLeft"
-                        style={{
-                          textAnchor: "middle",
-                          fill: "#3b82f6",
-                          fontSize: 12,
-                        }}
-                      />
-                    </YAxis>
-                    <YAxis
-                      yAxisId="right"
-                      orientation="right"
-                      stroke="#8b5cf6"
-                      tickFormatter={(v) => `₹${v}`}
-                    >
-                      <Label
-                        value="Average Price"
-                        angle={90}
-                        position="insideRight"
-                        style={{
-                          textAnchor: "middle",
-                          fill: "#8b5cf6",
-                          fontSize: 12,
-                        }}
-                      />
-                    </YAxis>
-                    <Tooltip />
-                    <Line
-                      yAxisId="left"
-                      type="monotone"
-                      dataKey="purchaseAmount"
-                      stroke="#3b82f6"
-                      name="Purchase Amount"
-                      strokeWidth={2}
-                      dot={{ r: 5, fill: "#3b82f6" }}
-                      label={{ position: "top", fill: "#3b82f6", fontSize: 12 }}
-                    />
-                    <Line
-                      yAxisId="right"
-                      type="monotone"
-                      dataKey="avgPrice"
-                      stroke="#8b5cf6"
-                      name="Average Price"
-                      strokeWidth={2}
-                      dot={{ r: 5, fill: "#8b5cf6" }}
-                      label={{ position: "top", fill: "#8b5cf6", fontSize: 12 }}
-                    />
-                  </LineChart>
-                </ResponsiveContainer>
-              </div>
-            </Card.Body>
-          </Card>
+            {/* Table Part */}
+            <ItemsPurchaseTrendAnalysisTable
+              tableData={tableData}
+              filter={filter}
+            />
 
-          {/* Table Card */}
-          <Card className="shadow-sm border-0 rounded-4">
-            <Card.Body>
-              <h5 className="fw-bold mb-3">Daily Purchase Data</h5>
-              <small className="text-muted d-block mb-3">
-                Detailed breakdown of purchase metrics by date
-              </small>
-              <Table hover responsive className="align-middle">
-                <thead className="table-light">
-                  <tr>
-                    <th>Date</th>
-                    <th>Total Quantity</th>
-                    <th>Total Price</th>
-                    <th>Avg Price</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {tableData.map((row, idx) => (
-                    <tr key={idx}>
-                      <td className="text-dark fw-semibold">
-                        {row.date.icon}
-                        {row.date.label}
-                      </td>
-                      <td className="text-blue fw-semibold">
-                        {row.quantity.icon}
-                        {row.quantity.label}
-                      </td>
-                      <td className="text-green fw-semibold">
-                        {row.totalPrice.icon}
-                        {row.totalPrice.label}
-                      </td>
-                      <td className="text-purple fw-semibold">
-                        {row.avgPrice.label}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </Table>
-            </Card.Body>
-          </Card>
-
-          {/* Inline Styles */}
-          <style jsx>{`
-            .trend-analysis .tab-btn {
-              border: none;
-              background: #f9fafb;
-              color: #6b7280;
-              font-weight: 500;
-              padding: 6px 14px;
-              border-radius: 9999px;
-              transition: all 0.2s ease-in-out;
-              margin-left: 4px;
-            }
-            .trend-analysis .tab-btn.active {
-              background: linear-gradient(90deg, #ff7e5f, #feb47b);
-              color: #fff;
-            }
-            .trend-analysis .text-purple {
-              color: #8b5cf6 !important;
-            }
-            .trend-analysis .text-blue {
-              color: #3b82f6 !important;
-            }
-            .trend-analysis .text-green {
-              color: #22c55e !important;
-            }
-          `}</style>
-        </div>
-      )}
-    </ServiceRenderer>
+            {/* Inline Styles */}
+            <style jsx>{`
+              .trend-analysis .tab-btn {
+                border: none;
+                background: #f9fafb;
+                color: #6b7280;
+                font-weight: 500;
+                padding: 6px 14px;
+                border-radius: 9999px;
+                transition: all 0.2s ease-in-out;
+                margin-left: 4px;
+              }
+              .trend-analysis .tab-btn.active {
+                background: linear-gradient(90deg, #ff7e5f, #feb47b);
+                color: #fff;
+              }
+              .trend-analysis .text-purple {
+                color: #8b5cf6 !important;
+              }
+              .trend-analysis .text-blue {
+                color: #3b82f6 !important;
+              }
+              .trend-analysis .text-green {
+                color: #22c55e !important;
+              }
+            `}</style>
+          </>
+        )}
+      </ServiceRenderer>
+    </div>
   );
 }
+
+// "use client";
+
+// import React, { useMemo } from "react";
+// import { Card, Table, ButtonGroup, Button } from "react-bootstrap";
+// import {
+//   LineChart,
+//   Line,
+//   XAxis,
+//   YAxis,
+//   Tooltip,
+//   CartesianGrid,
+//   ResponsiveContainer,
+//   Label,
+// } from "recharts";
+// import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer";
+// import { purchaseTrendAnalysisDataFormatter } from "@/utils/data_formatters/itemsPageDataFormatter";
+// import { useItemSummaryDaily } from "@/services/item-service";
+// import { useItemsContext } from "@/contexts/ItemsContext";
+
+// export default function ItemsPurchaseTrendAnalysis() {
+//   const { startDate, endDate } = useItemsContext();
+
+//   return (
+//     <ServiceRenderer
+//       queryHook={useItemSummaryDaily}
+//       queryKey={["itemSummaryDaily", { startdt: startDate, enddt: endDate }]}
+//       queryFn={() =>
+//         useItemSummaryDaily({ startdt: startDate, enddt: endDate }).queryFn
+//       }
+//       queryArgs={[75,{ startdt: startDate, enddt: endDate }]}
+//       formatter={(data) => purchaseTrendAnalysisDataFormatter(data?.list || [])}
+//       shimmerCount={2}
+//     >
+//       {({ chartData, tableData }) => (
+//         <div className="p-3 trend-analysis">
+//           {/* Chart Card */}
+//           <Card className="shadow-sm border-0 mb-4 rounded-4">
+//             <Card.Body>
+//               <div className="d-flex justify-content-between align-items-center mb-3">
+//                 <div>
+//                   <h5 className="fw-bold mb-0">Purchase Trend Analysis</h5>
+//                   <small className="text-muted">
+//                     Purchase amounts and average pricing trends over time
+//                   </small>
+//                 </div>
+//                 <ButtonGroup>
+//                   <Button className="tab-btn active">Daily</Button>
+//                   <Button className="tab-btn">Same Days</Button>
+//                   <Button className="tab-btn">Weekly</Button>
+//                   <Button className="tab-btn">Monthly</Button>
+//                 </ButtonGroup>
+//               </div>
+
+//               <div style={{ width: "100%", height: 280 }}>
+//                 <ResponsiveContainer>
+//                   <LineChart data={chartData}>
+//                     <CartesianGrid strokeDasharray="3 3" stroke="#eee" />
+//                     <XAxis dataKey="date" stroke="#888" />
+//                     <YAxis
+//                       yAxisId="left"
+//                       orientation="left"
+//                       stroke="#3b82f6"
+//                       tickFormatter={(v) => `₹${v}`}
+//                     >
+//                       <Label
+//                         value="Purchase Amount"
+//                         angle={-90}
+//                         position="insideLeft"
+//                         style={{
+//                           textAnchor: "middle",
+//                           fill: "#3b82f6",
+//                           fontSize: 12,
+//                         }}
+//                       />
+//                     </YAxis>
+//                     <YAxis
+//                       yAxisId="right"
+//                       orientation="right"
+//                       stroke="#8b5cf6"
+//                       tickFormatter={(v) => `₹${v}`}
+//                     >
+//                       <Label
+//                         value="Average Price"
+//                         angle={90}
+//                         position="insideRight"
+//                         style={{
+//                           textAnchor: "middle",
+//                           fill: "#8b5cf6",
+//                           fontSize: 12,
+//                         }}
+//                       />
+//                     </YAxis>
+//                     <Tooltip />
+//                     <Line
+//                       yAxisId="left"
+//                       type="monotone"
+//                       dataKey="purchaseAmount"
+//                       stroke="#3b82f6"
+//                       name="Purchase Amount"
+//                       strokeWidth={2}
+//                       dot={{ r: 5, fill: "#3b82f6" }}
+//                       label={{ position: "top", fill: "#3b82f6", fontSize: 12 }}
+//                     />
+//                     <Line
+//                       yAxisId="right"
+//                       type="monotone"
+//                       dataKey="avgPrice"
+//                       stroke="#8b5cf6"
+//                       name="Average Price"
+//                       strokeWidth={2}
+//                       dot={{ r: 5, fill: "#8b5cf6" }}
+//                       label={{ position: "top", fill: "#8b5cf6", fontSize: 12 }}
+//                     />
+//                   </LineChart>
+//                 </ResponsiveContainer>
+//               </div>
+//             </Card.Body>
+//           </Card>
+
+//           {/* Table Card */}
+//           <Card className="shadow-sm border-0 rounded-4">
+//             <Card.Body>
+//               <h5 className="fw-bold mb-3">Daily Purchase Data</h5>
+//               <small className="text-muted d-block mb-3">
+//                 Detailed breakdown of purchase metrics by date
+//               </small>
+//               <Table hover responsive className="align-middle">
+//                 <thead className="table-light">
+//                   <tr>
+//                     <th>Date</th>
+//                     <th>Total Quantity</th>
+//                     <th>Total Price</th>
+//                     <th>Avg Price</th>
+//                   </tr>
+//                 </thead>
+//                 <tbody>
+//                   {tableData.map((row, idx) => (
+//                     <tr key={idx}>
+//                       <td className="text-dark fw-semibold">
+//                         {row.date.icon}
+//                         {row.date.label}
+//                       </td>
+//                       <td className="text-blue fw-semibold">
+//                         {row.quantity.icon}
+//                         {row.quantity.label}
+//                       </td>
+//                       <td className="text-green fw-semibold">
+//                         {row.totalPrice.icon}
+//                         {row.totalPrice.label}
+//                       </td>
+//                       <td className="text-purple fw-semibold">
+//                         {row.avgPrice.label}
+//                       </td>
+//                     </tr>
+//                   ))}
+//                 </tbody>
+//               </Table>
+//             </Card.Body>
+//           </Card>
+
+//           {/* Inline Styles */}
+//           <style jsx>{`
+//             .trend-analysis .tab-btn {
+//               border: none;
+//               background: #f9fafb;
+//               color: #6b7280;
+//               font-weight: 500;
+//               padding: 6px 14px;
+//               border-radius: 9999px;
+//               transition: all 0.2s ease-in-out;
+//               margin-left: 4px;
+//             }
+//             .trend-analysis .tab-btn.active {
+//               background: linear-gradient(90deg, #ff7e5f, #feb47b);
+//               color: #fff;
+//             }
+//             .trend-analysis .text-purple {
+//               color: #8b5cf6 !important;
+//             }
+//             .trend-analysis .text-blue {
+//               color: #3b82f6 !important;
+//             }
+//             .trend-analysis .text-green {
+//               color: #22c55e !important;
+//             }
+//           `}</style>
+//         </div>
+//       )}
+//     </ServiceRenderer>
+//   );
+// }
 
 // "use client";
 

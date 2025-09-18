@@ -32,7 +32,13 @@ export default function ItemsDepartmentAnalytics() {
         <Container fluid className="p-3 bg-light rounded shadow-sm">
           {/* Header */}
           <Row className="mb-3">
-            <Col>
+            <Col
+            className="p-2"
+              style={{
+                backgroundColor: "rgb(239,244,255)",
+                marginTop:"-15px"
+              }}
+            >
               <h5 className="fw-bold d-flex align-items-center">
                 <span className="me-2">📊</span> Department Analytics
               </h5>

@@ -132,7 +132,7 @@ export default function Home() {
           {/* Pending service call not availbale integration */}
         </MainComponentHoldingCard>
       </div>
-      <MobileBottomNav />
+      {/* <MobileBottomNav /> */}
     </QueryClientProvider>
   );
 }

@@ -67,7 +67,7 @@ export default function ItemsTrendAnalysis() {
   }, [filter]);
 
   return (
-    <div className="p-3">
+    <div className="p-1">
       <ServiceRenderer
         queryHook={SelectedHook}
         queryKey={["itemsTrendAnalysis", filter, startDateCS, endDateCS]}

@@ -32,11 +32,14 @@ const ItemsStockTrends = () => {
         useItemLeftoverStockHistory({ startdt: startDate, enddt: endDate })
           .queryFn
       }
-      queryArgs={[475,{ startdt: startDate, enddt: endDate,outlet:1,userId:7 }]}
+      queryArgs={[
+        475,
+        { startdt: startDate, enddt: endDate, outlet: 1, userId: 7 },
+      ]}
       formatter={stockTrendsDataFormatter}
       shimmerCount={1}
     >
-      {({cardsData,data}) => (
+      {({ cardsData, data }) => (
         <Container fluid className="p-4 bg-white rounded shadow-sm">
           {/* Top Summary Section */}
           <Row className="mb-4 text-center g-3">
@@ -47,8 +50,11 @@ const ItemsStockTrends = () => {
               >
                 <h6 className="text-muted">Current Stock</h6>
                 <h4 className="fw-bold text-primary">
-                  {cardsData?.currentStock?.toLocaleString()} GM
+                  {cardsData?.currentStock?.toLocaleString()} {cardsData?.unit}
                 </h4>
+                <h6 className="fw-bold text-primary">
+                  {cardsData.currentStockSub}
+                </h6>
               </Card>
             </Col>
             <Col md={3}>
@@ -58,8 +64,11 @@ const ItemsStockTrends = () => {
               >
                 <h6 className="text-muted">Latest Price</h6>
                 <h4 className="fw-bold text-success">
-                  ₹{cardsData?.currentPrice} per 1000 GM
+                  ₹{cardsData?.currentPrice}
                 </h4>
+                <h6 className="fw-bold text-success">
+                  {cardsData.currentPriceSub}
+                </h6>
               </Card>
             </Col>
             <Col md={3}>
@@ -69,8 +78,11 @@ const ItemsStockTrends = () => {
               >
                 <h6 className="text-muted">Total Purchase</h6>
                 <h4 className="fw-bold text-warning">
-                  {cardsData?.totalPurchase?.toLocaleString()} GM
+                  {cardsData?.totalPurchase?.toLocaleString()} {cardsData?.unit}
                 </h4>
+                <h6 className="fw-bold text-warning">
+                  {cardsData.totalPurchaseSub}
+                </h6>
               </Card>
             </Col>
             <Col md={3}>
@@ -80,8 +92,12 @@ const ItemsStockTrends = () => {
               >
                 <h6 className="text-muted">Total Consumption</h6>
                 <h4 className="fw-bold text-purple">
-                  {cardsData?.totalConsumption?.toLocaleString()} GM
+                  {cardsData?.totalConsumption?.toLocaleString()}{" "}
+                  {cardsData?.unit}
                 </h4>
+                <h6 className="fw-bold text-purple">
+                  {cardsData.totalConsumptionSub}
+                </h6>
               </Card>
             </Col>
           </Row>

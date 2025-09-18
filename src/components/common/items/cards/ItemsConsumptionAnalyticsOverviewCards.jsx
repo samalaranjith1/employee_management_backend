@@ -55,14 +55,16 @@ export default function ItemsConsumptionAnalyticsOverviewCards({ item }) {
       >
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <div>
+            <h6>Net Consumption</h6>
+
             <div style={{ fontWeight: "600", fontSize: "16px" }}>
-              {item.data?.consumptionQuantity || 0}
+              {item.data?.netConsumptionQuantity || 0}
             </div>
             <small style={{ color: "#6c757d" }}>GM</small>
           </div>
           <div>
             <div style={{ fontWeight: "600", fontSize: "16px" }}>
-              ₹{item.data?.consumptionValue || 0}
+              ₹{item.data?.netConsumptionValue || 0}
             </div>
             <small style={{ color: "#6c757d" }}>Total</small>
           </div>
@@ -81,14 +83,15 @@ export default function ItemsConsumptionAnalyticsOverviewCards({ item }) {
       >
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <div>
+            <h6>Sales</h6>
             <div style={{ fontWeight: "600", fontSize: "16px" }}>
-              {item.data?.netConsumptionQuantity || 0}
+              {item.data?.saleQuantity || 0}
             </div>
             <small style={{ color: "#6c757d" }}>GM</small>
           </div>
           <div>
             <div style={{ fontWeight: "600", fontSize: "16px" }}>
-              ₹{item.data?.netConsumptionValue || 0}
+              ₹{item.data?.salePrice || 0}
             </div>
             <small style={{ color: "#6c757d" }}>Total</small>
           </div>
@@ -103,7 +106,7 @@ export default function ItemsConsumptionAnalyticsOverviewCards({ item }) {
           fontSize: "13px",
         }}
       >
-        Utilization Rate {item.utilizationRate}
+        Utilization Rate {item.data?.saleToConsumptionMarginPercentage}%
       </div>
     </Card>
   );

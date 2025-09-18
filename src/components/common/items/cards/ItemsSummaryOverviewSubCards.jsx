@@ -4,7 +4,17 @@ import { Row, Col, Card } from "react-bootstrap";
 
 export default function ItemsSummaryOverviewSubCards({ footer = [] }) {
   return (
-    <Row className="g-3 mt-3">
+    <Row
+      className="g-3 mt-3"
+      style={{
+        flex: "1",
+        display: "flex",
+        alignItems: "center",
+        background: "#F3FFF8",
+        borderRadius: "12px",
+        boxShadow: "0 4px 8px rgb(0 0 0 / 0.05)",
+      }}
+    >
       {footer.map((foot) => (
         <Col key={foot.id}>
           <Card

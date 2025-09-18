@@ -22,7 +22,7 @@ export default function ItemsMenuItemConsumptionAnalysis() {
           enddt: endDate,
         }).queryFn
       }
-      queryArgs={[75, { startdt: startDate, enddt: endDate, outlet: 1, userId: 7 }]}
+      queryArgs={[74, { startdt: startDate, enddt: endDate, outlet: 1, userId: 7 }]}
       formatter={menuItemConsumptionAnalysisDataFormatter}
       shimmerCount={1}
     >
@@ -34,16 +34,28 @@ export default function ItemsMenuItemConsumptionAnalysis() {
 
         return (
           <Card
-            className="p-3 shadow-sm"
+            className="p-0 shadow-sm"
             style={{ borderRadius: "12px", background: "#fff" }}
           >
-            <h5 className="fw-bold mb-2">Menu Item Consumption Analysis</h5>
-            <p className="text-muted small">
-              Item consumption breakdown by menu items with quantity distribution
-            </p>
+            <div
+            className="p-3"
+              style={{
+                backgroundColor: "rgb(255,249,236)",
+              }}
+            >
+              <h5 className="fw-bold mb-2">
+                Menu Item Consumption Analysis
+              </h5>
+              <p className="text-muted small">
+                Item consumption breakdown by menu items with quantity
+                distribution
+              </p>
+            </div>
 
-            <Row>
-              <ItemsMenuItemConsumptionAnalysisTable formattedData={formattedData} />
+            <Row className="p-2">
+              <ItemsMenuItemConsumptionAnalysisTable
+                formattedData={formattedData}
+              />
               <ItemsMenuItemConsumptionAnalysisGraph chartData={chartData} />
             </Row>
           </Card>

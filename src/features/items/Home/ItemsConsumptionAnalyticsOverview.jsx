@@ -13,7 +13,7 @@ const ItemsConsumptionAnalyticsOverview = () => {
   const scrollRef = useRef(null);
 
   return (
-    <Container fluid>
+    <Container fluid className="bg-white">
       <ComponentHeader
         title="Consumption Analytics Overview"
         description="Comprehensive consumption metrics across different time periods for GOLD DROP OIL"
@@ -35,7 +35,7 @@ const ItemsConsumptionAnalyticsOverview = () => {
           }).queryFn
         }
         queryArgs={[
-          75,
+          74,
           { startdt: startDate, enddt: endDate, outlet: 1, userId: 7 },
         ]}
         formatter={itemHealthDataFormatter}

@@ -150,9 +150,9 @@ const SupplierDuesThisMonth = () => {
                 <div style={{ fontSize: "0.9rem", color: "#334155" }}>
                   Total Purchase MTD
                 </div>
-                <div style={styles.amount}>{data.cardData.value}</div>
+                <div style={styles.amount}>{data.cardData[0].value}</div>
                 <div style={{ fontSize: "0.85rem", color: "#64748b" }}>
-                  {data.cardData.sub}
+                  from {data.cardData[0].suppliers} suppliers
                 </div>
               </div>
               <div

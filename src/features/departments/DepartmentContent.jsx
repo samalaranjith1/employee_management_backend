@@ -25,7 +25,6 @@ function DepartmentContent({ activeKey, dateFilter }) {
         width: "100%",
       }}
     >
-      {console.log(activeKey,'ramarama')}
       {/* Scrollable content */}
       <div style={{ flexGrow: 1, overflowY: "auto" }}>
         {activeKey.toLowerCase() === "home" && <DepartmentHome />}

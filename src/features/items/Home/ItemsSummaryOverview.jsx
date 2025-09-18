@@ -21,13 +21,14 @@ export default function ItemsSummaryOverview() {
       queryFn={() =>
         useItemSummary({ startdt: startDate, enddt: endDate }).queryFn
       }
-      queryArgs={[75, { startdt: startDate, enddt: endDate }]}
+      queryArgs={[74, { startdt: startDate, enddt: endDate, outlet:1, userId:7 }]}
       formatter={summeryOverviewDataFormatter}
       shimmerCount={1}
     >
       {(formatted) => (
         <Container fluid className="p-2 card bg-light">
           {/* Header */}
+          {console.log(formatted,'ramarama')}
           <div className="mb-4">
             <h5 className="fw-bold">{formatted.header.title}</h5>
             <p className="text-muted small">{formatted.header.subtitle}</p>

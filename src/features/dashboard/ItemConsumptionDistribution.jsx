@@ -9,7 +9,8 @@ import ComponentHeader from "@/components/common/ComponentHeader";
 import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer";
 import { useDashboardContext } from "@/contexts/DashboardContext";
 import { consumptionDistributionDataFormatter } from "@/utils/data_formatters/dashboardFormatter";
-import { useProductsUsageList } from "@/services/product-service";
+import { useItemsConsumptionDistribution } from "@/services/item-service";
+
 import ItemConsumptionDistributionTable from "@/components/common/dashboard/TablesSort/ItemConsumptionDistributionTable";
 
 export default function ItemConsumptionDistribution() {
@@ -33,14 +34,14 @@ export default function ItemConsumptionDistribution() {
 
       {/* ✅ ServiceRenderer handles loading/error/data */}
       <ServiceRenderer
-        queryHook={useProductsUsageList}
+        queryHook={useItemsConsumptionDistribution}
         queryKey={[
           "itemsConsumptionDistribution",
           1,
           { startdt: startDate, enddt: endDate },
         ]}
         queryFn={() =>
-          useProductsUsageList(1, {
+          useItemsConsumptionDistribution(1, {
             startdt: startDate,
             enddt: endDate,
           }).queryFn

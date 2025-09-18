@@ -88,7 +88,9 @@ const SupplierManagement = () => {
         queryFn={() =>
           useSuppliersUsage({ startdt: startDate, enddt: endDate }).queryFn
         }
-        queryArgs={[{ startdt: startDate, enddt: endDate ,outlet:1,userId:7}]}
+        queryArgs={[
+          { startdt: startDate, enddt: endDate, outlet: 1, userId: 7 },
+        ]}
         formatter={supplierManagementDataFormatter}
         shimmerCount={2}
       >
@@ -108,10 +110,10 @@ const SupplierManagement = () => {
                     Total Purchase
                   </div>
                   <div style={styles.amount}>
-                    {formattedData.cardData.totalPurchase}
+                    {formattedData.cardData[0].value}
                   </div>
                   <div style={{ fontSize: "0.85rem", color: "#64748b" }}>
-                    from {formattedData.cardData.totalSuppliers} suppliers
+                    from {formattedData.cardData[0].suppliers} suppliers
                   </div>
                 </div>
                 <div

@@ -29,6 +29,12 @@ export default function ItemsConsumptionDepartmentDistributionChart() {
     "#6B7280",
   ];
 
+  // ✅ prepare COLORS outside of ServiceRenderer
+  const getColors = (chartData) =>
+    [...COLOR_PALETTE]
+      .sort(() => 0.5 - Math.random())
+      .slice(0, chartData.length);
+
   return (
     <ServiceRenderer
       queryHook={useDepartmentsUsageList}
@@ -42,18 +48,15 @@ export default function ItemsConsumptionDepartmentDistributionChart() {
           enddt: endDate,
         }).queryFn
       }
-      queryArgs={[{ startdt: startDate, enddt: endDate ,outlet:1,userId:7}]}
+      queryArgs={[{ startdt: startDate, enddt: endDate, outlet: 1, userId: 7 }]}
       formatter={consumptionDepartmentDistributionChartDataFormatter}
       shimmerCount={1}
     >
       {(formattedData) => {
         const { chartData, total } = formattedData;
 
-        // ✅ This useMemo is fine because it's INSIDE a single render (no new hook call order changes)
-        const COLORS = useMemo(() => {
-          const shuffled = [...COLOR_PALETTE].sort(() => 0.5 - Math.random());
-          return chartData.map((_, index) => shuffled[index % shuffled.length]);
-        }, [chartData]);
+        // ✅ now just compute COLORS (no hook here)
+        const COLORS = getColors(chartData);
 
         return (
           <Card
@@ -230,6 +233,470 @@ export default function ItemsConsumptionDepartmentDistributionChart() {
     </ServiceRenderer>
   );
 }
+// "use client";
+
+// import React, { useState, useMemo } from "react";
+// import { Card, Row, Col, Dropdown } from "react-bootstrap";
+// import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
+// import { consumptionDepartmentDistributionChartDataFormatter } from "@/utils/data_formatters/itemsPageDataFormatter";
+// import { useDepartmentsUsageList } from "@/services/department-service";
+// import { useItemsContext } from "@/contexts/ItemsContext";
+// import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer";
+
+// export default function ItemsConsumptionDepartmentDistributionChart() {
+//   const { startDate, endDate } = useItemsContext();
+//   const [metric, setMetric] = useState("Consumption Quantity (GM)");
+
+//   // 🎨 Color palette
+//   const COLOR_PALETTE = [
+//     "#4E79FF",
+//     "#10B981",
+//     "#F59E0B",
+//     "#EF4444",
+//     "#A855F7",
+//     "#06B6D4",
+//     "#EAB308",
+//     "#3B82F6",
+//     "#F97316",
+//     "#D946EF",
+//     "#F43F5E",
+//     "#22C55E",
+//     "#6B7280",
+//   ];
+
+//   return (
+//     <ServiceRenderer
+//       queryHook={useDepartmentsUsageList}
+//       queryKey={[
+//         "departmentsUsageList",
+//         { startdt: startDate, enddt: endDate },
+//       ]}
+//       queryFn={() =>
+//         useDepartmentsUsageList({
+//           startdt: startDate,
+//           enddt: endDate,
+//         }).queryFn
+//       }
+//       queryArgs={[{ startdt: startDate, enddt: endDate, outlet: 1, userId: 7 }]}
+//       formatter={consumptionDepartmentDistributionChartDataFormatter}
+//       shimmerCount={1}
+//     >
+//       {(formattedData) => {
+//         const { chartData, total } = formattedData;
+
+//         // ✅ moved OUTSIDE of render-prop hook call order
+//         const COLORS = useMemo(() => {
+//           const shuffled = [...COLOR_PALETTE].sort(() => 0.5 - Math.random());
+//           return chartData.map((_, index) => shuffled[index % shuffled.length]);
+//         }, [chartData]);
+
+//         return (
+//           <Card
+//             style={{
+//               borderRadius: "16px",
+//               backgroundColor: "#fff",
+//               border: "none",
+//               boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
+//               padding: "20px",
+//             }}
+//           >
+//             {/* Header */}
+//             <div
+//               style={{
+//                 display: "flex",
+//                 alignItems: "center",
+//                 justifyContent: "space-between",
+//                 background: "linear-gradient(90deg, #fce7f3, #fbcfe8)",
+//                 borderRadius: "12px",
+//                 padding: "12px 16px",
+//                 marginBottom: "20px",
+//               }}
+//             >
+//               <div
+//                 style={{ display: "flex", alignItems: "center", gap: "10px" }}
+//               >
+//                 <div
+//                   style={{
+//                     backgroundColor: "#EC4899",
+//                     padding: "8px",
+//                     borderRadius: "8px",
+//                   }}
+//                 >
+//                   {chartData[0]?.icon}
+//                 </div>
+//                 <div>
+//                   <h5
+//                     style={{
+//                       margin: 0,
+//                       fontSize: "16px",
+//                       fontWeight: 600,
+//                       color: "#111827",
+//                     }}
+//                   >
+//                     Department Distribution Chart
+//                   </h5>
+//                   <p
+//                     style={{
+//                       margin: 0,
+//                       fontSize: "13px",
+//                       color: "#6B7280",
+//                     }}
+//                   >
+//                     Visual breakdown of departmental metrics
+//                   </p>
+//                 </div>
+//               </div>
+
+//               {/* 🔽 Dropdown */}
+//               <Dropdown>
+//                 <Dropdown.Toggle
+//                   variant="light"
+//                   style={{
+//                     border: "1px solid #E5E7EB",
+//                     padding: "6px 12px",
+//                     borderRadius: "8px",
+//                     backgroundColor: "#fff",
+//                     fontSize: "13px",
+//                     fontWeight: 500,
+//                     color: "#111827",
+//                   }}
+//                 >
+//                   {metric}
+//                 </Dropdown.Toggle>
+//                 <Dropdown.Menu>
+//                   <Dropdown.Item
+//                     onClick={() => setMetric("Consumption Quantity (GM)")}
+//                   >
+//                     Consumption Quantity (GM)
+//                   </Dropdown.Item>
+//                   <Dropdown.Item
+//                     onClick={() => setMetric("Consumption Value (₹)")}
+//                   >
+//                     Consumption Value (₹)
+//                   </Dropdown.Item>
+//                   <Dropdown.Item onClick={() => setMetric("Consumption Units")}>
+//                     Consumption Units
+//                   </Dropdown.Item>
+//                 </Dropdown.Menu>
+//               </Dropdown>
+//             </div>
+
+//             <Row>
+//               {/* Pie Chart */}
+//               <Col md={7}>
+//                 <ResponsiveContainer width="100%" height={300}>
+//                   <PieChart>
+//                     <Pie
+//                       data={chartData}
+//                       dataKey="value"
+//                       innerRadius={70}
+//                       outerRadius={100}
+//                       paddingAngle={3}
+//                     >
+//                       {chartData.map((_, index) => (
+//                         <Cell key={index} fill={COLORS[index]} />
+//                       ))}
+//                     </Pie>
+//                     <Tooltip />
+//                   </PieChart>
+//                 </ResponsiveContainer>
+//               </Col>
+
+//               {/* List */}
+//               <Col md={5}>
+//                 <div style={{ marginBottom: "10px", fontWeight: 600 }}>
+//                   {metric}
+//                 </div>
+//                 {chartData.map((item) => (
+//                   <div
+//                     key={item.id}
+//                     style={{
+//                       display: "flex",
+//                       justifyContent: "space-between",
+//                       alignItems: "center",
+//                       padding: "10px 12px",
+//                       borderRadius: "12px",
+//                       marginBottom: "8px",
+//                       background: "#F9FAFB",
+//                     }}
+//                   >
+//                     <div
+//                       style={{
+//                         display: "flex",
+//                         alignItems: "center",
+//                         gap: "8px",
+//                       }}
+//                     >
+//                       <div style={{ fontSize: "18px" }}>{item.icon}</div>
+//                       <div style={{ fontSize: "14px", fontWeight: 500 }}>
+//                         {item.name}
+//                       </div>
+//                     </div>
+//                     <div style={{ textAlign: "right" }}>
+//                       <div style={{ fontWeight: 600, fontSize: "14px" }}>
+//                         {item.value.toFixed(1)} GM
+//                       </div>
+//                       <div style={{ fontSize: "12px", color: "#6B7280" }}>
+//                         {item.percentage}%
+//                       </div>
+//                     </div>
+//                   </div>
+//                 ))}
+
+//                 <div
+//                   style={{
+//                     display: "flex",
+//                     justifyContent: "space-between",
+//                     padding: "12px",
+//                     borderRadius: "12px",
+//                     marginTop: "12px",
+//                     background: "#F3F4F6",
+//                     fontWeight: 700,
+//                   }}
+//                 >
+//                   <span>Total</span>
+//                   <span>{total} GM</span>
+//                 </div>
+//               </Col>
+//             </Row>
+//           </Card>
+//         );
+//       }}
+//     </ServiceRenderer>
+//   );
+// }
+// "use client";
+
+// import React, { useState, useMemo } from "react";
+// import { Card, Row, Col, Dropdown } from "react-bootstrap";
+// import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
+// import { consumptionDepartmentDistributionChartDataFormatter } from "@/utils/data_formatters/itemsPageDataFormatter";
+// import { useDepartmentsUsageList } from "@/services/department-service";
+// import { useItemsContext } from "@/contexts/ItemsContext";
+// import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer";
+
+// export default function ItemsConsumptionDepartmentDistributionChart() {
+//   const { startDate, endDate } = useItemsContext();
+//   const [metric, setMetric] = useState("Consumption Quantity (GM)");
+
+//   // 🎨 Color palette
+//   const COLOR_PALETTE = [
+//     "#4E79FF",
+//     "#10B981",
+//     "#F59E0B",
+//     "#EF4444",
+//     "#A855F7",
+//     "#06B6D4",
+//     "#EAB308",
+//     "#3B82F6",
+//     "#F97316",
+//     "#D946EF",
+//     "#F43F5E",
+//     "#22C55E",
+//     "#6B7280",
+//   ];
+
+//   return (
+//     <ServiceRenderer
+//       queryHook={useDepartmentsUsageList}
+//       queryKey={[
+//         "departmentsUsageList",
+//         { startdt: startDate, enddt: endDate },
+//       ]}
+//       queryFn={() =>
+//         useDepartmentsUsageList({
+//           startdt: startDate,
+//           enddt: endDate,
+//         }).queryFn
+//       }
+//       queryArgs={[{ startdt: startDate, enddt: endDate ,outlet:1,userId:7}]}
+//       formatter={consumptionDepartmentDistributionChartDataFormatter}
+//       shimmerCount={1}
+//     >
+//       {(formattedData) => {
+//         const { chartData, total } = formattedData;
+
+//         // ✅ This useMemo is fine because it's INSIDE a single render (no new hook call order changes)
+//         const COLORS = useMemo(() => {
+//           const shuffled = [...COLOR_PALETTE].sort(() => 0.5 - Math.random());
+//           return chartData.map((_, index) => shuffled[index % shuffled.length]);
+//         }, [chartData]);
+
+//         return (
+//           <Card
+//             style={{
+//               borderRadius: "16px",
+//               backgroundColor: "#fff",
+//               border: "none",
+//               boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
+//               padding: "20px",
+//             }}
+//           >
+//             {/* Header */}
+//             <div
+//               style={{
+//                 display: "flex",
+//                 alignItems: "center",
+//                 justifyContent: "space-between",
+//                 background: "linear-gradient(90deg, #fce7f3, #fbcfe8)",
+//                 borderRadius: "12px",
+//                 padding: "12px 16px",
+//                 marginBottom: "20px",
+//               }}
+//             >
+//               <div
+//                 style={{ display: "flex", alignItems: "center", gap: "10px" }}
+//               >
+//                 <div
+//                   style={{
+//                     backgroundColor: "#EC4899",
+//                     padding: "8px",
+//                     borderRadius: "8px",
+//                   }}
+//                 >
+//                   {chartData[0]?.icon}
+//                 </div>
+//                 <div>
+//                   <h5
+//                     style={{
+//                       margin: 0,
+//                       fontSize: "16px",
+//                       fontWeight: 600,
+//                       color: "#111827",
+//                     }}
+//                   >
+//                     Department Distribution Chart
+//                   </h5>
+//                   <p
+//                     style={{
+//                       margin: 0,
+//                       fontSize: "13px",
+//                       color: "#6B7280",
+//                     }}
+//                   >
+//                     Visual breakdown of departmental metrics
+//                   </p>
+//                 </div>
+//               </div>
+
+//               {/* 🔽 Dropdown */}
+//               <Dropdown>
+//                 <Dropdown.Toggle
+//                   variant="light"
+//                   style={{
+//                     border: "1px solid #E5E7EB",
+//                     padding: "6px 12px",
+//                     borderRadius: "8px",
+//                     backgroundColor: "#fff",
+//                     fontSize: "13px",
+//                     fontWeight: 500,
+//                     color: "#111827",
+//                   }}
+//                 >
+//                   {metric}
+//                 </Dropdown.Toggle>
+//                 <Dropdown.Menu>
+//                   <Dropdown.Item
+//                     onClick={() => setMetric("Consumption Quantity (GM)")}
+//                   >
+//                     Consumption Quantity (GM)
+//                   </Dropdown.Item>
+//                   <Dropdown.Item
+//                     onClick={() => setMetric("Consumption Value (₹)")}
+//                   >
+//                     Consumption Value (₹)
+//                   </Dropdown.Item>
+//                   <Dropdown.Item onClick={() => setMetric("Consumption Units")}>
+//                     Consumption Units
+//                   </Dropdown.Item>
+//                 </Dropdown.Menu>
+//               </Dropdown>
+//             </div>
+
+//             <Row>
+//               {/* Pie Chart */}
+//               <Col md={7}>
+//                 <ResponsiveContainer width="100%" height={300}>
+//                   <PieChart>
+//                     <Pie
+//                       data={chartData}
+//                       dataKey="value"
+//                       innerRadius={70}
+//                       outerRadius={100}
+//                       paddingAngle={3}
+//                     >
+//                       {chartData.map((_, index) => (
+//                         <Cell key={index} fill={COLORS[index]} />
+//                       ))}
+//                     </Pie>
+//                     <Tooltip />
+//                   </PieChart>
+//                 </ResponsiveContainer>
+//               </Col>
+
+//               {/* List */}
+//               <Col md={5}>
+//                 <div style={{ marginBottom: "10px", fontWeight: 600 }}>
+//                   {metric}
+//                 </div>
+//                 {chartData.map((item) => (
+//                   <div
+//                     key={item.id}
+//                     style={{
+//                       display: "flex",
+//                       justifyContent: "space-between",
+//                       alignItems: "center",
+//                       padding: "10px 12px",
+//                       borderRadius: "12px",
+//                       marginBottom: "8px",
+//                       background: "#F9FAFB",
+//                     }}
+//                   >
+//                     <div
+//                       style={{
+//                         display: "flex",
+//                         alignItems: "center",
+//                         gap: "8px",
+//                       }}
+//                     >
+//                       <div style={{ fontSize: "18px" }}>{item.icon}</div>
+//                       <div style={{ fontSize: "14px", fontWeight: 500 }}>
+//                         {item.name}
+//                       </div>
+//                     </div>
+//                     <div style={{ textAlign: "right" }}>
+//                       <div style={{ fontWeight: 600, fontSize: "14px" }}>
+//                         {item.value.toFixed(1)} GM
+//                       </div>
+//                       <div style={{ fontSize: "12px", color: "#6B7280" }}>
+//                         {item.percentage}%
+//                       </div>
+//                     </div>
+//                   </div>
+//                 ))}
+
+//                 <div
+//                   style={{
+//                     display: "flex",
+//                     justifyContent: "space-between",
+//                     padding: "12px",
+//                     borderRadius: "12px",
+//                     marginTop: "12px",
+//                     background: "#F3F4F6",
+//                     fontWeight: 700,
+//                   }}
+//                 >
+//                   <span>Total</span>
+//                   <span>{total} GM</span>
+//                 </div>
+//               </Col>
+//             </Row>
+//           </Card>
+//         );
+//       }}
+//     </ServiceRenderer>
+//   );
+// }
 
 // "use client";
 

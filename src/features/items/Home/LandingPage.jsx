@@ -22,7 +22,7 @@ function LandingPage() {
       <ItemsSummaryOverview />
       <ItemsTrendAnalysis />
       {/* for below api is not avilable */}
-      <ItemsDepartmentAnalyticsTable />
+      {/* <ItemsDepartmentAnalyticsTable /> */}
       <ItemsDepartmentAnalytics />
       <ItemsDepartmentDistributionChart />
       <ItemsMenuItemConsumptionAnalysis />

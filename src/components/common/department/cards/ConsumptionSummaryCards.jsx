@@ -47,14 +47,14 @@ export default function ConsumptionSummaryCards({ cards, scrollRef }) {
                   {card.title}
                 </h6>
                 <h3 className="fw-bold mb-1">{card.value}</h3>
-                <small
+                {/* <small
                   className={`fw-semibold ${
                     card.change >= 0 ? "text-success" : "text-danger"
                   }`}
                   style={{ letterSpacing: "0.03em" }}
                 >
                   {card.change >= 0 ? "▲" : "▼"} {Math.abs(card.change)}%
-                </small>
+                </small> */}
               </Col>
               <Col xs="auto">
                 <div

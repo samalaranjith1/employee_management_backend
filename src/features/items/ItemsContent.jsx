@@ -6,6 +6,7 @@ import Purchase from "./Purchase/LandingPage";
 import PriceTrends from "./PriceTrends/LandingPage";
 import Products from "./Products/LandingPage";
 import ItemsHome from "./Home/LandingPage";
+import ActionableInsights from "../dashboard/ActionableInsights";
 
 function ItemsContent({ activeTab, dateFilter }) {
   return (
@@ -24,7 +25,7 @@ function ItemsContent({ activeTab, dateFilter }) {
       {/* Scrollable content */}
       <div style={{ flexGrow: 1, overflowY: "auto" }}>
         {activeTab === "Home" && <ItemsHome />}
-        {activeTab === "Insights" && <Insights />}
+        {activeTab === "Insights" && <ActionableInsights />}
         {activeTab === "Purchase" && <Purchase />}
         {activeTab === "Consumption" && <Consumption />}
         {activeTab === "Products" && <Products />}

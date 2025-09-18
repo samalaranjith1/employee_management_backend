@@ -12,7 +12,7 @@ function SalesTable({ products }) {
 
   // 🔹 Column config
   const columns = [
-    { key: "srNo", label: "#" },
+    // { key: "srNo", label: "#" },
     { key: "name", label: "PRODUCT" },
     { key: "items", label: "#ITEMS" },
     { key: "netSales", label: "NET SALES" },
@@ -111,7 +111,7 @@ function SalesTable({ products }) {
               filteredData.map((item) => (
                 <tr key={item.id} style={{ borderBottom: "1px solid #eee" }}>
                   {/* # */}
-                  <td style={{ padding: "14px 16px" }}>{item.srNo}</td>
+                  {/* <td style={{ padding: "14px 16px" }}>{item.srNo}</td> */}
 
                   {/* Product */}
                   <td style={{ padding: "14px 16px", minWidth: "250px" }}>

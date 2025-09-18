@@ -33,9 +33,14 @@ export default function ItemsDepartmentDistributionChart() {
       shimmerCount={1}
     >
       {({ formatted, total }) => (
-        <Card className="p-4 shadow-sm" style={{ borderRadius: "16px" }}>
+        <Card className="p-2 pt-0 shadow-sm" style={{ borderRadius: "16px" }}>
           {/* Header */}
-          <Row className="mb-3 align-items-center">
+          <Row
+            className="mb-3 p-3 align-items-center"
+            style={{
+              backgroundColor: "rgb(251,244,252)",
+            }}
+          >
             <Col>
               <h5 className="fw-bold mb-0">Department Distribution Chart</h5>
               <p className="text-muted mb-0" style={{ fontSize: "0.9rem" }}>

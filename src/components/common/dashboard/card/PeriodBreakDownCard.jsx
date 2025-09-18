@@ -16,9 +16,9 @@ export default function PeriodBreakDownCard({ idx, card, scrollRef }) {
           <h5>{card.title}</h5>
           <h4>{card.value}</h4>
         </div>
-        <div className="text-end">
+        {/* <div className="text-end">
           <small className={`text-${card.color}`}>{card.change}</small>
-        </div>
+        </div> */}
       </div>
     </CommonCard>
   );

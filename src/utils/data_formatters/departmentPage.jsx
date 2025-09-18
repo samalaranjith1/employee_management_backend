@@ -281,43 +281,43 @@ export const departmentSalesForeCastByItemDataFormatter = (apiResponse) => {
   return { topCardsData, tableData };
 };
 
-export const departmentConsumptionForecastDataFormatter = (apiResponse) => {
-  const list = apiResponse.list || [];
+// export const departmentConsumptionForecastDataFormatter = (apiResponse) => {
+//   const list = apiResponse.list || [];
 
-  // Top cards data (example: total avgNetSales, avgTotalSales, avgOrders)
-  const totalQuantity = list.reduce(
-    (acc, curr) => acc + (curr.avgItemsSold || 0),
-    0
-  );
-  const totalSales = list.reduce(
-    (acc, curr) => acc + (curr.avgTotalSales || 0),
-    0
-  );
-  const totalOrders = list.reduce(
-    (acc, curr) => acc + (curr.avgOrders || 0),
-    0
-  );
+//   // Top cards data (example: total avgNetSales, avgTotalSales, avgOrders)
+//   const totalQuantity = list.reduce(
+//     (acc, curr) => acc + (curr.avgItemsSold || 0),
+//     0
+//   );
+//   const totalSales = list.reduce(
+//     (acc, curr) => acc + (curr.avgTotalSales || 0),
+//     0
+//   );
+//   const totalOrders = list.reduce(
+//     (acc, curr) => acc + (curr.avgOrders || 0),
+//     0
+//   );
 
-  const topCardsData = [
-    { title: "Total Items Sold", value: totalQuantity },
-    { title: "Total Sales", value: totalSales },
-    { title: "Total Orders", value: totalOrders },
-  ];
+//   const topCardsData = [
+//     { title: "Total Items Sold", value: totalQuantity },
+//     { title: "Total Sales", value: totalSales },
+//     { title: "Total Orders", value: totalOrders },
+//   ];
 
-  // Table data
-  const tableData = list.flat().map((item) => ({
-    day: item.day,
-    name: item.product.name,
-    category: item.product.categoryName || "-",
-    unit: item.product.pieceUnit || "-",
-    unitQuantity: item.product.pieceQuantity || 1,
-    unitPrice: item.product.price || 0,
-    quantity: item.quantity || 0,
-    totalPrice: item.totalPrice || 0,
-  }));
+//   // Table data
+//   const tableData = list.flat().map((item) => ({
+//     day: item.day,
+//     name: item.product.name,
+//     category: item.product.categoryName || "-",
+//     unit: item.product.pieceUnit || "-",
+//     unitQuantity: item.product.pieceQuantity || 1,
+//     unitPrice: item.product.price || 0,
+//     quantity: item.quantity || 0,
+//     totalPrice: item.totalPrice || 0,
+//   }));
 
-  return { topCardsData, tableData };
-};
+//   return { topCardsData, tableData };
+// };
 
 // home tab
 // ✅ Data formatter for Department Consumption Summary
@@ -392,6 +392,42 @@ export const departmentConsumptionForecastDataFormatter = (apiResponse) => {
 //     },
 //   ];
 // };
+
+export const departmentConsumptionForecastDataFormatter = (apiResponse) => {
+  const list = apiResponse.list || [];
+
+  // 🔹 Top cards data
+  const totalQuantity = list.reduce(
+    (acc, curr) => acc + (curr.quantity || 0),
+    0
+  );
+  const totalSales = list.reduce(
+    (acc, curr) => acc + (curr.totalPrice || 0),
+    0
+  );
+  const totalOrders = list.length; // since no avgOrders, we consider number of items as orders
+
+  const topCardsData = [
+    { title: "Total Quantity", value: totalQuantity },
+    { title: "Total Sales", value: totalSales },
+    { title: "Total Items", value: totalOrders },
+  ];
+
+  // 🔹 Table data
+  const tableData = list.map((item) => ({
+    day: item.dayName,
+    name: item.item?.name || "-",
+    category: item.item?.categoryName || "-",
+    unit: item.item?.unit || "-",
+    unitQuantity: item.item?.unitQuantity || 1,
+    unitPrice: item.unitPrice || item.item?.unitPrice || 0,
+    quantity: item.quantity || 0,
+    totalPrice: item.totalPrice || 0,
+    department: item.department?.name || "-",
+  }));
+
+  return { topCardsData, tableData };
+};
 
 export const departmentConsumptionSummaryDataFormatter = (data) => {
   if (!data || !data.summary) return [];

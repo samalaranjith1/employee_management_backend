@@ -4,7 +4,7 @@ import React, { useMemo } from "react";
 import { Table, Button } from "react-bootstrap";
 import { FaDownload } from "react-icons/fa";
 import { salesDataFormatter } from "@/utils/data_formatters/productsPageDataFormatter";
-import { useProductSummaryMonthly } from "@/services/product-service";
+import { useProductSummaryDaily } from "@/services/product-service";
 import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer";
 import { useProductsContext } from "@/contexts/ProductsContext";
 import ProductsSalesTable from "@/components/common/products/TableSort/ProductsSalesTable";
@@ -86,7 +86,7 @@ const ProductsSales = () => {
 
   return (
     <ServiceRenderer
-      queryHook={useProductSummaryMonthly}
+      queryHook={useProductSummaryDaily}
       queryKey={[
         "productSummaryMonthly",
         { startdt: startDate, enddt: endDate },

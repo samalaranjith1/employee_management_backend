@@ -1,9 +1,16 @@
-import { FaFileInvoice,FaBoxOpen, FaRupeeSign, FaReceipt } from "react-icons/fa";
+import {
+  FaFileInvoice,
+  FaBoxOpen,
+  FaRupeeSign,
+  FaReceipt,
+  FaChartLine,
+  FaTable,
+} from "react-icons/fa";
 
 export const suppliersSummaryOverViewDataFormatter = (apiData) => {
   if (!apiData || !apiData.summary) return { summaryCards: [] };
 
-  const { expense, payment } = apiData.summary;
+  const { expense, payment,dues } = apiData.summary;
 
   // derive dues
   const duesTotal = (expense?.totalAmount || 0) - (payment?.totalAmount || 0);
@@ -52,16 +59,14 @@ export const suppliersSummaryOverViewDataFormatter = (apiData) => {
         iconBg: "#E85C0D",
         icon: <FaReceipt size={18} color="#fff" />,
         fields: [
-          { label: "Total Dues", value: `₹${duesTotal}` },
-          { label: "This month", value: `₹0` },
-          { label: "Other", value: `₹${duesTotal}`, bold: true },
+          { label: "Total Dues", value: `₹${dues?.totalAmount}` },
+          { label: "This month", value: `₹${dues?.thisMonthAmount}` },
+          { label: "Previous", value: `₹${dues?.previousAmount}`, bold: true },
         ],
       },
     ],
   };
 };
-
-import { FaChartLine, FaTable } from "react-icons/fa";
 
 // Helper to format date like "Dec 1st, 2024 - Sunday"
 const formatDate = (dt) => {
@@ -93,8 +98,7 @@ export const supplierFinancialAnalysisDataFormatter = (apiData) => {
   // Prepare chart data
   const chartData = apiData.list.map((item) => ({
     date: item.dt,
-    purchaseAmount:
-      item.purchase?.totalPrice || item.expense?.purchaseAmount || 0,
+    purchaseAmount: item.expense?.purchaseAmount || 0,
     paymentAmount: item.payment?.paymentAmount || 0,
   }));
 
@@ -104,8 +108,7 @@ export const supplierFinancialAnalysisDataFormatter = (apiData) => {
     return {
       date: dateLabel,
       day: weekday,
-      purchaseAmount:
-        item.purchase?.totalPrice || item.expense?.purchaseAmount || 0,
+      purchaseAmount: item.expense?.purchaseAmount || 0,
       paymentAmount: item.payment?.paymentAmount || 0,
     };
   });

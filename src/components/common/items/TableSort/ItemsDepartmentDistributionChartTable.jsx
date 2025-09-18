@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useMemo } from "react";
-import { Col, Card } from "react-bootstrap";
+import { Col, Card, Table } from "react-bootstrap";
 import { useTableSort } from "@/components/hooks/useTableSort";
 
 export default function ItemsDepartmentDistributionChartTable({
@@ -9,131 +9,130 @@ export default function ItemsDepartmentDistributionChartTable({
   total,
   selectedKey,
 }) {
-  // 🔹 Prepare data for sorting
+  // ✅ Ensure formatted is always an array
   const tableData = useMemo(() => {
-    return formatted.map((d, idx) => ({
-      ...d,
-      valueNum: parseFloat(d.value) || 0,
-      index: idx,
+    if (!Array.isArray(formatted)) return [];
+    return formatted.map((d) => ({
+      name: d.name || "-",
+      value: d.value || 0,
+      percent: total > 0 ? ((d.value / total) * 100).toFixed(1) : 0,
+      color: d.color || "#ccc",
     }));
-  }, [formatted]);
+  }, [formatted, total]);
 
+  // Table sorting
   const { sortedData, sortKey, direction, handleSort } =
     useTableSort(tableData);
-
-  const renderArrow = (key) =>
+  const renderSortArrow = (key) =>
     sortKey === key ? (direction === "asc" ? " ↑" : " ↓") : "";
 
   const columns = [
     { key: "name", label: "Department" },
     {
-      key: "valueNum",
-      label:
-        selectedKey === "consumptionValue"
-          ? "Consumption Quantity (GM)"
-          : "Net Sales",
+      key: "value",
+      label: selectedKey === "consumptionValue" ? "Quantity (GM)" : "Net Sales",
     },
-    { key: "percentage", label: "Percentage (%)" },
+    { key: "percent", label: "Percentage (%)" },
   ];
 
   return (
     <Col md={6}>
-      <h6 className="fw-bold mb-3">
-        {selectedKey === "consumptionValue"
-          ? "Consumption Quantity (GM)"
-          : "Net Sales"}
-      </h6>
-
-      <div
-        style={{
-          maxHeight: "65vh",
-          overflowY: "auto",
-          position: "relative",
-        }}
+      <Card
+        className="border-0 shadow-sm"
+        style={{ borderRadius: "16px", overflow: "hidden" }}
       >
-        {/* Sticky Header */}
+        {/* Scroll wrapper */}
         <div
-          className="d-flex justify-content-between px-3 py-2 fw-bold border-bottom bg-white"
-          style={{ position: "sticky", top: 0, zIndex: 5 }}
+          style={{
+            maxHeight: "65vh",
+            overflowY: "auto",
+            overflowX: "auto",
+          }}
         >
-          {columns.map((col) => (
-            <div
-              key={col.key}
-              onClick={() => handleSort(col.key)}
-              style={{
-                cursor: "pointer",
-                fontSize: "13px",
-                flex: 1,
-                textAlign: col.key === "name" ? "left" : "center",
-              }}
-            >
-              {col.label} {renderArrow(col.key)}
-            </div>
-          ))}
-        </div>
-
-        {/* Cards for Each Row */}
-        {sortedData?.length > 0 ? (
-          sortedData.map((d) => (
-            <Card
-              key={d.id}
-              className="mb-2 shadow-sm border-0"
-              style={{ borderRadius: "12px" }}
-            >
-              <Card.Body className="d-flex justify-content-between align-items-center px-3 py-2">
-                {/* Left Section with Icon */}
-                <div
-                  className="d-flex align-items-center"
-                  style={{ flex: 1, minWidth: "120px" }}
-                >
-                  <span
+          <Table
+            hover
+            bordered={false}
+            className="align-middle mb-0 text-nowrap"
+          >
+            <thead style={{ backgroundColor: "#F9FAFB" }}>
+              <tr>
+                {columns.map((col) => (
+                  <th
+                    key={col.key}
+                    onClick={() => handleSort(col.key)}
                     style={{
-                      width: "12px",
-                      height: "12px",
-                      borderRadius: "50%",
-                      backgroundColor: d.color,
-                      display: "inline-block",
-                      marginRight: "8px",
+                      fontWeight: 600,
+                      fontSize: "0.85rem",
+                      textTransform: "uppercase",
+                      color: "#555",
+                      background: "#F9FAFB",
+                      position: "sticky",
+                      top: 0,
+                      zIndex: 2,
+                      cursor: "pointer",
+                      padding: "12px 16px",
+                      textAlign: col.key === "name" ? "left" : "center",
                     }}
-                  />
-                  <d.Icon
-                    style={{ color: d.color, marginRight: "6px" }}
-                    size={14}
-                  />
-                  <span className="fw-bold">{d.name}</span>
-                </div>
+                  >
+                    {col.label}
+                    {renderSortArrow(col.key)}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {sortedData.length > 0 ? (
+                sortedData.map((row, idx) => (
+                  <tr key={idx}>
+                    <td className="py-3 px-3 fw-semibold">
+                      <span
+                        style={{
+                          display: "inline-block",
+                          width: "12px",
+                          height: "12px",
+                          borderRadius: "3px",
+                          backgroundColor: row.color,
+                          marginRight: "6px",
+                        }}
+                      ></span>
+                      {row.name}
+                    </td>
+                    <td className="text-center">
+                      {row.value.toLocaleString()}
+                    </td>
+                    <td className="text-center">{row.percent}%</td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td
+                    colSpan={columns.length}
+                    style={{
+                      textAlign: "center",
+                      padding: "20px",
+                      color: "#888",
+                      fontStyle: "italic",
+                    }}
+                  >
+                    No data available
+                  </td>
+                </tr>
+              )}
+            </tbody>
 
-                {/* Value */}
-                <div
-                  className="fw-semibold"
-                  style={{ flex: 1, textAlign: "center" }}
-                >
-                  {d.value}
-                </div>
-
-                {/* Percentage */}
-                <div
-                  className="text-muted"
-                  style={{ flex: 1, textAlign: "center" }}
-                >
-                  {d.percentage}%
-                </div>
-              </Card.Body>
-            </Card>
-          ))
-        ) : (
-          <div className="text-center py-3">No data available</div>
-        )}
-
-        {/* Sticky Total Row */}
-        <div
-          className="d-flex justify-content-between px-3 py-2 border-top fw-bold bg-light"
-          style={{ position: "sticky", bottom: 0, zIndex: 5 }}
-        >
-          <span>Total</span>
-          <span>{total}</span>
+            {/* Optional footer row for total */}
+            {total ? (
+              <tfoot style={{ backgroundColor: "#F9FAFB", fontWeight: "bold" }}>
+                <tr>
+                  <td>Total</td>
+                  <td className="text-center">{total.toLocaleString()}</td>
+                  <td className="text-center">100%</td>
+                </tr>
+              </tfoot>
+            ) : null}
+          </Table>
         </div>
-      </div>
+      </Card>
     </Col>
   );
 }

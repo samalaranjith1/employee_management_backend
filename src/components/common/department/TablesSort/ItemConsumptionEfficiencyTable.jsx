@@ -170,7 +170,7 @@ export default function ItemConsumptionEfficiencyTable({ tableData = [] }) {
                     <td style={{ color: "#0db143", fontWeight: 700 }}>
                       {row.sales}{" "}
                       <span style={{ color: "#bbb", fontWeight: 500 }}>
-                        {row.salesUnit} Sold
+                        {row.salesUnit} 
                       </span>
                     </td>
 
@@ -178,7 +178,7 @@ export default function ItemConsumptionEfficiencyTable({ tableData = [] }) {
                     <td style={{ color: "#fd4137", fontWeight: 600 }}>
                       +{row.difference}{" "}
                       <span style={{ fontWeight: 500, color: "#fd4137" }}>
-                        {row.differenceUnit} excess
+                        {row.differenceUnit} 
                       </span>
                     </td>
 
@@ -199,7 +199,7 @@ export default function ItemConsumptionEfficiencyTable({ tableData = [] }) {
                     {/* COST IMPACT */}
                     <td style={{ color: "#fd4137", fontWeight: 700 }}>
                       ₹{row.costImpact}{" "}
-                      <span
+                      {/* <span
                         style={{
                           color: "#fd4137",
                           fontWeight: 500,
@@ -208,7 +208,7 @@ export default function ItemConsumptionEfficiencyTable({ tableData = [] }) {
                         }}
                       >
                         loss incurred
-                      </span>
+                      </span> */}
                     </td>
 
                     {/* STATUS */}

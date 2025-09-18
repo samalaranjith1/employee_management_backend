@@ -95,7 +95,7 @@ export default function TrendAnalysis() {
           <Col xs="auto" className="d-flex align-items-center ms-auto gap-2">
             <div className="d-none d-md-flex">
               <ButtonGroup>
-                {["Daily", "Weekly", "Monthly"].map((type) => (
+                {["Daily","SameDay", "Weekly", "Monthly"].map((type) => (
                   <Button
                     key={type}
                     variant={view === type ? "primary" : "outline-secondary"}
@@ -206,7 +206,7 @@ export default function TrendAnalysis() {
                     />
                   </LineChart>
                 </ResponsiveContainer>
-
+{/* 
                 <Row className="mt-3 text-center fw-bold d-none d-md-flex">
                   <Col style={{ color: "#22c55e" }}>
                     Avg Sales ₹{averages.Sales}k
@@ -220,7 +220,7 @@ export default function TrendAnalysis() {
                   <Col style={{ color: "#8b5cf6" }}>
                     Avg Closing ₹{averages.Closing}k
                   </Col>
-                </Row>
+                </Row> */}
               </>
             );
           }}

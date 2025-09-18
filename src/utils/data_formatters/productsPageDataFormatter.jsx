@@ -27,6 +27,7 @@ const safeValue = (val, prefix = "₹") => {
   return prefix ? `${prefix}${val}` : val;
 };
 
+//pending as api is returning empty data
 export const productSummaryOverViewDataFormatter = (apiData) => {
   if (!apiData || !apiData.summary || !apiData.product) {
     return {
@@ -47,7 +48,7 @@ export const productSummaryOverViewDataFormatter = (apiData) => {
     };
   }
 
-  const { summary, product } = apiData;
+  const { summary, product} = apiData;
 
   return {
     expense: {
@@ -132,14 +133,15 @@ export const productSummaryOverViewDataFormatter = (apiData) => {
 };
 
 export const productsTrendAnalysisDataFormatter = (apiData) => {
-    const formatTrendData =  apiData.list?.map((item) => ({
-        date: new Date(item.dt).toLocaleDateString("en-US", {
-          month: "short",
-          day: "numeric",
-        }),
-        totalSales: item.totalSales,
-        itemsSold: item.itemsSold,
-      }));
+    const formatTrendData = apiData?.list?.map((item) => ({
+      date: new Date(item.dt).toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+      }),
+      totalSales: item.totalSales,
+      itemsSold: item.itemsSold,
+      makingCost: item.totalMakingCost,
+    }));
   const formatTableData = apiData.list.map((item) => ({
     date: new Date(item.dt).toLocaleDateString("en-US", {
       month: "short",
@@ -188,7 +190,15 @@ export const productsIngredientAnalyticsDataFormatter = (apiData) => {
   let totalCost = 0;
 
   const tableData = apiData.list.map((ingredient, index) => {
-    const { item, unitQuantity, unitPrice, ingredientQuantity, ingredientPrice } = ingredient;
+    const {
+      item,
+      unitQuantity,
+      unitPrice,
+      ingredientQuantity,
+      ingredientPrice,
+      totalQuantity,
+      totalPrice,
+    } = ingredient;
 
     totalCost += ingredientPrice;
 
@@ -205,8 +215,10 @@ export const productsIngredientAnalyticsDataFormatter = (apiData) => {
       name: item.name,
       type: item.itemType,
       storeItem: `${item.itemType} • ${unitQuantity}${item.unit} • ₹${unitPrice}`,
-      recipe: `₹${ingredientPrice.toFixed(2)} • ${ingredientQuantity} ${item.unit}`,
-      total: `₹${(ingredientPrice * 10).toFixed(2)} • ${ingredientQuantity * 10} ${item.unit}`,
+      recipe: `₹${ingredientPrice.toFixed(2)} • ${ingredientQuantity} ${
+        item.unit
+      }`,
+      total: `₹${totalPrice.toFixed(2)} • ${totalQuantity} ${item.unit}`,
       price: ingredientPrice,
     };
   });
@@ -306,7 +318,7 @@ export const productsCostDataFormatter = (apiData) => {
     {
       id: "itemsSold",
       label: "Items Sold",
-      value: 15, // Placeholder (replace with actual if available in API)
+      value: apiData?.itemsSold, // Placeholder (replace with actual if available in API)
       bgColor: "#F3F6FF",
       textColor: "#2A55FF",
       icon: <FaShoppingCart size={20} color="#2A55FF" />,
@@ -314,7 +326,7 @@ export const productsCostDataFormatter = (apiData) => {
     {
       id: "ingredientsCount",
       label: "Number of Ingredients",
-      value: apiData.list?.length || 0,
+      value: apiData.totalIngredientCount || 0,
       bgColor: "#F2FBF5",
       textColor: "#1AAB4A",
       icon: <FaCube size={20} color="#1AAB4A" />,
@@ -322,9 +334,7 @@ export const productsCostDataFormatter = (apiData) => {
     {
       id: "totalCost",
       label: "Total Cost of Ingredients",
-      value: `₹${apiData.list
-        .reduce((sum, i) => sum + (i.ingredientPrice || 0), 0)
-        .toFixed(1)}`,
+      value: `₹${apiData?.totalIngredientCost.toFixed(1)}`,
       bgColor: "#FFF7F2",
       textColor: "#E85C0D",
       icon: <FaRupeeSign size={20} color="#E85C0D" />,
@@ -338,10 +348,6 @@ export const productsCostDataFormatter = (apiData) => {
   );
 
   const ingredients = apiData.list.map((ing) => {
-    const percentage = totalCost
-      ? ((ing.ingredientPrice / totalCost) * 100).toFixed(1)
-      : 0;
-
     return {
       name: ing.item.name,
       alias: ing.item.alias,
@@ -350,10 +356,10 @@ export const productsCostDataFormatter = (apiData) => {
         qty: `${ing.ingredientQuantity} ${ing.item.unit}`,
       },
       totalCost: {
-        price: `₹${(ing.ingredientPrice * 10).toFixed(1)}`, // sample multiplier for batch
-        qty: `${ing.ingredientQuantity * 10} ${ing.item.unit}`,
+        price: `₹${(ing.totalPrice).toFixed(1)}`, // sample multiplier for batch
+        qty: `${ing.totalQuantity} ${ing.item.unit}`,
       },
-      distribution: `${percentage}%`,
+      distribution: `${ing?.costPercent}%`,
     };
   });
 

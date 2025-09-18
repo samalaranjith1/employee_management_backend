@@ -12,7 +12,7 @@ export default function DepartmentPeriodDropDownTable({ table = [] }) {
 
   // 🔹 Columns
   const columns = [
-    { key: "index", label: "#" },
+    // { key: "index", label: "#" },
     { key: "date", label: "Date" },
     { key: "sales", label: "Sales" },
     { key: "consumption", label: "Consumption" },
@@ -128,10 +128,10 @@ export default function DepartmentPeriodDropDownTable({ table = [] }) {
 
                 return (
                   <tr
-                    key={row.index}
+                    // key={row.index}
                     style={{ borderBottom: "1px solid #eee" }}
                   >
-                    <td style={{ padding: "14px 16px" }}>{row.index}</td>
+                    {/* <td style={{ padding: "14px 16px" }}>{row.index}</td> */}
                     <td style={{ padding: "14px 16px" }}>
                       <div className="fw-semibold" style={{ fontSize: 14 }}>
                         {formattedDate}{" "}
