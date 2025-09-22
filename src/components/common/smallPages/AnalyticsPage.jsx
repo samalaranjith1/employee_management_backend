@@ -2,20 +2,24 @@
 import { Card, Col, Container, Row, Table } from "react-bootstrap";
 import { FaChartLine, FaDownload, FaFilter } from "react-icons/fa";
 import { usePathname } from "next/navigation";
+import { useState, useEffect } from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { applyDateRange, formatDate } from "@/utils"; // import your utility
 
 export default function AnalyticsPage({
   title,
   subtitle,
   filters = [],
   dateRangeOptions = [],
-  activeDateRange = "",
-  onDateRangeChange,
+  activeDateRange: activeDateRangeProp = "",
+  onDateRangeChange: onDateRangeChangeProp,
   summaryCards = [],
   table = { columns: [], rows: [] },
   onFilter,
   onExport,
   onAnalyse,
-  styles = {}, // Receive styles from props
+  styles = {},
   pillRow,
   datePill,
   summaryCard,
@@ -31,12 +35,46 @@ export default function AnalyticsPage({
   const pathname = usePathname();
   const showOnlyTable = pathname === "/" || pathname === "/dashboard";
 
+  // Local state
+  const [activeDateRange, setActiveDateRange] = useState(activeDateRangeProp);
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+
+  useEffect(() => {
+    if (activeDateRangeProp) setActiveDateRange(activeDateRangeProp);
+  }, [activeDateRangeProp]);
+
+  // Date pill click
+  const handlePillClick = (range) => {
+    setActiveDateRange(range);
+
+    if (range === "Custom") {
+      // Keep dates null initially for custom
+      setStartDate(null);
+      setEndDate(null);
+    } else {
+      const { start, end } = applyDateRange(range);
+      setStartDate(start);
+      setEndDate(end);
+
+      onDateRangeChangeProp?.(range, start, end);
+    }
+  };
+
+  // When user selects custom dates
+  const handleCustomDateChange = (dates) => {
+    const [start, end] = dates;
+    setStartDate(formatDate(start));
+    setEndDate(formatDate(end));
+
+    // Call parent callback if provided
+    if (start && end) onDateRangeChangeProp?.("Custom", start, end);
+  };
+
   return (
     <div style={{ position: "relative", top: "-80px" }}>
-      {/* ✅ Render everything except when on / or /dashboard */}
       {!showOnlyTable && (
         <>
-          {/* --- Filters + Date Pills --- */}
           <Container
             style={{
               borderRadius: 18,
@@ -52,7 +90,6 @@ export default function AnalyticsPage({
                 {filters.map((filter, idx) => {
                   const colSize =
                     filters.length > 0 ? Math.floor(12 / filters.length) : 12;
-
                   return (
                     <Col key={idx} md={colSize}>
                       <label
@@ -93,18 +130,32 @@ export default function AnalyticsPage({
                 })}
               </Row>
 
-              {/* Date Range Pills */}
+              {/* --- Date Range Pills --- */}
               <Row className="mb-1" style={pillRow}>
                 <Col>
                   {dateRangeOptions.map((option) => (
                     <button
                       key={option}
                       style={datePill(option === activeDateRange)}
-                      onClick={() => onDateRangeChange?.(option)}
+                      onClick={() => handlePillClick(option)}
                     >
                       {option}
                     </button>
                   ))}
+
+                  {/* Show date picker if Custom is selected */}
+                  {activeDateRange === "Custom" && (
+                    <div style={{ marginTop: 12 }}>
+                      <DatePicker
+                        selected={startDate}
+                        onChange={handleCustomDateChange}
+                        startDate={startDate}
+                        endDate={endDate}
+                        selectsRange
+                        inline
+                      />
+                    </div>
+                  )}
                 </Col>
               </Row>
             </Card.Body>
@@ -131,7 +182,7 @@ export default function AnalyticsPage({
         </>
       )}
 
-      {/* --- Table with Controls (always shown) --- */}
+      {/* --- Table with Controls --- */}
       <Card
         style={{
           borderRadius: 22,
@@ -140,23 +191,23 @@ export default function AnalyticsPage({
         }}
       >
         <Card.Body>
-            <div
-              className="d-flex justify-content-between mb-3 align-items-center"
-              style={{ flexWrap: "wrap" }}
-            >
-              <input style={search} placeholder="Search..." />
-              <div style={{ display: "flex", gap: 6, marginTop: 6 }}>
-                <button style={analyser} onClick={onAnalyse}>
-                  <FaChartLine className="me-2" /> Analyser
-                </button>
-                <button style={exportBtn} onClick={onExport}>
-                  <FaDownload className="me-2" /> Export
-                </button>
-                <button style={filterBtn} onClick={onFilter}>
-                  <FaFilter className="me-2" /> Filter
-                </button>
-              </div>
+          <div
+            className="d-flex justify-content-between mb-3 align-items-center"
+            style={{ flexWrap: "wrap" }}
+          >
+            <input style={search} placeholder="Search..." />
+            <div style={{ display: "flex", gap: 6, marginTop: 6 }}>
+              <button style={analyser} onClick={onAnalyse}>
+                <FaChartLine className="me-2" /> Analyser
+              </button>
+              <button style={exportBtn} onClick={onExport}>
+                <FaDownload className="me-2" /> Export
+              </button>
+              <button style={filterBtn} onClick={onFilter}>
+                <FaFilter className="me-2" /> Filter
+              </button>
             </div>
+          </div>
 
           <Table
             hover
@@ -190,6 +241,416 @@ export default function AnalyticsPage({
     </div>
   );
 }
+// "use client";
+// import { Card, Col, Container, Row, Table } from "react-bootstrap";
+// import { FaChartLine, FaDownload, FaFilter } from "react-icons/fa";
+// import { usePathname } from "next/navigation";
+// import { useState, useEffect } from "react";
+// import { applyDateRange } from "@/utils"; // import your utility
+
+// export default function AnalyticsPage({
+//   title,
+//   subtitle,
+//   filters = [],
+//   dateRangeOptions = [],
+//   activeDateRange: activeDateRangeProp = "",
+//   onDateRangeChange: onDateRangeChangeProp,
+//   summaryCards = [],
+//   table = { columns: [], rows: [] },
+//   onFilter,
+//   onExport,
+//   onAnalyse,
+//   styles = {}, // Receive styles from props
+//   pillRow,
+//   datePill,
+//   summaryCard,
+//   iconCircle,
+//   cardTitle,
+//   cardValue,
+//   tableHeader,
+//   analyser,
+//   exportBtn,
+//   filterBtn,
+//   search,
+// }) {
+//   const pathname = usePathname();
+//   const showOnlyTable = pathname === "/" || pathname === "/dashboard";
+
+//   // ✅ Local state for active pill
+//   const [activeDateRange, setActiveDateRange] = useState(activeDateRangeProp);
+
+//   // ✅ Local state for start/end date
+//   const [startDate, setStartDate] = useState(null);
+//   const [endDate, setEndDate] = useState(null);
+
+//   // ✅ Sync with prop if changes
+//   useEffect(() => {
+//     if (activeDateRangeProp) setActiveDateRange(activeDateRangeProp);
+//   }, [activeDateRangeProp]);
+
+//   // ✅ Date pill click handler using utility
+//   const handlePillClick = (range) => {
+//     setActiveDateRange(range);
+
+//     // Use utility function
+//     const { start, end } = applyDateRange(range);
+//     setStartDate(start);
+//     setEndDate(end);
+
+//     // Call parent callback if provided
+//     onDateRangeChangeProp?.(range, start, end);
+//   };
+
+//   return (
+//     <div style={{ position: "relative", top: "-80px" }}>
+//       {!showOnlyTable && (
+//         <>
+//           {/* --- Filters + Date Pills --- */}
+//           <Container
+//             style={{
+//               borderRadius: 18,
+//               background: "#fff",
+//               boxShadow: "0 8px 24px rgba(44,37,68,0.08)",
+//               marginBottom: 36,
+//               padding: 0,
+//             }}
+//             className="mb-4"
+//           >
+//             <Card.Body style={{ padding: "32px 36px 24px 36px" }}>
+//               <Row className="mb-2">
+//                 {filters.map((filter, idx) => {
+//                   const colSize =
+//                     filters.length > 0 ? Math.floor(12 / filters.length) : 12;
+//                   return (
+//                     <Col key={idx} md={colSize}>
+//                       <label
+//                         style={{
+//                           fontWeight: 700,
+//                           fontSize: 16,
+//                           marginBottom: 6,
+//                         }}
+//                       >
+//                         {filter.label}
+//                       </label>
+//                       <select
+//                         value={filter.value}
+//                         onChange={(e) => filter.onChange?.(e.target.value)}
+//                         style={{
+//                           background: "#fcfcfd",
+//                           color: "#1d2d35",
+//                           borderRadius: 12,
+//                           border: "1.7px solid #edecec",
+//                           width: "100%",
+//                           fontSize: 16,
+//                           fontWeight: 500,
+//                           padding: "10px 18px",
+//                           marginBottom: 10,
+//                           marginTop: 5,
+//                           outline: "none",
+//                         }}
+//                       >
+//                         <option value="">All {filter.label}</option>
+//                         {filter.options.map((opt, i) => (
+//                           <option key={i} value={opt.value}>
+//                             {opt.label}
+//                           </option>
+//                         ))}
+//                       </select>
+//                     </Col>
+//                   );
+//                 })}
+//               </Row>
+
+//               {/* --- Date Range Pills --- */}
+//               <Row className="mb-1" style={pillRow}>
+//                 <Col>
+//                   {dateRangeOptions.map((option) => (
+//                     <button
+//                       key={option}
+//                       style={datePill(option === activeDateRange)}
+//                       onClick={() => handlePillClick(option)}
+//                     >
+//                       {option}
+//                     </button>
+//                   ))}
+//                 </Col>
+//               </Row>
+//             </Card.Body>
+//           </Container>
+
+//           {/* --- Summary Cards --- */}
+//           <Row className="mb-4">
+//             {summaryCards.map((card) => (
+//               <Col key={card.id} md={4}>
+//                 <Card style={summaryCard(card.bgColor)}>
+//                   <Card.Body style={{ padding: "18px 22px" }}>
+//                     <div style={{ display: "flex", alignItems: "center" }}>
+//                       <div style={iconCircle(card.iconBg)}>{card.icon}</div>
+//                       <div>
+//                         <div style={cardTitle}>{card.title}</div>
+//                         <div style={cardValue}>{card.value}</div>
+//                       </div>
+//                     </div>
+//                   </Card.Body>
+//                 </Card>
+//               </Col>
+//             ))}
+//           </Row>
+//         </>
+//       )}
+
+//       {/* --- Table with Controls --- */}
+//       <Card
+//         style={{
+//           borderRadius: 22,
+//           boxShadow: "0 8px 18px rgba(44,37,68,0.09)",
+//           border: "none",
+//         }}
+//       >
+//         <Card.Body>
+//           <div
+//             className="d-flex justify-content-between mb-3 align-items-center"
+//             style={{ flexWrap: "wrap" }}
+//           >
+//             <input style={search} placeholder="Search..." />
+//             <div style={{ display: "flex", gap: 6, marginTop: 6 }}>
+//               <button style={analyser} onClick={onAnalyse}>
+//                 <FaChartLine className="me-2" /> Analyser
+//               </button>
+//               <button style={exportBtn} onClick={onExport}>
+//                 <FaDownload className="me-2" /> Export
+//               </button>
+//               <button style={filterBtn} onClick={onFilter}>
+//                 <FaFilter className="me-2" /> Filter
+//               </button>
+//             </div>
+//           </div>
+
+//           <Table
+//             hover
+//             responsive
+//             className="align-middle mb-0"
+//             style={{ borderCollapse: "separate", borderSpacing: 0 }}
+//           >
+//             <thead>
+//               <tr>
+//                 {table.columns.map((col) => (
+//                   <th key={col.key} style={tableHeader}>
+//                     {col.label}
+//                   </th>
+//                 ))}
+//               </tr>
+//             </thead>
+//             <tbody>
+//               {table.rows.map((row, idx) => (
+//                 <tr key={idx}>
+//                   {table.columns.map((col) => (
+//                     <td key={col.key} style={{ fontSize: 16, fontWeight: 600 }}>
+//                       {row[col.key]}
+//                     </td>
+//                   ))}
+//                 </tr>
+//               ))}
+//             </tbody>
+//           </Table>
+//         </Card.Body>
+//       </Card>
+//     </div>
+//   );
+// }
+
+// "use client";
+// import { Card, Col, Container, Row, Table } from "react-bootstrap";
+// import { FaChartLine, FaDownload, FaFilter } from "react-icons/fa";
+// import { usePathname } from "next/navigation";
+
+// export default function AnalyticsPage({
+//   title,
+//   subtitle,
+//   filters = [],
+//   dateRangeOptions = [],
+//   activeDateRange = "",
+//   onDateRangeChange,
+//   summaryCards = [],
+//   table = { columns: [], rows: [] },
+//   onFilter,
+//   onExport,
+//   onAnalyse,
+//   styles = {}, // Receive styles from props
+//   pillRow,
+//   datePill,
+//   summaryCard,
+//   iconCircle,
+//   cardTitle,
+//   cardValue,
+//   tableHeader,
+//   analyser,
+//   exportBtn,
+//   filterBtn,
+//   search,
+// }) {
+//   const pathname = usePathname();
+//   const showOnlyTable = pathname === "/" || pathname === "/dashboard";
+
+//   return (
+//     <div style={{ position: "relative", top: "-80px" }}>
+//       {/* ✅ Render everything except when on / or /dashboard */}
+//       {!showOnlyTable && (
+//         <>
+//           {/* --- Filters + Date Pills --- */}
+//           <Container
+//             style={{
+//               borderRadius: 18,
+//               background: "#fff",
+//               boxShadow: "0 8px 24px rgba(44,37,68,0.08)",
+//               marginBottom: 36,
+//               padding: 0,
+//             }}
+//             className="mb-4"
+//           >
+//             <Card.Body style={{ padding: "32px 36px 24px 36px" }}>
+//               <Row className="mb-2">
+//                 {filters.map((filter, idx) => {
+//                   const colSize =
+//                     filters.length > 0 ? Math.floor(12 / filters.length) : 12;
+
+//                   return (
+//                     <Col key={idx} md={colSize}>
+//                       <label
+//                         style={{
+//                           fontWeight: 700,
+//                           fontSize: 16,
+//                           marginBottom: 6,
+//                         }}
+//                       >
+//                         {filter.label}
+//                       </label>
+//                       <select
+//                         value={filter.value}
+//                         onChange={(e) => filter.onChange?.(e.target.value)}
+//                         style={{
+//                           background: "#fcfcfd",
+//                           color: "#1d2d35",
+//                           borderRadius: 12,
+//                           border: "1.7px solid #edecec",
+//                           width: "100%",
+//                           fontSize: 16,
+//                           fontWeight: 500,
+//                           padding: "10px 18px",
+//                           marginBottom: 10,
+//                           marginTop: 5,
+//                           outline: "none",
+//                         }}
+//                       >
+//                         <option value="">All {filter.label}</option>
+//                         {filter.options.map((opt, i) => (
+//                           <option key={i} value={opt.value}>
+//                             {opt.label}
+//                           </option>
+//                         ))}
+//                       </select>
+//                     </Col>
+//                   );
+//                 })}
+//               </Row>
+
+//               {/* Date Range Pills */}
+//               <Row className="mb-1" style={pillRow}>
+//                 <Col>
+//                   {dateRangeOptions.map((option) => (
+//                     <button
+//                       key={option}
+//                       style={datePill(option === activeDateRange)}
+//                       onClick={() => onDateRangeChange?.(option)}
+//                     >
+//                       {option}
+//                     </button>
+//                   ))}
+//                 </Col>
+//               </Row>
+//             </Card.Body>
+//           </Container>
+
+//           {/* --- Summary Cards --- */}
+//           <Row className="mb-4">
+//             {summaryCards.map((card) => (
+//               <Col key={card.id} md={4}>
+//                 <Card style={summaryCard(card.bgColor)}>
+//                   <Card.Body style={{ padding: "18px 22px" }}>
+//                     <div style={{ display: "flex", alignItems: "center" }}>
+//                       <div style={iconCircle(card.iconBg)}>{card.icon}</div>
+//                       <div>
+//                         <div style={cardTitle}>{card.title}</div>
+//                         <div style={cardValue}>{card.value}</div>
+//                       </div>
+//                     </div>
+//                   </Card.Body>
+//                 </Card>
+//               </Col>
+//             ))}
+//           </Row>
+//         </>
+//       )}
+
+//       {/* --- Table with Controls (always shown) --- */}
+//       <Card
+//         style={{
+//           borderRadius: 22,
+//           boxShadow: "0 8px 18px rgba(44,37,68,0.09)",
+//           border: "none",
+//         }}
+//       >
+//         <Card.Body>
+//             <div
+//               className="d-flex justify-content-between mb-3 align-items-center"
+//               style={{ flexWrap: "wrap" }}
+//             >
+//               <input style={search} placeholder="Search..." />
+//               <div style={{ display: "flex", gap: 6, marginTop: 6 }}>
+//                 <button style={analyser} onClick={onAnalyse}>
+//                   <FaChartLine className="me-2" /> Analyser
+//                 </button>
+//                 <button style={exportBtn} onClick={onExport}>
+//                   <FaDownload className="me-2" /> Export
+//                 </button>
+//                 <button style={filterBtn} onClick={onFilter}>
+//                   <FaFilter className="me-2" /> Filter
+//                 </button>
+//               </div>
+//             </div>
+
+//           <Table
+//             hover
+//             responsive
+//             className="align-middle mb-0"
+//             style={{ borderCollapse: "separate", borderSpacing: 0 }}
+//           >
+//             <thead>
+//               <tr>
+//                 {table.columns.map((col) => (
+//                   <th key={col.key} style={tableHeader}>
+//                     {col.label}
+//                   </th>
+//                 ))}
+//               </tr>
+//             </thead>
+//             <tbody>
+//               {table.rows.map((row, idx) => (
+//                 <tr key={idx}>
+//                   {table.columns.map((col) => (
+//                     <td key={col.key} style={{ fontSize: 16, fontWeight: 600 }}>
+//                       {row[col.key]}
+//                     </td>
+//                   ))}
+//                 </tr>
+//               ))}
+//             </tbody>
+//           </Table>
+//         </Card.Body>
+//       </Card>
+//     </div>
+//   );
+// }
 // import { Card, Col, Container, Row, Table } from "react-bootstrap";
 // import { FaChartLine, FaDownload, FaFilter } from "react-icons/fa";
 

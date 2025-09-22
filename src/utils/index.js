@@ -181,3 +181,43 @@ function parseValue(val) {
 //     return 0;
 //   });
 // }
+
+// utils/dateUtils.js
+export const applyDateRange = (range) => {
+  const today = formatDate(new Date());
+  let start = null,
+    end = null;
+
+  switch (range) {
+    case "Today":
+      start = end = today;
+      break;
+    case "Yesterday": {
+      const yesterday = new Date(); // clone today
+      yesterday.setDate(yesterday.getDate() - 1);
+      start = end = formatDate(yesterday);
+      break;
+    }
+    case "This Week": {
+      const curr = new Date();
+      const first = curr.getDate() - curr.getDay();
+      start = formatDate(new Date(curr.setDate(first)));
+      end = formatDate(new Date());
+      break;
+    }
+    case "This Month": {
+      const curr = new Date();
+      start = formatDate(new Date(curr.getFullYear(), curr.getMonth(), 1));
+      end = formatDate(new Date());
+      break;
+    }
+    case "Custom":
+      start = null;
+      end = null;
+      break;
+    default:
+      break;
+  }
+
+  return { start, end };
+};

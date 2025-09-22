@@ -13,9 +13,10 @@ import { useProductsAll } from "@/services/product-service";
 import { useSalesHourly } from "@/services/sales-service";
 import { useDepartmentContext } from "@/contexts/DepartmentContext";
 
-// Utility: format API hourly data into recharts friendly format
+// ✅ Utility: format API hourly data into recharts friendly format
 const formatHourlyData = (apiData, metric) => {
   if (!apiData?.list) return [];
+
   return apiData.list.map((item) => ({
     hour: `${item.hr}:00`,
     forecast:
@@ -27,14 +28,23 @@ const formatHourlyData = (apiData, metric) => {
   }));
 };
 
-// 🔹 Formatter for SalesHourly response
+// ✅ Formatter for SalesHourly response
 const salesHourlyFormatter = (data, selectedMetric) => {
   if (!data) return null;
 
   return {
-    dailyForecast: `₹${data.totalProjectedSales ?? 0}`,
-    actualSoFar: `₹${data.totalSales ?? 0}`,
-    remainingTarget: `₹${data.remaningSales ?? 0}`,
+    dailyForecast:
+      selectedMetric === "Sales"
+        ? `₹${data.totalProjectedSales ?? 0}`
+        : `${data.totalProjectedOrders ?? 0}`,
+    actualSoFar:
+      selectedMetric === "Sales"
+        ? `₹${data.totalSales ?? 0}`
+        : `${data.totalOrders ?? 0}`,
+    remainingTarget:
+      selectedMetric === "Sales"
+        ? `₹${data.remaningSales ?? 0}`
+        : `${data.remaningOrders ?? 0}`,
     graphData: formatHourlyData(data, selectedMetric),
   };
 };
@@ -49,7 +59,7 @@ export default function HourlyForecast() {
   const [products, setProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
 
-  // ✅ Fetch products normally instead of through ServiceRenderer
+  // ✅ Fetch products list
   const {
     data: productData,
     isLoading,
@@ -60,17 +70,19 @@ export default function HourlyForecast() {
     outlet: 1,
     userId: 7,
   });
-useEffect(() => {
-  const flatList = productData?.list ? productData.list.flat() : [];
 
-  if (flatList.length > 0) {
-    setProducts(flatList);
-    setSelectedProduct((prev) => prev || flatList[0]);
-  }
-}, [productData]);
+  // ✅ Populate product list & default selection
+  useEffect(() => {
+    const flatList = productData?.list ? productData.list.flat() : [];
+    if (flatList.length > 0) {
+      setProducts(flatList);
+      setSelectedProduct((prev) => prev || flatList[0]);
+    }
+  }, [productData]);
 
   return (
     <Container fluid className="mt-3">
+      {/* Header */}
       <ComponentHeader
         title="Hourly Forecast"
         description="Real-time predictions for today's performance"
@@ -80,7 +92,7 @@ useEffect(() => {
         text="Today's Forecast →"
       />
 
-      {/* Step 2️⃣ : Fetch Sales Hourly for Selected Product */}
+      {/* Sales Hourly Data for Selected Product */}
       {selectedProduct && (
         <ServiceRenderer
           queryHook={useSalesHourly}
@@ -102,7 +114,6 @@ useEffect(() => {
               outlet: 1,
               userId: 7,
               products: selectedProduct.id,
-              // products: selectedProduct.id,
             },
           ]}
           shimmerCount={1}
@@ -139,6 +150,147 @@ useEffect(() => {
     </Container>
   );
 }
+// "use client";
+
+// import React, { useState, useRef, useEffect } from "react";
+// import "bootstrap/dist/css/bootstrap.min.css";
+// import { Container } from "react-bootstrap";
+
+// import HourlyForecastGraph from "@/components/common/dashboard/GraphWrapper/HourlyForecastGraph";
+// import HourlyForecastFilterCard from "@/components/common/FilterComponent/HourlyForecastFilterCard";
+// import ComponentHeader from "@/components/common/ComponentHeader";
+// import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer";
+
+// import { useProductsAll } from "@/services/product-service";
+// import { useSalesHourly } from "@/services/sales-service";
+// import { useDepartmentContext } from "@/contexts/DepartmentContext";
+
+// // Utility: format API hourly data into recharts friendly format
+// const formatHourlyData = (apiData, metric) => {
+//   if (!apiData?.list) return [];
+//   return apiData.list.map((item) => ({
+//     hour: `${item.hr}:00`,
+//     forecast:
+//       metric === "Sales"
+//         ? item.projectedSales?.netSales ?? 0
+//         : item.projectedSales?.orders ?? 0,
+//     actual:
+//       metric === "Sales" ? item.sales?.netSales ?? 0 : item.sales?.orders ?? 0,
+//   }));
+// };
+
+// // 🔹 Formatter for SalesHourly response
+// const salesHourlyFormatter = (data, selectedMetric) => {
+//   if (!data) return null;
+
+//   return {
+//     dailyForecast: `₹${data.totalProjectedSales ?? 0}`,
+//     actualSoFar: `₹${data.totalSales ?? 0}`,
+//     remainingTarget: `₹${data.remaningSales ?? 0}`,
+//     graphData: formatHourlyData(data, selectedMetric),
+//   };
+// };
+
+// export default function HourlyForecast() {
+//   const myScrollRef = useRef(null);
+//   const { startDate, endDate } = useDepartmentContext();
+
+//   const [metrics] = useState(["Sales", "Orders"]);
+//   const [selectedMetric, setSelectedMetric] = useState("Sales");
+
+//   const [products, setProducts] = useState([]);
+//   const [selectedProduct, setSelectedProduct] = useState(null);
+
+//   // ✅ Fetch products normally instead of through ServiceRenderer
+//   const {
+//     data: productData,
+//     isLoading,
+//     error,
+//   } = useProductsAll({
+//     startdt: startDate,
+//     enddt: endDate,
+//     outlet: 1,
+//     userId: 7,
+//   });
+// useEffect(() => {
+//   const flatList = productData?.list ? productData.list.flat() : [];
+
+//   if (flatList.length > 0) {
+//     setProducts(flatList);
+//     setSelectedProduct((prev) => prev || flatList[0]);
+//   }
+// }, [productData]);
+
+//   return (
+//     <Container fluid className="mt-3">
+//       <ComponentHeader
+//         title="Hourly Forecast"
+//         description="Real-time predictions for today's performance"
+//         isShowArrows={false}
+//         scrollRef={myScrollRef}
+//         isExpandable={true}
+//         text="Today's Forecast →"
+//       />
+
+//       {/* Step 2️⃣ : Fetch Sales Hourly for Selected Product */}
+//       {selectedProduct && (
+//         <ServiceRenderer
+//           queryHook={useSalesHourly}
+//           queryKey={[
+//             "salesHourly",
+//             selectedProduct.id,
+//             { startdt: startDate, enddt: endDate },
+//           ]}
+//           queryFn={() =>
+//             useSalesHourly(selectedProduct.id, {
+//               startdt: startDate,
+//               enddt: endDate,
+//             }).queryFn
+//           }
+//           queryArgs={[
+//             {
+//               startdt: startDate,
+//               enddt: endDate,
+//               outlet: 1,
+//               userId: 7,
+//               products: selectedProduct.id,
+//               // products: selectedProduct.id,
+//             },
+//           ]}
+//           shimmerCount={1}
+//           formatter={(data) => salesHourlyFormatter(data, selectedMetric)}
+//         >
+//           {(currentData) => (
+//             <HourlyForecastFilterCard
+//               products={products.map((p) => p.name)}
+//               metrics={metrics}
+//               selectedProduct={selectedProduct?.name || ""}
+//               selectedMetric={selectedMetric}
+//               setSelectedMetric={setSelectedMetric}
+//               setSelectedProduct={(name) => {
+//                 const productObj = products.find((p) => p.name === name);
+//                 setSelectedProduct(productObj);
+//               }}
+//               currentData={currentData}
+//               renderGraph={() =>
+//                 currentData?.graphData?.length > 0 ? (
+//                   <HourlyForecastGraph
+//                     currentData={currentData}
+//                     selectedMetric={selectedMetric}
+//                   />
+//                 ) : (
+//                   <div className="text-center p-5 text-secondary">
+//                     No data available for this selection.
+//                   </div>
+//                 )
+//               }
+//             />
+//           )}
+//         </ServiceRenderer>
+//       )}
+//     </Container>
+//   );
+// }
 
 // "use client";
 

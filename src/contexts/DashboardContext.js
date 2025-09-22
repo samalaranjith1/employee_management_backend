@@ -1,5 +1,6 @@
 "use client";
 
+import { formatDate } from "@/utils";
 import { createContext, useContext, useState } from "react";
 
 const DashboardContext = createContext();
@@ -7,8 +8,8 @@ const DashboardContext = createContext();
 export function DashboardContextProvider({ children }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   //dashboard filters startDate, endDate
-    const [startDate, setStartDate] = useState(new Date());
-    const [endDate, setEndDate] = useState(new Date());
+    const [startDate, setStartDate] = useState(formatDate(new Date()));
+    const [endDate, setEndDate] = useState(formatDate(new Date()));
 
   const toggleSidebar = () => setIsSidebarOpen((prev) => !prev);
   const contextValues = {

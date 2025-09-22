@@ -34,11 +34,13 @@ import PeriodDataBreakdown from "@/features/dashboard/PeriodDataBreakDown";
 import SupplierDues from "@/features/dashboard/SupplierDues";
 import { ButtonGroup, ToggleButton } from "react-bootstrap";
 import SalesAnalytics from "../(smallPages)/sales_analytics/page";
-import ConsumptionClosingAnalysis from "../(smallPages)/consumption_analytics/page";
+import ConsumptionHistoryAnalysis from "../(smallPages)/consumption_analytics/page";
 import PurchaseAnalytics from "../(smallPages)/purchase_analytics/page";
 import RecipeInsights from "../(smallPages)/reciepe_analytics/page";
 import WarehouseStockAnalytics from "../(smallPages)/ware_house_analytics/page";
 import ItemPriceChangeAnalytics from "../(smallPages)/item_price_change_analytics/page";
+import ConsumptionClosingAnalysis from "../(smallPages)/consumption_closing_analytics/page";
+import WastageAnalytics from "../(smallPages)/wastage_analytics/page";
 
 export default function Page() {
   const [activeTab, setActiveTab] = useState("Dashboard");
@@ -47,11 +49,12 @@ export default function Page() {
     "Dashboard",
     "Sales",
     "Consumption",
+    "Closing",
     "Purchase",
     "Recipe",
-    "Wastage",
-    "Closing",
+    "Stock",
     "Item Price",
+    "Wastage"
   ];
 
   return (
@@ -69,9 +72,10 @@ export default function Page() {
         <ButtonGroup
           className="rounded-pill w-max d-flex"
           style={{
-            backgroundColor: "#E6E6E6",
+            backgroundColor: "#0000ff",
             minWidth: "100%",
             flexWrap: "nowrap",
+            color: "white",
           }}
         >
           {tabs.map((label) => {
@@ -91,7 +95,7 @@ export default function Page() {
                   padding: "10px 20px",
                   fontWeight: 600,
                   backgroundColor: selected ? "#FF6600" : "transparent",
-                  color: selected ? "#fff" : "#888",
+                  color: selected ? "#fff" : "#fff",
                   border: "none",
                   boxShadow: "none",
                   cursor: "pointer",
@@ -218,7 +222,6 @@ export default function Page() {
             </MainComponentHoldingCard>
           </>
         )}
-
         {/* Other tabs placeholders */}
         {activeTab === "Sales" && (
           <MainComponentHoldingCard>
@@ -227,7 +230,7 @@ export default function Page() {
         )}
         {activeTab === "Consumption" && (
           <MainComponentHoldingCard>
-            <ConsumptionClosingAnalysis />
+            <ConsumptionHistoryAnalysis />
           </MainComponentHoldingCard>
         )}
         {activeTab === "Purchase" && (
@@ -240,7 +243,7 @@ export default function Page() {
             <RecipeInsights />
           </MainComponentHoldingCard>
         )}
-        {activeTab === "Wastage" && (
+        {activeTab === "Stock" && (
           <MainComponentHoldingCard>
             <WarehouseStockAnalytics />
           </MainComponentHoldingCard>
@@ -253,6 +256,11 @@ export default function Page() {
         {activeTab === "Item Price" && (
           <MainComponentHoldingCard>
             <ItemPriceChangeAnalytics />
+          </MainComponentHoldingCard>
+        )}{" "}
+        {activeTab === "Wastage" && (
+          <MainComponentHoldingCard>
+            <WastageAnalytics />
           </MainComponentHoldingCard>
         )}
       </div>
