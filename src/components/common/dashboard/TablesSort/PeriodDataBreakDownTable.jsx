@@ -3,8 +3,12 @@ import React from "react";
 import { Table, Badge } from "react-bootstrap";
 import BaseSurface from "./BaseSurface";
 import { useTableSort } from "@/components/hooks/useTableSort";
+import { handleNavigation } from "@/utils";
+import { useRouter } from "next/navigation";
 
-function PeriodDataBreakDownTable({ data }) {
+function PeriodDataBreakDownTable({ data, filters }) {
+  const router = useRouter();
+
   // ✅ use sorting hook
   const { sortedData, sortKey, direction, handleSort } = useTableSort(
     data.table || []
@@ -33,7 +37,10 @@ function PeriodDataBreakDownTable({ data }) {
               <th
                 key={col.key}
                 className="fw-bold"
-                style={{ cursor: "pointer" ,backgroundColor:"rgb(250,250,150"}}
+                style={{
+                  cursor: "pointer",
+                  backgroundColor: "rgb(250,250,150",
+                }}
                 onClick={() => handleSort(col.key)}
               >
                 {col.label}
@@ -54,9 +61,42 @@ function PeriodDataBreakDownTable({ data }) {
                   </>
                 )}
               </td>
-              <td>{row.sales}</td>
-              <td>{row.consumption}</td>
-              <td>{row.waste}</td>
+              <td
+                onClick={() =>
+                  handleNavigation({
+                    router,
+                    url: "sales_analytics",
+                    params: filters,
+                  })
+                }
+                style={{ cursor: "pointer" }}
+              >
+                {row.sales}
+              </td>
+              <td
+                onClick={() =>
+                  handleNavigation({
+                    router,
+                    url: "consumption_analytics",
+                    params: filters,
+                  })
+                }
+                style={{ cursor: "pointer" }}
+              >
+                {row.consumption}
+              </td>
+              <td
+                onClick={() =>
+                  handleNavigation({
+                    router,
+                    url: "wastage_analytics",
+                    params: filters,
+                  })
+                }
+                style={{ cursor: "pointer" }}
+              >
+                {row.waste}
+              </td>
               <td>
                 <Badge bg="warning" text="dark">
                   {row.ratio}

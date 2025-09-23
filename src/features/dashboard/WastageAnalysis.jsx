@@ -18,10 +18,13 @@ import { wastageAnalysisDataFormatter } from "@/utils/data_formatters/dashboardF
 
 import WastageAnalysisTopCards from "@/components/common/dashboard/card/WastageAnalysisTopCards";
 import WastageAnalysisTable from "@/components/common/dashboard/TablesSort/WastageAnalysisTable";
+import { handleNavigation } from "@/utils";
+import { useRouter } from "next/navigation";
 
 export default function WastageAnalysis() {
   const { startDate, endDate } = useDashboardContext();
   const myScrollRef = useRef(null);
+  const router =useRouter()
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -50,24 +53,35 @@ export default function WastageAnalysis() {
         queryFn={() =>
           useWasteSummary({ startdt: startDate, enddt: endDate }).queryFn
         }
-        queryArgs={[{ startdt: startDate, enddt: endDate }]}
+        queryArgs={[{ startdt: startDate, enddt: endDate,outlet:1,userId:7 }]}
         formatter={wastageAnalysisDataFormatter}
         shimmerCount={3}
       >
         {(formattedData) => (
           <>
-            <WastageAnalysisTopCards
-              statCard={{
-                // borderRadius: 20,
-                // padding: 20,
-                background: "#fff",
-                // boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
-                minWidth: "23vw",
-                flex: "0 0 auto",
-              }}
-              scrollRef={myScrollRef}
-              cardsData={formattedData?.cardsData}
-            />
+            <div
+              style={{ cursor: "pointer" }}
+              onClick={() =>
+                handleNavigation({
+                  router,
+                  url: "wastage_analytics",
+                  params: {startDate:startDate,endDate:endDate},
+                })
+              }
+            >
+              <WastageAnalysisTopCards
+                statCard={{
+                  // borderRadius: 20,
+                  // padding: 20,
+                  background: "#fff",
+                  // boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
+                  minWidth: "23vw",
+                  flex: "0 0 auto",
+                }}
+                scrollRef={myScrollRef}
+                cardsData={formattedData?.cardsData}
+              />
+            </div>
 
             <WastageAnalysisTable
               expiredItems={formattedData?.expiredItems}

@@ -3,9 +3,14 @@ import React from "react";
 import { Table } from "react-bootstrap";
 import BaseSurface from "./BaseSurface";
 import { useTableSort } from "@/components/hooks/useTableSort";
+import { handleNavigation } from "@/utils";
+import { useRouter } from "next/navigation";
+import { useDashboardContext } from "@/contexts/DashboardContext";
 
 function KitchenPurchaseByDepartmentTable({ data, badgeStyle }) {
   const { sortedData, sortKey, direction, handleSort } = useTableSort(data);
+  const router = useRouter();
+  const { dashboardFilter } = useDashboardContext();
 
   const renderSortArrow = (key) =>
     sortKey === key ? (direction === "asc" ? " ↑" : " ↓") : "";
@@ -22,6 +27,12 @@ function KitchenPurchaseByDepartmentTable({ data, badgeStyle }) {
     { key: "netConsumption", label: "Net Consumption" },
     { key: "budget", label: "Budget" },
   ];
+
+    const routes = {
+      opening: { url: "consumption_closing_analytics" },
+      consumption: { url: "consumption_analytics" },
+      closing: { url: "consumption_closing_analytics" },
+    };
 
   return (
     <BaseSurface maxHeight="65vh">
@@ -76,7 +87,17 @@ function KitchenPurchaseByDepartmentTable({ data, badgeStyle }) {
                         <td
                           key={col.key}
                           className="fw-bold text-success"
-                          style={{ backgroundColor: dept.bg }}
+                          style={{
+                            backgroundColor: dept.bg,
+                            cursor: "pointer",
+                          }}
+                          onClick={() =>
+                            handleNavigation({
+                              router,
+                              url: "sales_analytics",
+                              params: dashboardFilter,
+                            })
+                          }
                         >
                           {dept.sales}
                         </td>
@@ -93,7 +114,20 @@ function KitchenPurchaseByDepartmentTable({ data, badgeStyle }) {
                       );
                     default:
                       return (
-                        <td key={col.key} style={{ backgroundColor: dept.bg }}>
+                        <td
+                          key={col.key}
+                          style={{
+                            backgroundColor: dept.bg,
+                            cursor: "pointer",
+                          }}
+                          onClick={() =>
+                            handleNavigation({
+                              router,
+                              url: routes[col.key]?.url || '',
+                              params: dashboardFilter,
+                            })
+                          }
+                        >
                           {dept[col.key]}
                         </td>
                       );

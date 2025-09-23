@@ -3,10 +3,15 @@ import React from "react";
 import { Table, Badge } from "react-bootstrap";
 import BaseSurface from "./BaseSurface";
 import { useTableSort } from "@/components/hooks/useTableSort";
+import { handleNavigation } from "@/utils";
+import { useRouter } from "next/navigation";
+import { useDashboardContext } from "@/contexts/DashboardContext";
 
 function ItemConsumptionEffieciencyTable({ tableData, wasteBadge }) {
+    const { startDate, endDate } = useDashboardContext();
   const { sortedData, sortKey, direction, handleSort } =
     useTableSort(tableData);
+  const router = useRouter();
 
   const renderSortArrow = (key) =>
     sortKey === key ? (direction === "asc" ? " ↑" : " ↓") : "";
@@ -59,7 +64,22 @@ function ItemConsumptionEffieciencyTable({ tableData, wasteBadge }) {
                 {/* Item Details */}
                 <td>
                   <div style={{ display: "flex", flexDirection: "column" }}>
-                    <span style={{ fontWeight: "500" }}>{row.item}</span>
+                    <span
+                      style={{ fontWeight: "500", cursor: "pointer" }}
+                      onClick={() =>
+                        handleNavigation({
+                          router,
+                          url: "items",
+                          params: {
+                            startDate: startDate,
+                            endDate: endDate,
+                            // departments: item?.departmentId,
+                          },
+                        })
+                      }
+                    >
+                      {row.item}
+                    </span>
                     <small style={{ color: "#6c757d" }}>
                       {row.dept} • {row.unitQuantity}
                       {row.unit} • ₹{row.unitPrice}
@@ -68,17 +88,60 @@ function ItemConsumptionEffieciencyTable({ tableData, wasteBadge }) {
                 </td>
 
                 {/* Department */}
-                <td>
+                <td
+                  style={{ cursor: "pointer" }}
+                  onClick={() =>
+                    handleNavigation({
+                      router,
+                      url: "departments",
+                      params: {
+                        startDate: startDate,
+                        endDate: endDate,
+                        // departments: item?.departmentId,
+                      },
+                    })
+                  }
+                >
                   <Badge bg="white" text="primary">
                     {row.dept || (row.department?.name ?? "-")}
                   </Badge>
                 </td>
 
                 {/* Consumed */}
-                <td>{row.consumed}</td>
+                <td
+                  style={{ cursor: "pointer" }}
+                  onClick={() =>
+                    handleNavigation({
+                      router,
+                      url: "consumption_analytics",
+                      params: {
+                        startDate: startDate,
+                        endDate: endDate,
+                        departments: row?.departmentId,
+                      },
+                    })
+                  }
+                >
+                  {row.consumed}
+                </td>
 
                 {/* Sales */}
-                <td>{row.sales}</td>
+                <td
+                  style={{ cursor: "pointer" }}
+                  onClick={() =>
+                    handleNavigation({
+                      router,
+                      url: "items",
+                      params: {
+                        startDate: startDate,
+                        endDate: endDate,
+                        departments: row?.departmentId,
+                      },
+                    })
+                  }
+                >
+                  {row.sales}
+                </td>
 
                 {/* Difference */}
                 <td

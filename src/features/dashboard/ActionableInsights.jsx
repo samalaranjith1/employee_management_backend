@@ -8,11 +8,13 @@ import { Container } from "react-bootstrap";
 import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer";
 import ActionableCard from "@/components/common/dashboard/card/ActionableCard";
 import ActionableVerticalCards from "@/components/common/dashboard/card/ActionableVerticalCards";
-import { usePathname } from "next/navigation"; // ✅ For route detection
+import { usePathname, useRouter } from "next/navigation"; // ✅ For route detection
+import { handleNavigation } from "@/utils";
 
 const ActionableInsights = () => {
-  const { startDate, endDate } = useDashboardContext();
+  const { startDate, endDate, dashboardFilter } = useDashboardContext();
   const myScrollRef = useRef(null);
+  const router = useRouter();
   const pathname = usePathname(); // ✅ get current path
 
   const priorityColors = {
@@ -42,6 +44,14 @@ const ActionableInsights = () => {
         isExpandable={true}
         titleIcon={""}
         text={`5 Active`}
+        style={{ cursor: "pointer" }}
+        handleExpandClick={() =>
+          handleNavigation({
+            router,
+            url: "insights",
+            params: dashboardFilter,
+          })
+        }
       />
       <ServiceRenderer
         queryHook={useOutletActionableInsights}

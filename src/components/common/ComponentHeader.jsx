@@ -20,6 +20,7 @@ function ComponentHeader({
   isExpandable,
   text = "",
   titleIcon = null,
+  handleExpandClick=()=>{},
 }) {
   const CARD_GAP_PX = 16;
   const [showScrollButtons, setShowScrollButtons] = useState(false);
@@ -114,7 +115,13 @@ function ComponentHeader({
             />
           </div>
         )}
-        {isExpandable && <FaExpand size={24} color="rgb(255,80,22)" />}
+        {isExpandable && (
+          <FaExpand
+            size={24}
+            color="rgb(255,80,22)"
+            onClick={handleExpandClick}
+          />
+        )}
       </Col>
     </Row>
   );

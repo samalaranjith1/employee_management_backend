@@ -1,12 +1,17 @@
 "use client";
-import React from "react";
+import React, { useContext } from "react";
 import { Table } from "react-bootstrap";
 import BaseSurface from "./BaseSurface";
 import { useTableSort } from "@/components/hooks/useTableSort";
 import { useTableControls } from "@/components/hooks/useTableControls";
 import { TableControls } from "@/components/common/TableControls";
+import { useDashboardContext } from "@/contexts/DashboardContext";
+import { useRouter } from "next/navigation";
+import { handleNavigation } from "@/utils";
 
 export default function ProductDetailsTable({ rowsData, styles }) {
+  const {dashboardFilter} = useDashboardContext()
+  const router = useRouter()
   // ✅ Sorting hook
   const { sortedData, sortKey, direction, handleSort } = useTableSort(rowsData);
 
@@ -83,11 +88,35 @@ export default function ProductDetailsTable({ rowsData, styles }) {
               filteredData.map((row, idx) => (
                 <tr key={idx}>
                   <td>
-                    <div className="fw-bold">{row.product}</div>
+                    <div
+                      className="fw-bold"
+                      style={{ cursor: "pointer" }}
+                      onClick={() =>
+                        handleNavigation({
+                          router,
+                          url: "products",
+                          params: dashboardFilter,
+                        })
+                      }
+                    >
+                      {row.product}
+                    </div>
                     <small className="text-muted">{row.details}</small>
                   </td>
                   <td className="fw-bold">{row.items}</td>
-                  <td className="text-success fw-bold">{row.netSales}</td>
+                  <td
+                    className="text-success fw-bold"
+                    style={{ cursor: "pointer" }}
+                    onClick={() =>
+                      handleNavigation({
+                        router,
+                        url: "sales_analytics",
+                        params: { ...dashboardFilter, products :row?.productId},
+                      })
+                    }
+                  >
+                    {row.netSales}
+                  </td>
                   <td className="text-danger fw-bold">{row.discount}</td>
                   <td className="text-info fw-bold">{row.tax}</td>
                   <td className="text-danger fw-bold">{row.makingCost}</td>

@@ -9,10 +9,13 @@ import { useOutletSummary } from "@/services/outlet-service";
 import { consumptionSummaryFormatter } from "@/utils/data_formatters/dashboardFormatter";
 import { useDashboardContext } from "@/contexts/DashboardContext";
 import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer";
+import { handleNavigation } from "@/utils";
+import { useRouter } from "next/navigation";
 
 export default function ConsumptionSummarry() {
-  const { startDate, endDate } = useDashboardContext();
+  const { startDate, endDate,dashboardFilter } = useDashboardContext();
   const myScrollRef = useRef(null);
+    const router = useRouter();
 
   return (
     <Container fluid>
@@ -25,6 +28,14 @@ export default function ConsumptionSummarry() {
         scrollRef={myScrollRef}
         isExpandable={true}
         titleIcon={""}
+        style={{ cursor: "pointer" }}
+        handleExpandClick={() =>
+          handleNavigation({
+            router,
+            url: "consumption_analytics",
+            params: dashboardFilter,
+          })
+        }
       />
 
       {/* ✅ ServiceRenderer takes care of loading, error, retry, no data */}

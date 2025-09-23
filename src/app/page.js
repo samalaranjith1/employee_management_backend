@@ -62,7 +62,6 @@ export default function Home() {
         </MainComponentHoldingCard>
         <MainComponentHoldingCard>
           <HourlyForecast />
-          {/* pending service call integration */}
         </MainComponentHoldingCard>
         <MainComponentHoldingCard>
           <KitchenPurchaseByDepartment />
@@ -129,7 +128,6 @@ export default function Home() {
         </MainComponentHoldingCard>
         <MainComponentHoldingCard>
           <SupplierDues />
-          {/* Pending service call not availbale integration */}
         </MainComponentHoldingCard>
       </div>
       {/* <MobileBottomNav /> */}

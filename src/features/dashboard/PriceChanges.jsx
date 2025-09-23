@@ -16,10 +16,13 @@ import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer
 import { useDashboardContext } from "@/contexts/DashboardContext";
 import { useItemsPriceChangeSummary } from "@/services/item-service";
 import { priceChangeDataFormatter } from "@/utils/data_formatters/dashboardFormatter";
+import { handleNavigation } from "@/utils";
+import { useRouter } from "next/navigation";
 
 export default function PriceChanges() {
   const { startDate, endDate } = useDashboardContext();
   const myScrollRef = useRef(null);
+  const router = useRouter()
 
   const styles = {
     headerCard: {
@@ -110,7 +113,16 @@ export default function PriceChanges() {
           <>
             {/* Top Header Card */}
             <Card style={styles.headerCard} className="mb-4">
-              <Card.Body>
+              <Card.Body
+                style={{ cursor: "pointer" }}
+                onClick={() =>
+                  handleNavigation({
+                    router,
+                    url: "item_price_change_analytics",
+                    params: { startDate: startDate, endDate: endDate },
+                  })
+                }
+              >
                 <div style={styles.title}>
                   <FaChartLine className="me-2" /> Price Changes
                 </div>
@@ -141,11 +153,11 @@ export default function PriceChanges() {
             </Card>
 
             {/* Bottom Section */}
-            <PriceChangesTable
-              styles={styles}
-              recentChanges={priceChangeData?.recentChanges ?? []}
-              futureHikes={priceChangeData?.futureHikes ?? []}
-            />
+              <PriceChangesTable
+                styles={styles}
+                recentChanges={priceChangeData?.recentChanges ?? []}
+                futureHikes={priceChangeData?.futureHikes ?? []}
+              />
           </>
         )}
       </ServiceRenderer>

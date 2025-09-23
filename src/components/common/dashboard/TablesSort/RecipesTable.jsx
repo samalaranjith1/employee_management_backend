@@ -2,8 +2,13 @@
 import React from "react";
 import BaseSurface from "./BaseSurface";
 import { useTableSort } from "@/components/hooks/useTableSort";
+import { useRouter } from "next/navigation";
+import { useDashboardContext } from "@/contexts/DashboardContext";
+import { handleNavigation } from "@/utils";
 
 function RecipesTable({ title, data, bgColor }) {
+  const router = useRouter()
+  const {dashboardFilter} = useDashboardContext()
   // ✅ Sorting hook
   const sort = useTableSort(data || []);
 
@@ -118,7 +123,20 @@ function RecipesTable({ title, data, bgColor }) {
                   </div>
                 )}
               </div>
-              <div style={{ textAlign: "right" }}>{item.cost}</div>
+              <div
+                style={{ textAlign: "right" ,
+                  cursor:'pointer'
+                }}
+                onClick={() =>
+                  handleNavigation({
+                    router,
+                    url: "reciepe_analytics",
+                    params: { ...dashboardFilter,products:item?.productId },
+                  })
+                }
+              >
+                {item.cost}
+              </div>
               <div style={{ textAlign: "right" }}>
                 <span
                   style={{
@@ -133,7 +151,17 @@ function RecipesTable({ title, data, bgColor }) {
                   {item.costPct}
                 </span>
               </div>
-              <div style={{ textAlign: "right" }}>{item.sales}</div>
+              <div style={{ textAlign: "right" ,
+                                cursor:'pointer'
+                }}
+                onClick={() =>
+                  handleNavigation({
+                    router,
+                    url: "reciepe_analytics",
+                    params: { ...dashboardFilter,products:item?.productId },
+                  })
+                }
+              >{item.sales}</div>
             </div>
           ))}
         </div>

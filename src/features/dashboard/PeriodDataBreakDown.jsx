@@ -147,6 +147,7 @@ export default function PeriodDataBreakdown() {
               {/* Pass the height to the table so the header can stick */}
               <PeriodDataBreakDownTable
                 data={{ table }}
+                filters={{startDate:startDateCS,endDate:endDateCS}}
                 containerStyle={{ maxHeight: "60vh", overflowY: "auto" }}
               />
             </div>

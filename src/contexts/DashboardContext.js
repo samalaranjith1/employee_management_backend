@@ -10,6 +10,10 @@ export function DashboardContextProvider({ children }) {
   //dashboard filters startDate, endDate
     const [startDate, setStartDate] = useState(formatDate(new Date()));
     const [endDate, setEndDate] = useState(formatDate(new Date()));
+    const [dashboardFilter,setDashboardFilter]= useState({
+      startDate:startDate,
+      endDate:endDate
+    })
 
   const toggleSidebar = () => setIsSidebarOpen((prev) => !prev);
   const contextValues = {
@@ -20,6 +24,7 @@ export function DashboardContextProvider({ children }) {
     endDate,
     setEndDate,
     toggleSidebar,
+    dashboardFilter,
   };
 
   return (

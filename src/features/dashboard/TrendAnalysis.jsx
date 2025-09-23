@@ -15,6 +15,9 @@ import { subDays, subWeeks, subMonths, format } from "date-fns";
 import { Button, ButtonGroup, Container, Row, Col } from "react-bootstrap";
 import { FaBolt, FaExpand } from "react-icons/fa";
 import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer";
+import { handleNavigation } from "@/utils";
+import { useRouter } from "next/navigation";
+
 import {
   useOutletDailySummary,
   useOutletMonthlySummary,
@@ -26,6 +29,7 @@ import { trendAnalysisFormatter } from "@/utils/data_formatters/dashboardFormatt
 
 export default function TrendAnalysis() {
   const { startDate, endDate } = useDashboardContext();
+  const router = useRouter();
   const [startDateCS, setStartDateCS] = useState("");
   const [endDateCS, setEndDateCs] = useState("");
 
@@ -170,8 +174,65 @@ export default function TrendAnalysis() {
                           : `₹${value}k`
                       }
                     />
-                    <Legend />
-
+                    <Legend
+                      content={(props) => {
+                        const { payload } = props;
+                        return (
+                          <ul
+                            style={{
+                              listStyle: "none",
+                              display: "flex",
+                              justifyContent: "center", // 🔹 center align
+                              gap: "20px",
+                              padding: 0,
+                              margin: 0,
+                            }}
+                          >
+                            {payload.map((entry, index) => (
+                              <li
+                                key={`legend-${index}`}
+                                style={{
+                                  cursor: "pointer",
+                                  display: "flex",
+                                  alignItems: "center",
+                                  gap: "6px",
+                                }}
+                                onClick={() =>
+                                  handleNavigation({
+                                    router,
+                                    url:
+                                      entry.value === "Sales"
+                                        ? "sales_analytics"
+                                        : entry.value === "Consumption"
+                                        ? "consumption_analytics"
+                                        : entry.value === "Opening"
+                                        ? "consumption_closing_analytics"
+                                        : entry.value === "Closing"
+                                        ? "consumption_closing_analytics"
+                                        : "",
+                                    params: {
+                                      startDate: startDateCS,
+                                      endDate: endDateCS,
+                                    },
+                                  })
+                                }
+                              >
+                                <span
+                                  style={{
+                                    width: 12,
+                                    height: 12,
+                                    backgroundColor: entry.color,
+                                    display: "inline-block",
+                                    borderRadius: "3px",
+                                  }}
+                                />
+                                {entry.value}
+                              </li>
+                            ))}
+                          </ul>
+                        );
+                      }}
+                    />
                     <Line
                       yAxisId="left"
                       type="monotone"
@@ -206,7 +267,7 @@ export default function TrendAnalysis() {
                     />
                   </LineChart>
                 </ResponsiveContainer>
-{/* 
+                {/* 
                 <Row className="mt-3 text-center fw-bold d-none d-md-flex">
                   <Col style={{ color: "#22c55e" }}>
                     Avg Sales ₹{averages.Sales}k

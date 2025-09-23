@@ -41,17 +41,98 @@ import {
 import { formatCurrency } from "@/constants";
 import { FaArrowTrendDown, FaArrowTrendUp } from "react-icons/fa6";
 
+// export function consumptionSummaryFormatter(data) {
+//   return [
+//     {
+//       title: "CONSUMPTION %",
+//       percentage: `${data.current?.consumptionPercentage?.toFixed(0)}%`,
+//       percentageChange: "+2.1%", // you can calculate if API gives trend data
+//       icon: <FaUtensils size={36} color="#bc4b00" />,
+//       textColor: "#bc4b00",
+//       bgColor: "rgb(255,247,237)",
+//       rows: [
+//         { label: "Sale", value: `₹${data?.current?.netSales?.toLocaleString()}` },
+//         {
+//           label: "Consumption",
+//           value: `₹${data.current?.consumptionValue?.toLocaleString()}`,
+//         },
+//         {
+//           label: "Net Consumption",
+//           value: `₹${data.current?.netConsumptionValue?.toLocaleString()} (${data.current?.netConsumptionPercentage?.toFixed(
+//             0
+//           )}%)`,
+//         },
+//       ],
+//     },
+//     {
+//       title: "CONSUMPTION",
+//       percentage: `₹${data.current?.consumptionValue?.toLocaleString()}`,
+//       percentageChange: "-1.5%", // example
+//       icon: <FaChartLine size={36} color="#1d40af" />,
+//       textColor: "#1d40af",
+//       bgColor: "rgb(238,245,255)",
+//       rows: [
+//         {
+//           label: "Opening Stock",
+//           value: `₹${data.current?.consumptionOpeningValue?.toLocaleString()}`,
+//         },
+//         {
+//           label: "Closing Stock",
+//           value: `₹${data.current?.consumptionClosingValue?.toLocaleString()}`,
+//         },
+//         {
+//           label: "Net Consumption",
+//           value: `₹${data.current?.netConsumptionValue?.toLocaleString()}`,
+//         },
+//       ],
+//     },
+//     {
+//       title: "NET SALES",
+//       percentage: `₹${data.current?.netSales.toLocaleString()}`,
+//       percentageChange: "+8.3%", // example
+//       icon: <FaCoffee size={36} color="#5b21b6" />,
+//       textColor: "#5b21b6",
+//       bgColor: "rgb(250,245,255)",
+//       rows: [
+//         {
+//           label: "Total Sales",
+//           value: `₹${data.current?.totalSales.toLocaleString()}`,
+//         },
+//         {
+//           label: "Discount",
+//           value: `₹${data.current?.discount.toLocaleString()}`,
+//         },
+//         { label: "Tax", value: `₹${data?.current?.tax.toLocaleString()}` },
+//         // {
+//         //   label: "Dine in",
+//         //   value: `₹${data.current?.dineInSales?.toLocaleString()}`,
+//         // },
+//         // {
+//         //   label: "Online",
+//         //   value: `₹${data.current?.onlineSales?.toLocaleString()}`,
+//         // },
+//       ],
+//     },
+//   ];
+// }
+
+// monthSummaryFormatter.js
+
 export function consumptionSummaryFormatter(data) {
   return [
     {
       title: "CONSUMPTION %",
       percentage: `${data.current?.consumptionPercentage?.toFixed(0)}%`,
-      percentageChange: "+2.1%", // you can calculate if API gives trend data
+      percentageChange: "+2.1%",
       icon: <FaUtensils size={36} color="#bc4b00" />,
       textColor: "#bc4b00",
       bgColor: "rgb(255,247,237)",
+      routeUrl: "/consumption_analytics", // 🔹 direct
       rows: [
-        { label: "Sale", value: `₹${data?.current?.netSales?.toLocaleString()}` },
+        {
+          label: "Sale",
+          value: `₹${data?.current?.netSales?.toLocaleString()}`,
+        },
         {
           label: "Consumption",
           value: `₹${data.current?.consumptionValue?.toLocaleString()}`,
@@ -67,10 +148,11 @@ export function consumptionSummaryFormatter(data) {
     {
       title: "CONSUMPTION",
       percentage: `₹${data.current?.consumptionValue?.toLocaleString()}`,
-      percentageChange: "-1.5%", // example
+      percentageChange: "-1.5%",
       icon: <FaChartLine size={36} color="#1d40af" />,
       textColor: "#1d40af",
       bgColor: "rgb(238,245,255)",
+      routeUrl: "/consumption_analytics", // 🔹 direct
       rows: [
         {
           label: "Opening Stock",
@@ -89,10 +171,11 @@ export function consumptionSummaryFormatter(data) {
     {
       title: "NET SALES",
       percentage: `₹${data.current?.netSales.toLocaleString()}`,
-      percentageChange: "+8.3%", // example
+      percentageChange: "+8.3%",
       icon: <FaCoffee size={36} color="#5b21b6" />,
       textColor: "#5b21b6",
       bgColor: "rgb(250,245,255)",
+      routeUrl: "/sales_analytics", // 🔹 direct
       rows: [
         {
           label: "Total Sales",
@@ -103,20 +186,10 @@ export function consumptionSummaryFormatter(data) {
           value: `₹${data.current?.discount.toLocaleString()}`,
         },
         { label: "Tax", value: `₹${data?.current?.tax.toLocaleString()}` },
-        // {
-        //   label: "Dine in",
-        //   value: `₹${data.current?.dineInSales?.toLocaleString()}`,
-        // },
-        // {
-        //   label: "Online",
-        //   value: `₹${data.current?.onlineSales?.toLocaleString()}`,
-        // },
       ],
     },
   ];
 }
-
-// monthSummaryFormatter.js
 export function monthSummaryFormatter(data) {
   if (!data?.current) return [];
 
@@ -139,6 +212,7 @@ export function monthSummaryFormatter(data) {
           variant: "secondary",
         },
       ],
+      routeUrl: "",
     },
     {
       title: "EXPENSES",
@@ -158,6 +232,7 @@ export function monthSummaryFormatter(data) {
           variant: "secondary",
         },
       ],
+      routeUrl: "purchase_analytics",
     },
     {
       title: "SALES",
@@ -165,6 +240,7 @@ export function monthSummaryFormatter(data) {
       value: formatCurrency(data.current?.netSales),
       trend: "up",
       trendColor: "primary",
+      routeUrl: "sales_analytics",
       rows: [
         {
           label: "Dine in",
@@ -184,6 +260,7 @@ export function monthSummaryFormatter(data) {
       value: formatCurrency(data.current?.netConsumptionValue),
       trend: "down",
       trendColor: "primary",
+      routeUrl: "consumption_analytics",
       rows: [
         {
           label: "Opening",
@@ -566,9 +643,10 @@ export const departmentConsumptionPieChartFormatter = (apiData) => {
       percentage: Number(item?.netSales / apiData.netSales || 0),
       totalSales: Number(apiData?.totalSales || 0),
       color: getRandomColor(),
+      departmentId: item?.department?.id,
     }));
 
-  return {chartData,total:apiData?.netSales}
+  return { chartData, total: apiData?.netSales };
 };
 
 const formatNumber = (value, unit = "", fraction = 1) => {
@@ -622,7 +700,9 @@ export function itemConsumptionEfficiencyDataFormatter(data) {
     const diffValue = parseFloat(row.quantityDifference || 0);
     return {
       item: item.name,
-      dept: item.categoryName,
+      itemId: item?.id,
+      dept: row.department?.name,
+      departmentId: row.department?.id,
       unitQuantity: item.unitQuantity,
       unit: item.unit,
       unitPrice: item.unitPrice,
@@ -646,13 +726,19 @@ export function itemConsumptionEfficiencyDataFormatter(data) {
 }
 export function topConsumedItemsDataFormatter(apiData) {
   if (!apiData || !apiData.list) return { data: [], total: 0 };
-  const filteredData = apiData.list.filter((item) => item?.consumptionValue > 0);
-  const totalValue = filteredData.reduce((sum, item) => sum + item.consumptionValue, 0);
+  const filteredData = apiData.list.filter(
+    (item) => item?.consumptionValue > 0
+  );
+  const totalValue = filteredData.reduce(
+    (sum, item) => sum + item.consumptionValue,
+    0
+  );
 
   const data = filteredData.map((item) => ({
     name: item.item?.name || "Unknown",
     category: item.item?.categoryName || "Uncategorized",
     value: Math.round(item.consumptionValue),
+    departmentId: item?.departmentId,
   }));
 
   return {
@@ -813,47 +899,46 @@ export const consumptionDistributionDataFormatter = (apiData) => {
   };
 };
 
-
 export function wastageAnalysisDataFormatter(data) {
   // ✅ Cards Data
-const cardsData = [
-  {
-    title: data.totalWastage?.label ?? "Total Wastage",
-    value: data.totalWastage?.amount ?? 0,
-    sub: "",
-    bgLight: "#e8f9f3",
-    bgSolid: "#1abc9c",
-    icon: <FaTrashAlt />,
-  },
-  {
-    title: data.rawMaterial?.label ?? "Raw Material",
-    value: data.rawMaterial?.amount ?? 0,
-    sub: `(${data.rawMaterial?.count ?? 0} Items)`,
-    bgLight: "#e8f5e9",
-    bgSolid: "#2ecc71",
-    icon: <FaBoxOpen />,
-  },
-  {
-    title: data.expiredItems?.label ?? "Expired Items",
-    value: data.expiredItems?.amount ?? 0,
-    sub: `(${data.expiredItems?.count ?? 0} Items)`,
-    bgLight: "#fff3e0",
-    bgSolid: "#e67e22",
-    icon: <FaExclamationTriangle />,
-  },
-  {
-    title: data.expiredProducts?.label ?? "Expired Products",
-    value: data.expiredProducts?.amount ?? 0,
-    sub: `(${data.expiredProducts?.count ?? 0} Items)`,
-    bgLight: "#f3e5f5",
-    bgSolid: "#9b59b6",
-    icon: <FaTimesCircle />,
-  },
-];
+  const cardsData = [
+    {
+      title: data.totalWastage?.label ?? "Total Wastage",
+      value: data.totalWastage?.amount ?? 0,
+      sub: "",
+      bgLight: "#e8f9f3",
+      bgSolid: "#1abc9c",
+      icon: <FaTrashAlt />,
+    },
+    {
+      title: data.rawMaterial?.label ?? "Raw Material",
+      value: data.rawMaterial?.amount ?? 0,
+      sub: `(${data.rawMaterial?.count ?? 0} Items)`,
+      bgLight: "#e8f5e9",
+      bgSolid: "#2ecc71",
+      icon: <FaBoxOpen />,
+    },
+    {
+      title: data.expiredItems?.label ?? "Expired Items",
+      value: data.expiredItems?.amount ?? 0,
+      sub: `(${data.expiredItems?.count ?? 0} Items)`,
+      bgLight: "#fff3e0",
+      bgSolid: "#e67e22",
+      icon: <FaExclamationTriangle />,
+    },
+    {
+      title: data.expiredProducts?.label ?? "Expired Products",
+      value: data.expiredProducts?.amount ?? 0,
+      sub: `(${data.expiredProducts?.count ?? 0} Items)`,
+      bgLight: "#f3e5f5",
+      bgSolid: "#9b59b6",
+      icon: <FaTimesCircle />,
+    },
+  ];
 
   // ✅ Raw Material Wastage
   const rawMaterialWastage =
-    data.rawMaterialWastage?.map((rm) => ({
+    data.rawMaterialWastage?.list?.map((rm) => ({
       name: rm.item?.name ?? "N/A",
       category: rm.item?.categoryName ?? "-",
       qty: `${rm.totalQuntity ?? 0}${rm.item?.unit ?? ""}`,
@@ -864,7 +949,7 @@ const cardsData = [
 
   // ✅ Expired Items
   const expiredItems =
-    data.expiredItemsList?.map((it) => ({
+    data.expiredItems?.list?.map((it) => ({
       name: it.item?.name ?? "N/A",
       category: it.item?.categoryName ?? "-",
       qty: `${it.totalQuntity ?? 0}${it.item?.unit ?? ""}`,
@@ -875,7 +960,7 @@ const cardsData = [
 
   // ✅ Expired Products
   const expiredProducts =
-    data.expiredProductsList?.map((p) => ({
+    data.expiredProducts?.list?.map((p) => ({
       name: p.product?.name ?? "N/A",
       category: p.product?.categoryName ?? "-",
       qty: `${p.totalQuntity ?? 0}${p.product?.unit ?? ""}`,
@@ -908,6 +993,7 @@ export function priceChangeDataFormatter(data) {
     change: item.projectedMonthlyCostDiff,
     percent: item.priceDiffPercentage,
     up: item.newPrice > item.oldPrice,
+    itemId: item?.item?.id
   }));
 
   const futureHikes = data?.future?.map((item) => ({
@@ -921,7 +1007,8 @@ export function priceChangeDataFormatter(data) {
     change: item.projectedMonthlyCostDiff,
     percent: item.priceDiffPercentage,
     up: item.newPrice > item.oldPrice,
-    quantity: item.projectedMonthlyQty, // 👈 frontend needs to handle this
+    quantity: item.projectedMonthlyQty,
+    itemId: item?.item?.id,
   }));
 
   const topCard = {
@@ -973,6 +1060,7 @@ export function outOfOfficeDataFormatter(data) {
       size: `1 ${item.unit}`,
       code: `#${item.unitPrice}`, // Assuming this is unique code
       closing: latestPurchaseClosingDate,
+      itemId:item?.id
     };
   });
 
@@ -1046,6 +1134,7 @@ export function recipesDataFormatter(data) {
   const lossProducts =
     data.lossMakingProducts?.list?.map((item) => ({
       product: item.product?.name ?? "N/A",
+      productId: item.product?.id,
       subtitle: `${item.product?.categoryName ?? ""} • ₹${
         item.product?.price ?? 0
       }`,
@@ -1065,6 +1154,7 @@ export function recipesDataFormatter(data) {
   const profitProducts =
     data.profitableProducts?.list?.map((item) => ({
       product: item.product?.name ?? "N/A",
+      productId:item.product?.id,
       subtitle: `${item.product?.categoryName ?? ""} • ₹${
         item.product?.price ?? 0
       }`,
@@ -1171,6 +1261,7 @@ export function productPerformanceDetailsDataFormmatter(data) {
 
   return data.list.map((item) => ({
     product: item.product?.name ?? "N/A",
+    productId: item.product?.id,
     details: `${
       item.product?.departmentName ?? item.product?.categoryName ?? "N/A"
     }. ₹${item.product?.price ?? 0}`,
@@ -1312,6 +1403,7 @@ export function supplierManagementDataFormatter(data) {
     location: item.supplier?.city ?? "N/A",
     purchase: formatCurrency(item.purchase?.totalPrice ?? 0),
     items: item.purchase?.itemCount ?? 0,
+    supplierId: item.supplier?.id,
   }));
   return {
     cardData,
@@ -1397,3 +1489,29 @@ export function recommendationsDatFormmatter(data) {
     desc: item.description,
   }));
 }
+
+export const supplierDuesDataFormatter = (apiResponse) => {
+  if (!apiResponse) return { summary: null, list: [] };
+
+  const { suppliers, totalDueAmount, list } = apiResponse;
+
+  const formattedList = list.map((item) => ({
+    supplier: item.supplier?.name || "Unknown Supplier",
+    category: item.supplier?.supplierType || "N/A",
+    location: item.supplier?.city || "",
+    thisMonth: item.purchase?.totalPrice || 0,
+    lastMonth: null, // API doesn’t provide
+    total: item.expense?.totalAmount || 0,
+    items: item.purchase?.itemCount || 0,
+    supplierId: item.supplier?.id,
+    dueAmount: item.dues?.totalAmount || 0,
+  }));
+
+  return {
+    summary: {
+      totalDueAmount,
+      suppliers,
+    },
+    list: formattedList,
+  };
+};

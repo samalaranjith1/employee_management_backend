@@ -2,8 +2,13 @@
 import React from "react";
 import BaseSurface from "./BaseSurface";
 import { useTableSort } from "@/components/hooks/useTableSort";
+import { handleNavigation } from "@/utils";
+import { useRouter } from "next/navigation";
+import { useDashboardContext } from "@/contexts/DashboardContext";
 
 function OutOfStockTable({ data, getBadgeStyle }) {
+  const router = useRouter()
+  const {dashboardFilter}=useDashboardContext()
   const { sortedData, sortKey, direction, handleSort } = useTableSort(data);
 
   const renderSortArrow = (key) =>
@@ -110,7 +115,18 @@ function OutOfStockTable({ data, getBadgeStyle }) {
                 </div>
 
                 {/* MOQ */}
-                <div style={{ textAlign: "center" }}>{item.moq}</div>
+                <div
+                  style={{ textAlign: "center", cursor: "pointer" }}
+                  onClick={() =>
+                    handleNavigation({
+                      router,
+                      url: "ware_house_analytics",
+                      params: {...dashboardFilter,items:item?.itemId},
+                    })
+                  }
+                >
+                  {item.moq}
+                </div>
 
                 {/* Stock + Status stacked */}
                 <div

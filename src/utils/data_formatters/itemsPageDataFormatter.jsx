@@ -62,11 +62,11 @@ export const summeryOverviewDataFormatter = (apiData) => {
         rows: [
           {
             label: "Qty",
-            value: `${summary.purchaseQuantity} ${item.unit}`,
+            value: `${summary?.purchaseQuantity} ${item?.unit}`,
           },
           {
             label: "Amount",
-            value: `₹${summary.purchaseValue}`,
+            value: `₹${summary?.purchaseValue}`,
           },
         ],
       },
@@ -78,11 +78,11 @@ export const summeryOverviewDataFormatter = (apiData) => {
         rows: [
           {
             label: "Qty",
-            value: `${summary.consumptionOpeningQuantity} ${item.unit}`,
+            value: `${summary?.consumptionOpeningQuantity} ${item?.unit}`,
           },
           {
             label: "Amount",
-            value: `₹${summary.consumptionOpeningValue}`,
+            value: `₹${summary?.consumptionOpeningValue}`,
           },
         ],
       },
@@ -94,11 +94,11 @@ export const summeryOverviewDataFormatter = (apiData) => {
         rows: [
           {
             label: "Qty",
-            value: `${summary.consumptionQuantity} ${item.unit}`,
+            value: `${summary?.consumptionQuantity} ${item?.unit}`,
           },
           {
             label: "Amount",
-            value: `₹${summary.consumptionValue}`,
+            value: `₹${summary?.consumptionValue}`,
           },
         ],
       },
@@ -110,11 +110,11 @@ export const summeryOverviewDataFormatter = (apiData) => {
         rows: [
           {
             label: "Qty",
-            value: `${summary.consumptionClosingQuantity} ${item.unit}`,
+            value: `${summary?.consumptionClosingQuantity} ${item?.unit}`,
           },
           {
             label: "Amount",
-            value: `₹${summary.consumptionClosingValue}`,
+            value: `₹${summary?.consumptionClosingValue}`,
           },
         ],
       },
@@ -126,11 +126,11 @@ export const summeryOverviewDataFormatter = (apiData) => {
         rows: [
           {
             label: "Qty",
-            value: `${summary.netConsumptionQuantity} ${item.unit}`,
+            value: `${summary?.netConsumptionQuantity} ${item?.unit}`,
           },
           {
             label: "Amount",
-            value: `₹${summary.netConsumptionValue}`,
+            value: `₹${summary?.netConsumptionValue}`,
           },
         ],
       },
@@ -142,11 +142,11 @@ export const summeryOverviewDataFormatter = (apiData) => {
         rows: [
           {
             label: "Qty",
-            value: `${summary.saleQuantity} ${item.unit}`,
+            value: `${summary?.saleQuantity} ${item?.unit}`,
           },
           {
             label: "Price",
-            value: `₹${summary.salePrice}`,
+            value: `₹${summary?.salePrice}`,
           },
         ],
       },
@@ -511,8 +511,6 @@ export const purchaseTrendAnalysisDataFormatter = (data) => {
 
 export const purchaseAnalyticsOverviewDataFormatter = (apiData) => {
   if (!apiData) return [];
-  console.log(apiData.thisWeek,"ramarama")
-
   return [
     {
       key: "thisWeek",

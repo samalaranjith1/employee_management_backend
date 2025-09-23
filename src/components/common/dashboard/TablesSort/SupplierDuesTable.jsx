@@ -3,8 +3,13 @@ import React from "react";
 import { Table, Badge } from "react-bootstrap";
 import BaseSurface from "./BaseSurface";
 import { useTableSort } from "@/components/hooks/useTableSort";
+import { handleNavigation } from "@/utils";
+import { useDashboardContext } from "@/contexts/DashboardContext";
+import { useRouter } from "next/navigation";
 
 function SupplierDuesTable({ styles, data }) {
+  const {dashboardFilter}=useDashboardContext()
+  const router = useRouter()
   // ✅ Sorting hook
   const sort = useTableSort(data || []);
 
@@ -53,7 +58,20 @@ function SupplierDuesTable({ styles, data }) {
           {sort.sortedData.map((row, idx) => (
             <tr key={idx}>
               <td>
-                <div style={styles.supplierName}>{row.supplier}</div>
+                <div
+                  style={styles.supplierName}
+                  onClick={() =>
+                    handleNavigation({
+                      router,
+                      url: "suppliers",
+                      params: {
+                        ...dashboardFilter,suppliers:row?.supplierId
+                      },
+                    })
+                  }
+                >
+                  {row.supplier}
+                </div>
                 <div className="d-flex align-items-center gap-1">
                   <Badge style={styles.badge}>{row.category}</Badge>
                   <span style={styles.locationText}>{row.location}</span>

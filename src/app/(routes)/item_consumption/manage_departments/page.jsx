@@ -1,4 +1,4 @@
 "use client";
-export default async function Page({ params }) {
+export default async function Page() {
   return <div>Page</div>;
 }

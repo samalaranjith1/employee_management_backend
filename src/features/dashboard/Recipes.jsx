@@ -11,10 +11,13 @@ import { useProductsRecipesSummary } from "@/services/product-service";
 import { recipesDataFormatter } from "@/utils/data_formatters/dashboardFormatter";
 import { useDashboardContext } from "@/contexts/DashboardContext";
 import { FaChartLine, FaExclamationTriangle } from "react-icons/fa";
+import { useRouter } from "next/navigation";
+import { handleNavigation } from "@/utils";
 
 const RecipesDashboard = () => {
   const myScrollRef = useRef(null);
   const { startDate, endDate } = useDashboardContext();
+  const router = useRouter()
 
   return (
     <Container fluid className="mt-0 p-2">
@@ -69,7 +72,15 @@ const RecipesDashboard = () => {
                 msOverflowStyle: "none",
                 scrollbarWidth: "none",
                 WebkitOverflowScrolling: "touch",
+                cursor: "pointer",
               }}
+              onClick={() =>
+                handleNavigation({
+                  router,
+                  url: "reciepe_analytics",
+                  params: { startDate: startDate, endDate: endDate },
+                })
+              }
             >
               {recipesData?.topCards?.map((card, idx) => (
                 <RecipesCards
@@ -83,7 +94,10 @@ const RecipesDashboard = () => {
             <Row className="mt-4">
               {/* Loss Making Products Section */}
               <Col md={6} className="mb-4">
-                <div className="card-header border-0 pb-2 p-1 d-flex justify-content-between align-items-center" style={{backgroundColor:"rgb(240,240,240"}}>
+                <div
+                  className="card-header border-0 pb-2 p-1 d-flex justify-content-between align-items-center"
+                  style={{ backgroundColor: "rgb(240,240,240" }}
+                >
                   <div>
                     <h6 className="card-title mb-0">Loss Making Products</h6>
                     <p className="card-text text-muted mb-0">
@@ -102,7 +116,10 @@ const RecipesDashboard = () => {
 
               {/* Profitable Products Section */}
               <Col md={6} className="mb-4">
-                <div className="card-header border-0 pb-2 p-1 d-flex justify-content-between align-items-center" style={{backgroundColor:"rgb(240,240,240"}}>
+                <div
+                  className="card-header border-0 pb-2 p-1 d-flex justify-content-between align-items-center"
+                  style={{ backgroundColor: "rgb(240,240,240" }}
+                >
                   <div>
                     <h6 className="card-title mb-0">Profitable Products</h6>
                     <p className="card-text text-muted mb-0">

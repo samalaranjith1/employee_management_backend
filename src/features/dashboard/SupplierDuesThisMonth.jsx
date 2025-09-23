@@ -10,6 +10,8 @@ import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer
 import { useSuppliersUsageMTD } from "@/services/supplier-service";
 import { supplierManagementDataFormatter } from "@/utils/data_formatters/dashboardFormatter";
 import PurchaseDistributionGraph from "@/components/common/dashboard/GraphWrapper/PurchaseDistributionGraph";
+import { handleNavigation } from "@/utils";
+import { useRouter } from "next/navigation";
 
 const styles = {
   container: { padding: "1rem", backgroundColor: "#f8fafc" },
@@ -48,6 +50,7 @@ const months = [
 ];
 
 const SupplierDuesThisMonth = () => {
+  const router = useRouter()
   const now = new Date();
   const currentMonth = now.toLocaleString("default", { month: "long" });
 
@@ -145,7 +148,17 @@ const SupplierDuesThisMonth = () => {
             </Row>
 
             {/* Purchase Summary */}
-            <div style={styles.purchaseCard} className="mb-4">
+            <div
+              style={styles.purchaseCard}
+              className="mb-4"
+              onClick={() =>
+                handleNavigation({
+                  router,
+                  url: "purchase_analytics",
+                  params: { startDate: formattedStart, endDate: formattedEnd },
+                })
+              }
+            >
               <div>
                 <div style={{ fontSize: "0.9rem", color: "#334155" }}>
                   Total Purchase MTD
@@ -190,7 +203,7 @@ const SupplierDuesThisMonth = () => {
   );
 };
 
-export default SupplierDuesThisMonth; 
+export default SupplierDuesThisMonth;
 // "use client";
 
 // import ComponentHeader from "@/components/common/ComponentHeader";

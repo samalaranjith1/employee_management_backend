@@ -10,10 +10,13 @@ import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer
 import { useDepartmentsUsageList } from "@/services/department-service";
 import { departmentConsumptionPieChartFormatter } from "@/utils/data_formatters/dashboardFormatter";
 import { useDashboardContext } from "@/contexts/DashboardContext";
+import { useRouter } from "next/navigation";
+import { handleNavigation } from "@/utils";
 
 export default function DepartmentConsumptionChart() {
   const { startDate, endDate } = useDashboardContext();
   const myScrollRef = useRef(null);
+  const router = useRouter();
 
   // Styles
   const styles = {
@@ -99,7 +102,9 @@ export default function DepartmentConsumptionChart() {
           useDepartmentsUsageList(1, { startdt: startDate, enddt: endDate })
             .queryFn
         }
-        queryArgs={[{ startdt: startDate, enddt: endDate ,outlet:1,userId:7}]}
+        queryArgs={[
+          { startdt: startDate, enddt: endDate, outlet: 1, userId: 7 },
+        ]}
         formatter={departmentConsumptionPieChartFormatter}
         shimmerCount={2}
       >
@@ -147,12 +152,24 @@ export default function DepartmentConsumptionChart() {
                           <span style={styles.colorDot(item.color)}></span>
                           <span>{item.name}</span>
                         </div>
-                        <div>
+                        <div
+                          onClick={() =>
+                            handleNavigation({
+                              router,
+                              url: "consumption_analytics",
+                              params: {
+                                startDate: startDate,
+                                endDate: endDate,
+                                departments:item?.departmentId
+                              },
+                            })
+                          }
+                        >
                           ₹{item.value.toLocaleString()}{" "}
                           <span
                             style={{ color: "#6c757d", fontSize: "0.8rem" }}
                           >
-                            {((item.percentage ) * 100).toFixed(1)}%
+                            {(item.percentage * 100).toFixed(1)}%
                           </span>
                         </div>
                       </div>

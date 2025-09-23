@@ -3,10 +3,15 @@ import React from "react";
 import { Table, Badge } from "react-bootstrap";
 import BaseSurface from "./BaseSurface";
 import { useTableSort } from "@/components/hooks/useTableSort";
+import { handleNavigation } from "@/utils";
+import { useRouter } from "next/navigation";
+import { useDashboardContext } from "@/contexts/DashboardContext";
 
 export default function SupplierDetailsTable({ supplierData }) {
   // ✅ Sorting hook
   const sort = useTableSort(supplierData || []);
+  const router = useRouter()
+  const {dashboardFilter}= useDashboardContext()
 
   // ✅ Render sort arrow
   const renderSortArrow = (key) =>
@@ -65,7 +70,20 @@ export default function SupplierDetailsTable({ supplierData }) {
                     </span>
                   </div>
                 </td>
-                <td style={{ color: "#16a34a", fontWeight: 600 }}>
+                <td
+                  style={{
+                    color: "#16a34a",
+                    fontWeight: 600,
+                    cursor: "pointer",
+                  }}
+                  onClick={() =>
+                    handleNavigation({
+                      router,
+                      url: "suppliers",
+                      params: { ...dashboardFilter, suppliers :row?.supplierId},
+                    })
+                  }
+                >
                   {row.purchase}
                 </td>
                 <td>{row.items}</td>

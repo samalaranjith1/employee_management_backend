@@ -10,10 +10,13 @@ import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer
 import { useDashboardContext } from "@/contexts/DashboardContext";
 import { useItemsBelowMOQSummary } from "@/services/item-service";
 import { outOfOfficeDataFormatter } from "@/utils/data_formatters/dashboardFormatter";
+import { handleNavigation } from "@/utils";
+import { useRouter } from "next/navigation";
 
 export default function InventoryDashboard() {
   const { startDate, endDate } = useDashboardContext();
   const myScrollRef = useRef(null);
+  const router = useRouter()
 
   const getBadgeStyle = (status) => {
     const base = {
@@ -82,11 +85,23 @@ export default function InventoryDashboard() {
         {(formattedData, refetch) => (
           <>
             {/* Top Cards */}
-            <OutOfStockTopCards
-              cardBase={cardBase}
-              iconStyle={iconStyle}
-              scrollRef={myScrollRef}
-            />
+            <div
+              onClick={() =>
+                handleNavigation({
+                  router,
+                  url: "ware_house_analytics",
+                  params: {startDate:startDate,endDate:endDate},
+                })
+              }
+              style={{ cursor: "pointer" }}
+            >
+              <OutOfStockTopCards
+                cardBase={cardBase}
+                iconStyle={iconStyle}
+                scrollRef={myScrollRef}
+              />
+            </div>
+
             {/* Horizontal Card Tables */}
             <Card className="p-2">
               <Row className="p-0">

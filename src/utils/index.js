@@ -221,3 +221,24 @@ export const applyDateRange = (range) => {
 
   return { start, end };
 };
+
+// utils/navigation.jss
+export function handleNavigation({ router, url, params = {} }) {
+  if (typeof window === "undefined") return;
+  // Generate 6-digit random ID
+  const randomId = Math.floor(100000000 + Math.random() * 900000000);
+  sessionStorage.setItem(randomId, JSON.stringify(params)); // or localStorage if you prefer
+
+  const targetUrl = `${url}?${randomId}`;
+
+  // Detect mobile
+  const isMobile = window.innerWidth <= 768;
+
+  if(url){
+    if (isMobile) {
+      router.push(targetUrl); // same tab
+    } else {
+      window.open(targetUrl, "_blank"); // desktop new tab
+    }
+  }
+}

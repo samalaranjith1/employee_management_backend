@@ -9,6 +9,8 @@ import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer
 import { useDashboardContext } from "@/contexts/DashboardContext";
 import { useItemsUsageList } from "@/services/item-service";
 import { topConsumedItemsDataFormatter } from "@/utils/data_formatters/dashboardFormatter";
+import { handleNavigation } from "@/utils";
+import { useRouter } from "next/navigation";
 
 // Predefined consistent colors for slices following first image palette
 const COLORS = [
@@ -27,6 +29,8 @@ const COLORS = [
 export default function TopConsumedItems() {
   const { startDate, endDate } = useDashboardContext();
   const myScrollRef = useRef(null);
+    const router = useRouter();
+  
   // Place percent outside the edge of each sector
   const renderLabel = ({ cx, cy, midAngle, outerRadius, percent, index }) => {
     const RADIAN = Math.PI / 180;
@@ -44,7 +48,7 @@ export default function TopConsumedItems() {
         textAnchor={x > cx ? "start" : "end"}
         alignmentBaseline="middle"
       >
-        {(percent)}%
+        {percent}%
       </text>
     );
   };
@@ -179,7 +183,21 @@ export default function TopConsumedItems() {
                       </div>
                     </Col>
                     {/* Value + Percent */}
-                    <Col xs="auto" className="text-end">
+                    <Col
+                      xs="auto"
+                      className="text-end"
+                      onClick={() =>
+                        handleNavigation({
+                          router,
+                          url: "consumption_analytics",
+                          params: {
+                            startDate: startDate,
+                            endDate: endDate,
+                            departments: item?.departmentId,
+                          },
+                        })
+                      }
+                    >
                       <div style={{ fontWeight: 600 }}>
                         ₹{Math.round(item.value).toLocaleString()}
                       </div>

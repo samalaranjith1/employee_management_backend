@@ -10,8 +10,11 @@ import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer
 import { useDashboardContext } from "@/contexts/DashboardContext";
 import { useSuppliersUsage } from "@/services/supplier-service";
 import { supplierManagementDataFormatter } from "@/utils/data_formatters/dashboardFormatter";
+import { handleNavigation } from "@/utils";
+import { useRouter } from "next/navigation";
 
 const SupplierManagement = () => {
+  const router = useRouter()
   const styles = {
     container: {
       padding: "1rem",
@@ -104,7 +107,17 @@ const SupplierManagement = () => {
                 <div className="ms-2 fw-semibold">Purchase from Suppliers</div>
               </div>
 
-              <div style={styles.purchaseCard} className="mb-4">
+              <div
+                style={styles.purchaseCard}
+                className="mb-4"
+                onClick={() =>
+                  handleNavigation({
+                    router,
+                    url: "purchase_analytics",
+                    params: {startDate:startDate,endDate:endDate},
+                  })
+                }
+              >
                 <div>
                   <div style={{ fontSize: "0.9rem", color: "#334155" }}>
                     Total Purchase

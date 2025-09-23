@@ -4,6 +4,9 @@ import { Row, Col, Table } from "react-bootstrap";
 import { FaExclamationCircle } from "react-icons/fa";
 import BaseSurface from "./BaseSurface";
 import { useTableSort } from "@/components/hooks/useTableSort";
+import { handleNavigation } from "@/utils";
+import { useRouter } from "next/navigation";
+import { useDashboardContext } from "@/contexts/DashboardContext";
 
 function PriceChangesTable({ styles, recentChanges, futureHikes }) {
   const recentSort = useTableSort(recentChanges || []);
@@ -28,7 +31,10 @@ function PriceChangesTable({ styles, recentChanges, futureHikes }) {
     footerAmount,
     dateLabel,
     dateClass
-  ) => (
+  ) => {
+    const {dashboardFilter} = useDashboardContext()
+    const router = useRouter()
+    return (
     <div style={{ maxHeight: "400px", overflowY: "auto", overflowX: "auto" }}>
       <Table hover className="mb-0" style={{ minWidth: "700px" }}>
         <thead
@@ -55,7 +61,19 @@ function PriceChangesTable({ styles, recentChanges, futureHikes }) {
         </thead>
         <tbody style={styles?.tableBody}>
           {sortHook.sortedData.map((item, idx) => (
-            <tr key={idx}>
+            <tr
+              key={idx}
+              style={{ cursor: "pointer" }}
+              onClick={() =>
+                handleNavigation({
+                  router,
+                  url: "item_price_change_analytics",
+                  params: {...dashboardFilter,
+                    items:item?.itemId
+                  },
+                })
+              }
+            >
               <td className="fw-bold">{item.name}</td>
               <td className="text-muted">{item.category}</td>
               <td className={dateClass}>
@@ -85,7 +103,7 @@ function PriceChangesTable({ styles, recentChanges, futureHikes }) {
         </div>
       )}
     </div>
-  );
+  )};
 
   return (
     <Row>

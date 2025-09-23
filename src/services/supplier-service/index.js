@@ -12,6 +12,13 @@ export function useSupplier(id, params) {
   });
 }
 
+export function useSupplierDues(params) {
+  return useApiQuery({
+    key: ["suppliers", "dues", params],
+    endpoint: `/suppliers/dues`,
+    params,
+  });
+}
 export function useSupplierSummary(id, params) {
   return useApiQuery({
     key: ["suppliers", id, "summary", params],
