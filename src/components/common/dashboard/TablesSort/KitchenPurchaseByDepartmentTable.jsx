@@ -10,7 +10,11 @@ import { useDashboardContext } from "@/contexts/DashboardContext";
 function KitchenPurchaseByDepartmentTable({ data, badgeStyle }) {
   const { sortedData, sortKey, direction, handleSort } = useTableSort(data);
   const router = useRouter();
-  const { dashboardFilter } = useDashboardContext();
+  const {
+    dashboardFilter,
+    startDate: startDate,
+    endDate: endDate,
+  } = useDashboardContext();
 
   const renderSortArrow = (key) =>
     sortKey === key ? (direction === "asc" ? " ↑" : " ↓") : "";
@@ -29,7 +33,7 @@ function KitchenPurchaseByDepartmentTable({ data, badgeStyle }) {
   ];
 
     const routes = {
-      opening: { url: "consumption_closing_analytics" },
+      opening: { url: "sp/consumption_closing_analytics" },
       consumption: { url: "consumption_analytics" },
       closing: { url: "consumption_closing_analytics" },
     };
@@ -94,8 +98,11 @@ function KitchenPurchaseByDepartmentTable({ data, badgeStyle }) {
                           onClick={() =>
                             handleNavigation({
                               router,
-                              url: "sales_analytics",
-                              params: dashboardFilter,
+                              url: "sp/sales_analytics",
+                              params: {
+                                startDate: startDate,
+                                endDate: endDate,
+                              },
                             })
                           }
                         >
@@ -123,8 +130,11 @@ function KitchenPurchaseByDepartmentTable({ data, badgeStyle }) {
                           onClick={() =>
                             handleNavigation({
                               router,
-                              url: routes[col.key]?.url || '',
-                              params: dashboardFilter,
+                              url: routes[col.key]?.url || "",
+                              params: {
+                                startDate: startDate,
+                                endDate: endDate,
+                              },
                             })
                           }
                         >

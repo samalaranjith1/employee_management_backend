@@ -73,6 +73,7 @@ function ItemConsumptionEffieciencyTable({ tableData, wasteBadge }) {
                           params: {
                             startDate: startDate,
                             endDate: endDate,
+                            items: row?.itemId,
                             // departments: item?.departmentId,
                           },
                         })
@@ -97,7 +98,7 @@ function ItemConsumptionEffieciencyTable({ tableData, wasteBadge }) {
                       params: {
                         startDate: startDate,
                         endDate: endDate,
-                        // departments: item?.departmentId,
+                        departments: row?.departmentId,
                       },
                     })
                   }
@@ -113,7 +114,7 @@ function ItemConsumptionEffieciencyTable({ tableData, wasteBadge }) {
                   onClick={() =>
                     handleNavigation({
                       router,
-                      url: "consumption_analytics",
+                      url: "sp/consumption_analytics",
                       params: {
                         startDate: startDate,
                         endDate: endDate,

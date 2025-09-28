@@ -154,7 +154,7 @@ const SupplierDuesThisMonth = () => {
               onClick={() =>
                 handleNavigation({
                   router,
-                  url: "purchase_analytics",
+                  url: "sp/purchase_analytics",
                   params: { startDate: formattedStart, endDate: formattedEnd },
                 })
               }

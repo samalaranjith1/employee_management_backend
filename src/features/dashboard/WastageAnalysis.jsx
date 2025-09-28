@@ -64,7 +64,7 @@ export default function WastageAnalysis() {
               onClick={() =>
                 handleNavigation({
                   router,
-                  url: "wastage_analytics",
+                  url: "sp/wastage_analytics",
                   params: {startDate:startDate,endDate:endDate},
                 })
               }

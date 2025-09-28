@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 import { handleNavigation } from "@/utils";
 
 export default function ProductDetailsTable({ rowsData, styles }) {
-  const {dashboardFilter} = useDashboardContext()
+  const { dashboardFilter, startDate ,endDate} = useDashboardContext();
   const router = useRouter()
   // ✅ Sorting hook
   const { sortedData, sortKey, direction, handleSort } = useTableSort(rowsData);
@@ -95,7 +95,7 @@ export default function ProductDetailsTable({ rowsData, styles }) {
                         handleNavigation({
                           router,
                           url: "products",
-                          params: dashboardFilter,
+                          params: {startDate:startDate,endDate:endDate},
                         })
                       }
                     >
@@ -110,8 +110,8 @@ export default function ProductDetailsTable({ rowsData, styles }) {
                     onClick={() =>
                       handleNavigation({
                         router,
-                        url: "sales_analytics",
-                        params: { ...dashboardFilter, products :row?.productId},
+                        url: "sp/sales_analytics",
+                        params: { startDate:startDate,endDate:endDate, products :row?.productId},
                       })
                     }
                   >

@@ -8,7 +8,11 @@ import { handleNavigation } from "@/utils";
 
 function RecipesTable({ title, data, bgColor }) {
   const router = useRouter()
-  const {dashboardFilter} = useDashboardContext()
+  const {
+    dashboardFilter,
+    startDate: startDate,
+    endDate: endDate,
+  } = useDashboardContext();
   // ✅ Sorting hook
   const sort = useTableSort(data || []);
 
@@ -124,14 +128,16 @@ function RecipesTable({ title, data, bgColor }) {
                 )}
               </div>
               <div
-                style={{ textAlign: "right" ,
-                  cursor:'pointer'
-                }}
+                style={{ textAlign: "right", cursor: "pointer" }}
                 onClick={() =>
                   handleNavigation({
                     router,
-                    url: "reciepe_analytics",
-                    params: { ...dashboardFilter,products:item?.productId },
+                    url: "sp/reciepe_analytics",
+                    params: {
+                      startDate: startDate,
+                      endDate: endDate,
+                      products: item?.productId,
+                    },
                   })
                 }
               >
@@ -151,17 +157,22 @@ function RecipesTable({ title, data, bgColor }) {
                   {item.costPct}
                 </span>
               </div>
-              <div style={{ textAlign: "right" ,
-                                cursor:'pointer'
-                }}
+              <div
+                style={{ textAlign: "right", cursor: "pointer" }}
                 onClick={() =>
                   handleNavigation({
                     router,
-                    url: "reciepe_analytics",
-                    params: { ...dashboardFilter,products:item?.productId },
+                    url: "sp/reciepe_analytics",
+                    params: {
+                      startDate: startDate,
+                      endDate: endDate,
+                      products: item?.productId,
+                    },
                   })
                 }
-              >{item.sales}</div>
+              >
+                {item.sales}
+              </div>
             </div>
           ))}
         </div>

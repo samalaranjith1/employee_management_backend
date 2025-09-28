@@ -32,78 +32,84 @@ function PriceChangesTable({ styles, recentChanges, futureHikes }) {
     dateLabel,
     dateClass
   ) => {
-    const {dashboardFilter} = useDashboardContext()
+    const {
+      dashboardFilter,
+      startDate: startDate,
+      endDate: endDate,
+    } = useDashboardContext();
     const router = useRouter()
     return (
-    <div style={{ maxHeight: "400px", overflowY: "auto", overflowX: "auto" }}>
-      <Table hover className="mb-0" style={{ minWidth: "700px" }}>
-        <thead
-          style={{
-            position: "sticky",
-            top: 0,
-            background: "#fff",
-            zIndex: 5,
-            borderBottom: "1px solid #ddd",
-          }}
-        >
-          <tr>
-            {columns.map((col) => (
-              <th
-                key={col.key}
-                style={{ cursor: "pointer", whiteSpace: "nowrap" }}
-                onClick={() => sortHook.handleSort(col.key)}
-              >
-                {col.label}
-                {renderSortArrow(sortHook, col.key)}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody style={styles?.tableBody}>
-          {sortHook.sortedData.map((item, idx) => (
-            <tr
-              key={idx}
-              style={{ cursor: "pointer" }}
-              onClick={() =>
-                handleNavigation({
-                  router,
-                  url: "item_price_change_analytics",
-                  params: {...dashboardFilter,
-                    items:item?.itemId
-                  },
-                })
-              }
-            >
-              <td className="fw-bold">{item.name}</td>
-              <td className="text-muted">{item.category}</td>
-              <td className={dateClass}>
-                {dateLabel}: {item.date}
-              </td>
-              <td className="text-end">₹{item.oldPrice}</td>
-              <td className="text-end">₹{item.newPrice}</td>
-              <td
-                className="text-end"
-                style={item.up ? styles.priceUp : styles.priceDown}
-              >
-                {item.up ? "+" : ""}₹{item.change}
-              </td>
-              <td
-                className="text-end"
-                style={item.up ? styles.priceUp : styles.priceDown}
-              >
-                {item.percent}%
-              </td>
+      <div style={{ maxHeight: "400px", overflowY: "auto", overflowX: "auto" }}>
+        <Table hover className="mb-0" style={{ minWidth: "700px" }}>
+          <thead
+            style={{
+              position: "sticky",
+              top: 0,
+              background: "#fff",
+              zIndex: 5,
+              borderBottom: "1px solid #ddd",
+            }}
+          >
+            <tr>
+              {columns.map((col) => (
+                <th
+                  key={col.key}
+                  style={{ cursor: "pointer", whiteSpace: "nowrap" }}
+                  onClick={() => sortHook.handleSort(col.key)}
+                >
+                  {col.label}
+                  {renderSortArrow(sortHook, col.key)}
+                </th>
+              ))}
             </tr>
-          ))}
-        </tbody>
-      </Table>
-      {footerText && (
-        <div style={{ padding: "8px 12px", ...styles?.footer }}>
-          {footerText}: <span className="text-danger">{footerAmount}</span>
-        </div>
-      )}
-    </div>
-  )};
+          </thead>
+          <tbody style={styles?.tableBody}>
+            {sortHook.sortedData.map((item, idx) => (
+              <tr
+                key={idx}
+                style={{ cursor: "pointer" }}
+                onClick={() =>
+                  handleNavigation({
+                    router,
+                    url: "sp/item_price_change_analytics",
+                    params: {
+                      startDate: startDate,
+                      endDate: endDate,
+                      items: item?.itemId,
+                    },
+                  })
+                }
+              >
+                <td className="fw-bold">{item.name}</td>
+                <td className="text-muted">{item.category}</td>
+                <td className={dateClass}>
+                  {dateLabel}: {item.date}
+                </td>
+                <td className="text-end">₹{item.oldPrice}</td>
+                <td className="text-end">₹{item.newPrice}</td>
+                <td
+                  className="text-end"
+                  style={item.up ? styles.priceUp : styles.priceDown}
+                >
+                  {item.up ? "+" : ""}₹{item.change}
+                </td>
+                <td
+                  className="text-end"
+                  style={item.up ? styles.priceUp : styles.priceDown}
+                >
+                  {item.percent}%
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+        {footerText && (
+          <div style={{ padding: "8px 12px", ...styles?.footer }}>
+            {footerText}: <span className="text-danger">{footerAmount}</span>
+          </div>
+        )}
+      </div>
+    );};
 
   return (
     <Row>

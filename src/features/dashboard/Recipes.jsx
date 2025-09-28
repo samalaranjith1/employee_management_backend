@@ -77,7 +77,7 @@ const RecipesDashboard = () => {
               onClick={() =>
                 handleNavigation({
                   router,
-                  url: "reciepe_analytics",
+                  url: "sp/reciepe_analytics",
                   params: { startDate: startDate, endDate: endDate },
                 })
               }

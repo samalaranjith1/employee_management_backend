@@ -8,7 +8,11 @@ import { useDashboardContext } from "@/contexts/DashboardContext";
 
 function OutOfStockTable({ data, getBadgeStyle }) {
   const router = useRouter()
-  const {dashboardFilter}=useDashboardContext()
+  const {
+    dashboardFilter,
+    startDate: startDate,
+    endDate: endDate,
+  } = useDashboardContext();
   const { sortedData, sortKey, direction, handleSort } = useTableSort(data);
 
   const renderSortArrow = (key) =>
@@ -120,8 +124,12 @@ function OutOfStockTable({ data, getBadgeStyle }) {
                   onClick={() =>
                     handleNavigation({
                       router,
-                      url: "ware_house_analytics",
-                      params: {...dashboardFilter,items:item?.itemId},
+                      url: "sp/ware_house_analytics",
+                      params: {
+                        startDate: startDate,
+                        endDate: endDate,
+                        items: item?.itemId,
+                      },
                     })
                   }
                 >

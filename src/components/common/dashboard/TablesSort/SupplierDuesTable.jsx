@@ -8,7 +8,11 @@ import { useDashboardContext } from "@/contexts/DashboardContext";
 import { useRouter } from "next/navigation";
 
 function SupplierDuesTable({ styles, data }) {
-  const {dashboardFilter}=useDashboardContext()
+  const {
+    dashboardFilter,
+    startDate: startDate,
+    endDate: endDate,
+  } = useDashboardContext();
   const router = useRouter()
   // ✅ Sorting hook
   const sort = useTableSort(data || []);
@@ -65,7 +69,9 @@ function SupplierDuesTable({ styles, data }) {
                       router,
                       url: "suppliers",
                       params: {
-                        ...dashboardFilter,suppliers:row?.supplierId
+                        startDate: startDate,
+                        endDate: endDate,
+                        suppliers: row?.supplierId,
                       },
                     })
                   }

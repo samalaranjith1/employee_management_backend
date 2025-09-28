@@ -54,20 +54,30 @@ export const salesAnalyticsFormatter = (apiData) => {
       { key: "itemsSold", label: "ITEMS SOLD" },
       { key: "orders", label: "ORDERS" },
     ],
-    rows: apiData.list?.map((item) => ({
-      date: new Date(item.dt).toLocaleDateString("en-GB", {
-        day: "numeric",
-        month: "short",
-        year: "numeric",
-        weekday: "short",
-      }),
-      product: item.product?.name ?? "-",
-      netSales: `₹${item.sales?.netSales ?? 0}`,
-      discount: `₹${item.sales?.discount ?? 0}`,
-      totalSales: `₹${item.sales?.totalSales ?? 0}`,
-      itemsSold: item.sales?.itemsSold ?? 0,
-      orders: item.sales?.orders ?? 0,
-    })) ?? [],
+    rows:
+      apiData.list?.map((item) => ({
+        date: new Date(item.dt).toLocaleDateString("en-GB", {
+          day: "numeric",
+          month: "short",
+          year: "numeric",
+          weekday: "short",
+        }),
+        //departmentName price
+        product: item.product?.name ,
+        // [item.product?.name ?? "-",
+        // (
+        //   <span style={{ display: "flex", flexDirection: "column" }}>
+        //     <span>
+        //        {item.product?.departmentName}. ₹{item.product?.price}
+        //     </span>
+        //   </span>
+        // ),],
+        netSales: `₹${item.sales?.netSales ?? 0}`,
+        discount: `₹${item.sales?.discount ?? 0}`,
+        totalSales: `₹${item.sales?.totalSales ?? 0}`,
+        itemsSold: item.sales?.itemsSold ?? 0,
+        orders: item.sales?.orders ?? 0,
+      })) ?? [],
   };
 
   return { summaryCards, tableData };
@@ -197,8 +207,8 @@ export const consumptionClosingFormatter = (apiData) => {
           {row.item?.name}
           <br />
           <span style={{ fontSize: 13, color: "#868DA6" }}>
-            {row.item?.categoryName} · {row.item?.unitQuantity}{" "}
-            {row.item?.unit} · ₹{row.unitPrice}
+            {row.item?.categoryName} · {row.item?.unitQuantity} {row.item?.unit}{" "}
+            · ₹{row.unitPrice}
           </span>
         </>
       ),
@@ -255,14 +265,15 @@ export const purchaseHistoryFormatter = (apiData) => {
       { key: "totalPrice", label: "TOTAL PRICE" },
       { key: "date", label: "DATE" },
     ],
-    rows: apiData.list?.map((row) => ({
-      item: `${row.item?.name}\n${row.item?.categoryName} • ${row.item?.unitQuantity}${row.item?.unit}`,
-      supplier: row.supplier?.name ?? "-",
-      quantity: row.quantity ?? 0,
-      itemPrice: `₹${row.itemPrice ?? 0}`,
-      totalPrice: `₹${row.totalPrice ?? 0}`,
-      date: row.dt ?? "-",
-    })) ?? [],
+    rows:
+      apiData.list?.map((row) => ({
+        item: `${row.item?.name}\n${row.item?.categoryName} • ${row.item?.unitQuantity}${row.item?.unit}`,
+        supplier: row.supplier?.name ?? "-",
+        quantity: row.quantity ?? 0,
+        itemPrice: `₹${row.itemPrice ?? 0}`,
+        totalPrice: `₹${row.totalPrice ?? 0}`,
+        date: row.dt ?? "-",
+      })) ?? [],
   };
 
   return { summaryCards, tableData };
@@ -482,9 +493,3 @@ export const stockItemDataFormatter = (apiData) => {
 
   return { summaryCards, tableData };
 };
-
-
-
-
-
-

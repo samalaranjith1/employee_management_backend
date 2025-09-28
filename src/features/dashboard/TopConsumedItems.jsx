@@ -189,7 +189,7 @@ export default function TopConsumedItems() {
                       onClick={() =>
                         handleNavigation({
                           router,
-                          url: "consumption_analytics",
+                          url: "sp/consumption_analytics",
                           params: {
                             startDate: startDate,
                             endDate: endDate,

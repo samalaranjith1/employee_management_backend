@@ -112,7 +112,7 @@ const SupplierDues = () => {
         queryKey={[
           "supplierDues",
           1,
-          { startdt: startDate, enddt: endDate, ...dashboardFilter },
+          { startdt: startDate, enddt: endDate,  },
         ]}
         queryFn={() =>
           useSupplierDues({

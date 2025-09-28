@@ -13,77 +13,77 @@ import { useEffect, useMemo, useState } from "react";
 
 const basePath = "https://flavourheaven.in/costonomy-services/";
 
-export function useApiQuery({
-  key,
-  endpoint,
-  params = {},
-  config = {},
-  options = {},
-}) {
-  const queryClient = useQueryClient();
-
-  // Use full JSON string of params in stableKey for deep change detection
-  const stableKey = useMemo(
-    () => [...key, JSON.stringify(params)],
-    [key, params]
-  );
-
-  const cacheKey = stableKey.join("|"); // Or JSON.stringify(stableKey)
-
-  const [initialData, setInitialData] = useState();
-
-  useEffect(() => {
-    let mounted = true;
-    getItem(cacheKey).then((data) => {
-      if (mounted && data) setInitialData(data);
-    });
-    return () => {
-      mounted = false;
-    };
-  }, [cacheKey]);
-
-  return useQuery({
-    queryKey: stableKey,
-    queryFn: async () => {
-      const { data } = await axios.get(`${basePath}${endpoint}`, {
-        params,
-        ...config,
-      });
-      if (typeof window !== "undefined") await setItem(cacheKey, data);
-      return data;
-    },
-    initialData,
-    staleTime: 1000 * 60 * 20,
-    cacheTime: 1000 * 60 * 30,
-    refetchOnMount: "always",
-    refetchOnWindowFocus: false,
-    refetchOnReconnect: false,
-    keepPreviousData: true,
-    retry: false,
-    ...options,
-  });
-}
-
-//below version is with out any storage working perfectly
 // export function useApiQuery({
-//   key, // Array query key
-//   endpoint, // API endpoint string
-//   params = {}, // URL params
-//   config = {}, // axios config (headers, etc.)
-//   options = {}, // React Query options (select, enabled, etc.)
+//   key,
+//   endpoint,
+//   params = {},
+//   config = {},
+//   options = {},
 // }) {
+//   const queryClient = useQueryClient();
+
+//   // Use full JSON string of params in stableKey for deep change detection
+//   const stableKey = useMemo(
+//     () => [...key, JSON.stringify(params)],
+//     [key, params]
+//   );
+
+//   const cacheKey = stableKey.join("|"); // Or JSON.stringify(stableKey)
+
+//   const [initialData, setInitialData] = useState();
+
+//   useEffect(() => {
+//     let mounted = true;
+//     getItem(cacheKey).then((data) => {
+//       if (mounted && data) setInitialData(data);
+//     });
+//     return () => {
+//       mounted = false;
+//     };
+//   }, [cacheKey]);
+
 //   return useQuery({
-//     queryKey: key,
+//     queryKey: stableKey,
 //     queryFn: async () => {
 //       const { data } = await axios.get(`${basePath}${endpoint}`, {
 //         params,
 //         ...config,
 //       });
+//       if (typeof window !== "undefined") await setItem(cacheKey, data);
 //       return data;
 //     },
+//     initialData,
+//     staleTime: 1000 * 60 * 20,
+//     cacheTime: 1000 * 60 * 30,
+//     refetchOnMount: "always",
+//     refetchOnWindowFocus: false,
+//     refetchOnReconnect: false,
+//     keepPreviousData: true,
+//     retry: false,
 //     ...options,
 //   });
 // }
+
+// below version is with out any storage working perfectly
+export function useApiQuery({
+  key, // Array query key
+  endpoint, // API endpoint string
+  params = {}, // URL params
+  config = {}, // axios config (headers, etc.)
+  options = {}, // React Query options (select, enabled, etc.)
+}) {
+  return useQuery({
+    queryKey: key,
+    queryFn: async () => {
+      const { data } = await axios.get(`${basePath}${endpoint}`, {
+        params,
+        ...config,
+      });
+      return data;
+    },
+    ...options,
+  });
+}
 //working for the first time later they are not working
 //  export function useApiQuery({
 //   key,

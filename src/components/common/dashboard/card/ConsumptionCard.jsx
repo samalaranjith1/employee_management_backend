@@ -17,7 +17,7 @@ export default function ConsumptionCard({
   routeUrl,
   params = {},
 }) {
-  const { dashboardFilter } = useDashboardContext();
+  const { dashboardFilter,startDate,endDate } = useDashboardContext();
   const [isClient, setIsClient] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const router = useRouter();
@@ -36,11 +36,15 @@ export default function ConsumptionCard({
   return (
     <div
       onClick={() =>
-        handleNavigation({ router, url: routeUrl, params: dashboardFilter })
+        handleNavigation({
+          router,
+          url: `sp/${routeUrl}`,
+          params: { startDate: startDate, endDate: endDate ,departments:'2'},
+        })
       }
       style={{ cursor: "pointer" }}
     >
-      <CommonCard
+      {/* <CommonCard
         bgColor={bgColor}
         textColor={textColor}
         style={{
@@ -54,15 +58,43 @@ export default function ConsumptionCard({
           cursor: "pointer",
         }}
       >
+       */}
+      <CommonCard
+        bgColor={bgColor}
+        style={{
+          minWidth: isMobile ? "88vw" : "30vw",
+          flexShrink: 0,
+          borderRadius: "12px",
+          border: "1.5px solid #c0bfc7", // Medium gray border like Figma
+          backgroundColor: bgColor || "#faf8f7", // Pastel background close to Figma
+          color: textColor || "#000000",
+          boxShadow: "none", // Remove drop shadow, use subtle border
+          cursor: "pointer",
+          padding: "16px 20px", // Consistent padding
+        }}
+      >
         <div className="d-flex justify-content-between align-items-center mb-2">
           <div>
             <h6
-              className="text-secondary fw-bold text-uppercase"
-              style={{ fontSize: "0.8rem" }}
+              className="text-uppercase fw-bold"
+              style={{
+                fontSize: "0.8rem",
+                letterSpacing: "0.05em",
+                color: "#a1a1a1", // Muted gray color for heading
+              }}
             >
               {title}
             </h6>
-            <h4 className="fw-bold mb-0">{percentage}</h4>
+            <h4
+              className="fw-bold mb-0"
+              style={{
+                fontSize: "1.5rem",
+                color: textColor || "#000000",
+                lineHeight: 1.1,
+              }}
+            >
+              {percentage}
+            </h4>
           </div>
           <div>{icon}</div>
         </div>
@@ -77,7 +109,14 @@ export default function ConsumptionCard({
                 color: "black",
               }}
             >
-              <span className="text-secondary" style={{ fontSize: "0.9rem" }}>
+              <span
+                // className="text-secondary"
+                style={{
+                  fontSize: "0.9rem",
+                  color: textColor,
+                  fontWeight: "bold",
+                }}
+              >
                 {row.label}
               </span>
               <span className="fw-bold" style={{ fontSize: "0.9rem" }}>

@@ -89,7 +89,7 @@ export default function InventoryDashboard() {
               onClick={() =>
                 handleNavigation({
                   router,
-                  url: "ware_house_analytics",
+                  url: "sp/ware_house_analytics",
                   params: {startDate:startDate,endDate:endDate},
                 })
               }

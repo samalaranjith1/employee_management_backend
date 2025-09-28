@@ -3,6 +3,28 @@ import { startOfWeek, startOfMonth, subDays, format } from "date-fns";
 //dashboard filters
 export const formatDate = (date) => format(date, "yyyy-MM-dd");
 
+export function isYesterday(date) {
+  const yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+  return formatDate(date) === formatDate(yesterday);
+}
+
+// Get start of the current week (Monday)
+export function isStartOfWeek(date) {
+  const d = new Date(date);
+  const day = d.getDay(); // Sunday = 0
+  const diff = day === 0 ? -6 : 1 - day; // Monday as start
+  const monday = new Date(d.setDate(d.getDate() + diff));
+  return formatDate(monday);
+}
+
+// Get start of the current month
+export function isStartOfMonth(date) {
+  const d = new Date(date);
+  d.setDate(1);
+  return formatDate(d);
+}
+
 export const handlePreset = (type, stateChanges) => {
   const { setActive, setShowCalendar, setStartDate, setEndDate } =
     stateChanges;
@@ -223,22 +245,87 @@ export const applyDateRange = (range) => {
 };
 
 // utils/navigation.jss
+// export function handleNavigation({ router, url, params = {} }) {
+//   if (typeof window === "undefined") return;
+//   // Generate 6-digit random ID
+//   const randomId = Math.floor(100000000 + Math.random() * 900000000);
+//   sessionStorage.setItem(randomId, JSON.stringify(params)); // or localStorage if you prefer
+
+//   const targetUrl = `${url}?${randomId}`;
+
+//   // Detect mobile
+//   const isMobile = window.innerWidth <= 768;
+
+//   if(url){
+//     if (isMobile) {
+//       router.push(targetUrl); // same tab
+//     } else {
+//       window.open(targetUrl, "_blank"); // desktop new tab
+//     }
+//   }
+// }
+// export function handleNavigation({ router, url, params = {} }) {
+//   if (typeof window === "undefined") return;
+
+//   const randomId = Math.floor(100000000 + Math.random() * 900000000);
+
+//   try {
+//     const existing = sessionStorage.getItem(randomId);
+//     let dataToSave = params;
+
+//     if (existing) {
+//       const parsed = JSON.parse(existing);
+//       dataToSave = { ...parsed, ...params }; // merge existing with new params
+//     }
+
+//     sessionStorage.setItem(randomId, JSON.stringify(dataToSave));
+//   } catch (err) {
+//     console.error("Failed to save navigation params:", err);
+//     sessionStorage.setItem(randomId, JSON.stringify(params));
+//   }
+
+//   const targetUrl = `${url}?${randomId}`;
+//   const isMobile = window.innerWidth <= 768;
+
+//   if (url) {
+//     if (isMobile) {
+//       router.push(targetUrl);
+//     } else {
+//       window.open(targetUrl, "_blank");
+//     }
+//   }
+// }
 export function handleNavigation({ router, url, params = {} }) {
   if (typeof window === "undefined") return;
-  // Generate 6-digit random ID
-  const randomId = Math.floor(100000000 + Math.random() * 900000000);
-  sessionStorage.setItem(randomId, JSON.stringify(params)); // or localStorage if you prefer
 
-  const targetUrl = `${url}?${randomId}`;
+  // Generate a random key (or get from params)
+  const randomKey = Math.floor(100000000 + Math.random() * 900000000);
 
-  // Detect mobile
+  try {
+    const existing = sessionStorage.getItem(randomKey);
+    let dataToSave = { ...params }; // start with new params
+
+    if (existing) {
+      const parsed = JSON.parse(existing);
+      dataToSave = { ...parsed, ...params }; // merge existing with new params
+    }
+
+    sessionStorage.setItem(randomKey, JSON.stringify(dataToSave));
+  } catch (err) {
+    console.error("Failed to save navigation params:", err);
+    sessionStorage.setItem(randomKey, JSON.stringify(params));
+  }
+
+  const targetUrl = `${url}?${randomKey}`;
   const isMobile = window.innerWidth <= 768;
 
-  if(url){
+  if (url) {
     if (isMobile) {
-      router.push(targetUrl); // same tab
+      router.push(targetUrl);
     } else {
-      window.open(targetUrl, "_blank"); // desktop new tab
+      window.open(targetUrl, "_blank");
     }
   }
 }
+
+

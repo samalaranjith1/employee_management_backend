@@ -113,7 +113,7 @@ const SupplierManagement = () => {
                 onClick={() =>
                   handleNavigation({
                     router,
-                    url: "purchase_analytics",
+                    url: "sp/purchase_analytics",
                     params: {startDate:startDate,endDate:endDate},
                   })
                 }

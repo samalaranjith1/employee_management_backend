@@ -118,7 +118,7 @@ export default function PriceChanges() {
                 onClick={() =>
                   handleNavigation({
                     router,
-                    url: "item_price_change_analytics",
+                    url: "sp/item_price_change_analytics",
                     params: { startDate: startDate, endDate: endDate },
                   })
                 }

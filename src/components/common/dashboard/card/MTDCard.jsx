@@ -9,15 +9,15 @@ import { handleNavigation } from "@/utils";
 
 export default function MTDCard({ idx, isMobile, card, getVariantBgColor }) {
   const router = useRouter();
-  const { dashboardFilter } = useDashboardContext();
+  const { dashboardFilter ,startDate,endDate} = useDashboardContext();
   return (
     <div
       style={{ cursor: "pointer" }}
       onClick={() =>
         handleNavigation({
           router,
-          url: card.routeUrl,
-          params: dashboardFilter,
+          url: `sp/${card.routeUrl}`,
+          params: { startDate: startDate, endDate: endDate },
         })
       }
     >

@@ -11,7 +11,11 @@ export default function SupplierDetailsTable({ supplierData }) {
   // ✅ Sorting hook
   const sort = useTableSort(supplierData || []);
   const router = useRouter()
-  const {dashboardFilter}= useDashboardContext()
+  const {
+    dashboardFilter,
+    startDate: startDate,
+    endDate: endDate,
+  } = useDashboardContext();
 
   // ✅ Render sort arrow
   const renderSortArrow = (key) =>
@@ -80,7 +84,11 @@ export default function SupplierDetailsTable({ supplierData }) {
                     handleNavigation({
                       router,
                       url: "suppliers",
-                      params: { ...dashboardFilter, suppliers :row?.supplierId},
+                      params: {
+                        startDate: startDate,
+                        endDate: endDate,
+                        suppliers: row?.supplierId,
+                      },
                     })
                   }
                 >

@@ -202,13 +202,13 @@ export default function TrendAnalysis() {
                                     router,
                                     url:
                                       entry.value === "Sales"
-                                        ? "sales_analytics"
+                                        ? "sp/sales_analytics"
                                         : entry.value === "Consumption"
-                                        ? "consumption_analytics"
+                                        ? "sp/consumption_analytics"
                                         : entry.value === "Opening"
-                                        ? "consumption_closing_analytics"
+                                        ? "sp/consumption_closing_analytics"
                                         : entry.value === "Closing"
-                                        ? "consumption_closing_analytics"
+                                        ? "sp/consumption_closing_analytics"
                                         : "",
                                     params: {
                                       startDate: startDateCS,

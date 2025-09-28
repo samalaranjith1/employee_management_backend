@@ -65,7 +65,7 @@ function PeriodDataBreakDownTable({ data, filters }) {
                 onClick={() =>
                   handleNavigation({
                     router,
-                    url: "sales_analytics",
+                    url: "sp/sales_analytics",
                     params: filters,
                   })
                 }
@@ -77,7 +77,7 @@ function PeriodDataBreakDownTable({ data, filters }) {
                 onClick={() =>
                   handleNavigation({
                     router,
-                    url: "consumption_analytics",
+                    url: "sp/consumption_analytics",
                     params: filters,
                   })
                 }
@@ -89,7 +89,7 @@ function PeriodDataBreakDownTable({ data, filters }) {
                 onClick={() =>
                   handleNavigation({
                     router,
-                    url: "wastage_analytics",
+                    url: "sp/wastage_analytics",
                     params: filters,
                   })
                 }

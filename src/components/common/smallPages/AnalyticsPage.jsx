@@ -4,10 +4,11 @@ import { Card, Col, Container, Row, Table } from "react-bootstrap";
 import { usePathname } from "next/navigation";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { applyDateRange } from "@/utils";
+import { applyDateRange, formatDate } from "@/utils";
 import { useTableControls } from "@/components/hooks/useTableControls";
 import { useTableSort } from "@/components/hooks/useTableSort";
 import { TableControls } from "@/components/common/TableControls";
+import DOMPurify from "dompurify";
 
 export default function AnalyticsPage({
   title,
@@ -51,19 +52,24 @@ export default function AnalyticsPage({
     if (range === "Custom") {
       setStartDate(null);
       setEndDate(null);
+      setIsDatePickerOpen(true);
     } else {
       const { start, end } = applyDateRange(range);
-      setStartDate(start);
-      setEndDate(end);
+      setStartDate(formatDate(start));
+      setEndDate(formatDate(end));
       onDateRangeChangeProp?.(range, start, end);
     }
   };
+  const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
 
   const handleCustomDateChange = (dates) => {
     const [start, end] = dates;
     setStartDate(start);
     setEndDate(end);
-    if (start && end) onDateRangeChangeProp?.("Custom", start, end);
+    if (start && end) {
+      onDateRangeChangeProp?.("Custom", start, end);
+      setIsDatePickerOpen(false);
+    }
   };
 
   // Sorting hook
@@ -196,13 +202,13 @@ export default function AnalyticsPage({
                       {option}
                     </button>
                   ))}
-                  {activeDateRange === "Custom" && (
+                  {activeDateRange === "Custom" && isDatePickerOpen && (
                     <div style={{ marginTop: 12 }}>
                       <DatePicker
                         selected={startDate}
                         onChange={handleCustomDateChange}
-                        startDate={startDate}
-                        endDate={endDate}
+                        startDate={startDate ? new Date(startDate) : null}
+                        endDate={endDate ? new Date(endDate) : null}
                         selectsRange
                         inline
                       />
@@ -262,6 +268,183 @@ export default function AnalyticsPage({
               position: "relative",
             }}
           >
+            {/* <Table
+              hover
+              className="align-middle mb-0"
+              style={{ minWidth: "100%" }}
+            >
+              <thead
+                style={{
+                  position: "sticky",
+                  top: 0,
+                  zIndex: 1000,
+                  backgroundColor: "#fff",
+                }}
+              >
+                <tr>
+                  {table.columns.map((col) => (
+                    <th
+                      key={col.key}
+                      onClick={() => handleSort(col.key)}
+                      style={{ ...tableHeader, cursor: "pointer" }}
+                    >
+                      {col.label}
+                      {sortKey === col.key
+                        ? direction === "asc"
+                          ? " ↑"
+                          : " ↓"
+                        : ""}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {filteredData.length > 0 ? (
+                  filteredData.map((row, idx) => (
+                    <tr key={idx}>
+                      {table.columns.map((col) => {
+                        const cellValue = row[col.key];
+
+                        // Case 1: check if HTML string
+                        const isHtmlString =
+                          typeof cellValue === "string" &&
+                          /<\/?[a-z][\s\S]*>/i.test(cellValue);
+
+                        // Case 2: object (render its key: value pairs vertically)
+                        const isObject =
+                          cellValue &&
+                          typeof cellValue === "object" &&
+                          !Array.isArray(cellValue);
+
+                        return (
+                          <td
+                            key={col.key}
+                            style={{ fontSize: 16, fontWeight: 600 }}
+                          >
+                            {isHtmlString ? (
+                              <span
+                                dangerouslySetInnerHTML={{
+                                  __html: DOMPurify.sanitize(cellValue),
+                                }}
+                              />
+                            ) : isObject ? (
+                              <div
+                                style={{
+                                  display: "flex",
+                                  flexDirection: "column",
+                                }}
+                              >
+                                {Object.entries(cellValue).map(([k, v]) => (
+                                  <span key={k}>
+                                    {v !== null && v !== undefined
+                                      ? String(v)
+                                      : ""}
+                                  </span>
+                                ))}
+                              </div>
+                            ) : (
+                              cellValue
+                            )}
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td
+                      colSpan={table.columns.length}
+                      style={{
+                        textAlign: "center",
+                        padding: "20px",
+                        color: "#888",
+                        fontStyle: "italic",
+                      }}
+                    >
+                      No data available
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </Table> */}
+            {/* <Table
+              hover
+              className="align-middle mb-0"
+              style={{ minWidth: "100%" }}
+            >
+              <thead
+                style={{
+                  position: "sticky",
+                  top: 0,
+                  zIndex: 1000,
+                  backgroundColor: "#fff",
+                }}
+              >
+                <tr>
+                  {table.columns.map((col) => (
+                    <th
+                      key={col.key}
+                      onClick={() => handleSort(col.key)}
+                      style={{ ...tableHeader, cursor: "pointer" }}
+                    >
+                      {col.label}
+                      {sortKey === col.key
+                        ? direction === "asc"
+                          ? " ↑"
+                          : " ↓"
+                        : ""}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {filteredData.length > 0 ? (
+                  filteredData.map((row, idx) => (
+                    <tr key={idx}>
+                      {table.columns.map((col) => {
+                        const cellValue = row[col.key];
+
+                        // Check if value looks like HTML
+                        const isHtmlString =
+                          typeof cellValue === "string" &&
+                          /<\/?[a-z][\s\S]*>/i.test(cellValue);
+
+                        return (
+                          <td
+                            key={col.key}
+                            style={{ fontSize: 16, fontWeight: 600 }}
+                          >
+                            {isHtmlString ? (
+                              <span
+                                dangerouslySetInnerHTML={{
+                                  __html: DOMPurify.sanitize(cellValue),
+                                }}
+                              />
+                            ) : (
+                              cellValue
+                            )}
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td
+                      colSpan={table.columns.length}
+                      style={{
+                        textAlign: "center",
+                        padding: "20px",
+                        color: "#888",
+                        fontStyle: "italic",
+                      }}
+                    >
+                      No data available
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </Table> */}
             <Table
               hover
               className="align-middle mb-0"

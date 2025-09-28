@@ -33,7 +33,7 @@ export default function ConsumptionSummarry() {
           handleNavigation({
             router,
             url: "consumption_analytics",
-            params: dashboardFilter,
+            params: { startDate: startDate, endDate: endDate },
           })
         }
       />

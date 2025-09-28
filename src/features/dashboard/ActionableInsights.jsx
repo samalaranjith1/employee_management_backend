@@ -49,7 +49,7 @@ const ActionableInsights = () => {
           handleNavigation({
             router,
             url: "insights",
-            params: dashboardFilter,
+            params: { startDate: startDate, endDate: endDate },
           })
         }
       />
