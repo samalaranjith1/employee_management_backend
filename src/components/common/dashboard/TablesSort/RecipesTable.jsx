@@ -25,8 +25,8 @@ function RecipesTable({ title, data, bgColor }) {
     { key: "product", label: "Product", spanKey: "subtitle" },
     { key: "items", label: "Items", spanKey: "stock" },
     { key: "cost", label: "Cost" },
-    { key: "costPct", label: "Cost %" },
     { key: "sales", label: "Sales" },
+    { key: "costPct", label: "Cost %" },
   ];
 
   return (
@@ -86,8 +86,8 @@ function RecipesTable({ title, data, bgColor }) {
                     col.key === "product"
                       ? "left"
                       : col.key === "items"
-                      ? "center"
-                      : "right",
+                        ? "center"
+                        : "right",
                   cursor: "pointer",
                 }}
                 onClick={() => sort.handleSort(col.key)}
@@ -143,20 +143,6 @@ function RecipesTable({ title, data, bgColor }) {
               >
                 {item.cost}
               </div>
-              <div style={{ textAlign: "right" }}>
-                <span
-                  style={{
-                    background: `${item.costPctColor}20`,
-                    color: item.costPctColor,
-                    padding: "4px 8px",
-                    borderRadius: "6px",
-                    fontSize: "0.85rem",
-                    fontWeight: 500,
-                  }}
-                >
-                  {item.costPct}
-                </span>
-              </div>
               <div
                 style={{ textAlign: "right", cursor: "pointer" }}
                 onClick={() =>
@@ -173,6 +159,21 @@ function RecipesTable({ title, data, bgColor }) {
               >
                 {item.sales}
               </div>
+              <div style={{ textAlign: "right" }}>
+                <span
+                  style={{
+                    background: `${item.costPctColor}20`,
+                    color: item.costPctColor,
+                    padding: "4px 8px",
+                    borderRadius: "6px",
+                    fontSize: "0.85rem",
+                    fontWeight: 500,
+                  }}
+                >
+                  {item.costPct}
+                </span>
+              </div>
+
             </div>
           ))}
         </div>

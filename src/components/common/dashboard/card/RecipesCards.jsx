@@ -29,6 +29,16 @@ export default function RecipesCards({ card, idx, widthDesktop }) {
       {/* Header (Icon and Label) */}
       <div className="d-flex justify-content-between align-items-center">
         {/* Icon Container with Rotation */}
+
+
+        {/* Label */}
+        <span
+          style={{
+            color: card.labelColor,
+          }}
+        >
+          {card.label}
+        </span>
         <span
           style={{
             display: "flex",
@@ -45,20 +55,6 @@ export default function RecipesCards({ card, idx, widthDesktop }) {
           {/* Icon rotated back to be upright */}
           {card.icon}
         </span>
-
-        {/* Label */}
-        <span
-          style={{
-            fontSize: "0.8rem",
-            padding: "4px 8px",
-            borderRadius: "8px",
-            backgroundColor: card.labelColor,
-            color: "#FFFFFF",
-            fontWeight: "500",
-          }}
-        >
-          {card.label}
-        </span>
       </div>
 
       {/* Title */}
@@ -67,20 +63,11 @@ export default function RecipesCards({ card, idx, widthDesktop }) {
           marginTop: "10px",
           fontWeight: "600",
           color: card.textColor,
+          fontWeight:'bold'
         }}
       >
         {card.title}
       </h6>
-
-      {/* Separator Line */}
-      <div
-        style={{
-          height: "1px",
-          backgroundColor: `${card.textColor}30`, // Use a lighter version of text color for the line
-          // margin: "1rem 0",
-        }}
-      />
-
       {/* Data Rows (Products, Sales, Shares) */}
       {renderDataRow("Products", card.products)}
       {renderDataRow("Total Sales", card.sales)}

@@ -24,6 +24,16 @@ export default function ItemConsumptionEfficiencyCard({
           style={{ flex: "0 0 auto", padding: "10px" }}
         >
           <div className="d-flex align-items-center">
+            
+            <div>
+               <div style={{ fontSize: "13px", color: "#555" }}>
+                {card.label}
+              </div>
+              <div style={{ fontSize: "18px", fontWeight: "bold" }}>
+                {card.value}
+              </div>
+             
+            </div>
             <div
               style={{
                 width: 40,
@@ -33,18 +43,10 @@ export default function ItemConsumptionEfficiencyCard({
                 alignItems: "center",
                 justifyContent: "center",
                 backgroundColor: "#fff",
-                marginRight: "10px",
+                marginLeft: "auto",
               }}
             >
               {card.icon}
-            </div>
-            <div>
-              <div style={{ fontSize: "18px", fontWeight: "bold" }}>
-                {card.value}
-              </div>
-              <div style={{ fontSize: "13px", color: "#555" }}>
-                {card.label}
-              </div>
             </div>
           </div>
         </CommonCard>

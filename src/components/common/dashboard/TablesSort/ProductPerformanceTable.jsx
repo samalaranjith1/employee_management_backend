@@ -8,7 +8,7 @@ export default function ProductPerformanceTable({ data }) {
   const classificationColors = {
     "Top Performers": { bg: "#d4f6e7", color: "#2a9d8f" },
     "Moderate Performers": { bg: "#fff3d4", color: "#f4a261" },
-    "Low Performers": { bg: "#c29898ff", color: "#e76f51" },
+    "Low Performers": { bg: "#f9e5e5ff", color: "#e13307ff" },
   };
 
   const barColors = {
@@ -109,26 +109,28 @@ export default function ProductPerformanceTable({ data }) {
                       {percentile}
                     </td>
                     <td style={{ fontWeight: "bold" }}>{products}</td>
-                    <td>₹{sales}</td>
+                    <td>{sales}</td>
                     <td>{salesPercent}</td>
-                    <td style={{ color: "#7f3fff", fontWeight: 600 }}>
-                      ₹{margin}
+                    <td>
+                      {margin}
                     </td>
-                    <td style={{ color: "#7f3fff", fontWeight: 600 }}>
+                    <td >
                       {marginPercent}
                     </td>
                     <td>
-                      <Badge
+                      <span
                         style={{
                           backgroundColor: classColor.bg,
                           color: classColor.color,
                           fontWeight: 600,
                           padding: "4px 10px",
                           borderRadius: "10px",
+                          display: "inline-block",
                         }}
                       >
                         {classification}
-                      </Badge>
+                      </span>
+
                     </td>
                   </tr>
                 );

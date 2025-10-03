@@ -8,10 +8,15 @@ import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer
 import AnalyticsPage from "@/components/common/smallPages/AnalyticsPage";
 import { useProductsRecipesSummary } from "@/services/product-service";
 import { receipesDataFormatter } from "@/utils/data_formatters/smallPagesDataFormatter";
+import { usePathname } from "next/navigation";
+import { useDashboardContext } from "@/contexts/DashboardContext";
 
 export default function RecipeInsights() {
   const { isDeptLoading, isMasterProductsLoading, isProductsLoading, departmentOptions, masterProductOptions, productOptions } = useOrgFilters();
   const searchParams = useSearchParams();
+const { startDate: startDateCT, endDate: endDateCT } = useDashboardContext()
+const pathname = usePathname();
+const isDashboard = pathname === "/" || pathname === "/dashboard";
   const randomKey = Array.from(searchParams.keys())[0] || "RecipeInsights";
 
   const {
@@ -192,21 +197,22 @@ export default function RecipeInsights() {
 
   return (
     <div style={{ background: "#f2f3fb", minHeight: "100vh" }}>
-      <div style={styles.headerBar}>
+      {!isDashboard ? <div style={styles.headerBar}>
         <h1 style={styles.headerTitle}>Recipe Insights</h1>
         <p style={styles.headerSubtitle}>
           Deep analysis of recipe profitability, cost efficiency, and
           performance metrics
         </p>
-      </div>
+      </div>  : <div className="mt-5 p-5"></div>}
+      
       <div style={styles.analyticsBox}>
         <ServiceRenderer
           queryHook={useProductsRecipesSummary}
           queryKey={[
             "productsRecipesHistory",
             {
-              startdt: formatDate(startDate),
-              enddt: formatDate(endDate),
+              startdt: isDashboard ? startDateCT : formatDate(startDate),
+              enddt: isDashboard ? endDateCT : formatDate(endDate),
               outlet: 1,
               userId: 7,
               department: filters.department,
@@ -216,8 +222,8 @@ export default function RecipeInsights() {
           ]}
           queryFn={() =>
             useProductsRecipesSummary({
-              startdt: formatDate(startDate),
-              enddt: formatDate(endDate),
+              startdt: isDashboard ? startDateCT : formatDate(startDate),
+              enddt: isDashboard ? endDateCT : formatDate(endDate),
               outlet: 1,
               userId: 7,
               department: filters.department,
@@ -227,8 +233,8 @@ export default function RecipeInsights() {
           }
           queryArgs={[
             {
-              startdt: formatDate(startDate),
-              enddt: formatDate(endDate),
+              startdt: isDashboard ? startDateCT : formatDate(startDate),
+              enddt: isDashboard ? endDateCT : formatDate(endDate),
               outlet: 1,
               userId: 7,
               department: filters.department,

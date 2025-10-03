@@ -1,6 +1,5 @@
-"use client"
+"use client";
 import React, { useEffect, useState } from "react";
-import ComponentHeader from "@/components/common/ComponentHeader";
 import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer";
 import {
   useOutletDailySummary,
@@ -9,7 +8,7 @@ import {
   useOutletSameDaySummary,
 } from "@/services/outlet-service";
 import { periodDataBreakdownFormatter } from "@/utils/data_formatters/dashboardFormatter";
-import { Button, ButtonGroup, Card, Container } from "react-bootstrap";
+import { ButtonGroup, ToggleButton, Card, Row, Col } from "react-bootstrap";
 import { subDays, subWeeks, subMonths, format } from "date-fns";
 import PeriodDataBreakDownTable from "@/components/common/dashboard/TablesSort/PeriodDataBreakDownTable";
 import PeriodBreakDownCard from "@/components/common/dashboard/card/PeriodBreakDownCard";
@@ -36,7 +35,7 @@ export default function PeriodDataBreakdown() {
   const [startDateCS, setStartDateCS] = useState("");
   const [endDateCS, setEndDateCS] = useState("");
 
-  // Calculate date range based on activeTab/view
+  // Calculate date range
   const getDateRange = (view) => {
     const today = new Date();
     let startDatetemp;
@@ -60,48 +59,66 @@ export default function PeriodDataBreakdown() {
     setEndDateCS(format(today, "yyyy-MM-dd"));
   };
 
-  // Update date range on activeTab change
   useEffect(() => {
     getDateRange(activeTab);
   }, [activeTab]);
 
   const SelectedHook = useDataFetchMethod(activeTab);
+  const tabs = ["Daily", "SameDay", "Weekly", "Monthly"];
 
   return (
-    <Container fluid className="bg-white p-2 card">
-      <ComponentHeader
-        title={"Period Data Breakdown"}
-        description={"Detailed metrics across different time periods"}
-        isShowArrows={true}
-        isExpandable={true}
-      />
+    <Card className="p-3 shadow-sm" style={{ borderRadius: "16px" }}>
+      {/* Header */}
+      <Row className="align-items-center mb-4">
+        <Col>
+          <h5 className="fw-bold mb-0">Period Data Breakdown</h5>
+          <small className="text-muted">
+            Detailed metrics across different time periods
+          </small>
+        </Col>
+        <Col xs="auto">
+          {/* Tabs */}
+          <ButtonGroup
+            className="rounded-pill"
+            style={{ backgroundColor: "#E6E6E6" }}
+          >
+            {tabs.map((label) => {
+              const selected = activeTab === label;
+              return (
+                <ToggleButton
+                  key={label}
+                  id={`period-${label}`}
+                  type="radio"
+                  variant="none"
+                  checked={selected}
+                  value={label}
+                  onChange={() => setActiveTab(label)}
+                  className="rounded-pill"
+                  style={{
+                    fontSize: "13px",
+                    padding: "6px 16px",
+                    backgroundColor: selected ? "#FF6600" : "transparent",
+                    color: selected ? "white" : "#888",
+                    border: "none",
+                    cursor: "pointer",
+                    userSelect: "none",
+                  }}
+                >
+                  {label === "SameDay" ? "Same Days" : label}
+                </ToggleButton>
+              );
+            })}
+          </ButtonGroup>
+        </Col>
+      </Row>
 
-      {/* Tabs */}
-      <div className="d-flex justify-content-center mb-3">
-        <ButtonGroup
-          style={{ backgroundColor: "rgb(245, 199, 143)", width: "90vw" }}
-        >
-          {["Daily", "SameDay", "Weekly", "Monthly"].map((tab) => (
-            <Button
-              key={tab}
-              style={{
-                width: "24vw",
-                borderRadius: "10px",
-                backgroundColor: activeTab === tab ? "rgb(254,69,37)" : "",
-              }}
-              onClick={() => setActiveTab(tab)}
-            >
-              {tab}
-            </Button>
-          ))}
-        </ButtonGroup>
-      </div>
+      {/* Info banner for SameDay */}
       {activeTab === "SameDay" && (
         <Card
-          className="d-inline align-items-center"
+          className="d-inline-flex align-items-center mb-3"
           style={{
-            backgroundColor: "#FFF8F2", // light peach bg
-            border: "1px solid #F5CBA7", // orange border
+            backgroundColor: "#FFF8F2",
+            border: "1px solid #F5CBA7",
             borderRadius: "8px",
             padding: "0.75rem 1rem",
             boxShadow: "none",
@@ -119,6 +136,8 @@ export default function PeriodDataBreakdown() {
           </span>
         </Card>
       )}
+
+      {/* 🔹 ServiceRenderer */}
       <ServiceRenderer
         queryHook={SelectedHook}
         queryKey={["periodBreakdown", activeTab, startDateCS, endDateCS]}
@@ -135,28 +154,187 @@ export default function PeriodDataBreakdown() {
           <>
             {/* Cards */}
             <div
-              className="d-flex overflow-auto px-2 hide-scrollbar"
+              className="d-flex overflow-auto px-2 hide-scrollbar mb-3"
               style={{ gap: "1rem" }}
             >
               {cards.map((card, idx) => (
                 <PeriodBreakDownCard key={idx} card={card} idx={idx} />
               ))}
             </div>
+
             {/* Table */}
             <div style={{ maxHeight: "60vh", overflow: "auto" }}>
-              {/* Pass the height to the table so the header can stick */}
               <PeriodDataBreakDownTable
                 data={{ table }}
-                filters={{startDate:startDateCS,endDate:endDateCS}}
+                filters={{ startDate: startDateCS, endDate: endDateCS }}
                 containerStyle={{ maxHeight: "60vh", overflowY: "auto" }}
               />
             </div>
           </>
         )}
       </ServiceRenderer>
-    </Container>
+    </Card>
   );
 }
+// "use client"
+// import React, { useEffect, useState } from "react";
+// import ComponentHeader from "@/components/common/ComponentHeader";
+// import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer";
+// import {
+//   useOutletDailySummary,
+//   useOutletWeeklySummary,
+//   useOutletMonthlySummary,
+//   useOutletSameDaySummary,
+// } from "@/services/outlet-service";
+// import { periodDataBreakdownFormatter } from "@/utils/data_formatters/dashboardFormatter";
+// import { Button, ButtonGroup, Card, Container } from "react-bootstrap";
+// import { subDays, subWeeks, subMonths, format } from "date-fns";
+// import PeriodDataBreakDownTable from "@/components/common/dashboard/TablesSort/PeriodDataBreakDownTable";
+// import PeriodBreakDownCard from "@/components/common/dashboard/card/PeriodBreakDownCard";
+// import { FaHistory } from "react-icons/fa";
+
+// // Hook selector
+// const useDataFetchMethod = (view) => {
+//   switch (view) {
+//     case "Daily":
+//       return useOutletDailySummary;
+//     case "SameDay":
+//       return useOutletSameDaySummary;
+//     case "Weekly":
+//       return useOutletWeeklySummary;
+//     case "Monthly":
+//       return useOutletMonthlySummary;
+//     default:
+//       return useOutletDailySummary;
+//   }
+// };
+
+// export default function PeriodDataBreakdown() {
+//   const [activeTab, setActiveTab] = useState("Daily");
+//   const [startDateCS, setStartDateCS] = useState("");
+//   const [endDateCS, setEndDateCS] = useState("");
+
+//   // Calculate date range based on activeTab/view
+//   const getDateRange = (view) => {
+//     const today = new Date();
+//     let startDatetemp;
+//     switch (view) {
+//       case "Daily":
+//         startDatetemp = subDays(today, 7);
+//         break;
+//       case "Weekly":
+//         startDatetemp = subWeeks(today, 5);
+//         break;
+//       case "Monthly":
+//         startDatetemp = subMonths(today, 5);
+//         break;
+//       case "SameDay":
+//         startDatetemp = subWeeks(today, 5);
+//         break;
+//       default:
+//         startDatetemp = today;
+//     }
+//     setStartDateCS(format(startDatetemp, "yyyy-MM-dd"));
+//     setEndDateCS(format(today, "yyyy-MM-dd"));
+//   };
+
+//   // Update date range on activeTab change
+//   useEffect(() => {
+//     getDateRange(activeTab);
+//   }, [activeTab]);
+
+//   const SelectedHook = useDataFetchMethod(activeTab);
+
+//   return (
+//     <Container fluid className="bg-white p-2 card">
+//       <ComponentHeader
+//         title={"Period Data Breakdown"}
+//         description={"Detailed metrics across different time periods"}
+//         isShowArrows={true}
+//         isExpandable={true}
+//       />
+
+//       {/* Tabs */}
+//       <div className="d-flex justify-content-center mb-3">
+//         <ButtonGroup
+//           style={{ backgroundColor: "rgb(245, 199, 143)", width: "90vw" }}
+//         >
+//           {["Daily", "SameDay", "Weekly", "Monthly"].map((tab) => (
+//             <Button
+//               key={tab}
+//               style={{
+//                 width: "24vw",
+//                 borderRadius: "10px",
+//                 backgroundColor: activeTab === tab ? "rgb(254,69,37)" : "",
+//               }}
+//               onClick={() => setActiveTab(tab)}
+//             >
+//               {tab}
+//             </Button>
+//           ))}
+//         </ButtonGroup>
+//       </div>
+//       {activeTab === "SameDay" && (
+//         <Card
+//           className="d-inline align-items-center"
+//           style={{
+//             backgroundColor: "#FFF8F2", // light peach bg
+//             border: "1px solid #F5CBA7", // orange border
+//             borderRadius: "8px",
+//             padding: "0.75rem 1rem",
+//             boxShadow: "none",
+//           }}
+//         >
+//           <FaHistory
+//             style={{
+//               color: "#E67E22",
+//               marginRight: "0.5rem",
+//               flexShrink: 0,
+//             }}
+//           />
+//           <span style={{ color: "#E67E22", fontWeight: 500 }}>
+//             Last 7 {format(new Date(), "EEEE")}s • Same-day-of-week patterns
+//           </span>
+//         </Card>
+//       )}
+//       <ServiceRenderer
+//         queryHook={SelectedHook}
+//         queryKey={["periodBreakdown", activeTab, startDateCS, endDateCS]}
+//         queryArgs={[
+//           1,
+//           {
+//             startdt: startDateCS,
+//             enddt: endDateCS,
+//           },
+//         ]}
+//         formatter={(raw) => periodDataBreakdownFormatter(raw, activeTab)}
+//       >
+//         {({ cards, table }) => (
+//           <>
+//             {/* Cards */}
+//             <div
+//               className="d-flex overflow-auto px-2 hide-scrollbar"
+//               style={{ gap: "1rem" }}
+//             >
+//               {cards.map((card, idx) => (
+//                 <PeriodBreakDownCard key={idx} card={card} idx={idx} />
+//               ))}
+//             </div>
+//             {/* Table */}
+//             <div style={{ maxHeight: "60vh", overflow: "auto" }}>
+//               {/* Pass the height to the table so the header can stick */}
+//               <PeriodDataBreakDownTable
+//                 data={{ table }}
+//                 filters={{startDate:startDateCS,endDate:endDateCS}}
+//                 containerStyle={{ maxHeight: "60vh", overflowY: "auto" }}
+//               />
+//             </div>
+//           </>
+//         )}
+//       </ServiceRenderer>
+//     </Container>
+//   );
+// }
 
 // "use client";
 

@@ -31,7 +31,6 @@ export default function ConsumptionHistoryAnalysis() {
   // const [endDate, setEndDate] = useState(ctxEndDate || null);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
-  console.log(randomKey, "ramarama");
   // ✅ Load from sessionStorage if available
   useEffect(() => {
     if (!randomKey) return;

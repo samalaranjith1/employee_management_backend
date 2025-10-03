@@ -12,6 +12,7 @@ import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer
 import { useProductsAll } from "@/services/product-service";
 import { useSalesHourly } from "@/services/sales-service";
 import { useDepartmentContext } from "@/contexts/DepartmentContext";
+import { FaCampground, FaChartLine, FaCircle, FaGolfBall, FaPaste } from "react-icons/fa";
 
 // ✅ Utility: format API hourly data into recharts friendly format
 const formatHourlyData = (apiData, metric) => {
@@ -37,14 +38,17 @@ const salesHourlyFormatter = (data, selectedMetric) => {
       selectedMetric === "Sales"
         ? `₹${data.totalProjectedSales ?? 0}`
         : `${data.totalProjectedOrders ?? 0}`,
+    dailyForecastIcon:<FaChartLine color="blue" size={24}/>,
     actualSoFar:
       selectedMetric === "Sales"
         ? `₹${data.totalSales ?? 0}`
         : `${data.totalOrders ?? 0}`,
+    actualSoFarIcon:<FaPaste color="green" size={24} />,
     remainingTarget:
       selectedMetric === "Sales"
         ? `₹${data.remaningSales ?? 0}`
         : `${data.remaningOrders ?? 0}`,
+    remainingTargetIcon:<FaGolfBall  color="red" size={24}/>,
     graphData: formatHourlyData(data, selectedMetric),
   };
 };

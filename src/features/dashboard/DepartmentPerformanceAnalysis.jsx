@@ -85,7 +85,7 @@ const DepartmentPerformance = () => {
                   </div>
 
                   {/* Cost Ratio Tags */}
-                  <div className="mt-3 d-none d-md-flex flex-wrap gap-3">
+                  {/* <div className="mt-3 d-none d-md-flex flex-wrap gap-3">
                     {graph.slice(0, 3).map((dept) => (
                       <div
                         key={dept.name}
@@ -105,14 +105,14 @@ const DepartmentPerformance = () => {
                         </Badge>
                       </div>
                     ))}
-                  </div>
+                  </div> */}
 
                   {/* Legend */}
-                  <div className="mt-3">
+                  {/* <div className="mt-3">
                     <Badge bg="success">≤60% Excellent</Badge>{" "}
                     <Badge bg="warning">60-65% Good</Badge>{" "}
                     <Badge bg="danger">65% Needs Attention</Badge>
-                  </div>
+                  </div> */}
                 </Card.Body>
               </Card>
             </Col>

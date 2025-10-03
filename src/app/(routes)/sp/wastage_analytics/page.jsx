@@ -10,12 +10,18 @@ import { WastageAnalysisTable } from "@/components/common/dashboard/TablesSort";
 import { useWasteSummary } from "@/services/waste-management-service";
 import { wastageAnalysisDataFormatter } from "@/utils/data_formatters/dashboardFormatter";
 import { formatDate } from "@/utils";
+import { Tabs, Tab } from "react-bootstrap";
+import { usePathname } from "next/navigation";
+import { useDashboardContext } from "@/contexts/DashboardContext";
 
 export default function WastageAnalytics() {
   const { isDeptLoading, isItemsLoading, departmentOptions, itemOptions } =
     useOrgFilters();
 
   const searchParams = useSearchParams();
+  const { startDate: startDateCT, endDate: endDateCT } = useDashboardContext()
+  const pathname = usePathname();
+  const isDashboard = pathname === "/" || pathname === "/dashboard";
   const randomKey = Array.from(searchParams.keys())[0] || "WastageAnalytics";
 
   // ✅ Use session storage hook like first component
@@ -167,7 +173,7 @@ export default function WastageAnalytics() {
 
   return (
     <div style={{ background: "#f2f3fb", minHeight: "100vh" }}>
-      <div style={styles.headerBar}>
+      {!isDashboard ? <div style={styles.headerBar}>
         <h1 style={styles.headerTitle}>
           <FaTrashAlt size={34} style={{ marginRight: 10 }} />
           Wastage Analysis
@@ -175,11 +181,10 @@ export default function WastageAnalytics() {
         <p style={styles.headerSubtitle}>
           Track and minimize food waste across all categories
         </p>
-      </div>
-
+      </div> : <div className="mt-5 p-2"></div>}
       <div style={styles.analyticsBox}>
         {/* ✅ Date Filters */}
-        <div style={styles.pillRow}>
+        {!isDashboard && <div style={styles.pillRow}>
           {["Today", "Yesterday", "This Week", "This Month", "Custom"].map(
             (range) => (
               <div
@@ -191,15 +196,15 @@ export default function WastageAnalytics() {
               </div>
             )
           )}
-        </div>
+        </div>}
 
         <ServiceRenderer
           queryHook={useWasteSummary}
           queryKey={[
             "wasteSummary",
             {
-              startdt: formatDate(startDate),
-              enddt: formatDate(endDate),
+              startdt: isDashboard ? startDateCT : formatDate(startDate),
+              enddt: isDashboard ? endDateCT : formatDate(endDate),
               departmentId: filters.department || null,
               itemId: filters.item || null,
               range: activeDateRange,
@@ -207,8 +212,8 @@ export default function WastageAnalytics() {
           ]}
           queryFn={() =>
             useWasteSummary({
-              startdt: formatDate(startDate),
-              enddt: formatDate(endDate),
+              startdt: isDashboard ? startDateCT : formatDate(startDate),
+              enddt: isDashboard ? endDateCT : formatDate(endDate),
               departmentId: filters.department || null,
               itemId: filters.item || null,
               range: activeDateRange,
@@ -216,8 +221,10 @@ export default function WastageAnalytics() {
           }
           queryArgs={[
             {
-              startdt: formatDate(startDate),
-              enddt: formatDate(endDate),
+              startdt: isDashboard ? startDateCT : formatDate(startDate),
+              enddt: isDashboard ? endDateCT : formatDate(endDate),
+              outlet: 1,
+              userid: 7
             },
           ]}
           formatter={wastageAnalysisDataFormatter}
@@ -225,56 +232,6 @@ export default function WastageAnalytics() {
         >
           {(formattedData) => (
             <>
-              {/* ✅ Filters like first component */}
-              <div style={{ display: "flex", gap: 16, marginBottom: 20 }}>
-                <select
-                  value={filters.department}
-                  disabled={isDeptLoading}
-                  onChange={(e) =>
-                    setFilters((f) => ({ ...f, department: e.target.value }))
-                  }
-                >
-                  <option value="">Departments</option>
-                  {departmentOptions.map((d) => (
-                    <option key={d.value} value={d.value}>
-                      {d.label}
-                    </option>
-                  ))}
-                </select>
-
-                <select
-                  value={filters.item}
-                  disabled={isItemsLoading}
-                  onChange={(e) =>
-                    setFilters((f) => ({ ...f, item: e.target.value }))
-                  }
-                >
-                  <option value="">Items</option>
-                  {itemOptions.map((i) => (
-                    <option key={i.value} value={i.value}>
-                      {i.label}
-                    </option>
-                  ))}
-                </select>
-
-                <input
-                  style={styles.search}
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search..."
-                />
-
-                <button style={styles.analyser} onClick={handleAnalyse}>
-                  Analyse
-                </button>
-                <button style={styles.exportBtn} onClick={handleExport}>
-                  Export
-                </button>
-                <button style={styles.filterBtn} onClick={handleFilter}>
-                  Filter
-                </button>
-              </div>
-
               {/* ✅ Top summary cards */}
               <WastageAnalysisTopCards
                 cardsData={formattedData?.cardsData}

@@ -10,7 +10,7 @@ import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer
 import { useProductsRecipesSummary } from "@/services/product-service";
 import { recipesDataFormatter } from "@/utils/data_formatters/dashboardFormatter";
 import { useDashboardContext } from "@/contexts/DashboardContext";
-import { FaChartLine, FaExclamationTriangle } from "react-icons/fa";
+import { FaChartLine, FaExclamationTriangle, FaExpand } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import { handleNavigation } from "@/utils";
 
@@ -95,19 +95,28 @@ const RecipesDashboard = () => {
               {/* Loss Making Products Section */}
               <Col md={6} className="mb-4">
                 <div
-                  className="card-header border-0 pb-2 p-1 d-flex justify-content-between align-items-center"
-                  style={{ backgroundColor: "rgb(240,240,240" }}
+                  className="card-header border-0 pb-2 p-1 d-flex align-items-center p-2"
+                  style={{ backgroundColor: "rgb(240,240,240)" }}
                 >
-                  <div>
+                  {/* Column 1: Icon */}
+                  <div className="me-2">
+                    <FaExclamationTriangle color="#FF6347" size={24} />
+                  </div>
+
+                  {/* Column 2: Title + description */}
+                  <div className="flex-grow-1">
                     <h6 className="card-title mb-0">Loss Making Products</h6>
                     <p className="card-text text-muted mb-0">
                       Monitor inventory levels and prevent stockouts
                     </p>
                   </div>
+
+                  {/* Column 3: Expand icon */}
                   <div>
-                    <FaExclamationTriangle color="#FF6347" size={24} />
+                    <FaExpand size={18} style={{ cursor: "pointer" }} />
                   </div>
                 </div>
+
                 <RecipesTable
                   data={recipesData?.lossProducts || []}
                   bgColor={"#FFF5F5"}
@@ -117,19 +126,28 @@ const RecipesDashboard = () => {
               {/* Profitable Products Section */}
               <Col md={6} className="mb-4">
                 <div
-                  className="card-header border-0 pb-2 p-1 d-flex justify-content-between align-items-center"
-                  style={{ backgroundColor: "rgb(240,240,240" }}
+                  className="card-header border-0 pb-2 p-1 d-flex align-items-center p-2"
+                  style={{ backgroundColor: "rgb(240,240,240)" }}
                 >
-                  <div>
+                  {/* Column 1: Left Icon */}
+                  <div className="me-2">
+                    <FaChartLine color="#32CD32" size={24} />
+                  </div>
+
+                  {/* Column 2: Title + Description */}
+                  <div className="flex-grow-1">
                     <h6 className="card-title mb-0">Profitable Products</h6>
                     <p className="card-text text-muted mb-0">
                       Monitor inventory levels and prevent stockouts
                     </p>
                   </div>
+
+                  {/* Column 3: Expand Icon */}
                   <div>
-                    <FaChartLine color="#32CD32" size={24} />
+                    <FaExpand size={18} style={{ cursor: "pointer" }} />
                   </div>
                 </div>
+
                 <RecipesTable
                   data={recipesData?.profitProducts || []}
                   bgColor={"#F0FFF4"}

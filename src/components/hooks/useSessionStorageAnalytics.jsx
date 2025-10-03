@@ -23,13 +23,6 @@ function detectDateRange(startDate, endDate) {
   const startOfWeek = new Date(today);
   startOfWeek.setDate(today.getDate() + diff);
   const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
-  console.log(
-    isSameDay(start, yesterday) && isSameDay(end, yesterday),
-    isSameDay(start, yesterday),
-    isSameDay(end, yesterday),
-    "ramarama",
-    start,end,
-  );
 
   if (isSameDay(start, today) && isSameDay(end, today)) return "Today";
   if (isSameDay(start, yesterday) && isSameDay(end, yesterday))

@@ -11,6 +11,15 @@ export function useOutlet(id, params) {
   });
 }
 
+export function useOutletSearch(id, params) {
+  return useApiQuery({
+    key: ["outlet", id, params],
+    endpoint: `outlet/${id}/search`,
+    params,
+    select: (data) => consumptionSummaryFormatter(data),
+  });
+}
+
 // Summary
 export function useOutletSummary(id, params) {
   return useApiQuery({

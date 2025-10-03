@@ -39,7 +39,7 @@ function TopSellingProductsTable({ revenueSummary = [] }) {
         onClick={() => sort.handleSort("amount")}
       >
         <span>Title</span>
-        <span>Amount{renderSortArrow("amount")}</span>
+        {/* <span>Amount{renderSortArrow("amount")}</span> */}
       </div>
 
       <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
@@ -84,7 +84,7 @@ function TopSellingProductsTable({ revenueSummary = [] }) {
                 <div style={{ fontSize: 12, color: "#9aa0b0" }}>{item.sub}</div>
               </div>
 
-              <div className="p-2 m-2 ps-5" style={{fontSize:"24px"}}>{item.icon}</div>
+              <div className="p-2 m-2 ps-5" style={{fontSize:"24px",marginLeft:'auto'}}>{item.icon}</div>
             </div>
           </div>
         ))}

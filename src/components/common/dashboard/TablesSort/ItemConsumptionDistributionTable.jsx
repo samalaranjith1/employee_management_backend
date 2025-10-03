@@ -65,13 +65,11 @@ export default function ItemConsumptionDistributionTable({ data }) {
                 {columns.map((col) => {
                   switch (col.key) {
                     case "percentile":
+                      const bgColor = getBadgeVariant(row.classification);
                       return (
-                        <td key={col.key} className="fw-medium">
-                          <FaCircle
-                            size={10}
-                            className="me-2"
-                            style={{ color: row.color }}
-                          />
+                        <td key={col.key} className="fw-medium" 
+                            style={{ color: bgColor.color }}
+                        >
                           {row.percentile}
                         </td>
                       );
@@ -87,8 +85,8 @@ export default function ItemConsumptionDistributionTable({ data }) {
                     case "value":
                       return (
                         <td key={col.key} className="text-success fw-bold">
-                          ₹{row.value.toLocaleString()}{" "}
-                          <small className="text-success">
+                          <div>₹{row.value.toLocaleString()}</div>
+                          <small className="text-success fw-normal">
                             <FaArrowUp size={10} className="me-1" />
                             consumption
                           </small>
@@ -97,15 +95,15 @@ export default function ItemConsumptionDistributionTable({ data }) {
                     case "percentValue":
                       return (
                         <td key={col.key} className="text-primary fw-bold">
-                          {row.percentValue}{" "}
-                          <small className="text-muted">of total value</small>
+                          <div>{row.percentValue}{" "}</div>
+                          <small className="text-muted fw-normal">of total value</small>
                         </td>
                       );
                     case "classification":
                       const badge = getBadgeVariant(row.classification);
                       return (
                         <td key={col.key}>
-                          <Badge
+                          {/* <Badge
                             style={{
                               backgroundColor: badge.bg,
                               color: badge.color,
@@ -116,6 +114,21 @@ export default function ItemConsumptionDistributionTable({ data }) {
                           >
                             {row.classification}
                           </Badge>
+                           */}
+                          <span
+                            style={{
+                              display: "inline-block",
+                              backgroundColor: badge.bg, // your dynamic bg
+                              color: badge.color,        // your dynamic text color
+                              fontWeight: 500,
+                              padding: "6px 12px",
+                              borderRadius: "8px",
+                              fontSize: "0.85rem",       // matches bootstrap badge size
+                            }}
+                          >
+                            {row.classification}
+                          </span>
+
                         </td>
                       );
                     default:

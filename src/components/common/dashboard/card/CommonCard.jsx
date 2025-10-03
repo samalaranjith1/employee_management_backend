@@ -14,6 +14,7 @@ export default function CommonCard({
   boxShadow = "0 4px 12px rgba(0,0,0,0.1)",
   border = "none",
   scrollRef,
+  maxHeight,
   style = {},
 }) {
   const [isMobile, setIsMobile] = useState(false);
@@ -39,6 +40,7 @@ export default function CommonCard({
         padding,
         boxShadow,
         border,
+        maxHeight,
         ...style,
       }}
     >

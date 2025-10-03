@@ -12,7 +12,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { subDays, subWeeks, subMonths, format } from "date-fns";
-import { Button, ButtonGroup, Container, Row, Col } from "react-bootstrap";
+import { Button, ButtonGroup, Container, Row, Col, ToggleButton } from "react-bootstrap";
 import { FaBolt, FaExpand } from "react-icons/fa";
 import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer";
 import { handleNavigation } from "@/utils";
@@ -97,9 +97,39 @@ export default function TrendAnalysis() {
           </Col>
 
           <Col xs="auto" className="d-flex align-items-center ms-auto gap-2">
-            <div className="d-none d-md-flex">
-              <ButtonGroup>
-                {["Daily","SameDay", "Weekly", "Monthly"].map((type) => (
+            <div className="d-none d-md-flex bg-gray">
+              <ButtonGroup className='px-2' style={{
+                backgroundColor: '#ddd',
+                borderRadius: '20px'
+              }}>
+                {["Daily", "SameDay", "Weekly", "Monthly"].map((label) => {
+                  const value = label.toLowerCase().replace(" ", "");
+                  // const view = filter === value;
+                  return (
+                    <ToggleButton
+                      key={label}
+                      id={`dept-graph-${label}`}
+                      type="radio"
+                      variant="none"
+                      checked={view}
+                      value={value}
+                      onClick={() => getDateRange(label)}
+                      className="rounded-pill"
+                      style={{
+                        fontSize: "13px",
+                        padding: "6px 16px",
+                        backgroundColor: view === label ? "#FF6600" : "transparent",
+                        color: view === label ? "white" : "#888",
+                        border: "none",
+                        cursor: "pointer",
+                        userSelect: "none",
+                      }}
+                    >
+                      {label}
+                    </ToggleButton>
+                  );
+                })}
+                {/* {["Daily","SameDay", "Weekly", "Monthly"].map((type) => (
                   <Button
                     key={type}
                     variant={view === type ? "primary" : "outline-secondary"}
@@ -107,14 +137,13 @@ export default function TrendAnalysis() {
                   >
                     {type}
                   </Button>
-                ))}
+                ))} */}
               </ButtonGroup>
             </div>
             <FaExpand size={24} color="rgb(255,80,22)" />
           </Col>
           <div className="d-flex d-md-none justify-content-center w-100 mt-1">
-            <ButtonGroup>
-              {["Daily", "Weekly", "Monthly"].map((type) => (
+            {/* {["Daily", "Weekly", "Monthly"].map((type) => (
                 <Button
                   key={type}
                   variant={view === type ? "primary" : "outline-secondary"}
@@ -122,7 +151,47 @@ export default function TrendAnalysis() {
                 >
                   {type}
                 </Button>
-              ))}
+              ))} */}
+            <ButtonGroup className='px-2' style={{
+              backgroundColor: '#ddd',
+              borderRadius: '20px'
+            }}>
+              {["Daily", "SameDay", "Weekly", "Monthly"].map((label) => {
+                const value = label.toLowerCase().replace(" ", "");
+                // const view = filter === value;
+                return (
+                  <ToggleButton
+                    key={label}
+                    id={`dept-graph-${label}`}
+                    type="radio"
+                    variant="none"
+                    checked={view}
+                    value={value}
+                    onClick={() => getDateRange(label)}
+                    className="rounded-pill"
+                    style={{
+                      fontSize: "13px",
+                      padding: "6px 16px",
+                      backgroundColor: view === label ? "#FF6600" : "transparent",
+                      color: view === label ? "white" : "#888",
+                      border: "none",
+                      cursor: "pointer",
+                      userSelect: "none",
+                    }}
+                  >
+                    {label}
+                  </ToggleButton>
+                );
+              })}
+              {/* {["Daily","SameDay", "Weekly", "Monthly"].map((type) => (
+                  <Button
+                    key={type}
+                    variant={view === type ? "primary" : "outline-secondary"}
+                    onClick={() => getDateRange(type)}
+                  >
+                    {type}
+                  </Button>
+                ))} */}
             </ButtonGroup>
           </div>
         </Row>
@@ -157,13 +226,13 @@ export default function TrendAnalysis() {
 
                     <YAxis
                       yAxisId="left"
-                      tickFormatter={(value) => `₹${value}k`}
+                      tickFormatter={(value) => `₹${parseInt(value/1000)}k`}
                       domain={[0, "auto"]}
                     />
                     <YAxis
                       yAxisId="right"
                       orientation="right"
-                      tickFormatter={(value) => `${value}%`}
+                      tickFormatter={(value) => `${parseInt(value/100)}%`}
                       domain={[0, 100]}
                     />
 
@@ -171,7 +240,7 @@ export default function TrendAnalysis() {
                       formatter={(value, name) =>
                         name === "consumptionPercentage"
                           ? `${value}%`
-                          : `₹${value}k`
+                          : `₹${value}`
                       }
                     />
                     <Legend
@@ -204,12 +273,12 @@ export default function TrendAnalysis() {
                                       entry.value === "Sales"
                                         ? "sp/sales_analytics"
                                         : entry.value === "Consumption"
-                                        ? "sp/consumption_analytics"
-                                        : entry.value === "Opening"
-                                        ? "sp/consumption_closing_analytics"
-                                        : entry.value === "Closing"
-                                        ? "sp/consumption_closing_analytics"
-                                        : "",
+                                          ? "sp/consumption_analytics"
+                                          : entry.value === "Opening"
+                                            ? "sp/consumption_closing_analytics"
+                                            : entry.value === "Closing"
+                                              ? "sp/consumption_closing_analytics"
+                                              : "",
                                     params: {
                                       startDate: startDateCS,
                                       endDate: endDateCS,

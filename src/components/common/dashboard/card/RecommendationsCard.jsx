@@ -28,7 +28,7 @@ export default function RecommendationsCard({
         >
           {rec.title}
         </div>
-        <div
+        {/* <div
           style={{
             fontWeight: 600,
             color: textColor,
@@ -37,7 +37,7 @@ export default function RecommendationsCard({
           }}
         >
           {rec.title}
-        </div>
+        </div> */}
       </div>
       <div style={{ fontSize: "13px", color: "#333" }}>{rec.desc}</div>
     </CommonCard>

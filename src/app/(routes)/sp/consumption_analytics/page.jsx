@@ -1,19 +1,23 @@
 "use client";
 import React from "react";
 import { useOrgFilters } from "@/components/hooks/useOrgFilters";
-import { useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { formatDate } from "@/utils";
 import { useSessionStorageAnalytics } from "@/components/hooks/useSessionStorageAnalytics";
 import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer";
 import AnalyticsPage from "@/components/common/smallPages/AnalyticsPage";
 import { useItemsConsumptionHistory } from "@/services/item-service";
 import { consumptionHistoryFormatter } from "@/utils/data_formatters/smallPagesDataFormatter";
+import { useDashboardContext } from "@/contexts/DashboardContext";
 
 export default function ConsumptionHistoryAnalysis() {
   const { isDeptLoading, isItemsLoading, departmentOptions, itemOptions } =
     useOrgFilters();
   const searchParams = useSearchParams();
+  const { startDate: startDateCT, endDate: endDateCT } = useDashboardContext()
   const randomKey = Array.from(searchParams.keys())[0] || "ConsumptionHistory";
+  const pathname = usePathname();
+  const isDashboard = pathname === "/" || pathname === "/dashboard";
 
   const {
     filters,
@@ -190,22 +194,21 @@ export default function ConsumptionHistoryAnalysis() {
 
   return (
     <div style={{ background: "#f2f3fb", minHeight: "100vh" }}>
-      <div style={styles.headerBar}>
-        <h1 style={styles.headerTitle}>Consumption Closing Analysis</h1>
+      {!isDashboard ? <div style={styles.headerBar}>
+        <h1 style={styles.headerTitle}>Consumption Analytics</h1>
         <p style={styles.headerSubtitle}>
-          End-of-day review and analysis of restaurant consumption data for
-          operational closure
+          Real time insights into your restaurant consumption patterns and operational efficiency
         </p>
-      </div>
-
+      </div> : <div className="mt-5 p-5"></div>
+      }
       <div style={styles.analyticsBox}>
         <ServiceRenderer
           queryHook={useItemsConsumptionHistory}
           queryKey={[
             "itemsConsumptionHistory",
             {
-              startdt: formatDate(startDate),
-              enddt: formatDate(endDate),
+              startdt: isDashboard ? startDateCT : formatDate(startDate),
+              enddt: isDashboard ? endDateCT : formatDate(endDate),
               outlet: 1,
               userId: 7,
               departmentId: filters.department || null,
@@ -214,8 +217,8 @@ export default function ConsumptionHistoryAnalysis() {
           ]}
           queryFn={() =>
             useItemsConsumptionHistory({
-              startdt: formatDate(startDate),
-              enddt: formatDate(endDate),
+              startdt: isDashboard ? startDateCT : formatDate(startDate),
+              enddt: isDashboard ? endDateCT : formatDate(endDate),
               outlet: 1,
               userId: 7,
               departmentId: filters.department || null,
@@ -224,8 +227,8 @@ export default function ConsumptionHistoryAnalysis() {
           }
           queryArgs={[
             {
-              startdt: formatDate(startDate),
-              enddt: formatDate(endDate),
+              startdt: isDashboard ? startDateCT : formatDate(startDate),
+              enddt: isDashboard ? endDateCT : formatDate(endDate),
               outlet: 1,
               userId: 7,
               departments: filters.department || null,

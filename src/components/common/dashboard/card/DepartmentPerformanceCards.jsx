@@ -6,63 +6,89 @@ import {
   FaUtensils,
   FaPercentage,
   FaBullseye,
+  FaCartPlus,
 } from "react-icons/fa";
 import CommonCard from "./CommonCard";
+import { FaArrowTrendUp } from "react-icons/fa6";
 
 export default function DepartmentPerformanceCards() {
   return (
     <Col
       xs={12}
       lg={3}
-      className="d-flex flex-lg-column flex-row overflow-auto gap-3 mb-3 mb-lg-0"
+      className="d-flex flex-lg-column flex-row gap-3 mb-3 mb-lg-0"
       style={{ whiteSpace: "nowrap" }}
     >
       <CommonCard
-        bgColor="#eaf2ff"
-        textColor="#3b82f6"
+        bgColor="#cff9d6ff"
+        textColor="#000"
         minWidth="220px"
-        style={{ borderLeft: "5px solid #3b82f6" }}
+        style={{ borderLeft: "5px solid #3b82f6", padding: '0px' }}
       >
         <Card.Body>
-          <FaRupeeSign className="text-primary fs-4" />
-          <p className="mb-1 text-muted">Total Sales</p>
-          <h5 className="fw-bold text-primary">₹413K</h5>
+          <div className="d-flex d-flex-row p-0">
+            <div>
+              <h6 className="fw-bold mb-1">Total Sales</h6>
+              <h4 className="fw-bold">₹413K</h4>
+            </div>
+            <div style={{ marginLeft: "auto" }}>
+              <FaCartPlus className="text-success fs-4" />
+            </div>
+          </div>
         </Card.Body>
       </CommonCard>
       <CommonCard
-        bgColor="#e6f8f2"
-        textColor="#10b981"
+        bgColor="#eaeffaff"
+        textColor="#000"
         minWidth="220px"
-        style={{ borderLeft: "5px solid #10b981" }}
+        style={{ borderLeft: "5px solid #10b981", padding: '0px' }}
       >
         <Card.Body>
-          <FaUtensils className="text-success fs-4" />
-          <p className="mb-1 text-muted">Total Consumption</p>
-          <h5 className="fw-bold text-success">₹255K</h5>
+          <div className="d-flex d-flex-row p-0">
+            <div>
+              <h6 className="fw-bold mb-1">Consumption</h6>
+              <h4 className="fw-bold">₹255K</h4>
+            </div>
+            <div style={{ marginLeft: "auto" }}>
+              <FaCartPlus className="text-primary fs-4" />
+            </div>
+          </div>
         </Card.Body>
       </CommonCard>
       <CommonCard
         bgColor="#fff5e6"
-        textColor="#f97316"
+        textColor="#000"
         minWidth="220px"
-        style={{ borderLeft: "5px solid #f97316" }}
+        style={{ borderLeft: "5px solid #f97316", padding: '0px' }}
       >
         <Card.Body>
-          <FaPercentage className="text-warning fs-4" />
-          <p className="mb-1 text-muted">Overall Cost %</p>
-          <h5 className="fw-bold text-warning">61.7%</h5>
+          <div className="d-flex d-flex-row">
+            <div>
+              <h6 className="fw-bold mb-1">Overall Cost %</h6>
+              <h4 className="fw-bold">61.7%</h4>
+            </div>
+            <div style={{ marginLeft: "auto" }}>
+              <FaCartPlus className="text-primary fs-4" />
+            </div>
+          </div>
         </Card.Body>
       </CommonCard>
       <CommonCard
-        bgColor="#f3e5ff"
-        textColor="#a855f7"
+        bgColor="#efe5f7ff"
+        textColor="#000"
         minWidth="220px"
-        style={{ borderLeft: "5px solid #a855f7" }}
+        style={{ borderLeft: "5px solid #a855f7", padding: "0px" }}
       >
         <Card.Body>
-          <FaBullseye className="text-purple fs-4" />
-          <p className="mb-1 text-muted">Target Cost %</p>
-          <h5 className="fw-bold text-purple">≤60%</h5>
+          <div className="d-flex d-flex-row">
+            <div>
+              <h6 className="fw-bold mb-1">Total Cost %</h6>
+              <h4 className="fw-bold">61.7%</h4>
+            </div>
+            <div style={{ marginLeft: "auto" }}>
+              <FaArrowTrendUp className="text-primary fs-4" />
+            </div>
+          </div>
         </Card.Body>
       </CommonCard>
     </Col>

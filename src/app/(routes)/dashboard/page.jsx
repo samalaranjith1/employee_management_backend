@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { act, useState } from "react";
 import DurationFilters from "@/features/dashboard/DurationFilters";
 import ConsumptionSummarry from "@/features/dashboard/ConsumptionSummarry";
 import ActionableInsights from "@/features/dashboard/ActionableInsights";
@@ -33,14 +33,15 @@ import DepartmentConsumptionChart from "@/features/dashboard/DepartmentConsumpti
 import PeriodDataBreakdown from "@/features/dashboard/PeriodDataBreakDown";
 import SupplierDues from "@/features/dashboard/SupplierDues";
 import { ButtonGroup, ToggleButton } from "react-bootstrap";
-import SalesAnalytics from "../(smallPages)/sales_analytics/page";
-import ConsumptionHistoryAnalysis from "../(smallPages)/consumption_analytics/page";
-import PurchaseAnalytics from "../(smallPages)/purchase_analytics/page";
-import RecipeInsights from "../(smallPages)/reciepe_analytics/page";
-import WarehouseStockAnalytics from "../(smallPages)/ware_house_analytics/page";
-import ItemPriceChangeAnalytics from "../(smallPages)/item_price_change_analytics/page";
-import ConsumptionClosingAnalysis from "../(smallPages)/consumption_closing_analytics/page";
-import WastageAnalytics from "../(smallPages)/wastage_analytics/page";
+import SalesAnalytics from "../sp/sales_analytics/page";
+import ConsumptionHistoryAnalysis from "../sp/consumption_analytics/page";
+import PurchaseAnalytics from "../sp/purchase_analytics/page";
+import RecipeInsights from "../sp/reciepe_analytics/page";
+import WarehouseStockAnalytics from "../sp/ware_house_analytics/page";
+import ItemPriceChangeAnalytics from "../sp/item_price_change_analytics/page";
+import ConsumptionClosingAnalysis from "../sp/consumption_closing_analytics/page";
+import WastageAnalytics from "../sp/wastage_analytics/page";
+import SecondNavBar from "./@Navbar/page";
 
 export default function Page() {
   const [activeTab, setActiveTab] = useState("Dashboard");
@@ -61,76 +62,13 @@ export default function Page() {
     <div>
       <div className="mt-4 pt-5"></div>
       {/* ✅ Duration filter stays outside tabs */}
-      <MainComponentHoldingCard>
+      <div className="d-md-none d-sm-flex">
         <DurationFilters />
-      </MainComponentHoldingCard>
-      {/* ✅ Top Navigation Tabs */}
-      <div
-        style={{ width: "100%", overflowX: "auto" }}
-        className="custom-scrollbar"
-      >
-        <ButtonGroup
-          className="rounded-pill w-max d-flex"
-          style={{
-            backgroundColor: "#0000ff",
-            minWidth: "100%",
-            flexWrap: "nowrap",
-            color: "white",
-          }}
-        >
-          {tabs.map((label) => {
-            const selected = activeTab === label;
-            return (
-              <ToggleButton
-                key={label}
-                id={`dashboard-tabs-${label}`}
-                type="radio"
-                variant="none"
-                checked={selected}
-                value={label}
-                onChange={(e) => setActiveTab(e.currentTarget.value)}
-                className="rounded-pill flex-grow-0"
-                style={{
-                  fontSize: "15px",
-                  padding: "10px 20px",
-                  fontWeight: 600,
-                  backgroundColor: selected ? "#FF6600" : "transparent",
-                  color: selected ? "#fff" : "#fff",
-                  border: "none",
-                  boxShadow: "none",
-                  cursor: "pointer",
-                  userSelect: "none",
-                  transition: "background 0.25s,color 0.2s",
-                  whiteSpace: "nowrap",
-                }}
-              >
-                {label}
-              </ToggleButton>
-            );
-          })}
-          {/* DurationFilters displayed from md and up */}
-          <div className="d-none d-md-flex ms-auto">
-            <DurationFilters />
-          </div>
-        </ButtonGroup>
-
-        <style jsx>{`
-          .custom-scrollbar::-webkit-scrollbar {
-            height: 6px;
-          }
-          .custom-scrollbar::-webkit-scrollbar-track {
-            background: transparent;
-          }
-          .custom-scrollbar::-webkit-scrollbar-thumb {
-            background-color: rgba(0, 0, 0, 0.2);
-            border-radius: 3px;
-          }
-          .custom-scrollbar {
-            -ms-overflow-style: none; /* IE and Edge */
-            scrollbar-width: thin; /* Firefox */
-          }
-        `}</style>
       </div>
+      {/* ✅ Top Navigation Tabs */}
+      <SecondNavBar activeTab={activeTab} setActiveTab={setActiveTab} />
+
+
 
       {/* ✅ Tab Content */}
       <div className="mt-2">
@@ -160,9 +98,9 @@ export default function Page() {
             <MainComponentHoldingCard>
               <DepartmentPerformanceAnalysis />
             </MainComponentHoldingCard>
-            <MainComponentHoldingCard>
+            {/* <MainComponentHoldingCard>
               <DepartmentAndItemConsumption />
-            </MainComponentHoldingCard>
+            </MainComponentHoldingCard> */}
             <MainComponentHoldingCard>
               <DepartmentConsumptionChart />
             </MainComponentHoldingCard>
@@ -208,9 +146,9 @@ export default function Page() {
             <MainComponentHoldingCard>
               <ProductPerformanceByPercentile />
             </MainComponentHoldingCard>
-            <MainComponentHoldingCard>
+            {/* <MainComponentHoldingCard>
               <RevenueContributionFromProducts />
-            </MainComponentHoldingCard>
+            </MainComponentHoldingCard> */}
             <MainComponentHoldingCard>
               <SuppliersManagement />
             </MainComponentHoldingCard>

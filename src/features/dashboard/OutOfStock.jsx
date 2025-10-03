@@ -12,6 +12,7 @@ import { useItemsBelowMOQSummary } from "@/services/item-service";
 import { outOfOfficeDataFormatter } from "@/utils/data_formatters/dashboardFormatter";
 import { handleNavigation } from "@/utils";
 import { useRouter } from "next/navigation";
+import { FaExclamationTriangle, FaExpand } from "react-icons/fa";
 
 export default function InventoryDashboard() {
   const { startDate, endDate } = useDashboardContext();
@@ -90,7 +91,7 @@ export default function InventoryDashboard() {
                 handleNavigation({
                   router,
                   url: "sp/ware_house_analytics",
-                  params: {startDate:startDate,endDate:endDate},
+                  params: { startDate: startDate, endDate: endDate },
                 })
               }
               style={{ cursor: "pointer" }}
@@ -106,14 +107,47 @@ export default function InventoryDashboard() {
             <Card className="p-2">
               <Row className="p-0">
                 <Col md={6}>
-                  <h5 style={{ fontWeight: "bold" }}>Items</h5>
+                  <div className="d-flex align-items-center justify-content-between p-1" style={{border:'2px solid #eee'}}>
+                    {/* Column 1: Icon */}
+                    <div>
+                      <FaExclamationTriangle size={24} />
+                    </div>
+
+                    {/* Column 2: Title + Description */}
+                    <div className="ms-3 flex-grow-1">
+                      <h6 className="mb-1">Items</h6>
+                      <p className="mb-0 text-muted">Monitor inventory levels and prevent stock out</p>
+                    </div>
+
+                    {/* Column 3: Number */}
+                    <div className="text-end">
+                      <FaExpand />
+                    </div>
+                  </div>
+
                   <OutOfStockTable
                     data={formattedData?.items || []}
                     getBadgeStyle={getBadgeStyle}
                   />
                 </Col>
                 <Col md={6}>
-                  <h5 style={{ fontWeight: "bold" }}>Base Items</h5>
+                  <div className="d-flex align-items-center justify-content-between p-1" style={{border:'2px solid #eee'}}>
+                    {/* Column 1: Icon */}
+                    <div>
+                      <FaExclamationTriangle size={24} />
+                    </div>
+
+                    {/* Column 2: Title + Description */}
+                    <div className="ms-3 flex-grow-1">
+                      <h6 className="mb-1">Base Items</h6>
+                      <p className="mb-0 text-muted">Monitor inventory levels and prevent stock out</p>
+                    </div>
+
+                    {/* Column 3: Number */}
+                    <div className="text-end">
+                      <FaExpand />
+                    </div>
+                  </div>
                   <OutOfStockTable
                     data={formattedData?.baseItems || []}
                     getBadgeStyle={getBadgeStyle}

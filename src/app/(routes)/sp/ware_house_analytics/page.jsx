@@ -8,11 +8,16 @@ import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer
 import AnalyticsPage from "@/components/common/smallPages/AnalyticsPage";
 import { useItemsBelowMOQList } from "@/services/item-service";
 import { stockItemDataFormatter } from "@/utils/data_formatters/smallPagesDataFormatter";
+import { usePathname } from "next/navigation";
+import { useDashboardContext } from "@/contexts/DashboardContext";
 
 export default function WarehouseStockAnalytics() {
   const { isCategoriesLoading, isItemsLoading, categoryOptions, itemOptions } =
     useOrgFilters();
   const searchParams = useSearchParams();
+  const { startDate: startDateCT, endDate: endDateCT } = useDashboardContext()
+  const pathname = usePathname();
+  const isDashboard = pathname === "/" || pathname === "/dashboard";
   const randomKey = Array.from(searchParams.keys())[0] || "WarehouseStock";
 
   const {
@@ -190,12 +195,13 @@ export default function WarehouseStockAnalytics() {
 
   return (
     <div style={{ background: "#f2f3fb", minHeight: "100vh" }}>
-      <div style={styles.headerBar}>
+      {!isDashboard ? <div style={styles.headerBar}>
         <h1 style={styles.headerTitle}>Warehouse Stock Analytics</h1>
         <p style={styles.headerSubtitle}>
-          Monitor stock availability, categories, and warehouse-level inventory
+          Monitor inventory levels, track stock runway and manage warehouse operations with real-time analytics
         </p>
-      </div>
+      </div> : <div className="mt-5 p-5"></div>}
+
 
       <div style={styles.analyticsBox}>
         <ServiceRenderer
@@ -203,8 +209,8 @@ export default function WarehouseStockAnalytics() {
           queryKey={[
             "itemsBelowMOQList",
             {
-              startdt: formatDate(startDate),
-              enddt: formatDate(endDate),
+              startdt: isDashboard ? startDateCT : formatDate(startDate),
+              enddt: isDashboard ? endDateCT : formatDate(endDate),
               outlet: 1,
               userId: 7,
               categoryId: filters.category || null,
@@ -213,8 +219,8 @@ export default function WarehouseStockAnalytics() {
           ]}
           queryFn={() =>
             useItemsBelowMOQList({
-              startdt: formatDate(startDate),
-              enddt: formatDate(endDate),
+              startdt: isDashboard ? startDateCT : formatDate(startDate),
+              enddt: isDashboard ? endDateCT : formatDate(endDate),
               outlet: 1,
               userId: 7,
               categoryId: filters.category || null,
@@ -223,8 +229,8 @@ export default function WarehouseStockAnalytics() {
           }
           queryArgs={[
             {
-              startdt: formatDate(startDate),
-              enddt: formatDate(endDate),
+              startdt: isDashboard ? startDateCT : formatDate(startDate),
+              enddt: isDashboard ? endDateCT : formatDate(endDate),
               outlet: 1,
               userId: 7,
               categories: filters.category || null,
@@ -239,7 +245,7 @@ export default function WarehouseStockAnalytics() {
               styles={styles}
               filters={[
                 {
-                  label: "Item Categories",
+                  label: "Item Category",
                   options: isCategoriesLoading ? [] : categoryOptions,
                   value: filters.category,
                   onChange: (val) =>

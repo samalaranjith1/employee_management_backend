@@ -106,8 +106,8 @@ export default function AnalyticsPage({
   // Filters config for useTableControls
   const filtersConfig = filterColumnKey
     ? {
-        [filterColumnKey]: ["All", ...uniqueFilterValues],
-      }
+      [filterColumnKey]: ["All", ...uniqueFilterValues],
+    }
     : {};
 
   // Table controls (search + filters)
@@ -132,8 +132,8 @@ export default function AnalyticsPage({
 
   return (
     <div style={{ position: "relative", top: "-80px" }}>
-      {!showOnlyTable && (
-        <>
+      <>
+        {!showOnlyTable &&
           <Container
             style={{
               borderRadius: 18,
@@ -217,10 +217,10 @@ export default function AnalyticsPage({
                 </Col>
               </Row>
             </Card.Body>
-          </Container>
+          </Container>}
 
-          {/* Summary Cards */}
-          <Row className="mb-4">
+        {/* Summary Cards */}
+        {/* <Row className="mb-4">
             {summaryCards.map((card) => (
               <Col key={card.id} md={4}>
                 <Card style={summaryCard(card.bgColor)}>
@@ -236,11 +236,31 @@ export default function AnalyticsPage({
                 </Card>
               </Col>
             ))}
-          </Row>
-        </>
-      )}
+          </Row> */}
+        <Row className="mb-4 justify-content-evenly">
+          {summaryCards.map((card, index) => (
+            <Col
+              key={card.id}
+              md={summaryCards.length === 2 ? 6 : 4} // 6 columns = 50% (≈ 50vw), else 4 (33.3%)
+              className="d-flex justify-content-center"
+            >
+              <Card style={{ ...summaryCard(card.bgColor), width: summaryCards.length === 2 ? "50vw" : "100%" }}>
+                <Card.Body style={{ padding: "18px 22px" }}>
+                  <div style={{ display: "flex", alignItems: "center" }}>
+                    <div style={iconCircle(card.iconBg)}>{card.icon}</div>
+                    <div>
+                      <div style={cardTitle}>{card.title}</div>
+                      <div style={cardValue}>{card.value}</div>
+                    </div>
+                  </div>
+                </Card.Body>
+              </Card>
+            </Col>
+          ))}
+        </Row>
+      </>
+      {/* )} */}
 
-      {/* Data Table */}
       <Card
         style={{
           borderRadius: 22,

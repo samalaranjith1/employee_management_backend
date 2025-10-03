@@ -1,0 +1,150 @@
+.scrollmenu {
+  display: flex;
+  overflow-x: auto; /* enable horizontal scroll */
+  -webkit-overflow-scrolling: touch; /* smooth scrolling on iOS */
+  scrollbar-width: none; /* Firefox */
+  scroll-behavior: smooth;
+  width: 100%;
+  padding: 4px 0;
+  background-color: #1f12d3;
+  white-space: nowrap; /* prevent wrapping */
+}
+
+.scrollmenu::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Edge */
+}
+
+/* Tab style */
+.dashboard-tab {
+  flex: 0 0 auto; /* prevent shrinking, maintain width */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 24px;
+  margin-right: 8px;
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
+  color: #b2b6bc;
+  white-space: nowrap; /* No wrapping text */
+  border-bottom: 3px solid transparent;
+  transition: all 0.2s;
+  border-radius: 20px;
+}
+
+.dashboard-tab.active {
+  color: #151818;
+  border-bottom: 3px solid #ff6600;
+}
+
+.dashboard-tab:last-child {
+  margin-right: 0;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .dashboard-tab {
+    padding: 10px 16px;
+    font-size: 14px;
+  }
+}
+.scrollmenu {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff;
+  padding: 0 0 4px 0;
+  border-bottom: 1px solid #f3f3f3;
+}
+
+.tabs-row {
+  display: flex;
+  overflow-x: auto;
+  white-space: nowrap;
+  flex: 1;
+}
+
+/* Hide scrollbar for webkit browsers */
+.tabs-row::-webkit-scrollbar {
+  display: none;
+}
+.tabs-row {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+/* Tab style */
+.dashboard-tab {
+  flex: 0 0 auto;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-weight: 500;
+  font-size: 18px;
+  color: #bac1ce;
+  padding: 0 32px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -3px; /* aligns underline flush to bottom border */
+  transition: all 0.2s;
+}
+
+.dashboard-tab.active {
+  color: #222;
+  font-weight: 600;
+  border-bottom: 3px solid #ff6600;
+}
+
+.dashboard-tab:last-child {
+  margin-right: 0;
+}
+
+/* Duration filter styling (right side) */
+.duration-filters {
+  display: flex;
+  align-items: center;
+  margin-left: 16px;
+  background: #fff;
+  border: 1px solid #ff6600;
+  border-radius: 24px;
+  height: 46px;
+  padding: 0 18px;
+  font-size: 16px;
+  color: #222;
+  box-shadow: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .dashboard-tab {
+    padding: 0 20px;
+    font-size: 15px;
+    height: 44px;
+  }
+  .duration-filters {
+    height: 38px;
+    font-size: 15px;
+    padding: 0 12px;
+  }
+}
+
+@media (max-width: 768px) {
+  .scrollmenu {
+    flex-direction: column;
+    align-items: flex-start;
+    padding-bottom: 0;
+  }
+  .tabs-row {
+    width: 100vw;
+  }
+  .duration-filters {
+    margin-top: 8px;
+    margin-left: 0;
+  }
+}

@@ -65,6 +65,25 @@ const basePath = "https://flavourheaven.in/costonomy-services/";
 // }
 
 // below version is with out any storage working perfectly
+// export function useApiQuery({
+//   key, // Array query key
+//   endpoint, // API endpoint string
+//   params = {}, // URL params
+//   config = {}, // axios config (headers, etc.)
+//   options = {}, // React Query options (select, enabled, etc.)
+// }) {
+//   return useQuery({
+//     queryKey: key,
+//     queryFn: async () => {
+//       const { data } = await axios.get(`${basePath}${endpoint}`, {
+//         params,
+//         ...config,
+//       });
+//       return data;
+//     },
+//     ...options,
+//   });
+// }
 export function useApiQuery({
   key, // Array query key
   endpoint, // API endpoint string
@@ -73,7 +92,7 @@ export function useApiQuery({
   options = {}, // React Query options (select, enabled, etc.)
 }) {
   return useQuery({
-    queryKey: key,
+    queryKey: [...key, params], // include params in the key to trigger refetch
     queryFn: async () => {
       const { data } = await axios.get(`${basePath}${endpoint}`, {
         params,
@@ -81,9 +100,14 @@ export function useApiQuery({
       });
       return data;
     },
+    staleTime: 300000, // 5 minutes
+    cacheTime: 600000, // 10 minutes
+    refetchOnWindowFocus: true, // Refetch on window focus
+    keepPreviousData: true, // ✅ Prevents UI flicker when params change
     ...options,
   });
 }
+
 //working for the first time later they are not working
 //  export function useApiQuery({
 //   key,

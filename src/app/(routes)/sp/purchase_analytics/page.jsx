@@ -8,11 +8,17 @@ import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer
 import AnalyticsPage from "@/components/common/smallPages/AnalyticsPage";
 import { useItemsPurchaseHistory } from "@/services/item-service";
 import { purchaseHistoryFormatter } from "@/utils/data_formatters/smallPagesDataFormatter";
+import { usePathname } from "next/navigation";
+import { useDashboardContext } from "@/contexts/DashboardContext";
 
 export default function PurchaseAnalytics() {
-  const { isCategoriesLoading, isItemsLoading, categoryOptions, itemOptions } =
+  const { isSuppliersLoading, isItemsLoading, supplierOptions, itemOptions } 
+  =
     useOrgFilters();
   const searchParams = useSearchParams();
+const { startDate: startDateCT, endDate: endDateCT } = useDashboardContext()
+const pathname = usePathname();
+const isDashboard = pathname === "/" || pathname === "/dashboard";
   const randomKey = Array.from(searchParams.keys())[0] || "PurchaseAnalytics";
 
   const {
@@ -27,7 +33,7 @@ export default function PurchaseAnalytics() {
     searchQuery,
     setSearchQuery,
   } = useSessionStorageAnalytics(randomKey, {
-    filters: { category: "", item: "" },
+    filters: { supplier: "", item: "" },
     startDate: null,
     endDate: null,
     activeDateRange: "Today",
@@ -36,7 +42,7 @@ export default function PurchaseAnalytics() {
 
   const handleAnalyse = () => {
     console.log("Analyse clicked with:", {
-      category: filters.category,
+      supplier: filters.supplier,
       item: filters.item,
       activeDateRange,
       searchQuery,
@@ -47,7 +53,7 @@ export default function PurchaseAnalytics() {
 
   const handleExport = () => {
     console.log("Export clicked with:", {
-      category: filters.category,
+      supplier: filters.supplier,
       item: filters.item,
       activeDateRange,
       searchQuery,
@@ -58,7 +64,7 @@ export default function PurchaseAnalytics() {
 
   const handleFilter = () => {
     console.log("Filter clicked with:", {
-      category: filters.category,
+      supplier: filters.supplier,
       item: filters.item,
       activeDateRange,
       searchQuery,
@@ -190,13 +196,13 @@ export default function PurchaseAnalytics() {
 
   return (
     <div style={{ background: "#f2f3fb", minHeight: "100vh" }}>
-      <div style={styles.headerBar}>
+      {!isDashboard ? <div style={styles.headerBar}>
         <h1 style={styles.headerTitle}>Purchase Analytics</h1>
         <p style={styles.headerSubtitle}>
-          Monitor inventory levels, track stock runway, and manage warehouse
-          operations with real-time analytics
+          Real-time insights into your restaurant purchase patterns and supplier performance
         </p>
-      </div>
+      </div>  : <div className="mt-5 p-5"></div>}
+      
 
       <div style={styles.analyticsBox}>
         <ServiceRenderer
@@ -204,31 +210,31 @@ export default function PurchaseAnalytics() {
           queryKey={[
             "itemsPurchaseHistory",
             {
-              startdt: formatDate(startDate),
-              enddt: formatDate(endDate),
+              startdt: isDashboard ? startDateCT : formatDate(startDate),
+              enddt: isDashboard ? endDateCT : formatDate(endDate),
               outlet: 1,
               userId: 7,
-              categoryId: filters.category || null,
+              supplierId: filters.supplier || null,
               itemId: filters.item || null,
             },
           ]}
           queryFn={() =>
             useItemsPurchaseHistory({
-              startdt: formatDate(startDate),
-              enddt: formatDate(endDate),
+              startdt: isDashboard ? startDateCT : formatDate(startDate),
+              enddt: isDashboard ? endDateCT : formatDate(endDate),
               outlet: 1,
               userId: 7,
-              categories: filters.category || null,
+              suppliers: filters.supplier || null,
               items: filters.item || null,
             }).queryFn
           }
           queryArgs={[
             {
-              startdt: formatDate(startDate),
-              enddt: formatDate(endDate),
+              startdt: isDashboard ? startDateCT : formatDate(startDate),
+              enddt: isDashboard ? endDateCT : formatDate(endDate),
               outlet: 1,
               userId: 7,
-              categories: filters.category || null,
+              suppliers: filters.supplier || null,
               items: filters.item || null,
             },
           ]}
@@ -240,11 +246,11 @@ export default function PurchaseAnalytics() {
               styles={styles}
               filters={[
                 {
-                  label: "Item Category",
-                  options: isCategoriesLoading ? [] : categoryOptions,
-                  value: filters.category,
+                  label: "Supplier",
+                  options: isSuppliersLoading ? [] : supplierOptions,
+                  value: filters.supplier,
                   onChange: (val) =>
-                    setFilters((f) => ({ ...f, category: val })),
+                    setFilters((f) => ({ ...f, supplier: val })),
                 },
                 {
                   label: "Items",

@@ -1,18 +1,22 @@
 "use client";
 import React from "react";
 import { useOrgFilters } from "@/components/hooks/useOrgFilters";
-import { useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { formatDate } from "@/utils";
 import { useSessionStorageAnalytics } from "@/components/hooks/useSessionStorageAnalytics";
 import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer";
 import AnalyticsPage from "@/components/common/smallPages/AnalyticsPage";
 import { useItemsConsumptionClosingHistory } from "@/services/item-service";
 import { consumptionClosingFormatter } from "@/utils/data_formatters/smallPagesDataFormatter";
+import { useDashboardContext } from "@/contexts/DashboardContext";
 
 export default function ConsumptionClosingAnalysis() {
   const { isDeptLoading, isItemsLoading, departmentOptions, itemOptions } =
     useOrgFilters();
   const searchParams = useSearchParams();
+const { startDate: startDateCT, endDate: endDateCT } = useDashboardContext()
+const pathname = usePathname();
+const isDashboard = pathname === "/" || pathname === "/dashboard";
   const randomKey = Array.from(searchParams.keys())[0] || "ConsumptionClosing";
 
   const {
@@ -190,13 +194,15 @@ export default function ConsumptionClosingAnalysis() {
 
   return (
     <div style={{ background: "#f2f3fb", minHeight: "100vh" }}>
+      {!isDashboard ?  
       <div style={styles.headerBar}>
         <h1 style={styles.headerTitle}>Consumption Closing Analysis</h1>
         <p style={styles.headerSubtitle}>
           End-of-day review and analysis of restaurant consumption data for
           operational closure
         </p>
-      </div>
+      </div> : <div className="mt-5 p-5"></div>}
+      
 
       <div style={styles.analyticsBox}>
         <ServiceRenderer
@@ -204,8 +210,8 @@ export default function ConsumptionClosingAnalysis() {
           queryKey={[
             "itemsConsumptionClosingHistory",
             {
-              startdt: formatDate(startDate),
-              enddt: formatDate(endDate),
+              startdt: isDashboard ? startDateCT : formatDate(startDate),
+              enddt: isDashboard ? endDateCT : formatDate(endDate),
               outlet: 1,
               userId: 7,
               departmentId: filters.department || null,
@@ -214,8 +220,8 @@ export default function ConsumptionClosingAnalysis() {
           ]}
           queryFn={() =>
             useItemsConsumptionClosingHistory({
-              startdt: formatDate(startDate),
-              enddt: formatDate(endDate),
+              startdt: isDashboard ? startDateCT : formatDate(startDate),
+              enddt: isDashboard ? endDateCT : formatDate(endDate),
               outlet: 1,
               userId: 7,
               departmentId: filters.department || null,
@@ -224,8 +230,8 @@ export default function ConsumptionClosingAnalysis() {
           }
           queryArgs={[
             {
-              startdt: formatDate(startDate),
-              enddt: formatDate(endDate),
+              startdt: isDashboard ? startDateCT : formatDate(startDate),
+              enddt: isDashboard ? endDateCT : formatDate(endDate),
               outlet: 1,
               userId: 7,
               departments: filters.department || null,

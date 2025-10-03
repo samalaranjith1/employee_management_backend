@@ -8,6 +8,8 @@ import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer
 import AnalyticsPage from "@/components/common/smallPages/AnalyticsPage";
 import { useSalesProductsDailyList } from "@/services/sales-service";
 import { salesAnalyticsFormatter } from "@/utils/data_formatters/smallPagesDataFormatter";
+import { usePathname } from "next/navigation";
+import { useDashboardContext } from "@/contexts/DashboardContext";
 
 export default function SalesAnalytics() {
   const {
@@ -19,6 +21,9 @@ export default function SalesAnalytics() {
     productOptions,
   } = useOrgFilters();
   const searchParams = useSearchParams();
+  const { startDate: startDateCT, endDate: endDateCT } = useDashboardContext()
+  const pathname = usePathname();
+  const isDashboard = pathname === "/" || pathname === "/dashboard";
   const randomKey = Array.from(searchParams.keys())[0] || "SalesAnalytics";
 
   const {
@@ -199,13 +204,14 @@ export default function SalesAnalytics() {
 
   return (
     <div style={{ background: "#f2f3fb", minHeight: "100vh" }}>
-      <div style={styles.headerBar}>
+      {!isDashboard ? <div style={styles.headerBar}>
         <h1 style={styles.headerTitle}>Sales Analytics</h1>
         <p style={styles.headerSubtitle}>
           Real-time insights into your restaurant sales performance and revenue
           trends
         </p>
-      </div>
+      </div> : <div className="mt-5 p-5"></div>}
+
 
       <div style={styles.analyticsBox}>
         <ServiceRenderer
@@ -213,8 +219,8 @@ export default function SalesAnalytics() {
           queryKey={[
             "salesProductsDailyList",
             {
-              startdt: formatDate(startDate),
-              enddt: formatDate(endDate),
+              startdt: isDashboard ? startDateCT : formatDate(startDate),
+              enddt: isDashboard ? endDateCT : formatDate(endDate),
               outlet: 1,
               userId: 7,
               departments: filters.department || null,
@@ -224,8 +230,8 @@ export default function SalesAnalytics() {
           ]}
           queryFn={() =>
             useSalesProductsDailyList({
-              startdt: formatDate(startDate),
-              enddt: formatDate(endDate),
+              startdt: isDashboard ? startDateCT : formatDate(startDate),
+              enddt: isDashboard ? endDateCT : formatDate(endDate),
               outlet: 1,
               userId: 7,
               departments: filters.department || null,
@@ -235,8 +241,8 @@ export default function SalesAnalytics() {
           }
           queryArgs={[
             {
-              startdt: formatDate(startDate),
-              enddt: formatDate(endDate),
+              startdt: isDashboard ? startDateCT : formatDate(startDate),
+              enddt: isDashboard ? endDateCT : formatDate(endDate),
               outlet: 1,
               userId: 7,
               departments: filters.department || null,

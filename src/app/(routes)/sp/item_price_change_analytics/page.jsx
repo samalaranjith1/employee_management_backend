@@ -8,12 +8,17 @@ import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer
 import AnalyticsPage from "@/components/common/smallPages/AnalyticsPage";
 import { useItemsPriceChangeRecentList } from "@/services/item-service";
 import { itemPriceChangeFormatter } from "@/utils/data_formatters/smallPagesDataFormatter";
+import { usePathname } from "next/navigation";
+import { useDashboardContext } from "@/contexts/DashboardContext";
 
 export default function ItemPriceChangeAnalytics() {
   const { isSuppliersLoading, isItemsLoading, supplierOptions, itemOptions } =
     useOrgFilters();
 
   const searchParams = useSearchParams();
+const { startDate: startDateCT, endDate: endDateCT } = useDashboardContext()
+const pathname = usePathname();
+const isDashboard = pathname === "/" || pathname === "/dashboard";
   const randomKey =
     Array.from(searchParams.keys())[0] || "ItemPriceChangeAnalytics";
 
@@ -193,12 +198,13 @@ export default function ItemPriceChangeAnalytics() {
   return (
     <div style={{ background: "#f2f3fb", minHeight: "100vh" }}>
       {/* Header */}
-      <div style={styles.headerBar}>
+      {!isDashboard ? <div style={styles.headerBar}>
         <h1 style={styles.headerTitle}>Item Price Change Analytics</h1>
         <p style={styles.headerSubtitle}>
-          Track item price fluctuations and their financial impact
+          Monitor inventory levels, track stock runway and manage warehouse operations with real-time analytics
         </p>
-      </div>
+      </div>  : <div className="mt-5 p-5"></div>}
+      
 
       {/* Analytics Section */}
       <div style={styles.analyticsBox}>
@@ -207,8 +213,8 @@ export default function ItemPriceChangeAnalytics() {
           queryKey={[
             "itemsPriceChangeRecentList",
             {
-              startdt: formatDate(startDate),
-              enddt: formatDate(endDate),
+              startdt: isDashboard ? startDateCT : formatDate(startDate),
+              enddt: isDashboard ? endDateCT : formatDate(endDate),
               outlet: 1,
               userId: 7,
               supplierId: filters.supplier?.id || null,
@@ -217,8 +223,8 @@ export default function ItemPriceChangeAnalytics() {
           ]}
           queryFn={() =>
             useItemsPriceChangeRecentList({
-              startdt: formatDate(startDate),
-              enddt: formatDate(endDate),
+              startdt: isDashboard ? startDateCT : formatDate(startDate),
+              enddt: isDashboard ? endDateCT : formatDate(endDate),
               outlet: 1,
               userId: 7,
               suppliers: filters.supplier || null,
@@ -227,8 +233,8 @@ export default function ItemPriceChangeAnalytics() {
           }
           queryArgs={[
             {
-              startdt: formatDate(startDate),
-              enddt: formatDate(endDate),
+              startdt: isDashboard ? startDateCT : formatDate(startDate),
+              enddt: isDashboard ? endDateCT : formatDate(endDate),
               outlet: 1,
               userId: 7,
               suppliers: filters.supplier || null,

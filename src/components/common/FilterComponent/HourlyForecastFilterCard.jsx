@@ -83,8 +83,16 @@ function HourlyForecastFilterCard({
           style={{ backgroundColor: "#e9f1ff", borderColor: "#e9f1ff" }}
         >
           <Card.Body>
-            <h6 className="fw-bold mb-1 text-primary">Daily Forecast</h6>
-            <h4 className="fw-bold text-dark">{currentData.dailyForecast}</h4>
+            <div className="d-flex d-flex-row">
+              <div>
+                <h6 className="fw-bold mb-1 text-primary">Daily Forecast</h6>
+                <h4 className="fw-bold text-dark">{currentData.dailyForecast}</h4>
+              </div>
+              <div style={{ marginLeft: "auto" }}>
+                {currentData.dailyForecastIcon}
+              </div>
+            </div>
+
           </Card.Body>
         </Card>
         <Card
@@ -92,8 +100,17 @@ function HourlyForecastFilterCard({
           style={{ backgroundColor: "#dff8e9", borderColor: "#dff8e9" }}
         >
           <Card.Body>
-            <h6 className="fw-bold mb-1 text-success">Actual So Far</h6>
-            <h4 className="fw-bold text-dark">{currentData.actualSoFar}</h4>
+            <div className="d-flex d-flex-row">
+
+              <div>
+                <h6 className="fw-bold mb-1 text-success">Actual So Far</h6>
+                <h4 className="fw-bold text-dark">{currentData.actualSoFar}</h4>
+              </div>
+              <div style={{ marginLeft: "auto" }}>
+                {currentData.actualSoFarIcon}
+              </div>
+            </div>
+
           </Card.Body>
         </Card>
         <Card
@@ -101,8 +118,14 @@ function HourlyForecastFilterCard({
           style={{ backgroundColor: "#ffe9e9", borderColor: "#ffe9e9" }}
         >
           <Card.Body>
-            <h6 className="fw-bold mb-1 text-danger">Remaining Target</h6>
-            <h4 className="fw-bold text-dark">{currentData.remainingTarget}</h4>
+            <div className="d-flex d-flex-row">
+              <div>
+                <h6 className="fw-bold mb-1 text-danger">Remaining Target</h6>
+                <h4 className="fw-bold text-dark">{currentData.remainingTarget}</h4>
+              </div>
+              <div style={{ marginLeft: "auto" }}>
+                {currentData.remainingTargetIcon}</div>
+            </div>
           </Card.Body>
         </Card>
       </Col>
@@ -134,7 +157,7 @@ function HourlyForecastFilterCard({
             </div>
             <div
               className="position-relative text-center"
-              style={{ width: isMobile?"98vw":'100%', marginLeft:isMobile?"-40px" :'0px'}}
+              style={{ width: isMobile ? "98vw" : '100%', marginLeft: isMobile ? "-40px" : '0px' }}
             >
               {renderGraph()}
             </div>

@@ -23,6 +23,8 @@ import {
   FaShoppingCart,
   FaWallet,
   FaTrashAlt,
+  FaCartPlus,
+  FaArrowRight,
 } from "react-icons/fa";
 import {
   format,
@@ -410,8 +412,8 @@ export function trendAnalysisFormatter(data, view) {
         view === "Weekly"
           ? `Week ${idx + 1}`
           : view === "Monthly"
-          ? format(parseISO(item.startDate), "MMM")
-          : format(parseISO(item.startDate), "MMM d"),
+            ? format(parseISO(item.startDate), "MMM")
+            : format(parseISO(item.startDate), "MMM d"),
 
       Sales: item.netSales ?? 0,
       Consumption: item?.consumptionValue ?? 0,
@@ -505,18 +507,22 @@ export function periodDataBreakdownFormatter(raw, view) {
       value: `${(current.consumptionPercentage || 0).toFixed(1)}%`,
       change: "-2.1%", // placeholder until API provides delta
       color: current.consumptionPercentage > 60 ? "danger" : "success",
+      bg: "white"
     },
     {
       title: `AVERAGE ${view.toUpperCase()} SALES`,
       value: formatCurrency(current.netSales),
       change: "+8.3%",
       color: "success",
+      bg: "white"
+
     },
     {
       title: `AVERAGE ${view.toUpperCase()} CONSUMPTION`,
       value: formatCurrency(current.consumptionValue),
       change: "+5.7%",
       color: "success",
+      bg: "white"
     },
     {
       title: `AVERAGE ${view.toUpperCase()} WASTE`,
@@ -669,29 +675,33 @@ export function itemConsumptionEfficiencyDataFormatter(data) {
 
   const summaryCards = [
     {
-      icon: <FaExclamationTriangle size={24} color="#ff4d4f" />,
-      label: "Critical Items",
-      value: data.redItems ?? 0,
-      bg: "#ffe6e6",
-    },
-    {
       icon: <FaBoxOpen size={24} color="#ff9800" />,
       label: "Total Items",
       value:
         (data.redItems ?? 0) + (data.greenItems ?? 0) + (data.orangeItems ?? 0),
-      bg: "#fff3e0",
+      bg: "#ddf0f5ff",
+
     },
+    {
+      icon: <FaExclamationTriangle size={24} color="#ff4d4f" />,
+      label: "Critical Items",
+      value: data.redItems ?? 0,
+      bg: "#d1f0cfff",
+
+    },
+
     {
       icon: <FaRupeeSign size={24} color="#f44336" />,
       label: "Total Waste",
       value: formatCurrency(data.burn),
-      bg: "#fff0f0",
+      bg: "#fff3e0",
+
     },
     {
       icon: <FaPercent size={24} color="#ff9800" />,
       label: "Avg Waste",
       value: formatPercentage(data.avgBurn),
-      bg: "#fff8e1",
+      bg: "#f9e5f9ff",
     },
   ];
 
@@ -717,8 +727,8 @@ export function itemConsumptionEfficiencyDataFormatter(data) {
         row.status === "Critical"
           ? "Critical"
           : row.burn >= 25
-          ? "Medium"
-          : "Low",
+            ? "Medium"
+            : "Low",
     };
   });
 
@@ -841,6 +851,7 @@ export const consumptionDistributionDataFormatter = (apiData) => {
         ? `₹${apiData.consumptionValue.toLocaleString()}`
         : "₹0",
       color: "#E8F0FF",
+      icon: <FaCartPlus color="white" size={24} />
     },
     {
       label: "High Consumption",
@@ -849,6 +860,8 @@ export const consumptionDistributionDataFormatter = (apiData) => {
         ? `₹${apiData.high.value.toLocaleString()}`
         : "₹0",
       color: "#E8F8F0",
+      icon: <FaArrowUp color="white" size={24} />
+
     },
     {
       label: "Medium Consumption",
@@ -857,6 +870,8 @@ export const consumptionDistributionDataFormatter = (apiData) => {
         ? `₹${apiData.medium.value.toLocaleString()}`
         : "₹0",
       color: "#FFF8E1",
+      icon: <FaArrowDown color="white" size={24} />
+
     },
     {
       label: "Low Consumption",
@@ -865,6 +880,7 @@ export const consumptionDistributionDataFormatter = (apiData) => {
         ? `₹${apiData.low.value.toLocaleString()}`
         : "₹0",
       color: "#FFEAEA",
+      icon: <FaArrowDown color="white" size={24} />
     },
   ];
 
@@ -887,10 +903,10 @@ export const consumptionDistributionDataFormatter = (apiData) => {
         item.classification === "High Consumption"
           ? "#4CAF50"
           : item.classification === "Medium Consumption"
-          ? "#FFC107"
-          : item.classification === "Low Consumption"
-          ? "#F44336"
-          : "#9E9E9E",
+            ? "#FFC107"
+            : item.classification === "Low Consumption"
+              ? "#F44336"
+              : "#9E9E9E",
     })) ?? [];
 
   return {
@@ -983,9 +999,8 @@ export function priceChangeDataFormatter(data) {
 
   const recentChanges = data?.recent?.map((item) => ({
     name: item.item?.name || "",
-    category: `${item.item?.categoryName || ""} • ${
-      item.projectedMonthlyQty || ""
-    }`,
+    category: `${item.item?.categoryName || ""} • ${item.projectedMonthlyQty || ""
+      }`,
     oldPrice: item.oldPrice,
     newPrice: item.newPrice,
     quantity: item.projectedMonthlyQty, // 👈 frontend needs to handle this
@@ -998,9 +1013,8 @@ export function priceChangeDataFormatter(data) {
 
   const futureHikes = data?.future?.map((item) => ({
     name: item.item?.name || "",
-    category: `${item.item?.categoryName || ""} • ${
-      item.projectedMonthlyQty || ""
-    }`,
+    category: `${item.item?.categoryName || ""} • ${item.projectedMonthlyQty || ""
+      }`,
     oldPrice: item.oldPrice,
     newPrice: item.newPrice,
     date: item.newPriceStartDate,
@@ -1060,7 +1074,7 @@ export function outOfOfficeDataFormatter(data) {
       size: `1 ${item.unit}`,
       code: `#${item.unitPrice}`, // Assuming this is unique code
       closing: latestPurchaseClosingDate,
-      itemId:item?.id
+      itemId: item?.id
     };
   });
 
@@ -1074,8 +1088,8 @@ export function outOfOfficeDataFormatter(data) {
         baseItem.status === "CRITICAL"
           ? "Critical"
           : baseItem.status === "OUT_OF_STOCK"
-          ? "Out of Stock"
-          : "Available",
+            ? "Out of Stock"
+            : "Available",
       category: baseItem.item.categoryName,
       size: `1 ${baseItem.item.unit}`,
       code: `#${baseItem.item.unitPrice}`,
@@ -1135,9 +1149,8 @@ export function recipesDataFormatter(data) {
     data.lossMakingProducts?.list?.map((item) => ({
       product: item.product?.name ?? "N/A",
       productId: item.product?.id,
-      subtitle: `${item.product?.categoryName ?? ""} • ₹${
-        item.product?.price ?? 0
-      }`,
+      subtitle: `${item.product?.categoryName ?? ""} • ₹${item.product?.price ?? 0
+        }`,
       items: item.sales?.itemsSold ?? 0,
       stock: item.stock ?? "In Stock", // fallback
       cost: item.totalMakingCost ? `₹${item.totalMakingCost}` : "N/A",
@@ -1154,10 +1167,9 @@ export function recipesDataFormatter(data) {
   const profitProducts =
     data.profitableProducts?.list?.map((item) => ({
       product: item.product?.name ?? "N/A",
-      productId:item.product?.id,
-      subtitle: `${item.product?.categoryName ?? ""} • ₹${
-        item.product?.price ?? 0
-      }`,
+      productId: item.product?.id,
+      subtitle: `${item.product?.categoryName ?? ""} • ₹${item.product?.price ?? 0
+        }`,
       items: item.sales?.itemsSold ?? 0,
       stock: item.stock ?? "In Stock", // fallback
       cost: item.totalMakingCost ? `₹${item.totalMakingCost}` : "N/A",
@@ -1262,9 +1274,8 @@ export function productPerformanceDetailsDataFormmatter(data) {
   return data.list.map((item) => ({
     product: item.product?.name ?? "N/A",
     productId: item.product?.id,
-    details: `${
-      item.product?.departmentName ?? item.product?.categoryName ?? "N/A"
-    }. ₹${item.product?.price ?? 0}`,
+    details: `${item.product?.departmentName ?? item.product?.categoryName ?? "N/A"
+      }. ₹${item.product?.price ?? 0}`,
     items: item.sales?.itemsSold ?? 0,
     netSales: formatCurrency(item.sales?.netSales),
     discount: formatCurrency(item.sales?.discount),
@@ -1321,6 +1332,8 @@ export function productPerformancePercentileTableFormatter(data) {
       amount: formatCurrency(data.totalSales),
       bgColor: "#dbe9ff",
       textColor: "#2a4cfa",
+      description: 'Menu Item analyzed',
+      icon: <FaCartPlus />
     },
     {
       label: data.high?.definition?.split(":")[0] ?? "High",
@@ -1328,6 +1341,8 @@ export function productPerformancePercentileTableFormatter(data) {
       amount: formatCurrency(data.high?.value),
       bgColor: "#dbffea",
       textColor: "#23864b",
+      description: 'Top 50% products',
+      icon: <FaArrowTrendUp />
     },
     {
       label: data.medium?.definition?.split(":")[0] ?? "Medium",
@@ -1335,6 +1350,8 @@ export function productPerformancePercentileTableFormatter(data) {
       amount: formatCurrency(data.medium?.value),
       bgColor: "#fff6d4",
       textColor: "#d08e00",
+      description: 'Next 40% products',
+      icon: <FaArrowRight />
     },
     {
       label: data.low?.definition?.split(":")[0] ?? "Low",
@@ -1342,6 +1359,8 @@ export function productPerformancePercentileTableFormatter(data) {
       amount: formatCurrency(data.low?.value),
       bgColor: "#ffeaea",
       textColor: "#d93939",
+      description: 'Bottom 10% products',
+      icon: <FaArrowTrendDown />
     },
   ];
 

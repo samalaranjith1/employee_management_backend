@@ -112,7 +112,7 @@ export default function PriceChanges() {
         {(priceChangeData, refetch) => (
           <>
             {/* Top Header Card */}
-            <Card style={styles.headerCard} className="mb-4">
+            <Card style={styles.headerCard} className="mb-4 p-0">
               <Card.Body
                 style={{ cursor: "pointer" }}
                 onClick={() =>
