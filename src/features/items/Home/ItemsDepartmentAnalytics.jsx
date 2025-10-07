@@ -38,7 +38,7 @@ export default function ItemsDepartmentAnalytics() {
             <Col xs="auto" className="d-flex align-items-center justify-content-center p-2">
               <div
                 style={{
-                  background: "linear-gradient(135deg, #36C194 60%, #239B63 100%)",
+                  background: "#464df9",
                   borderRadius: "12px",
                   padding: "12px",
                   display: "flex",

@@ -3,18 +3,7 @@ import React, { useEffect } from "react";
 import DurationFilters from "@/features/dashboard/DurationFilters"; // ✅ use DateFilter directly
 import "./navbar.module.css";
 
-const SecondNavBar = ({ activeTab, setActiveTab }) => {
-  const tabs = [
-    "Dashboard",
-    "Sales",
-    "Consumption",
-    "Closing",
-    "Purchase",
-    "Recipe",
-    "Stock",
-    "Item Price",
-    "Wastage",
-  ];
+const SecondNavBar = ({ tabs,activeTab, setActiveTab,useAppContext }) => {
 
   return (
     <div
@@ -56,7 +45,7 @@ const SecondNavBar = ({ activeTab, setActiveTab }) => {
         style={{ marginLeft: "auto", display: "flex", alignItems: "center" }}
         className="mt-1 d-none d-md-flex"
       >
-        <DurationFilters />
+        <DurationFilters useAppContext={useAppContext}/>
       </div>
     </div>
   );

@@ -15,9 +15,11 @@ import { handleCustomChange, handlePreset } from "@/utils";
 import { presetOptions } from "@/constants";
 import "./css/datefilter.module.css";
 
-export default function DateFilter() {
+export default function DurationFilters({useAppContext}) {
+  // const { startDate, endDate, setStartDate, setEndDate } =
+  //   useDashboardContext();
   const { startDate, endDate, setStartDate, setEndDate } =
-    useDashboardContext();
+    useAppContext;
   const [active, setActive] = useState("today");
   const [showCalendar, setShowCalendar] = useState(false);
   const [isCompact, setIsCompact] = useState(false);

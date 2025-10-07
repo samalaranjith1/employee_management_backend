@@ -93,7 +93,7 @@ export default function ItemsSupplierProductsHeader({
             </Col>
 
             {/* Right: Date Filters (Desktop) */}
-            <Col xs="auto" className="d-none d-md-block">
+            {/* <Col xs="auto" className="d-none d-md-block">
               <div className="d-flex gap-2">
                 {dateFilters.map((label) => (
                   <Button
@@ -115,7 +115,7 @@ export default function ItemsSupplierProductsHeader({
                   </Button>
                 ))}
               </div>
-            </Col>
+            </Col> */}
           </Row>
 
           {/* RawData Cards Inside Header */}
@@ -160,7 +160,7 @@ export default function ItemsSupplierProductsHeader({
           )}
 
           {/* Mobile Filters (Dropdown style) */}
-          <Row className="d-flex d-md-none mt-3">
+          {/* <Row className="d-flex d-md-none mt-3">
             <Col xs={12}>
               <Dropdown className="w-100">
                 <Dropdown.Toggle
@@ -215,10 +215,10 @@ export default function ItemsSupplierProductsHeader({
                 </Dropdown.Menu>
               </Dropdown>
             </Col>
-          </Row>
+          </Row> */}
 
           {/* Calendar (only if Custom is chosen) */}
-          {showCalendar && (
+          {/* {showCalendar && (
             <Row className="mt-3 d-flex justify-content-center">
               <Col xs="auto" className="p-0 pt-1 bg-white rounded shadow-sm">
               <DatePicker
@@ -230,13 +230,12 @@ export default function ItemsSupplierProductsHeader({
               />
               </Col>
             </Row>
-          )}
+          )} */}
         </Container>
       </div>
 
       {/* Tabs Section */}
-      <div style={{ background: "#F8F9FA", padding: "12px 24px" }}>
-        {/* Desktop Tabs */}
+      {/* <div style={{ background: "#F8F9FA", padding: "12px 24px" }}>
         <Nav
           variant="underline"
           className="justify-content-center gap-4 d-none d-md-flex"
@@ -260,7 +259,6 @@ export default function ItemsSupplierProductsHeader({
           ))}
         </Nav>
 
-        {/* Mobile Tabs (Dropdown style) */}
         <div className="d-md-none">
           <Dropdown className="w-100">
             <Dropdown.Toggle
@@ -312,7 +310,7 @@ export default function ItemsSupplierProductsHeader({
             </Dropdown.Menu>
           </Dropdown>
         </div>
-      </div>
+      </div> */}
     </>
   );
 }

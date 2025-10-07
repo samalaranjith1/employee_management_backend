@@ -98,7 +98,7 @@ export default function ProductsIngreidentAnalysisGraph({
               paddingAngle={3}
               dataKey="value"
               labelLine={false}
-              label={renderCustomizedLabel}
+              // label={renderCustomizedLabel}
             >
               {processedData.map((entry, index) => (
                 <Cell

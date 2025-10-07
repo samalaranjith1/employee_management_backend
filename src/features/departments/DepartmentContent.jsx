@@ -29,7 +29,7 @@ function DepartmentContent({ activeKey, dateFilter }) {
       {/* Scrollable content */}
       <div style={{ flexGrow: 1, overflowY: "auto" }}>
         {activeKey.toLowerCase() === "home" && <DepartmentHome />}
-        {activeKey.toLowerCase() === "actionable-insights" && (
+        {activeKey.toLowerCase() === "actionable insights" && (
           <ActionableInsights />)
         }
         {activeKey.toLowerCase() === "products" && <DepartmentProducts />}

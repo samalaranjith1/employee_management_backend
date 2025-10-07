@@ -11,6 +11,9 @@ import DepartmentContent from "@/features/departments/DepartmentContent";
 import DepartmentClosingCanvas from "@/features/departments/DepartmentClosingCanvas";
 import { useDepartmentContext } from "@/contexts/DepartmentContext";
 import { useDashboardContext } from "@/contexts/DashboardContext";
+import SecondNavBar from "../dashboard/@Navbar/page";
+import DurationFilter from "@/features/dashboard/DurationFilters";
+import DurationFilters from "@/features/dashboard/DurationFilters";
 
 function DepartmentPage() {
   const [showCanvas, setShowCanvas] = useState(false);
@@ -24,6 +27,7 @@ function DepartmentPage() {
     setEndDate: setEndDateDashboard,
   } = useDashboardContext();
 
+  const useAppContext= useDepartmentContext()
   // Sync with dashboard context
   useEffect(() => {
     setStartDateDashboard(startDate);
@@ -112,9 +116,10 @@ useEffect(() => {
         department={rawData.department}
         onManageClick={() => setShowCanvas(true)}
       />
+      <div className="p-2 d-md-none"><DurationFilters useAppContext={useAppContext} /></div>
       <Container fluid className="mt-4">
         <DepartmentCards cards={rawData.cards} />
-        <DepartmentFilters
+        {/* <DepartmentFilters
           durationFilter={durationFilter}
           setDurationFilter={setDurationFilter}
           startDate={startDate}
@@ -124,12 +129,14 @@ useEffect(() => {
           navTabs={navTabs}
           activeKey={activeKey}
           setActiveKey={setActiveKey}
-        />
+        /> */}
+      <SecondNavBar tabs={navTabs} activeTab={activeKey} setActiveTab={setActiveKey} useAppContext={useAppContext} />
+{/* 
         <DepartmentTabs
           navTabs={navTabs}
           activeKey={activeKey}
           setActiveKey={setActiveKey}
-        />
+        /> */}
         <DepartmentContent
           activeKey={activeKey}
           durationFilter={durationFilter}

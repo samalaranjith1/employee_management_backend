@@ -42,9 +42,11 @@ import ItemPriceChangeAnalytics from "../sp/item_price_change_analytics/page";
 import ConsumptionClosingAnalysis from "../sp/consumption_closing_analytics/page";
 import WastageAnalytics from "../sp/wastage_analytics/page";
 import SecondNavBar from "./@Navbar/page";
+import { useDashboardContext } from "@/contexts/DashboardContext";
 
 export default function Page() {
   const [activeTab, setActiveTab] = useState("Dashboard");
+  const useAppContext = useDashboardContext()
 
   const tabs = [
     "Dashboard",
@@ -55,7 +57,7 @@ export default function Page() {
     "Recipe",
     "Stock",
     "Item Price",
-    "Wastage"
+    "Wastage",
   ];
 
   return (
@@ -63,10 +65,10 @@ export default function Page() {
       <div className="mt-4 pt-5"></div>
       {/* ✅ Duration filter stays outside tabs */}
       <div className="d-md-none d-sm-flex">
-        <DurationFilters />
+        <DurationFilters useAppContext={useAppContext}/>
       </div>
       {/* ✅ Top Navigation Tabs */}
-      <SecondNavBar activeTab={activeTab} setActiveTab={setActiveTab} />
+      <SecondNavBar tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} useAppContext={useAppContext} />
 
 
 

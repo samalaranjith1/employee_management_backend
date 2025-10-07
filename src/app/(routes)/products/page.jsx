@@ -6,6 +6,8 @@ import { useProductsContext } from "@/contexts/ProductsContext";
 import ItemsSupplierProductsHeader from "@/components/common/ItemsSupplierProductsHeader";
 import ProdcutsContent from "@/features/products/ProductsContent";
 import { FaBoxOpen, FaBullseye, FaCube, FaUserClock } from "react-icons/fa";
+import SecondNavBar from "../dashboard/@Navbar/page";
+import DurationFilters from "@/features/dashboard/DurationFilters";
 
 function ProductsPage() {
   const [activeTab, setActiveTab] = useState("Home");
@@ -17,6 +19,7 @@ function ProductsPage() {
     setEndDate: setEndDateDashboard,
   } = useDashboardContext();
 
+  const useAppContext= useProductsContext()
   // Sync with dashboard context
   useEffect(() => {
     setStartDateDashboard(startDate);
@@ -108,6 +111,8 @@ function ProductsPage() {
         startDate={startDate}
         endDate={endDate}
       />
+      <div className="p-2 d-md-none"><DurationFilters useAppContext={useAppContext} /></div>
+      <SecondNavBar tabs={navTabs} activeTab={activeTab} setActiveTab={setActiveTab} useAppContext={useAppContext} />
 
       <Container fluid className="mt-4">
         <ProdcutsContent

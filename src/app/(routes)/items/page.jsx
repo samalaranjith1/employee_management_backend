@@ -5,6 +5,8 @@ import { useDashboardContext } from "@/contexts/DashboardContext";
 import { useItemsContext } from "@/contexts/ItemsContext";
 import ItemsSupplierProductsHeader from "@/components/common/ItemsSupplierProductsHeader";
 import ItemsContent from "@/features/items/ItemsContent";
+import SecondNavBar from "../dashboard/@Navbar/page";
+import DurationFilters from "@/features/dashboard/DurationFilters";
 
 function ItemsPage() {
   const [activeTab, setActiveTab] = useState("Home");
@@ -15,6 +17,7 @@ function ItemsPage() {
     setStartDate: setStartDateDashboard,
     setEndDate: setEndDateDashboard,
   } = useDashboardContext();
+  const useAppContext = useItemsContext()
 
   // Sync with dashboard context
   useEffect(() => {
@@ -93,6 +96,8 @@ function ItemsPage() {
         startDate={startDate}
         endDate={endDate}
       />
+      <div className="p-2 d-md-none"><DurationFilters useAppContext={useAppContext} /></div>
+      <SecondNavBar tabs={navTabs} activeTab={activeTab} setActiveTab={setActiveTab} useAppContext={useAppContext} />
       <Container fluid className="mt-4">
         <ItemsContent activeTab={activeTab} durationFilter={durationFilter} />
       </Container>

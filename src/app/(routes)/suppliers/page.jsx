@@ -5,6 +5,8 @@ import { useDashboardContext } from "@/contexts/DashboardContext";
 import { useSuppliersContext } from "@/contexts/SuppliersContext";
 import ItemsSupplierProductsHeader from "@/components/common/ItemsSupplierProductsHeader";
 import SuppliersContent from "@/features/suppliers/SuppliersContent";
+import DurationFilters from "@/features/dashboard/DurationFilters";
+import SecondNavBar from "../dashboard/@Navbar/page";
 
 function SuppliersPage() {
   const [activeTab, setActiveTab] = useState("Home");
@@ -16,6 +18,7 @@ function SuppliersPage() {
     setStartDate: setStartDateDashboard,
     setEndDate: setEndDateDashboard,
   } = useDashboardContext();
+  const useAppContext = useSuppliersContext()
 
   // Sync with dashboard context
   useEffect(() => {
@@ -84,7 +87,8 @@ function SuppliersPage() {
         startDate={startDate}
         endDate={endDate}
       />
-
+<div className="p-2 d-md-none"><DurationFilters useAppContext={useAppContext} /></div>
+      <SecondNavBar tabs={navTabs} activeTab={activeTab} setActiveTab={setActiveTab} useAppContext={useAppContext} />
       <Container fluid className="mt-4">
         <SuppliersContent
           activeTab={activeTab}
