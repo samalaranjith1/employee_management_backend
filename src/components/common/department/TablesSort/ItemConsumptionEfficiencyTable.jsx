@@ -17,7 +17,7 @@ const DEPARTMENT_COLORS = {
 export default function ItemConsumptionEfficiencyTable({ tableData = [] }) {
   const columns = [
     { key: "name", label: "ITEM DETAILS" },
-    { key: "department", label: "DEPARTMENT" },
+    // { key: "department", label: "DEPARTMENT" },
     { key: "consumed", label: "CONSUMED" },
     { key: "sales", label: "SALES QUANTITY" },
     { key: "difference", label: "DIFFERENCE" },
@@ -129,7 +129,10 @@ export default function ItemConsumptionEfficiencyTable({ tableData = [] }) {
                   <tr key={idx} style={{ background: "#fff" }}>
                     {/* ITEM DETAILS */}
                     <td>
-                      <div className="fw-bold">{row.name}</div>
+                      <div className="fw-bold d-flex flex-column">
+                        <div className="">{row.name}</div>
+                        <div className="text-muted fw-normal">{row.subline}</div>
+                      </div>
                       <div
                         style={{
                           color: "#888",
@@ -144,7 +147,7 @@ export default function ItemConsumptionEfficiencyTable({ tableData = [] }) {
                     </td>
 
                     {/* DEPARTMENT */}
-                    <td>
+                    {/* <td>
                       <span
                         className="px-3 py-1 rounded-pill"
                         style={{
@@ -156,7 +159,7 @@ export default function ItemConsumptionEfficiencyTable({ tableData = [] }) {
                       >
                         {row.department}
                       </span>
-                    </td>
+                    </td> */}
 
                     {/* CONSUMED */}
                     <td style={{ fontWeight: 600, color: "#212121" }}>

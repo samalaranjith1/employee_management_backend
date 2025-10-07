@@ -17,7 +17,7 @@ export default function DepartmentConsumption() {
 
   return (
     <Container fluid className="mt-2" style={{ background: "#fff" }}>
-      <ComponentHeader
+      {/* <ComponentHeader
         title={"Department Consumption"}
         description={"Track consumption, waste and critical items"}
         titleColor={"fw-bold text-primary fs-4"}
@@ -27,7 +27,7 @@ export default function DepartmentConsumption() {
         titleIcon={
           <FaExclamationTriangle className="me-2" color="red" size={24} />
         }
-      />
+      /> */}
 
       <ServiceRenderer
         queryHook={useItemsUsageListDepartments}

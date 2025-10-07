@@ -8,6 +8,7 @@ import ItemConsumptionEfficiencyCards from "@/components/common/department/cards
 import ItemConsumptionEfficiencyTable from "@/components/common/department/TablesSort/ItemConsumptionEfficiencyTable";
 import { useDepartmentContext } from "@/contexts/DepartmentContext";
 import ComponentHeader from "@/components/common/ComponentHeader";
+import { IconTarget } from "@tabler/icons-react";
 
 export default function ItemConsumptionEfficiency() {
   const { startDate, endDate } = useDepartmentContext();
@@ -17,11 +18,18 @@ export default function ItemConsumptionEfficiency() {
       <ComponentHeader
         title="Item Consumption Efficiency"
         description="Monitor wastage patterns and consumption inefficiencies across menu items"
-        titleColor="#FF5016"
+        titleColor="#000"
         cardBgColor="none"
         isShowArrows={true}
         isExpandable={true}
-        titleIcon="" // Insert Tabler/target icon here to match the first image
+        titleIcon={<div style={{
+      background: '#ff5b09',
+      borderRadius: '12px',
+      padding: '8px',
+      display: 'inline-block'
+    }}>
+      <IconTarget stroke={2} color="#fff" size={24} />
+    </div>} // Insert Tabler/target icon here to match the first image
         text=""
       />
       <ServiceRenderer

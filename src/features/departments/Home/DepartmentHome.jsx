@@ -24,10 +24,10 @@ function DepartmentHome() {
     <DepartmentHealth />
     <DepartmentTrendAnalysis />
     <DepartmentPeriodDropDown/>
+    <HourlyForecast />
     <ItemConsumptionEfficiency1 />
     {/* <TrendAnalysis /> */}
     {/* <PeriodDataBreakdown /> */}
-    <HourlyForecast />
     {/* <ItemConsumptionEfficiency /> */}
     <TopConsumedItems />
     <WastageAnalysis />

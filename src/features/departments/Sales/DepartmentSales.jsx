@@ -17,7 +17,7 @@ export default function DepartmentSales() {
 
   return (
     <Container fluid className="mt-2" style={{ background: "#fff" }}>
-      <ComponentHeader
+      {/* <ComponentHeader
         title={"Products Usage"}
         description={"Track sales usage, margins and performance"}
         titleColor={"fw-bold text-primary fs-4"}
@@ -25,7 +25,7 @@ export default function DepartmentSales() {
         scrollRef={myScrollRef}
         isExpandable={true}
         titleIcon={<FaChartLine className="me-2" color="blue" size={24} />}
-      />
+      /> */}
 
       <ServiceRenderer
         queryHook={useProductsUsageList}

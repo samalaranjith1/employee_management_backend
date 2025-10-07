@@ -13,6 +13,7 @@ import { departmentPeriodDropDownDataFormatter } from "@/utils/data_formatters/d
 
 import DepartmentPeriodDropDownCards from "@/components/common/department/cards/DepartmentPeriodDropDownCards";
 import DepartmentPeriodDropDownTable from "@/components/common/department/TablesSort/DepartmentPeriodDropDownTable";
+import { IconCalendar } from "@tabler/icons-react";
 
 export default function DepartmentPeriodDropDown() {
   const [filter, setFilter] = useState("daily");
@@ -39,6 +40,18 @@ export default function DepartmentPeriodDropDown() {
     <Card className="p-3 shadow-sm" style={{ borderRadius: "16px" }}>
       {/* Header */}
       <Row className="align-items-center mb-4">
+        <Col xs="auto">
+          <div style={{
+            background: '#fe4e16',
+            borderRadius: '12px',
+            padding: '8px',
+            display: 'inline-block'
+          }}>
+            <IconCalendar stroke={2} color="#fff" size={24} />
+          </div>
+        </Col>
+
+        {/* Text Column */}
         <Col>
           <h5 className="fw-bold mb-0">Period Data Breakdown</h5>
           <small className="text-muted">

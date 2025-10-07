@@ -50,30 +50,31 @@ export default function DepartmentPeriodDropDownCards({ cards = [] }) {
               boxShadow: "0 2px 8px rgba(0, 0, 0, 0.03)",
             }}
           >
-            <Card.Body className="d-flex align-items-center">
-              <div
-                className="p-2 d-flex align-items-center justify-content-center me-3"
-                style={{
-                  backgroundColor: c.iconBg, // e.g. "#16a34a"
-                  borderRadius: "12px", // fully rounded corner like pill
-                  width: 40,
-                  height: 40,
-                }}
-              >
-                {c.icon}
-              </div>
+            <Card.Body className="d-flex justify-content-between align-items-center">
+              {/* Left: Text Block */}
               <div>
-                <div
-                  className="fw-semibold text-muted"
-                  style={{ fontSize: 13 }}
-                >
+                <div className="fw-semibold text-muted" style={{ fontSize: 13 }}>
                   {c.title}
                 </div>
                 <div className="fw-bold" style={{ fontSize: 18 }}>
                   {c.value}
                 </div>
               </div>
+
+              {/* Right: Icon */}
+              <div
+                className="p-2 d-flex align-items-center justify-content-center"
+                style={{
+                  backgroundColor: c.iconBg,
+                  borderRadius: "12px",
+                  width: 40,
+                  height: 40,
+                }}
+              >
+                {c.icon}
+              </div>
             </Card.Body>
+
           </Card>
         </Col>
       ))}

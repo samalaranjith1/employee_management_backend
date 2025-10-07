@@ -17,7 +17,7 @@ export default function ClosingCards({ title, value, icon, color }) {
         padding: "1rem",
       }}
     >
-      <div className="d-flex align-items-center justify-content-between">
+      <div className="d-flex align-items-left">
         <div style={{ fontSize: "24px", color }}>{icon}</div>
         <div className="ms-3">
           <div className="fw-semibold text-secondary">{title}</div>

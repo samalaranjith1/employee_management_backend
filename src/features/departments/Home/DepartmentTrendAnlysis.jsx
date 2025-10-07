@@ -25,7 +25,7 @@ export default function DepartmentTrendAnalysis() {
     switch (view) {
       case "daily":
         return useDepartmentSummaryDaily;
-      case "sameday":
+      case "samedays":
         return useDepartmentSummarySameDay;
       case "weekly":
         return useDepartmentSummaryWeekly;
@@ -53,7 +53,7 @@ export default function DepartmentTrendAnalysis() {
       case "monthly":
         startDatetemp = subMonths(today, 5);
         break;
-      case "sameday":
+      case "samedays":
         startDatetemp = subWeeks(today, 5);
         break;
       default:

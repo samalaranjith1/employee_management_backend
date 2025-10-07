@@ -94,7 +94,7 @@ export default function SalesForeCastByItemTable({ tableData = [] }) {
         `}</style>
 
         <div style={{ minWidth: "750px" }}>
-          <Table hover bordered className="align-middle mb-0 text-nowrap">
+          <Table hover className="align-middle mb-0 text-nowrap">
             <thead>
               <tr>
                 {columns.map((col) => (
@@ -115,7 +115,7 @@ export default function SalesForeCastByItemTable({ tableData = [] }) {
                   >
                     {col.key === "day" ? (
                       <>
-                        <FaCalendarAlt className="me-1" /> DAY
+                         DAY
                       </>
                     ) : (
                       col.header

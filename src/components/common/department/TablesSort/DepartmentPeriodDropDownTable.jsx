@@ -123,7 +123,7 @@ export default function DepartmentPeriodDropDownTable({ table = [] }) {
                   day: "numeric",
                 });
                 const formattedDay = rowDate.toLocaleDateString("en-US", {
-                  weekday: "short",
+                  weekday: "long",
                 });
 
                 return (

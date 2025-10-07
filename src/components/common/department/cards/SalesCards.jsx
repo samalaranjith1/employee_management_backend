@@ -24,7 +24,7 @@ export default function SalesCards({ label, value, icon }) {
         color: "#000",
       }}
     >
-      <div className="d-flex align-items-center justify-content-between">
+      <div className="d-flex align-items-left">
         <div className="me-3 text-primary">{icon}</div>
         <div>
           <div className="fw-semibold text-secondary">{label}</div>

@@ -1,9 +1,10 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { Row, Col } from "react-bootstrap";
-import { FaArrowUp, FaExclamationTriangle } from "react-icons/fa";
+import { FaArrowRight, FaArrowUp, FaExclamationTriangle } from "react-icons/fa";
 import CommonCard from "./CommonCard";
 import { usePathname } from "next/navigation";
+import { IconPackage, IconTrendingDown, IconTrendingUp } from "@tabler/icons-react";
 
 export default function ActionableVerticalCards({
   data,
@@ -47,18 +48,44 @@ export default function ActionableVerticalCards({
         <Row className="align-items-center">
           {/* Left icon */}
           <Col xs="auto">
-            <div
-              style={{
-                background: "linear-gradient(135deg, #ff6a00, #ff3c3c)",
-                borderRadius: "12px",
-                padding: "8px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                color: "white",
-              }}
-            >
-              <FaArrowUp size={20} />
+            <div>
+              {data.priority === "low" ? (<div
+                style={{
+                  width: 36,
+                  height: 36,
+                  borderRadius: 12,
+                  background: "#45bbe9ff", // Adjust color to match Figma or differentiate as in your design
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <IconTrendingDown color="white" size={28} stroke={2} />
+              </div>) : data.priority === "high" ? <div
+                style={{
+                  width: 36,
+                  height: 36,
+                  borderRadius: 12,
+                  background: "#fd4a21",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <IconTrendingUp color="white" size={28} stroke={2} />
+              </div> : <div
+                style={{
+                  width: 36,
+                  height: 36,
+                  borderRadius: 12,
+                  background: "#e89d04",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <IconPackage color="white" size={28} stroke={2} />
+              </div>}
             </div>
           </Col>
 
@@ -74,6 +101,12 @@ export default function ActionableVerticalCards({
                 wordBreak: "break-word",
               }}
             />
+
+            <div>
+              <a style={{color:'#ff873e'}} onClick={()=>{window.open(data.url)}}>
+              Take Action  <FaArrowRight />
+            </a>
+            </div>
           </Col>
 
           {/* Right side priority */}

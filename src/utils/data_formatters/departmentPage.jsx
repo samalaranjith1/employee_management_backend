@@ -10,10 +10,11 @@ import {
   FaTrashAlt,
 } from "react-icons/fa";
 import { formatDate } from "..";
+import { IconAlertTriangle, IconChartLine, IconClipboardData, IconCurrencyDollar, IconNotes, IconPackage, IconRosetteDiscountCheck, IconShoppingCartCheck, IconSquareCheck, IconToolsKitchen2, IconTrashX, IconTrendingUp } from "@tabler/icons-react";
 
 // utils/formatMenuItems.js
 export function productsDataFormatter(rawData) {
-    const data = rawData?.list?.flat();
+  const data = rawData?.list?.flat();
 
   return data?.map((item) => {
     const margin = item.price - item.makingCost;
@@ -62,31 +63,77 @@ export function salesDataFormatter(rawData) {
     {
       label: "Products",
       value: rawData.totalProducts,
-      icon: <FaBoxOpen />
+      icon: <div style={{
+        background: '#e9f0fc', // vivid green gradient
+        borderRadius: '12px',
+        padding: '8px',
+        display: 'inline-block'
+      }}>
+        <IconPackage stroke={2} color="#226ef3" size={24} />
+      </div>,
     },
     {
       label: "Net Sales",
       value: formatCurrency(
         rawData.list?.reduce((acc, item) => acc + item.sales.netSales, 0)
       ),
-      icon: <FaShoppingCart />
+      icon: <IconCurrencyDollar
+        style={{
+          backgroundColor: '#fcf6e9',
+          color: '#de6601',
+          padding: '8px',
+          borderRadius: '8px'
+        }}
+        size={40}
+      />
+
     },
     {
       label: "Discount",
       value: formatCurrency(
         rawData.list?.reduce((acc, item) => acc + item.sales.discount, 0)
       ),
-      icon: <FaTags />
+      icon: <FaTags
+        size={40}
+        style={{
+          backgroundColor: '#f6f2ff',
+          color: '#4f1dc0',
+          fontSize: '32px', // Adjust as needed
+          padding: '8px',
+          borderRadius: '8px',
+          display: 'inline-block'
+        }}
+      />
     },
     {
       label: "Items Sold",
       value: rawData.list.reduce((acc, item) => acc + item.sales.itemsSold, 0),
-      icon: <FaClipboardList />
+      icon:
+        <IconSquareCheck
+          size={40} // Adjust size as needed
+          color="#288128"
+          style={{
+            backgroundColor: '#eeffed',
+            padding: '8px',
+            borderRadius: '8px',
+            display: 'inline-block'
+          }}
+        />
     },
     {
       label: "Orders",
       value: rawData.list.reduce((acc, item) => acc + item.sales.orders, 0),
-      icon: <FaFileAlt />
+      icon:
+        <IconNotes
+          color="#94449a"
+          size={40} // You can change this (e.g., 48, 56)
+          style={{
+            backgroundColor: '#fdeffe',
+            padding: '8px',
+            borderRadius: '8px',
+            display: 'inline-block'
+          }}
+        />
     },
   ];
 
@@ -117,25 +164,50 @@ export function departmentConcumptionDataFormatter(apiResponse) {
     {
       title: "Critical Items",
       value: apiResponse.redItems?.toString().padStart(2, "0"),
-      icon: <FaExclamationTriangle />,
+      icon: <div className="me-2">
+        <div style={{
+          background: '#fff2f2', // pink-red gradient
+          borderRadius: '12px',
+          padding: '8px',
+          display: 'inline-block'
+        }}>
+          <IconAlertTriangle stroke={2} color="#c03333" size={24} />
+        </div>
+      </div>,
       color: "danger",
     },
     {
       title: "Total Items",
       value: apiResponse.list?.length,
-      icon: <FaBox />,
+      icon: <div style={{
+        background: '#e9f0fc', // vivid green gradient
+        borderRadius: '12px',
+        padding: '8px',
+        display: 'inline-block'
+      }}>
+        <IconPackage stroke={2} color="#226ef3" size={24} />
+      </div>,
       color: "primary",
     },
     {
       title: "Total Waste",
       value: `₹${apiResponse.burn?.toFixed(1)}`,
-      icon: <FaTrash />,
+      icon: <div style={{
+        background: '#fff5e5', // teal/turquoise gradient
+        borderRadius: '12px',
+        padding: '8px',
+        display: 'inline-block'
+      }}>
+        <IconTrashX stroke={2} color="#ff6000" size={28} />
+      </div>,
       color: "warning",
     },
     {
       title: "Avg Waste Percentage",
       value: `${apiResponse.avgBurn?.toFixed(1)}%`,
-      icon: <FaPercent />,
+      icon: <div style={{ backgroundColor: '#faf6ff', display: 'inline-block' }}>
+        <FaPercent style={20} />
+      </div>,
       color: "purple",
     },
   ];
@@ -154,9 +226,8 @@ export function departmentConcumptionDataFormatter(apiResponse) {
       itemDetails: `${item.item.name} (${item.item.unitQuantity} ${item.item.unit})`,
       subCategory: item.item.categoryName,
       department: item.department.name,
-      consumed: `${
-        item.netConsumptionQuantity
-      } ${item.item.unit.toLowerCase()}`,
+      consumed: `${item.netConsumptionQuantity
+        } ${item.item.unit.toLowerCase()}`,
       salesQuantity: item.saleQuantity,
       difference: `${difference.toFixed(1)} ${item.item.unit.toLowerCase()}`,
       wastePercent: `${wastePercent.toFixed(1)}%`,
@@ -193,12 +264,28 @@ export const departmentClosingDataFormatter = (apiData) => {
     {
       title: "Total Closing",
       value: `₹${totalClosing}`,
-      icon: <FaExclamationTriangle color="#f44336" />,
+      icon: <div className="me-2">
+        <div style={{
+          background: '#fff2f2', // pink-red gradient
+          borderRadius: '12px',
+          padding: '8px',
+          display: 'inline-block'
+        }}>
+          <IconAlertTriangle stroke={2} color="#c03333" size={24} />
+        </div>
+      </div>
     },
     {
       title: "Total Items",
       value: totalItems.toString().padStart(2, "0"),
-      icon: <FaCube color="#3f51b5" />,
+      icon: <div style={{
+        background: '#e9f0fc', // vivid green gradient
+        borderRadius: '12px',
+        padding: '8px',
+        display: 'inline-block'
+      }}>
+        <IconPackage stroke={2} color="#226ef3" size={24} />
+      </div>
     },
   ];
 
@@ -446,7 +533,14 @@ export const departmentConsumptionSummaryDataFormatter = (data) => {
       title: "Consumption %",
       value: `${safeNumber(summary.consumptionPercentage, 0)}%`,
       change: +15.2, // Placeholder for demo
-      icon: <FaUtensils size={28} />,
+      icon: <div style={{
+        background: '#EFA14A',
+        borderRadius: '12px',
+        padding: '8px',
+        display: 'inline-block'
+      }}>
+        <IconToolsKitchen2 stroke={2} color="#fff" size={24} />
+      </div>,
       bg: "#FFF6ED",
       textColor: "#FF6A00",
       stats: [
@@ -466,7 +560,14 @@ export const departmentConsumptionSummaryDataFormatter = (data) => {
       title: "Consumption",
       value: safeCurrency(summary.consumptionValue),
       change: -2.1,
-      icon: <FaShoppingCart size={28} />,
+      icon: <div style={{
+        background: '#2680FF',
+        borderRadius: '12px',
+        padding: '8px',
+        display: 'inline-block'
+      }}>
+        <IconShoppingCartCheck stroke={2} color="#fff" size={24} />
+      </div>,
       bg: "#F0F7FF",
       textColor: "#007BFF",
       stats: [
@@ -489,7 +590,14 @@ export const departmentConsumptionSummaryDataFormatter = (data) => {
       title: "Net Sales",
       value: safeCurrency(summary.netSales),
       change: +15.2,
-      icon: <FaChartLine size={28} />,
+      icon: <div style={{
+        background: '#924CFE',
+        borderRadius: '12px',
+        padding: '8px',
+        display: 'inline-block'
+      }}>
+        <IconTrendingUp stroke={2} color="#fff" size={24} />
+      </div>,
       bg: "#FAF5FF",
       textColor: "#9C27B0",
       stats: [
@@ -591,30 +699,41 @@ export function departmentPeriodDropDownDataFormatter(data) {
     {
       title: "Cost Ratio",
       value: `${((totalConsumption / totalSales) * 100).toFixed(1)}%`,
-      icon: <FaPercentage size={20} color="#fff" />,
+      icon: <IconRosetteDiscountCheck
+        size={40} // Adjust as needed
+        color="#fff"
+
+      />,
       iconBg: "#16a34a",
-      bg: "#f0fdf4"
+      bg: "#fff"
     },
     {
       title: "Average Daily Sales",
       value: `₹${Math.round(avgSales).toLocaleString()}`,
-      icon: <FaChartBar size={20} color="#fff" />,
+      icon: <div style={{
+        background: '#8c20f0',
+        borderRadius: '16px',
+        padding: '12px',
+        display: 'inline-block'
+      }}>
+        <IconClipboardData stroke={2} color="#fff" size={24} />
+      </div>,
       iconBg: "#7c3aed",
-      bg: "#f5f3ff"
+      bg: "#fff"
     },
     {
       title: "Avg. Daily Consumption",
       value: `₹${Math.round(totalConsumption / data.length).toLocaleString()}`,
-      icon: <FaRupeeSign size={20} color="#fff" />,
-      iconBg: "#2563eb",
-      bg: "#eff6ff"
+      icon: <IconChartLine color="white" />,
+      iconBg: "#216cf1",
+      bg: "#fff"
     },
     {
       title: "Average Daily Waste",
       value: `₹${totalWaste.toLocaleString()}`,
       icon: <FaTrashAlt size={20} color="#fff" />,
       iconBg: "#f97316",
-      bg: "#fff7ed"
+      bg: "#fff"
     }
   ];
 
@@ -697,28 +816,56 @@ export const itemConsumptionEfficiencyDataFormatter = (data) => {
         value: data.list.length,
         bgLight: "#eaf3fd", // pastel blue
         bgSolid: "#228be6", // solid blue
-        icon: <FaShoppingCart />,
+        icon: <div style={{
+          background: '#1d65e9', // vibrant orange-red
+          borderRadius: '16px',
+          padding: '14px',
+          display: 'inline-block'
+        }}>
+          <IconShoppingCartCheck stroke={2} color="#fff" size={24} />
+        </div>
       },
       {
         label: "Critical Items",
         value: data.redItems,
         bgLight: "#e7f6ea", // light mint green
         bgSolid: "#34c988", // solid green
-        icon: <FaExclamationTriangle />,
+        icon: <div style={{
+          background: '#168357', // vibrant orange-red
+          borderRadius: '16px',
+          padding: '14px',
+          display: 'inline-block'
+        }}>
+          <IconShoppingCartCheck stroke={2} color="#fff" size={24} />
+        </div>,
       },
       {
         label: "Total Waste",
         value: `₹${parseFloat(data.burn).toLocaleString()}`,
         bgLight: "#fff5e5", // pastel orange
         bgSolid: "#ff944d", // solid orange
-        icon: <FaTrashAlt />,
+        icon: <div style={{
+          background: '#e8480c', // vibrant orange-red
+          borderRadius: '16px',
+          padding: '14px',
+          display: 'inline-block'
+        }}>
+          <IconShoppingCartCheck stroke={2} color="#fff" size={24} />
+        </div>,
       },
       {
         label: "Avg Waste Percentage",
         value: `${data.avgBurn}%`,
         bgLight: "#f5eefc", // pastel purple
         bgSolid: "#b197fc", // solid purple
-        icon: <FaChartLine />,
+        icon:  <div style={{
+      background: '#8f30db', // bold purple
+      borderRadius: '16px',
+      padding: '12px',
+      display: 'inline-block'
+    }}>
+      <IconTrendingUp stroke={2} color="#fff" size={24} />
+    </div>,
       },
     ],
     tableData: data?.list.map((item, idx) => ({
@@ -737,6 +884,7 @@ export const itemConsumptionEfficiencyDataFormatter = (data) => {
       costImpact: Number(item.burn || 0).toLocaleString(),
       status: item.status || "green",
       price: item.item?.price || 0,
+      subline: `${item.item.categoryName} . ${item.item.unitQuantity}  ${item.item.unit} . ₹${item.item.unitPrice}  `
     })),
   };
 };

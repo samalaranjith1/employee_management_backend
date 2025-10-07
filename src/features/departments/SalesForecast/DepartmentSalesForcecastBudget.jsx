@@ -16,7 +16,7 @@ export default function DepartmentSalesForecastBudget() {
 
   return (
     <Container fluid className="mt-2" style={{ background: "#fff" }}>
-      <ComponentHeader
+      {/* <ComponentHeader
         title="Sales Forecast Budget"
         description="Daily budget and sales tracking"
         titleColor="rgba(0,0,0,0.85)"
@@ -24,7 +24,7 @@ export default function DepartmentSalesForecastBudget() {
         scrollRef={myScrollRef}
         isExpandable={true}
         titleIcon={<FaChartLine className="me-2" color="#0066cc" size={24} />}
-      />
+      /> */}
 
       <ServiceRenderer
         queryHook={useDepartmentsBudgetDailyList}

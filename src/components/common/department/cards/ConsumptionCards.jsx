@@ -29,7 +29,7 @@ export default function ConsumptionCards({ topCardsData }) {
             padding: "1rem",
           }}
         >
-          <div className="d-flex align-items-center justify-content-between">
+          <div className="d-flex align-items-left">
             <div style={{ fontSize: "24px", color: card.color }}>
               {card.icon}
             </div>

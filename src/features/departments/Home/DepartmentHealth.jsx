@@ -8,6 +8,8 @@ import { useDepartmentContext } from "@/contexts/DepartmentContext";
 import { FaChartLine, FaArrowUp, FaArrowDown } from "react-icons/fa";
 import { departmentHealthDataFormatter } from "@/utils/data_formatters/departmentPage";
 import { useDepartmentHealth } from "@/services/department-service";
+import { IconChartHistogram } from "@tabler/icons-react";
+import { FaArrowTrendUp } from "react-icons/fa6";
 
 export default function DepartmentHealth() {
   const { startDate, endDate } = useDepartmentContext();
@@ -54,7 +56,14 @@ export default function DepartmentHealth() {
           title="Department Health"
           description="Real-time consumption metrics and performance indicators"
           titleColor="#000"
-          titleIcon={<FaChartLine size={28} color="#FF5C00" />}
+                  titleIcon={<div style={{
+          background: '#FF6254',
+          borderRadius: '12px',
+          padding: '8px',
+          display: 'inline-block'
+        }}>
+          <IconChartHistogram stroke={2} color="#fff" size={24} />
+        </div>}
           onPrev={() => scroll("left")}
           onNext={() => scroll("right")}
         />
@@ -126,8 +135,8 @@ export default function DepartmentHealth() {
                   style={{ fontSize: "0.9rem", fontWeight: "600", color: card.color }}
                 >
                   <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
-                    <span>{card.title}</span>
-                    {React.cloneElement(card.icon, { size: 14 })}
+                    <span className="pe-1">{card.title}</span>
+                    <FaArrowTrendUp />
                   </div>
                 </div>
 
@@ -142,7 +151,7 @@ export default function DepartmentHealth() {
                     backgroundColor: `${card.color}22`, // 22 hex ~ 13% opacity
                     color: card.color,
                     fontWeight: "700",
-                    fontSize: "1.5rem",
+                    // fontSize: "1.5rem",
                   }}
                 >
                   {card.percentage}
@@ -156,7 +165,7 @@ export default function DepartmentHealth() {
 
                 {/* Consumption */}
                 <div className="d-flex justify-content-between mb-2">
-                  <span style={{ color: "#000", fontWeight: "500" }}>Consumption</span>
+                  <span style={{ color: "#000",}}>Consumption</span>
                   <span style={{ fontWeight: "700" }}>{card.consumption}</span>
                 </div>
 

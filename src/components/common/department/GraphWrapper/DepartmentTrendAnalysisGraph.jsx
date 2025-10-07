@@ -10,8 +10,10 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
+  Legend,
 } from "recharts";
 import { FaArrowUp } from "react-icons/fa";
+import { IconTrendingUp } from "@tabler/icons-react";
 
 export default function DepartmentTrendAnalysisGraph({
   trendData,
@@ -34,12 +36,24 @@ export default function DepartmentTrendAnalysisGraph({
       <Row className="align-items-center mb-3">
         <Col>
           <h5 className="fw-bold mb-0 d-flex align-items-center">
-            <FaArrowUp className="me-2 text-primary" size={20} />
-            Trend Analysis
+            <div style={{
+              background: '#3a58eb', // bold purple
+              borderRadius: '12px',
+              padding: '8px',
+              display: 'inline-block',
+            }}>
+              <IconTrendingUp stroke={2} color="#fff" size={20} />
+            </div>
+
+            <div className="d-flex flex-column">
+              <span className="ps-1">Trend Analysis</span>
+              <small className="text-muted" style={{ fontWeight: "normal" }}>
+                Sales, consumption, and inventory trends over time
+              </small>
+
+            </div>
           </h5>
-          <small className="text-muted">
-            Sales, consumption, and inventory trends over time
-          </small>
+
         </Col>
         <Col xs="auto">
           {/* <ButtonGroup>

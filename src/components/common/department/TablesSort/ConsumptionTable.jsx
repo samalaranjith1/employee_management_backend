@@ -39,7 +39,6 @@ export default function ConsumptionTable({ tableData = [] }) {
         className="hide-scrollbar"
       >
         <Table
-          striped
           hover
           className="align-middle mb-0 text-nowrap"
           style={{ minWidth: "1100px" }}
@@ -101,7 +100,7 @@ export default function ConsumptionTable({ tableData = [] }) {
                     </Badge>
                   </td>
                   <td style={{ padding: "14px 16px", color: "red" }}>
-                    {item.costImpact} loss incurred
+                    {item.costImpact}
                   </td>
                   <td style={{ padding: "14px 16px" }}>
                     <Badge

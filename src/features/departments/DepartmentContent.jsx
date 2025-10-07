@@ -9,6 +9,7 @@ import DepartmentProducts from "./Products/DepartmentProducts";
 import DepartmentSales from "./Sales/DepartmentSales";
 import DepartmentSalesForcecast from "./SalesForecast/DepartmentSalesForcecast";
 import ActionableInsights from "../dashboard/ActionableInsights";
+import ItemConsumptionEfficiency from "./Home/ItemConsumptionEfficiency";
 
 function DepartmentContent({ activeKey, dateFilter }) {
   const {startDate,endDate} = useDepartmentContext()
@@ -33,7 +34,8 @@ function DepartmentContent({ activeKey, dateFilter }) {
         }
         {activeKey.toLowerCase() === "products" && <DepartmentProducts />}
         {activeKey.toLowerCase() === "sales" && <DepartmentSales />}
-        {activeKey.toLowerCase() === "consumption" && <DepartmentConsumption />}
+        {/* {activeKey.toLowerCase() === "consumption" && <DepartmentConsumption />} */}
+        {activeKey.toLowerCase() === "consumption" && <ItemConsumptionEfficiency />}        
         {activeKey.toLowerCase() === "closing" && <DepartmentClosing />}
         {activeKey.toLowerCase() === "sales-forecast" && (
           <DepartmentSalesForcecast />

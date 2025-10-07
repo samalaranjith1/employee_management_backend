@@ -37,6 +37,7 @@ export default function ConsumptionSummaryCards({ cards, scrollRef }) {
             background: card.bg,
             flex: "0 0 auto",
             width: isMobile ? "88vw" : "30vw",
+            minWidth:'300px',
           }}
         >
           <Card.Body>

@@ -100,9 +100,18 @@ export default function ConsumptionForecastTable({ tableData = [] }) {
               filteredData.map((row, idx) => (
                 <tr key={idx} style={{ borderBottom: "1px solid #eee" }}>
                   <td style={{ padding: "14px 16px" }}>{row.day}</td>
-                  <td style={{ padding: "14px 16px" }}>{row.name}</td>
-                  <td style={{ padding: "14px 16px" }}>{row.quantity}</td>
-                  <td style={{ padding: "14px 16px" }}>{row.totalPrice}</td>
+                  <td style={{ padding: "14px 16px" }}>
+                    <div>
+                      <div>{row.name}</div>
+                      <div className="'text-muted" style={{fontSize:"small"}}> 
+                        <span>{row.category}</span> . 
+                        <span>{row.unitQuantity} {row.unit}</span> .
+                        <span>₹{row.unitPrice}</span>
+                      </div>
+                    </div>
+                    </td>
+                  <td style={{ padding: "14px 16px" }}>{row.quantity} {row.unit.toLowerCase()}</td>
+                  <td style={{ padding: "14px 16px" }}>₹{row.totalPrice}</td>
                 </tr>
               ))
             ) : (
