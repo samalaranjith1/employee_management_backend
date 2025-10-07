@@ -30,7 +30,7 @@ export default function ItemConsumptionDistributionCard({
             <div className="flex flex-col" style={{ gap: 4 }}>
               <div style={{ fontSize: "14px", color: "#555" }}>{item.label}</div>
               <h4 className="fw-bold mb-0">{item.value}</h4>
-              <div style={{ fontSize: "14px", color: "#555" }}>{item.amount}</div>
+              <div style={{ fontSize: "14px", color: item.bgColor }}>{item.amount}</div>
             </div>
 
             {/* Column 2: icon (centered) with dark bg */}

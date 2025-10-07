@@ -1,7 +1,8 @@
 // utils/productSummaryFormatter.js
+import { IconBrandSpeedtest, IconCalculator, IconCurrencyRupee, IconPackage, IconShoppingCart } from "@tabler/icons-react";
 import {
-    FaStore, FaUtensils,
-    FaCube,
+  FaStore, FaUtensils,
+  FaCube,
   FaMoneyBillWave,
   FaCreditCard,
   FaFileInvoice,
@@ -33,27 +34,48 @@ export const productSummaryOverViewDataFormatter = (apiData) => {
     return {
       expense: {
         title: "Expense",
-        icon: <FaFileInvoice />,
+        icon: <div style={{
+          background: '#fff7ed', // beige gradient for Figma style
+          borderRadius: '12px',
+          padding: '8px',
+          display: 'inline-block'
+        }}>
+          <IconCalculator stroke={2} color="#000" size={20} />
+        </div>,
         items: [],
         bg: "#FFF6ED",
       },
       payment: {
         title: "Payment",
-        icon: <FaMoneyBillWave />,
+        icon: <div style={{
+          background: '#f0fdf4', // blue gradient similar to Figma
+          borderRadius: '16px',
+          padding: '12px',
+          display: 'inline-block'
+        }}>
+          <IconCurrencyRupee stroke={2} color="#000" size={24} />
+        </div>,
         items: [],
         bg: "#EFFFF2",
       },
-      dues: { title: "Dues", icon: <FaCreditCard />, items: [], bg: "#FFF0F0" },
+      dues: { title: "Dues", icon: <FaReceipt size={18} color="#000" />, items: [], bg: "#FFF0F0" },
       footer: [],
     };
   }
 
-  const { summary, product} = apiData;
+  const { summary, product } = apiData;
 
   return {
     expense: {
       title: "Expense",
-      icon: <FaFileInvoice className="me-2 text-dark" />,
+      icon: <div style={{
+        background: '#fff7ed', // beige gradient for Figma style
+        borderRadius: '8px',
+        padding: '2px',
+        display: 'inline-block'
+      }}>
+        <IconCalculator stroke={2} color="#000" size={16} />
+      </div>,
       items: [
         {
           label: "Purchase Amount",
@@ -62,21 +84,37 @@ export const productSummaryOverViewDataFormatter = (apiData) => {
         { label: "Tax Amount", value: safeValue(summary.tax) },
         { label: "Total Amount", value: safeValue(summary.totalMakingCost) },
       ],
-      bg: "#FFF6ED",
+      bg: "#FFF7ED",
     },
     payment: {
       title: "Payment",
-      icon: <FaMoneyBillWave className="me-2 text-dark" />,
+      icon: <div style={{
+        background: '#f0fdf4', // blue gradient similar to Figma
+        borderRadius: '4px',
+        padding: '2px',
+        display: 'inline-block'
+      }}>
+        <IconCurrencyRupee stroke={2} color="#000" size={16} />
+      </div>,
       items: [
         { label: "Payment Amount", value: safeValue(summary.netSales) },
         { label: "Tax Amount", value: safeValue(summary.tax) },
         { label: "Total Amount", value: safeValue(summary.totalSales) },
       ],
-      bg: "#EFFFF2",
+      bg: "#f0fdf4",
     },
     dues: {
       title: "Dues",
-      icon: <FaCreditCard className="me-2 text-dark" />,
+      icon:
+        <div style={{
+          background: '#FFF0F0', // blue gradient similar to Figma
+          borderRadius: '4px',
+          padding: '2px',
+          display: 'inline-block'
+        }}>
+          <FaReceipt size={18} color="#000" padding={'10px'} />
+        </div>,
+
       items: [
         {
           label: "Total Dues",
@@ -95,55 +133,93 @@ export const productSummaryOverViewDataFormatter = (apiData) => {
           ),
         },
       ],
-      bg: "#FFF0F0",
+      bg: "#fef2f2",
     },
     footer: [
       {
         label: "Margin",
         value: product.marginPercentage ? `${product.marginPercentage}%` : "--",
-        icon: <FaChartPie />,
+        icon: <div style={{
+          background: '#dcfce7', // blue gradient matching Figma style
+          borderRadius: '4px',
+          padding: '4px',
+          display: 'inline-block'
+        }}>
+          <IconBrandSpeedtest stroke={2} color="#00a63e" size={20} />
+        </div>
+        ,
         bg: "#EFFFF2",
       },
       {
         label: "Total Sales",
         value: safeValue(summary.totalSales),
-        icon: <FaMoneyBillWave />,
+        icon: <div style={{
+          background: '#ddf8eaff', // blue gradient similar to Figma
+          borderRadius: '4px',
+          padding: '4px',
+          display: 'inline-block'
+        }}>
+          <IconCurrencyRupee stroke={2} color="#00a63e" size={18} />
+        </div>,
         bg: "#EFFFF2",
       },
       {
         label: "Making Cost",
         value: safeValue(summary.totalMakingCost),
-        icon: <FaCalculator />,
-        bg: "#FFF6ED",
+        icon: <div style={{
+          background: '#ffedd4', // beige gradient for Figma style
+          borderRadius: '8px',
+          padding: '4px',
+          display: 'inline-block'
+        }}>
+          <IconCalculator stroke={2} color="#f87a40" size={18} />
+        </div>,
+        bg: "#F3FFF8",
       },
       {
         label: "Orders",
         value: summary.orders ?? "--",
-        icon: <FaShoppingCart />,
-        bg: "#F2F6FF",
+        icon: <div style={{
+          background: '#dbeafe', // blue gradient matching Figma style
+          borderRadius: '8px',
+          padding: '4px',
+          display: 'inline-block'
+        }}>
+          <IconShoppingCart stroke={2} color="#155dfc" size={18} />
+        </div>,
+        bg: "#F3FFF8",
       },
       {
         label: "Items Sold",
         value: summary.itemsSold ?? "--",
-        icon: <FaBox />,
-        bg: "#F7EDFF",
+        icon: <div style={{
+          background: '#f3e8ff', // vivid green gradient
+          borderRadius: '8px',
+          padding: '4px',
+          display: 'inline-block'
+        }}>
+          <IconPackage stroke={2} color="#9912fa" size={18} />
+        </div>,
+        bg: "#F3FFF8",
       },
     ],
   };
 };
 
 export const productsTrendAnalysisDataFormatter = (apiData) => {
-    const formatTrendData = apiData?.list?.map((item) => ({
-      date: new Date(item.dt).toLocaleDateString("en-US", {
-        month: "short",
-        day: "numeric",
-      }),
-      totalSales: item.totalSales,
-      itemsSold: item.itemsSold,
-      makingCost: item.totalMakingCost,
-    }));
+  const formatTrendData = apiData?.list?.map((item) => ({
+    // Use startDate for the X-axis label instead of dt
+    date: new Date(item.startDate).toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+    }),
+    totalSales: item.totalSales,
+    itemsSold: item.itemsSold,
+    totalMakingCost: item.totalMakingCost, // ✅ keep the same key used in graph
+  }));
+
   const formatTableData = apiData.list.map((item) => ({
-    date: new Date(item.dt).toLocaleDateString("en-US", {
+    date: new Date(item.startDate).toLocaleDateString("en-US", {
       month: "short",
       day: "numeric",
       year: "numeric",
@@ -152,36 +228,89 @@ export const productsTrendAnalysisDataFormatter = (apiData) => {
     totalSales: {
       value: `₹${item.totalSales}`,
       icon: <FaRupeeSign color="#6366f1" />,
-      color: "#6366f1", // Indigo (blueish)
+      color: "#6366f1",
     },
     netSales: {
       value: `₹${item.netSales}`,
       icon: <FaReceipt color="#10b981" />,
-      color: "#10b981", // Green
+      color: "#10b981",
     },
     discount: {
       value: `₹${item.discount}`,
       icon: <FaTags color="#f97316" />,
-      color: "#f97316", // Orange
+      color: "#f97316",
     },
     tax: {
       value: `₹${item.tax}`,
       icon: <FaReceipt color="#06b6d4" />,
-      color: "#06b6d4", // Cyan
+      color: "#06b6d4",
     },
     itemsSold: {
-      value: `${item.itemsSold}`, // ✅ Force string
+      value: `${item.itemsSold}`,
       icon: <FaBox color="#8b5cf6" />,
       color: "#8b5cf6",
     },
     orders: {
-      value: `${item.orders}`, // ✅ Same fix here
+      value: `${item.orders}`,
       icon: <FaShoppingCart color="#ef4444" />,
       color: "#ef4444",
     },
   }));
-  return { trendData:formatTrendData, tableData:formatTableData };
+
+  return { trendData: formatTrendData, tableData: formatTableData };
 };
+
+
+// export const productsTrendAnalysisDataFormatter = (apiData) => {
+//   const formatTrendData = apiData?.list?.map((item) => ({
+//     date: new Date(item.dt).toLocaleDateString("en-US", {
+//       month: "short",
+//       day: "numeric",
+//     }),
+//     totalSales: item.totalSales,
+//     itemsSold: item.itemsSold,
+//     makingCost: item.totalMakingCost,
+//   }));
+//   const formatTableData = apiData.list.map((item) => ({
+//     date: new Date(item.dt).toLocaleDateString("en-US", {
+//       month: "short",
+//       day: "numeric",
+//       year: "numeric",
+//       weekday: "long",
+//     }),
+//     totalSales: {
+//       value: `₹${item.totalSales}`,
+//       icon: <FaRupeeSign color="#6366f1" />,
+//       color: "#6366f1", // Indigo (blueish)
+//     },
+//     netSales: {
+//       value: `₹${item.netSales}`,
+//       icon: <FaReceipt color="#10b981" />,
+//       color: "#10b981", // Green
+//     },
+//     discount: {
+//       value: `₹${item.discount}`,
+//       icon: <FaTags color="#f97316" />,
+//       color: "#f97316", // Orange
+//     },
+//     tax: {
+//       value: `₹${item.tax}`,
+//       icon: <FaReceipt color="#06b6d4" />,
+//       color: "#06b6d4", // Cyan
+//     },
+//     itemsSold: {
+//       value: `${item.itemsSold}`, // ✅ Force string
+//       icon: <FaBox color="#8b5cf6" />,
+//       color: "#8b5cf6",
+//     },
+//     orders: {
+//       value: `${item.orders}`, // ✅ Same fix here
+//       icon: <FaShoppingCart color="#ef4444" />,
+//       color: "#ef4444",
+//     },
+//   }));
+//   return { trendData: formatTrendData, tableData: formatTableData };
+// };
 
 // utils/dataFormatter.js
 export const productsIngredientAnalyticsDataFormatter = (apiData) => {
@@ -215,9 +344,8 @@ export const productsIngredientAnalyticsDataFormatter = (apiData) => {
       name: item.name,
       type: item.itemType,
       storeItem: `${item.itemType} • ${unitQuantity}${item.unit} • ₹${unitPrice}`,
-      recipe: `₹${ingredientPrice.toFixed(2)} • ${ingredientQuantity} ${
-        item.unit
-      }`,
+      recipe: `₹${ingredientPrice.toFixed(2)} • ${ingredientQuantity} ${item.unit
+        }`,
       total: `₹${totalPrice.toFixed(2)} • ${totalQuantity} ${item.unit}`,
       price: ingredientPrice,
     };
@@ -293,19 +421,20 @@ export const productsIngredientsDataFormatter = (ingredient) => {
     // Display fields for rendering
     itemType: (
       <span className="d-flex align-items-center text-muted">
-        <FaStore className="me-2 text-primary" /> {rawItemType}
+        {/* <FaStore className="me-2 text-primary" />  */}
+        {rawItemType}
       </span>
     ),
     ingredient: (
       <span className="fw-semibold text-dark">
-        <FaUtensils className="me-2 text-success" />
+        {/* <FaUtensils className="me-2 text-success" /> */}
         {rawIngredient}
       </span>
     ),
     itemPrice: <span className="text-dark">₹{rawItemPrice.toFixed(2)}</span>,
-    quantity: <span className="text-dark">{rawQuantity}</span>,
+    quantity: <span className="text-dark" style={{ backgroundColor: "#eee", padding: '2px 5px', borderRadius: '5px' }}>{rawQuantity}</span>,
     totalPrice: (
-      <span className="fw-semibold text-success">
+      <span className="fw-semibold text-success" style={{ backgroundColor: "#f0fdf4", padding: '5px' }}>
         ₹{rawTotalPrice.toFixed(2)}
       </span>
     ),

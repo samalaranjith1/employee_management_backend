@@ -42,6 +42,7 @@ import {
 
 import { formatCurrency } from "@/constants";
 import { FaArrowTrendDown, FaArrowTrendUp } from "react-icons/fa6";
+import { IconArrowRight, IconBasketDollar, IconFoldDown, IconFolderSymlink, IconFoldUp, IconPackage, IconToolsKitchen2, IconShoppingCartCheck, IconTrendingUp, IconShoppingBagExclamation, IconShoppingCartExclamation, IconTrash, IconTrendingDown } from "@tabler/icons-react";
 
 // export function consumptionSummaryFormatter(data) {
 //   return [
@@ -119,16 +120,22 @@ import { FaArrowTrendDown, FaArrowTrendUp } from "react-icons/fa6";
 // }
 
 // monthSummaryFormatter.js
-
 export function consumptionSummaryFormatter(data) {
   return [
     {
       title: "CONSUMPTION %",
       percentage: `${data.current?.consumptionPercentage?.toFixed(0)}%`,
       percentageChange: "+2.1%",
-      icon: <FaUtensils size={36} color="#bc4b00" />,
+      icon: <div style={{
+        background: '#EFA14A',
+        borderRadius: '12px',
+        padding: '8px',
+        display: 'inline-block'
+      }}>
+        <IconToolsKitchen2 stroke={2} color="#fff" size={24} />
+      </div>,
       textColor: "#bc4b00",
-      bgColor: "rgb(255,247,237)",
+      bgColor: "#fff9f1",
       routeUrl: "/consumption_analytics", // 🔹 direct
       rows: [
         {
@@ -151,9 +158,16 @@ export function consumptionSummaryFormatter(data) {
       title: "CONSUMPTION",
       percentage: `₹${data.current?.consumptionValue?.toLocaleString()}`,
       percentageChange: "-1.5%",
-      icon: <FaChartLine size={36} color="#1d40af" />,
+      icon: <div style={{
+        background: '#2680FF',
+        borderRadius: '12px',
+        padding: '8px',
+        display: 'inline-block'
+      }}>
+        <IconShoppingCartCheck stroke={2} color="#fff" size={24} />
+      </div>,
       textColor: "#1d40af",
-      bgColor: "rgb(238,245,255)",
+      bgColor: "#f2f7ff",
       routeUrl: "/consumption_analytics", // 🔹 direct
       rows: [
         {
@@ -174,9 +188,16 @@ export function consumptionSummaryFormatter(data) {
       title: "NET SALES",
       percentage: `₹${data.current?.netSales.toLocaleString()}`,
       percentageChange: "+8.3%",
-      icon: <FaCoffee size={36} color="#5b21b6" />,
+      icon: <div style={{
+        background: '#924CFE',
+        borderRadius: '12px',
+        padding: '8px',
+        display: 'inline-block'
+      }}>
+        <IconTrendingUp stroke={2} color="#fff" size={24} />
+      </div>,
       textColor: "#5b21b6",
-      bgColor: "rgb(250,245,255)",
+      bgColor: "#faf6ff",
       routeUrl: "/sales_analytics", // 🔹 direct
       rows: [
         {
@@ -477,7 +498,7 @@ export function periodDataBreakdownFormatter(raw, view) {
         };
       }
       return {
-        tableLabel: label,
+        tableLabel: `${format(dStart, "d MMM")}`,
         tableLabelDesc: "",
       };
     }
@@ -558,12 +579,12 @@ export function periodDataBreakdownFormatter(raw, view) {
 
 function getBackgroundColor(status) {
   switch (status?.toLowerCase()) {
-    case "danger":
-      return "#ffe8e8"; // Red
-    case "warning":
-      return "#fff6da"; // Yellow
-    case "success":
-      return "#e8f9e8"; // Green
+    case "red":
+      return "#ff0000"; // Red
+    case "orange":
+      return "#0a2ee5ff"; // Yellow
+    case "green":
+      return "#257a0bff"; // Green
     default:
       return "#ffffff"; // Fallback
   }
@@ -595,30 +616,65 @@ export function departmentPerformanceFormatter(apiData) {
     {
       title: "Total Sales",
       value: `₹${Number(apiData.totalSales).toLocaleString()}`,
-      icon: FaRupeeSign,
+      icon: <div style={{
+        background: '#27a869', // vibrant orange-red
+        borderRadius: '16px',
+        padding: '12px',
+        display: 'inline-block'
+      }}>
+        <IconShoppingCartCheck stroke={2} color="#fff" size={24} />
+      </div>,
       iconColorClass: "text-primary",
-      borderColor: "#3b82f6",
+      borderColor: "#11974bff",
+      bgColor: "#cff9d6ff"
     },
     {
       title: "Total Consumption",
       value: `₹${Number(apiData.netConsumptionValue).toLocaleString()}`,
-      icon: FaUtensils,
+      icon: <div style={{
+        background: '#216cf2', // vibrant orange-red
+        borderRadius: '16px',
+        padding: '12px',
+        display: 'inline-block'
+      }}>
+        <IconShoppingCartCheck stroke={2} color="#fff" size={24} />
+      </div>,
       iconColorClass: "text-success",
-      borderColor: "#10b981",
+      borderColor: "#a4a4ffff",
+      bgColor: "#eaeffaff"
+
     },
     {
       title: "Overall Cost %",
       value: `${apiData.consumptionPercentage}%`,
-      icon: FaPercentage,
+      icon: <div style={{
+        background: '#ef4f08', // vibrant orange-red
+        borderRadius: '16px',
+        padding: '12px',
+        display: 'inline-block'
+      }}>
+        <IconShoppingCartCheck stroke={2} color="#fff" size={24} />
+      </div>,
       iconColorClass: "text-warning",
       borderColor: "#f97316",
+      bgColor: "#fff5e6"
+
     },
     {
-      title: "Target Cost %",
+      title: "Total Cost %",
       value: `${apiData.targetConsumptionPercentage}%`,
-      icon: FaBullseye,
+      icon: <div style={{
+        background: '#9534e3', // bold purple
+        borderRadius: '16px',
+        padding: '12px',
+        display: 'inline-block'
+      }}>
+        <IconTrendingUp stroke={2} color="#fff" size={24} />
+      </div>,
       iconColorClass: "text-purple", // make sure you define this class
       borderColor: "#a855f7",
+      bgColor: "#efe5f7ff"
+
     },
   ];
 
@@ -675,7 +731,14 @@ export function itemConsumptionEfficiencyDataFormatter(data) {
 
   const summaryCards = [
     {
-      icon: <FaBoxOpen size={24} color="#ff9800" />,
+      icon: <div style={{
+        background: '#216df2', // vibrant orange-red
+        borderRadius: '16px',
+        padding: '12px',
+        display: 'inline-block'
+      }}>
+        <IconShoppingCartCheck stroke={2} color="#fff" size={24} />
+      </div>,
       label: "Total Items",
       value:
         (data.redItems ?? 0) + (data.greenItems ?? 0) + (data.orangeItems ?? 0),
@@ -683,7 +746,14 @@ export function itemConsumptionEfficiencyDataFormatter(data) {
 
     },
     {
-      icon: <FaExclamationTriangle size={24} color="#ff4d4f" />,
+      icon: <div style={{
+        background: '#28ab6a', // vibrant orange-red
+        borderRadius: '16px',
+        padding: '12px',
+        display: 'inline-block'
+      }}>
+        <IconShoppingCartCheck stroke={2} color="#fff" size={24} />
+      </div>,
       label: "Critical Items",
       value: data.redItems ?? 0,
       bg: "#d1f0cfff",
@@ -691,14 +761,28 @@ export function itemConsumptionEfficiencyDataFormatter(data) {
     },
 
     {
-      icon: <FaRupeeSign size={24} color="#f44336" />,
+      icon: <div style={{
+        background: '#eb4a0a', // vibrant orange-red
+        borderRadius: '16px',
+        padding: '12px',
+        display: 'inline-block'
+      }}>
+        <IconShoppingCartCheck stroke={2} color="#fff" size={24} />
+      </div>,
       label: "Total Waste",
       value: formatCurrency(data.burn),
       bg: "#fff3e0",
 
     },
     {
-      icon: <FaPercent size={24} color="#ff9800" />,
+      icon: <div style={{
+        background: '#9533e3', // bold purple
+        borderRadius: '16px',
+        padding: '12px',
+        display: 'inline-block'
+      }}>
+        <IconTrendingUp stroke={2} color="#fff" size={24} />
+      </div>,
       label: "Avg Waste",
       value: formatPercentage(data.avgBurn),
       bg: "#f9e5f9ff",
@@ -724,11 +808,9 @@ export function itemConsumptionEfficiencyDataFormatter(data) {
       cost: formatCurrency(row.utilization),
       status: row.status,
       wasteType:
-        row.status === "Critical"
+        row.status === "red"
           ? "Critical"
-          : row.burn >= 25
-            ? "Medium"
-            : "Low",
+          : "Monitor"
     };
   });
 
@@ -847,40 +929,72 @@ export const consumptionDistributionDataFormatter = (apiData) => {
     {
       label: "Total Items",
       value: apiData.itemCount ?? 0,
+      bgColor: "#2370f6",
       amount: apiData.consumptionValue
         ? `₹${apiData.consumptionValue.toLocaleString()}`
         : "₹0",
       color: "#E8F0FF",
-      icon: <FaCartPlus color="white" size={24} />
+      icon: <div style={{
+        background: '#2370f6', // vibrant orange-red
+        borderRadius: '16px',
+        padding: '12px',
+        display: 'inline-block'
+      }}>
+        <IconShoppingCartCheck stroke={2} color="#fff" size={30} />
+      </div>
     },
     {
       label: "High Consumption",
       value: apiData.high?.count ?? 0,
+      bgColor: "#239f65",
       amount: apiData.high?.value
         ? `₹${apiData.high.value.toLocaleString()}`
         : "₹0",
       color: "#E8F8F0",
-      icon: <FaArrowUp color="white" size={24} />
+      icon: <div style={{
+        background: '#239f65', // matching green gradient from Figma
+        borderRadius: '16px',
+        padding: '12px',
+        display: 'inline-block'
+      }}>
+        <IconFoldUp stroke={2} color="#fff" size={30} />
+      </div>
 
     },
     {
       label: "Medium Consumption",
       value: apiData.medium?.count ?? 0,
+      bgColor: "#eb9d03",
       amount: apiData.medium?.value
         ? `₹${apiData.medium.value.toLocaleString()}`
         : "₹0",
       color: "#FFF8E1",
-      icon: <FaArrowDown color="white" size={24} />
+      icon: <div style={{
+        background: '#eb9d03', // vibrant orange gradient
+        borderRadius: '16px',
+        padding: '12px',
+        display: 'inline-block'
+      }}>
+        <IconFolderSymlink stroke={2} color="#fff" size={30} />
+      </div>
 
     },
     {
       label: "Low Consumption",
       value: apiData.low?.count ?? 0,
+      bgColor: "#f15107",
       amount: apiData.low?.value
         ? `₹${apiData.low.value.toLocaleString()}`
         : "₹0",
       color: "#FFEAEA",
-      icon: <FaArrowDown color="white" size={24} />
+      icon: <div style={{
+        background: '#f15107', // vibrant orange gradient
+        borderRadius: '16px',
+        padding: '12px',
+        display: 'inline-block'
+      }}>
+        <IconFoldDown stroke={2} color="#fff" size={30} />
+      </div>
     },
   ];
 
@@ -924,7 +1038,14 @@ export function wastageAnalysisDataFormatter(data) {
       sub: "",
       bgLight: "#e8f9f3",
       bgSolid: "#1abc9c",
-      icon: <FaTrashAlt />,
+      icon: <div style={{
+        background: '#2eba99', // teal/turquoise gradient
+        borderRadius: '12px',
+        padding: '8px',
+        display: 'inline-block'
+      }}>
+        <IconTrash stroke={2} color="#fff" size={28} />
+      </div>,
     },
     {
       title: data.rawMaterial?.label ?? "Raw Material",
@@ -932,7 +1053,14 @@ export function wastageAnalysisDataFormatter(data) {
       sub: `(${data.rawMaterial?.count ?? 0} Items)`,
       bgLight: "#e8f5e9",
       bgSolid: "#2ecc71",
-      icon: <FaBoxOpen />,
+      icon: <div style={{
+        background: '#209962', // vivid green gradient
+        borderRadius: '12px',
+        padding: '8px',
+        display: 'inline-block'
+      }}>
+        <IconPackage stroke={2} color="#fff" size={28} />
+      </div>,
     },
     {
       title: data.expiredItems?.label ?? "Expired Items",
@@ -940,7 +1068,14 @@ export function wastageAnalysisDataFormatter(data) {
       sub: `(${data.expiredItems?.count ?? 0} Items)`,
       bgLight: "#fff3e0",
       bgSolid: "#e67e22",
-      icon: <FaExclamationTriangle />,
+      icon: <div style={{
+        background: '#e9490b', // orange gradient
+        borderRadius: '12px',
+        padding: '8px',
+        display: 'inline-block'
+      }}>
+        <IconShoppingBagExclamation stroke={2} color="#fff" size={28} />
+      </div>,
     },
     {
       title: data.expiredProducts?.label ?? "Expired Products",
@@ -948,7 +1083,14 @@ export function wastageAnalysisDataFormatter(data) {
       sub: `(${data.expiredProducts?.count ?? 0} Items)`,
       bgLight: "#f3e5f5",
       bgSolid: "#9b59b6",
-      icon: <FaTimesCircle />,
+      icon: <div style={{
+        background: '#a43cf8', // purple gradient
+        borderRadius: '12px',
+        padding: '8px',
+        display: 'inline-block'
+      }}>
+        <IconShoppingCartExclamation stroke={2} color="#fff" size={28} />
+      </div>,
     },
   ];
 
@@ -960,7 +1102,7 @@ export function wastageAnalysisDataFormatter(data) {
       qty: `${rm.totalQuntity ?? 0}${rm.item?.unit ?? ""}`,
       price: rm.item?.unitPrice ?? 0,
       total: rm.totalPrice ?? 0,
-      icon: <FaShoppingBag />,
+      icon: ''
     })) ?? [];
 
   // ✅ Expired Items
@@ -972,6 +1114,7 @@ export function wastageAnalysisDataFormatter(data) {
       price: it.item?.unitPrice ?? 0,
       total: it.totalPrice ?? 0,
       date: it.expiredDate ?? "",
+      icon: '',
     })) ?? [];
 
   // ✅ Expired Products
@@ -983,6 +1126,7 @@ export function wastageAnalysisDataFormatter(data) {
       price: p.product?.unitPrice ?? 0,
       total: p.totalPrice ?? 0,
       date: p.expiredDate ?? "",
+      icon: '',
     })) ?? [];
 
   return {
@@ -1036,23 +1180,101 @@ export function priceChangeDataFormatter(data) {
 
 export function outOfOfficeDataFormatter(data) {
   // 1️⃣ Cards Data
+  // const cardsData = [
+  //   {
+  //     title: "Out of Stock",
+  //     count: data.zeroStockItems,
+  //     sub: "Zero inventory remaining",
+  //     icon: <div style={{
+  //     background: '#e00a48', // purple gradient
+  //     borderRadius: '12px',
+  //     padding: '8px',
+  //     display: 'inline-block'
+  //   }}>
+  //     <IconShoppingCartExclamation stroke={2} color="#fff" size={24} />
+  //   </div>
+  //   },
+  //   {
+  //     title: "Critical Items",
+  //     count: data.belowMoqItems,
+  //     sub: "Require immediate attention",
+  //     icon:  <div style={{
+  //     background: '#f75b01', // vibrant orange-red
+  //     borderRadius: '12px',
+  //     padding: '8px',
+  //     display: 'inline-block'
+  //   }}>
+  //     <IconShoppingCartCheck stroke={2} color="#fff" size={24} />
+  //   </div>
+  //   },
+  //   {
+  //     title: "Total Items",
+  //     count: data.totalItems,
+  //     sub: "Tracking inventory levels",
+  //     icon:<div style={{
+  //     background: '#1e68ed', // vivid green gradient
+  //     borderRadius: '12px',
+  //     padding: '8px',
+  //     display: 'inline-block'
+  //   }}>
+  //     <IconPackage stroke={2} color="#fff" size={24} />
+  //   </div>
+  //   },
+  // ];
   const cardsData = [
     {
       title: "Out of Stock",
       count: data.zeroStockItems,
       sub: "Zero inventory remaining",
+      bgColor: "#feeff1",
+      textColor: "#C62828",
+      icon: (
+        <div style={{
+          background: "#e00a48",
+          borderRadius: "12px",
+          padding: "8px",
+          display: "inline-block"
+        }}>
+          <IconShoppingCartExclamation stroke={2} color="#fff" size={24} />
+        </div>
+      ),
     },
     {
       title: "Critical Items",
       count: data.belowMoqItems,
       sub: "Require immediate attention",
+      bgColor: "#fff8ee",
+      textColor: "#E78C27",
+      icon: (
+        <div style={{
+          background: "#f75b01",
+          borderRadius: "12px",
+          padding: "8px",
+          display: "inline-block"
+        }}>
+          <IconShoppingCartCheck stroke={2} color="#fff" size={24} />
+        </div>
+      ),
     },
     {
       title: "Total Items",
       count: data.totalItems,
       sub: "Tracking inventory levels",
+      bgColor: "#f7f3ff",
+      textColor: "#1e68ed",
+      icon: (
+        <div style={{
+          background: "#1e68ed",
+          borderRadius: "12px",
+          padding: "8px",
+          display: "inline-block"
+        }}>
+          <IconPackage stroke={2} color="#fff" size={24} />
+        </div>
+      ),
     },
   ];
+
 
   // 2️⃣ Items Table
   const items = (data.storeItems || []).map((storeItem) => {
@@ -1071,8 +1293,8 @@ export function outOfOfficeDataFormatter(data) {
       stock: `${leftOverStockQuantity} ${item.unit}`,
       status: statusLabel,
       category: item.categoryName,
-      size: `1 ${item.unit}`,
-      code: `#${item.unitPrice}`, // Assuming this is unique code
+      size: `${item.unitQuantity}${item.unit}`,
+      code: `₹${item.unitPrice}`, // Assuming this is unique code
       closing: latestPurchaseClosingDate,
       itemId: item?.id
     };
@@ -1091,8 +1313,8 @@ export function outOfOfficeDataFormatter(data) {
             ? "Out of Stock"
             : "Available",
       category: baseItem.item.categoryName,
-      size: `1 ${baseItem.item.unit}`,
-      code: `#${baseItem.item.unitPrice}`,
+      size: `${baseItem.item.unitQuantity}${baseItem.item.unit}`,
+      code: `₹${baseItem.item.unitPrice}`,
       closing: baseItem.latestPurchaseClosingDate,
     };
   });
@@ -1115,8 +1337,15 @@ export function recipesDataFormatter(data) {
       sales: data.profitableProducts?.sales ?? 0,
       share: data.profitableProducts?.share ?? "0%",
       label: "High Margin",
-      icon: <FaArrowTrendUp />,
-      bg: "#E6F8EE",
+      icon: <div style={{
+        background: '#08a358', // bold purple
+        borderRadius: '16px',
+        padding: '12px',
+        display: 'inline-block'
+      }}>
+        <IconTrendingUp stroke={2} color="#fff" size={24} />
+      </div>,
+      bg: "#eafef4",
       labelColor: "#28A745",
       textColor: "#1E4620",
     },
@@ -1126,8 +1355,15 @@ export function recipesDataFormatter(data) {
       sales: data.moderateProducts?.sales ?? 0,
       share: data.moderateProducts?.share ?? "0%",
       label: "Medium Margin",
-      icon: <FaArrowTrendUp />,
-      bg: "#FFF8E1",
+      icon: <div style={{
+        background: '#f39e04', // bold purple
+        borderRadius: '16px',
+        padding: '12px',
+        display: 'inline-block'
+      }}>
+        <IconTrendingUp stroke={2} color="#fff" size={24} />
+      </div>,
+      bg: "#FFFBEA",
       labelColor: "#F4B400",
       textColor: "#4E3B00",
     },
@@ -1137,8 +1373,20 @@ export function recipesDataFormatter(data) {
       sales: data.lossMakingProducts?.sales ?? 0,
       share: data.lossMakingProducts?.share ?? "0%",
       label: "Low Margin",
-      icon: <FaArrowTrendDown />,
-      bg: "#FFE6E6",
+      icon: <div
+        style={{
+          width: 48,
+          height: 48,
+          borderRadius: 12,
+          background: "#f02740", // Adjust color to match Figma or differentiate as in your design
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <IconTrendingDown color="white" size={28} stroke={2} />
+      </div>,
+      bg: "#fef2f3",
       labelColor: "#D32F2F",
       textColor: "#5C0000",
     },
@@ -1152,7 +1400,7 @@ export function recipesDataFormatter(data) {
       subtitle: `${item.product?.categoryName ?? ""} • ₹${item.product?.price ?? 0
         }`,
       items: item.sales?.itemsSold ?? 0,
-      stock: item.stock ?? "In Stock", // fallback
+      stock: item.stock ?? "", // fallback
       cost: item.totalMakingCost ? `₹${item.totalMakingCost}` : "N/A",
       sales: item.sales?.totalSales ? `₹${item.sales.totalSales}` : "N/A",
       costPct: item.product?.costPercentage
@@ -1171,7 +1419,7 @@ export function recipesDataFormatter(data) {
       subtitle: `${item.product?.categoryName ?? ""} • ₹${item.product?.price ?? 0
         }`,
       items: item.sales?.itemsSold ?? 0,
-      stock: item.stock ?? "In Stock", // fallback
+      stock: item.stock ?? "", // fallback
       cost: item.totalMakingCost ? `₹${item.totalMakingCost}` : "N/A",
       sales: item.sales?.totalSales ? `₹${item.sales.totalSales}` : "N/A",
       costPct: item.product?.costPercentage
@@ -1195,7 +1443,15 @@ export function topSellingProductsDataFormatter(data) {
       title: "Total Products",
       value: data.totalProducts,
       subtitle: "Menu items analyzed",
-      icon: <FaBoxOpen />,
+      icon: <div style={{
+        background: '#1d65e8', // vibrant orange-red
+        borderRadius: '12px',
+        padding: '8px',
+        display: 'inline-block',
+        descColor: '#1d65e8'
+      }}>
+        <IconShoppingCartCheck stroke={2} color="#fff" size={24} />
+      </div>,
       bg: "#EEF2FF",
       iconBg: "#7C5CFF",
       color: "#2E2EA8",
@@ -1205,7 +1461,14 @@ export function topSellingProductsDataFormatter(data) {
       title: "Top Performers",
       value: data.highMarginProducts,
       subtitle: "Top 50% products",
-      icon: <FaStar />,
+      icon: <div style={{
+        background: '#26a568', // bold purple
+        borderRadius: '12px',
+        padding: '8px',
+        display: 'inline-block'
+      }}>
+        <IconTrendingUp stroke={2} color="#fff" size={24} />
+      </div>,
       bg: "#cefbeeff",
       iconBg: "#6C7A86",
       color: "#222831",
@@ -1215,7 +1478,14 @@ export function topSellingProductsDataFormatter(data) {
       title: "Moderate Performers",
       value: data.mediumMarginProducts,
       subtitle: "Next 40% products",
-      icon: <FaChartLine />,
+      icon: <div style={{
+        background: '#e58403', // orange gradient for Figma style
+        borderRadius: '12px',
+        padding: '8px',
+        display: 'inline-block'
+      }}>
+        <IconArrowRight stroke={2} color="#fff" size={28} />
+      </div>,
       bg: "#f7fad4ff",
       iconBg: "#07A875",
       color: "#0F6A43",
@@ -1225,7 +1495,19 @@ export function topSellingProductsDataFormatter(data) {
       title: "Low Performers",
       value: data.lowMarginProducts,
       subtitle: "Bottom 10% products",
-      icon: <FaShoppingCart />,
+      icon: <div
+        style={{
+          width: 48,
+          height: 48,
+          borderRadius: 12,
+          background: "#c11e38", // Adjust color to match Figma or differentiate as in your design
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <IconTrendingDown color="white" size={28} stroke={2} />
+      </div>,
       bg: "#fae0e2ff",
       iconBg: "#F29F05",
       color: "#8a0007ff",
@@ -1243,24 +1525,48 @@ export function topSellingProductsDataFormatter(data) {
   // if margin values exist in `data`, replace nulls
   const revenueSummary = [
     {
-      title: "Total Revenue",
-      amount: data.totalSales || 0,
+      title: "Total Revenue ",
+      amount: `₹${data.totalSales.toLocaleString()}` || 0,
       sub: "From top selling items",
-      icon: <FaRupeeSign color="#03b678" />,
+      icon: <div style={{
+        background: '#0f957b', // green gradient for Figma style
+        borderRadius: '12px',
+        padding: '8px',
+        display: 'inline-block'
+      }}>
+        <IconBasketDollar stroke={2} color="#fff" size={20} />
+      </div>,
+      textColor: '#0f957b',
       bgColor: "#f0fff0",
     },
     {
       title: "Total Margin",
-      amount: data.totalMargin ?? "N/A", // not available
+      amount: `₹${data.totalMargin.toLocaleString()}` ?? "N/A", // not available
       sub: "Net profit generated",
-      icon: <FaWallet color="#2370f6" />,
+      icon: <div style={{
+        background: '#226ef3', // vibrant orange-red
+        borderRadius: '12px',
+        padding: '8px',
+        display: 'inline-block'
+      }}>
+        <IconShoppingCartCheck stroke={2} color="#fff" size={20} />
+      </div>,
+      textColor: '#226ef3',
       bgColor: "#eef5fe",
     },
     {
-      title: "Avg Margin %",
-      amount: data.marginPercentage ?? "N/A", // not available
+      title: `Avg % Margin`,
+      amount: `${data.marginPercentage}%` ?? "N/A", // not available
       sub: "Overall profitability",
-      icon: <FaPercent color="#9936e9" />,
+      icon: <div style={{
+        background: '#9a36ea', // purple gradient
+        borderRadius: '12px',
+        padding: '8px',
+        display: 'inline-block'
+      }}>
+        <IconShoppingCartExclamation stroke={2} color="#fff" size={20} />
+      </div>,
+      textColor: '#9a36ea',
       bgColor: "#faf6ff",
     },
   ];
@@ -1333,7 +1639,14 @@ export function productPerformancePercentileTableFormatter(data) {
       bgColor: "#dbe9ff",
       textColor: "#2a4cfa",
       description: 'Menu Item analyzed',
-      icon: <FaCartPlus />
+      icon: <div style={{
+        background: '#1c62e5', // vibrant orange-red
+        borderRadius: '12px',
+        padding: '8px',
+        display: 'inline-block'
+      }}>
+        <IconShoppingCartCheck stroke={2} color="#fff" size={24} />
+      </div>
     },
     {
       label: data.high?.definition?.split(":")[0] ?? "High",
@@ -1342,7 +1655,14 @@ export function productPerformancePercentileTableFormatter(data) {
       bgColor: "#dbffea",
       textColor: "#23864b",
       description: 'Top 50% products',
-      icon: <FaArrowTrendUp />
+      icon: <div style={{
+        background: '#33c376', // bold purple
+        borderRadius: '12px',
+        padding: '8px',
+        display: 'inline-block'
+      }}>
+        <IconTrendingUp stroke={2} color="#fff" size={24} />
+      </div>
     },
     {
       label: data.medium?.definition?.split(":")[0] ?? "Medium",
@@ -1351,7 +1671,14 @@ export function productPerformancePercentileTableFormatter(data) {
       bgColor: "#fff6d4",
       textColor: "#d08e00",
       description: 'Next 40% products',
-      icon: <FaArrowRight />
+      icon: <div style={{
+        background: '#dc7e05', // orange gradient for Figma style
+        borderRadius: '16px',
+        padding: '14px',
+        display: 'inline-block'
+      }}>
+        <IconArrowRight stroke={2} color="#fff" size={24} />
+      </div>
     },
     {
       label: data.low?.definition?.split(":")[0] ?? "Low",
@@ -1360,7 +1687,19 @@ export function productPerformancePercentileTableFormatter(data) {
       bgColor: "#ffeaea",
       textColor: "#d93939",
       description: 'Bottom 10% products',
-      icon: <FaArrowTrendDown />
+      icon: <div
+        style={{
+          width: 48,
+          height: 48,
+          borderRadius: 12,
+          background: "#bc1d37", // Adjust color to match Figma or differentiate as in your design
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <IconTrendingDown color="white" size={24} stroke={2} />
+      </div>
     },
   ];
 
@@ -1518,8 +1857,8 @@ export const supplierDuesDataFormatter = (apiResponse) => {
     supplier: item.supplier?.name || "Unknown Supplier",
     category: item.supplier?.supplierType || "N/A",
     location: item.supplier?.city || "",
-    thisMonth: item.purchase?.totalPrice || 0,
-    lastMonth: null, // API doesn’t provide
+    totalPurchase: item.purchase?.totalPrice || 0,
+    totalPayments: item.payment?.totalAmount || 0,
     total: item.expense?.totalAmount || 0,
     items: item.purchase?.itemCount || 0,
     supplierId: item.supplier?.id,

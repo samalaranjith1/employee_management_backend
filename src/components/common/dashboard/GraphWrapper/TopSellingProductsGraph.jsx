@@ -8,6 +8,7 @@ import {
   Tooltip,
   CartesianGrid,
   ResponsiveContainer,
+  Legend,
 } from "recharts";
 function TopSellingProductsGraph({ chartData }) {
   return (
@@ -20,25 +21,26 @@ function TopSellingProductsGraph({ chartData }) {
           <XAxis dataKey="name" tick={{ fontSize: 12 }} />
           <YAxis yAxisId="left" orientation="left" tick={{ fontSize: 12 }} />
           <YAxis yAxisId="right" orientation="right" tick={{ fontSize: 12 }} />
+          <Legend />
           <Tooltip />
           <Bar
             yAxisId="left"
             dataKey="sales"
             barSize={36}
-            fill="#5B7BFF"
+            fill="#5d9d4a"
             radius={[6, 6, 0, 0]}
           />
           <Line
             yAxisId="right"
             type="monotone"
             dataKey="margin"
-            stroke="#6C5BFF"
+            stroke="#f3a92d"
             strokeWidth={3}
             dot={{
               r: 5,
               fill: "#fff",
-              stroke: "#6C5BFF",
-              strokeWidth: 3,
+              stroke: "#f3a92d",
+              strokeWidth: 2,
             }}
           />
         </ComposedChart>

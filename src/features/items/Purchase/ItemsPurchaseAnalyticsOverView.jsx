@@ -8,6 +8,7 @@ import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer
 import { purchaseAnalyticsOverviewDataFormatter } from "@/utils/data_formatters/itemsPageDataFormatter";
 import { useItemHealth } from "@/services/item-service";
 import { useItemsContext } from "@/contexts/ItemsContext";
+import { IconPackage } from "@tabler/icons-react";
 
 export default function ItemsPurchaseAnalyticsOverview() {
   const { startDate, endDate } = useItemsContext();
@@ -18,7 +19,7 @@ export default function ItemsPurchaseAnalyticsOverview() {
       queryFn={() =>
         useItemHealth({ startdt: startDate, enddt: endDate }).queryFn
       }
-      queryArgs={[74, { startdt: startDate, enddt: endDate ,outlet:1,userId:7}]}
+      queryArgs={[74, { startdt: startDate, enddt: endDate, outlet: 1, userId: 7 }]}
       formatter={purchaseAnalyticsOverviewDataFormatter}
       shimmerCount={4}
     >
@@ -27,21 +28,14 @@ export default function ItemsPurchaseAnalyticsOverview() {
           {/* Header */}
           <Row className="align-items-center mb-3">
             <Col xs="auto">
-              <div
-                style={{
-                  width: 40,
-                  height: 40,
-                  background:
-                    "linear-gradient(135deg, #8B5CF6 0%, #C084FC 100%)",
-                  borderRadius: 12,
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  color: "white",
-                }}
-              >
-                <FaInfoCircle size={16} />
-              </div>
+                <div style={{
+                  background: '#763ffa', // vivid green gradient
+                  borderRadius: '12px',
+                  padding: '8px',
+                  display: 'inline-block'
+                }}>
+                  <IconPackage stroke={2} color="#fff" size={24} />
+                </div>
             </Col>
             <Col>
               <h5 className="fw-bold mb-0">Purchase Analytics Overview</h5>
@@ -51,9 +45,8 @@ export default function ItemsPurchaseAnalyticsOverview() {
               </small>
             </Col>
           </Row>
-
           {/* Cards */}
-          <PurchaseAnalyticsCards cards={cards} />
+          <PurchaseAnalyticsCards data={cards} />
         </Card>
       )}
     </ServiceRenderer>

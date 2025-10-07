@@ -28,7 +28,7 @@ export default function ProductsIngreidentAnalysisTable({ tableData }) {
   ];
 
   return (
-    <div style={{ maxHeight: "400px", overflowY: "auto" }}>
+    <div style={{ maxHeight: "65vh", overflowY: "auto" }}>
       <Table hover className="align-middle mb-0">
         <thead
           style={{
@@ -43,7 +43,7 @@ export default function ProductsIngreidentAnalysisTable({ tableData }) {
               <th
                 key={col.key}
                 onClick={() => handleSort(col.key)}
-                style={{ cursor: "pointer", whiteSpace: "nowrap" }}
+                style={{ cursor: "pointer", whiteSpace: "nowrap", backgroundColor: "rgb(248,248,248" }}
               >
                 {col.label}
                 {renderSortArrow(col.key)}
@@ -56,15 +56,31 @@ export default function ProductsIngreidentAnalysisTable({ tableData }) {
             <tr key={row.key}>
               <td>
                 <div className="d-flex align-items-center gap-2">
-                  {row.icon}
+                  {/* {row.icon} */}
                   <div>
                     <div className="fw-semibold">{row.name}</div>
                     <small className="text-muted">{row.storeItem}</small>
                   </div>
                 </div>
               </td>
-              <td className="text-primary fw-semibold">{row.recipe}</td>
-              <td className="text-success fw-semibold">{row.total}</td>
+              <td className="text-primary fw-semibold">
+                <div className="d-flex align-items-center gap-2">
+                  {/* {row.icon} */}
+                  <div>
+                    <div className="fw-semibold">{row.recipe?.split(".")[0]}</div>
+                    <small className="text-muted">{row.recipe?.split(".")[1]}</small>
+                  </div>
+                </div>
+              </td>
+              <td className="text-success fw-semibold">
+                <div className="d-flex align-items-center gap-2">
+                  {/* {row.icon} */}
+                  <div>
+                    <div className="fw-semibold">{row.total?.split(".")[0]}</div>
+                    <small className="text-muted">{row.total?.split(".")[1]}</small>
+                  </div>
+                </div>
+              </td>
             </tr>
           ))}
         </tbody>

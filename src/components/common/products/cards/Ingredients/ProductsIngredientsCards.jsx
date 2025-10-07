@@ -17,7 +17,7 @@ export default function ProductsIngredientsCards({ list }) {
   return (
     <>
       {/* Header with swipe buttons */}
-      <ComponentHeader
+      {/* <ComponentHeader
         title={"Product Ingredients"}
         description={"Overview of product ingredients and cost"}
         titleColor={"rgb(255,92,0)"}
@@ -26,7 +26,7 @@ export default function ProductsIngredientsCards({ list }) {
         scrollRef={scrollRef}
         isExpandable={false}
         titleIcon={""}
-      />
+      /> */}
 
       {/* Scrollable cards */}
       <div
@@ -48,10 +48,10 @@ export default function ProductsIngredientsCards({ list }) {
             flexShrink: 0,
             borderRadius: "12px",
             boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
-            border: "2px solid gray",
+            border: "1px solid #ddd",
           }}
         >
-          <div className="text-center">
+          <div className="text-left">
             <h6 className="text-secondary fw-bold text-uppercase">
               Total Items
             </h6>
@@ -66,14 +66,14 @@ export default function ProductsIngredientsCards({ list }) {
             flexShrink: 0,
             borderRadius: "12px",
             boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
-            border: "2px solid gray",
+            border: "1px solid #ddd",
           }}
         >
-          <div className="text-center">
-            <h6 className="text-secondary fw-bold text-uppercase">
+          <div className="text-left">
+            <h6 className="text-secondary text-uppercase">
               Total Cost
             </h6>
-            <h4 className="fw-bold mb-0 text-success">₹{totalCost}</h4>
+            <h4 className="fw-bold mb-0">₹{totalCost}</h4>
           </div>
         </CommonCard>
       </div>

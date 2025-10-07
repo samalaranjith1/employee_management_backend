@@ -13,6 +13,7 @@ import { subDays, subWeeks, subMonths, format } from "date-fns";
 import PeriodDataBreakDownTable from "@/components/common/dashboard/TablesSort/PeriodDataBreakDownTable";
 import PeriodBreakDownCard from "@/components/common/dashboard/card/PeriodBreakDownCard";
 import { FaHistory } from "react-icons/fa";
+import { IconArrowsMaximize, IconCalendar, IconTrendingUp } from "@tabler/icons-react";
 
 // Hook selector
 const useDataFetchMethod = (view) => {
@@ -70,17 +71,35 @@ export default function PeriodDataBreakdown() {
     <Card className="p-3 shadow-sm" style={{ borderRadius: "16px" }}>
       {/* Header */}
       <Row className="align-items-center mb-4">
-        <Col>
-          <h5 className="fw-bold mb-0">Period Data Breakdown</h5>
-          <small className="text-muted">
-            Detailed metrics across different time periods
-          </small>
+        <Col className="d-flex flex-row gap-2">
+          <div
+            style={{
+              width: 36,
+              height: 36,
+              borderRadius: 12,
+              background: "#Fe481d", // Adjust color to match your Figma design
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <IconCalendar color="white" size={28} stroke={2} />
+          </div>
+          <div style={{ marginTop: '-5px' }}>
+            <h5 className="fw-bold mb-0">Period Data Breakdown</h5>
+            <small className="text-muted">
+              Detailed metrics across different time periods
+            </small>
+          </div>
         </Col>
-        <Col xs="auto">
+        <Col xs="auto" className="d-flex flex-row">
           {/* Tabs */}
           <ButtonGroup
             className="rounded-pill"
-            style={{ backgroundColor: "#E6E6E6" }}
+            style={{
+              backgroundColor: "#E6E6E6",
+              marginLeft: 'auto',
+            }}
           >
             {tabs.map((label) => {
               const selected = activeTab === label;
@@ -109,6 +128,18 @@ export default function PeriodDataBreakdown() {
               );
             })}
           </ButtonGroup>
+          <div
+            style={{
+              width: 36,
+              height: 36,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              marginLeft: 'auto'
+            }}
+          >
+            <IconArrowsMaximize color="rgb(100,100,100)" size={24} />
+          </div>
         </Col>
       </Row>
 
@@ -146,6 +177,8 @@ export default function PeriodDataBreakdown() {
           {
             startdt: startDateCS,
             enddt: endDateCS,
+            outlet:1,
+            userId:7
           },
         ]}
         formatter={(raw) => periodDataBreakdownFormatter(raw, activeTab)}
@@ -154,13 +187,31 @@ export default function PeriodDataBreakdown() {
           <>
             {/* Cards */}
             <div
-              className="d-flex overflow-auto px-2 hide-scrollbar mb-3"
-              style={{ gap: "1rem" }}
+              style={{
+                display: "flex",
+                overflowX: "auto",
+                paddingLeft: "0.5rem",
+                paddingRight: "0.5rem",
+                marginBottom: "1rem",
+                gap: "1rem",
+                WebkitOverflowScrolling: "touch",
+                scrollbarWidth: "none", // Firefox
+                msOverflowStyle: "none", // IE/Edge
+              }}
             >
+              <style>
+                {`
+      div::-webkit-scrollbar {
+        display: none;
+      }
+    `}
+              </style>
+
               {cards.map((card, idx) => (
                 <PeriodBreakDownCard key={idx} card={card} idx={idx} />
               ))}
             </div>
+
 
             {/* Table */}
             <div style={{ maxHeight: "60vh", overflow: "auto" }}>

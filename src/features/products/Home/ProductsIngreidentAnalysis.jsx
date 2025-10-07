@@ -1,25 +1,26 @@
 "use client";
 
 import React, { useRef } from "react";
-import { Row, Col, Card } from "react-bootstrap";
+import { Row, Col, Card, Container } from "react-bootstrap";
 
 import { productsIngredientAnalyticsDataFormatter } from "@/utils/data_formatters/productsPageDataFormatter";
 import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer";
 import { useProductsContext } from "@/contexts/ProductsContext";
-import {  useProductIngredientsUsage } from "@/services/product-service";
+import { useProductIngredientsUsage } from "@/services/product-service";
 
 import ProductsIngreidentAnalysisTable from "@/components/common/products/TableSort/ProductsIngreidentAnalysisTable";
 import ProductsIngreidentAnalysisGraph from "@/components/common/products/GraphWrapper/ProductsIngreidentAnalysisGraph";
+import { IconPackage } from "@tabler/icons-react";
 export default function ProductsIngreidentAnalysis() {
   const { startDate, endDate } = useProductsContext();
   const myScrollRef = useRef(null);
 
   return (
     <ServiceRenderer
-      queryHook={ useProductIngredientsUsage}
+      queryHook={useProductIngredientsUsage}
       queryKey={["productIngredients", { startdt: startDate, enddt: endDate }]}
       queryFn={() =>
-         useProductIngredientsUsage({ startdt: startDate, enddt: endDate }).queryFn
+        useProductIngredientsUsage({ startdt: startDate, enddt: endDate }).queryFn
       }
       queryArgs={[100, { startdt: startDate, enddt: endDate }]}
       formatter={productsIngredientAnalyticsDataFormatter}
@@ -28,15 +29,35 @@ export default function ProductsIngreidentAnalysis() {
         const { tableData, chartData, totalCost } = formattedData;
 
         return (
-          <Card
-            className="p-3 shadow-sm"
-            style={{ borderRadius: "12px", background: "#fff" }}
+          <Container fluid
+            className="p-2 shadow-sm"
+            style={{ borderRadius: "12px", background: "#fff" ,marginBottom:'40px'}}
+
           >
-            <h5 className="fw-bold mb-3">Product Ingredient Analysis</h5>
-            <p className="text-muted">
-              Raw material breakdown showing recipe quantities and total cost
-              distribution
-            </p>
+            <div className="d-flex align-items-center gap-2 mb-3 flex-wrap" style={{backgroundColor:"#fff5e5ff",padding:'10px'}}>
+              {/* Left Column — Icon */}
+              <div
+                className="d-flex align-items-center justify-content-center"
+                style={{
+                  background: "#f16d01", // vivid green gradient
+                  borderRadius: "16px",
+                  width: "40px",
+                  height: "40px",
+                  flexShrink: 0,
+                }}
+              >
+                <IconPackage stroke={2} color="#fff" size={24} />
+              </div>
+
+              {/* Right Column — Text */}
+              <div>
+                <h5 className="fw-semibold mb-1">Product Ingredient Analysis</h5>
+                <p className="text-muted mb-0">
+                  Raw material breakdown showing recipe quantities and total cost distribution
+                </p>
+              </div>
+            </div>
+
 
             <Row>
               {/* Table Section */}
@@ -52,7 +73,7 @@ export default function ProductsIngreidentAnalysis() {
                 />
               </Col>
             </Row>
-          </Card>
+          </Container>
         );
       }}
     </ServiceRenderer>

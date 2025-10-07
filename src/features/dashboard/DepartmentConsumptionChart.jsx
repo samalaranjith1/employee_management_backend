@@ -12,6 +12,7 @@ import { departmentConsumptionPieChartFormatter } from "@/utils/data_formatters/
 import { useDashboardContext } from "@/contexts/DashboardContext";
 import { useRouter } from "next/navigation";
 import { handleNavigation } from "@/utils";
+import { IconChartColumn } from "@tabler/icons-react";
 
 export default function DepartmentConsumptionChart() {
   const { startDate, endDate } = useDashboardContext();
@@ -32,7 +33,7 @@ export default function DepartmentConsumptionChart() {
       alignItems: "center",
       gap: "0.5rem",
       marginBottom: "1rem",
-      color: "#AB47BC",
+      color: "#000",
       fontWeight: 600,
       fontSize: "1.1rem",
     },
@@ -58,8 +59,12 @@ export default function DepartmentConsumptionChart() {
       marginTop: "1rem",
       fontWeight: 600,
       fontSize: "1rem",
-      textAlign: "right",
+      display: "flex",
+      justifyContent: "space-between", // pushes text left and value right
+      alignItems: "center",
+      alignItems: "flex-start",
     },
+
     scrollBox: {
       maxHeight: "250px",
       overflowY: "auto",
@@ -114,7 +119,14 @@ export default function DepartmentConsumptionChart() {
             <Card style={styles.card}>
               {/* Header */}
               <div style={styles.header}>
-                <FaShoppingCart size={18} />
+                <div style={{
+                  background: 'linear-gradient(135deg, #316FEA 60%, #2680FF 100%)', // blue gradient for Figma match
+                  borderRadius: '16px',
+                  padding: '8px',
+                  display: 'inline-block'
+                }}>
+                  <IconChartColumn stroke={2} color="#fff" size={24} />
+                </div>
                 <span>Department Consumption</span>
               </div>
 
@@ -153,6 +165,13 @@ export default function DepartmentConsumptionChart() {
                           <span>{item.name}</span>
                         </div>
                         <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "flex-start", // ensures left alignment
+                            minWidth: "100px", // ensures consistent width for all values
+                            fontFamily: "monospace", // optional: better number alignment
+                          }}
                           onClick={() =>
                             handleNavigation({
                               router,
@@ -160,23 +179,51 @@ export default function DepartmentConsumptionChart() {
                               params: {
                                 startDate: startDate,
                                 endDate: endDate,
-                                departments:item?.departmentId
+                                departments: item?.departmentId,
+                              },
+                            })
+                          }
+                        >
+                          <div>₹{item.value.toLocaleString()}</div>
+                          <div style={{ color: "#6c757d", fontSize: "0.8rem" }}>
+                            {(item.percentage * 100).toFixed(1)}%
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+
+                    {/* {chartData.map((item, idx) => (
+                      <div key={idx} style={styles.legendItem}>
+                        <div style={styles.legendLabel}>
+                          <span style={styles.colorDot(item.color)}></span>
+                          <span>{item.name}</span>
+                        </div>
+                        <div
+                          onClick={() =>
+                            handleNavigation({
+                              router,
+                              url: "sp/consumption_analytics",
+                              params: {
+                                startDate: startDate,
+                                endDate: endDate,
+                                departments: item?.departmentId
                               },
                             })
                           }
                         >
                           ₹{item.value.toLocaleString()}{" "}
-                          <span
+                          <div
                             style={{ color: "#6c757d", fontSize: "0.8rem" }}
                           >
                             {(item.percentage * 100).toFixed(1)}%
-                          </span>
+                          </div>
                         </div>
                       </div>
-                    ))}
+                    ))} */}
                   </div>
                   <div style={styles.total}>
-                    Total Purchases: ₹{total?.toLocaleString()}
+                    <span>Total Purchases:</span>
+                    <span style={{paddingRight:'3vw'}}>₹{total?.toLocaleString()}</span>
                   </div>
                 </Col>
               </Row>

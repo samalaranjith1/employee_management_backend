@@ -10,6 +10,7 @@ import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer
 import { useItemsUsageListDepartments } from "@/services/item-service";
 import { itemConsumptionEfficiencyDataFormatter } from "@/utils/data_formatters/dashboardFormatter";
 import { useDashboardContext } from "@/contexts/DashboardContext";
+import { IconTarget } from "@tabler/icons-react";
 
 const ItemConsumptionEfficiency = () => {
   const { startDate, endDate } = useDashboardContext();
@@ -40,12 +41,19 @@ const ItemConsumptionEfficiency = () => {
         description={
           "Monitor wastage patterns and consumption inefficiencies across menu items"
         }
-        titleColor={"rgb(255,79,22)"}
+        titleColor={"#000"}
         cardBgColor={"none"}
         isShowArrows={true}
         scrollRef={myScrollRef}
         isExpandable={true}
-        titleIcon={""}
+        titleIcon={<div style={{
+          background: '#fd4b1a',
+          borderRadius: '16px',
+          padding: '8px',
+          display: 'inline-block'
+        }}>
+          <IconTarget stroke={2} color="#fff" size={24} />
+        </div>}
         text={""}
       />
 
@@ -63,7 +71,7 @@ const ItemConsumptionEfficiency = () => {
             enddt: endDate,
           }).queryFn
         }
-        queryArgs={[{ startdt: startDate, enddt: endDate ,outlet:1,userId:7}]}
+        queryArgs={[{ startdt: startDate, enddt: endDate, outlet: 1, userId: 7 }]}
         formatter={itemConsumptionEfficiencyDataFormatter}
         shimmerCount={3}
       >

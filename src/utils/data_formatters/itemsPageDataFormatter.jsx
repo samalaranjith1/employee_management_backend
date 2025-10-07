@@ -1,4 +1,5 @@
 // src/utils/dataFormatter.js
+import { IconActivity, IconBrandSpeedtest, IconCalendar, IconCurrencyRupee, IconPackage, IconShoppingCart, IconTrendingUp } from "@tabler/icons-react";
 import { format, parseISO } from "date-fns";
 import {
   FaGlassMartiniAlt,
@@ -58,7 +59,7 @@ export const summeryOverviewDataFormatter = (apiData) => {
         id: "purchase",
         title: "Purchase",
         icon: <FaShoppingCart className="me-2" />,
-        bg: "#E9F3FF",
+        bg: "#fff7ed",
         rows: [
           {
             label: "Qty",
@@ -74,7 +75,7 @@ export const summeryOverviewDataFormatter = (apiData) => {
         id: "opening",
         title: "Opening",
         icon: <FaFolderOpen className="me-2" />,
-        bg: "#FFF3E9",
+        bg: "#f0fdf4",
         rows: [
           {
             label: "Qty",
@@ -90,7 +91,7 @@ export const summeryOverviewDataFormatter = (apiData) => {
         id: "consumption",
         title: "Consumption",
         icon: <FaBalanceScale className="me-2" />,
-        bg: "#FFE9E9",
+        bg: "#fef2f2",
         rows: [
           {
             label: "Qty",
@@ -106,7 +107,7 @@ export const summeryOverviewDataFormatter = (apiData) => {
         id: "closing",
         title: "Closing",
         icon: <FaFileInvoiceDollar className="me-2" />,
-        bg: "#E9FFF3",
+        bg: "#fef2f2",
         rows: [
           {
             label: "Qty",
@@ -122,7 +123,7 @@ export const summeryOverviewDataFormatter = (apiData) => {
         id: "netConsumption",
         title: "Net Consumption",
         icon: <FaBalanceScale className="me-2" />,
-        bg: "#FFF0F6",
+        bg: "#eff6ff",
         rows: [
           {
             label: "Qty",
@@ -138,7 +139,7 @@ export const summeryOverviewDataFormatter = (apiData) => {
         id: "sales",
         title: "Sales",
         icon: <FaChartLine className="me-2" />,
-        bg: "#F3E9FF",
+        bg: "#f5f3ff",
         rows: [
           {
             label: "Qty",
@@ -152,41 +153,76 @@ export const summeryOverviewDataFormatter = (apiData) => {
       },
     ],
     footer: [
-    {
-      id: "currentStock",
-      label: "Current Stock",
-      value: `${summary?.leftOverStockQuantity ?? 0} ${item?.unit ?? ''}`,
-      icon: <FaBoxes />,
-      bg: "#F3FFF8"
-    },
-    {
-      id: "stockValue",
-      label: "Stock Value",
-      value: `₹${summary?.leftOverStockValue ?? 0}`,
-      icon: <FaRupeeSign />,
-      bg: "#F3FFF8"
-    },
-    {
-      id: "margin",
-      label: "Margin %",
-      value: `${summary?.saleToConsumptionMarginPercentage ?? 0}%`,
-      icon: <FaPercentage />,
-      bg: "#F3FFF8"
-    },
-    {
-      id: "saleConsumptionGM",
-      label: "Sale - Consumption",
-      value: `${summary?.saleToConsumptionQuantityDifference ?? 0} ${item?.unit ?? ''}`,
-      icon: <FaArrowRight />,
-      bg: "#F3FFF8"
-    },
-    {
-      id: "saleConsumptionRs",
-      label: "Sale - Consumption",
-      value: `₹${summary?.saleToConsumptionMargin ?? 0}`,
-      icon: <FaArrowRight />,
-      bg: "#F3FFF8"
-    }]
+      {
+        id: "currentStock",
+        label: "Current Stock",
+        value: `${summary?.leftOverStockQuantity ?? 0} ${item?.unit ?? ''}`,
+        icon: <div style={{
+          background: '#d0fae5', // vivid green gradient
+          borderRadius: '12px',
+          padding: '8px',
+          display: 'inline-block'
+        }}>
+          <IconPackage stroke={2} color="#096009ff" size={20} />
+        </div>,
+        bg: "#F3FFF8"
+      },
+      {
+        id: "stockValue",
+        label: "Stock Value",
+        value: `₹${summary?.leftOverStockValue ?? 0}`,
+        icon: <div style={{
+          background: '#dbeafe', // blue gradient similar to Figma
+          borderRadius: '12px',
+          padding: '8px',
+          display: 'inline-block'
+        }}>
+          <IconCurrencyRupee stroke={2} color="#1f64fc" size={20} />
+        </div>,
+        bg: "#F3FFF8"
+      },
+      {
+        id: "margin",
+        label: "Margin %",
+        value: `${summary?.saleToConsumptionMarginPercentage ?? 0}%`,
+        icon: <div style={{
+          background: '#f3e8ff', // blue gradient matching Figma style
+          borderRadius: '12px',
+          padding: '8px',
+          display: 'inline-block'
+        }}>
+          <IconBrandSpeedtest stroke={2} color="#a837fb" size={20} />
+        </div>,
+        bg: "#F3FFF8"
+      },
+      {
+        id: "saleConsumptionGM",
+        label: "Sale - Consumption",
+        value: `${summary?.saleToConsumptionQuantityDifference ?? 0} ${item?.unit ?? ''}`,
+        icon: <div style={{
+          background: '#ffedd4', // soft orange/peach gradient for Figma look
+          borderRadius: '12px',
+          padding: '8px',
+          display: 'inline-block'
+        }}>
+          <IconActivity stroke={2} color="#f76829" size={16} />
+        </div>,
+        bg: "#F3FFF8"
+      },
+      {
+        id: "saleConsumptionRs",
+        label: "Sale - Consumption %",
+        value: `₹${summary?.saleToConsumptionMargin ?? 0}`,
+        icon: <div style={{
+          background: '#fef9c2', // bold purple
+          borderRadius: '12px',
+          padding: '8px',
+          display: 'inline-block'
+        }}>
+          <IconTrendingUp stroke={2} color="#d49212" size={16} />
+        </div>,
+        bg: "#F3FFF8"
+      }]
   };
 };
 
@@ -210,7 +246,7 @@ export function trendAnalysisDataFormatter(apiData) {
   //   netConsumptionIcon: <FaBurn className="me-1 text-danger" />,
   //   saleIcon: <FaShoppingCart className="me-1 text-purple" />,
   // }));
-  const unit ="GM"
+  const unit = "GM"
   const tableData = apiData?.list.map((item) => {
     const d = parseISO(item.dt);
     return {
@@ -363,9 +399,8 @@ export const menuItemConsumptionAnalysisDataFormatter = (apiData) => {
     return {
       id: product?.id,
       name: product?.masterProductName || product?.name,
-      recipeQty: `${
-        recipe?.unitQuantity
-      } gm`,
+      recipeQty: `${recipe?.unitQuantity
+        } gm`,
       recipePrice: `₹${recipe?.unitPrice}`,
       totalConsumption: `${recipe?.totalQuantity || 0} gm`,
       totalConsumptionPrice: `₹${recipe?.totalPrice}`,
@@ -375,42 +410,159 @@ export const menuItemConsumptionAnalysisDataFormatter = (apiData) => {
   });
 };
 
-export const itemHealthDataFormatter = (apiData) => {
-  return [
-    {
-      id: "thisWeek",
-      title: "This Week",
-      icon: <FaCalendarWeek className="me-2 text-primary" />,
-      bgClass: "bg-light-blue",
-      data: apiData.thisWeek,
-      utilizationRate: "92.9%",
-    },
-    {
-      id: "lastWeek",
-      title: "Last Week",
-      icon: <FaChartLine className="me-2 text-success" />,
-      bgClass: "bg-light-green",
-      data: apiData.lastWeek,
-      utilizationRate: "93.7%",
-    },
-    {
-      id: "thisMonth",
-      title: "This Month",
-      icon: <FaCalendarAlt className="me-2 text-purple" />,
-      bgClass: "bg-light-purple",
-      data: apiData.thisMonth,
-      utilizationRate: "92.9%",
-    },
-    {
-      id: "lastMonth",
-      title: "Last Month",
-      icon: <FaChartBar className="me-2 text-warning" />,
-      bgClass: "bg-light-orange",
-      data: apiData.lastMonth || {}, // fallback if API doesn’t provide
-      utilizationRate: "92.5%",
-    },
-  ];
-};
+// itemHealthDataFormatter.js
+
+import { IconChartHistogram } from "@tabler/icons-react";
+
+export const itemHealthDataFormatter = (apiData) => [
+  {
+    id: "thisWeek",
+    title: "This Week",
+    icon: (
+      <div
+        style={{
+          background: 'linear-gradient(135deg, #2196F3 0%, #18A8E7 100%)',
+          borderRadius: '14px',
+          padding: '10px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: 36,
+          height: 36,
+        }}
+      >
+        <IconCalendar size={20} stroke={2} color="#fff" />
+      </div>
+    ),
+    iconBg: "transparent",
+    cardBg: "linear-gradient(135deg, #ECF2FF 0%, #F7FAFF 100%)",
+    data: apiData.thisWeek,
+    utilizationRate: apiData.thisWeek?.utilizationRate || "92.9%",
+    textColor: "#1976D2",
+  },
+  {
+    id: "lastWeek",
+    title: "Last Week",
+    icon: (
+      <span
+        style={{
+          background: "#27AE60",
+          borderRadius: "8px",
+          width: 32,
+          height: 32,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <IconActivity stroke={2} color="#fff" size={18} />
+      </span>
+    ),
+    iconBg: "transparent",
+    cardBg: "linear-gradient(135deg, #ECFFF7 0%, #F7FFFA 100%)",
+    data: apiData.lastWeek,
+    utilizationRate: apiData.lastWeek?.utilizationRate || "93.7%",
+    textColor: "#27AE60",
+  },
+  {
+    id: "thisMonth",
+    title: "This Month",
+    icon: (
+      <span
+        style={{
+          background: "#924CFE",
+          borderRadius: "8px",
+          width: 32,
+          height: 32,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <IconChartHistogram color="#fff" size={18} stroke={2} />
+      </span>
+    ),
+    iconBg: "transparent",
+    cardBg: "linear-gradient(135deg, #F3E8FF 0%, #F9F5FF 100%)",
+    data: apiData.thisMonth,
+    utilizationRate: apiData.thisMonth?.utilizationRate || "92.9%",
+    textColor: "#924CFE",
+  },
+  {
+    id: "lastMonth",
+    title: "Last Month",
+    icon: (
+      <span
+        style={{
+          background: "#FF9900",
+          borderRadius: "8px",
+          width: 32,
+          height: 32,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <IconTrendingUp stroke={2} color="#fff" size={18} />
+      </span>
+    ),
+    iconBg: "transparent",
+    cardBg: "linear-gradient(135deg, #FFF2DF 0%, #FFFBF2 100%)",
+    data: apiData.lastMonth || {},
+    utilizationRate: apiData.lastMonth?.utilizationRate || "92.5%",
+    textColor: "#FF9900",
+  },
+];
+// export const itemHealthDataFormatter = (apiData) => {
+//   return [
+//     {
+//       id: "thisWeek",
+//       title: "This Week",
+//       icon: <FaCalendarWeek className="me-2 text-primary" />,
+//       bgClass: "bg-light-blue",
+//       data: apiData.thisWeek,
+//       utilizationRate: "92.9%",
+//     },
+//     {
+//       id: "lastWeek",
+//       title: "Last Week",
+//       icon:  <div style={{
+//       background: 'linear-gradient(135deg, #FFE7CD 60%, #FFEBCF 100%)', // soft orange/peach gradient for Figma look
+//       borderRadius: '8px',
+//       padding: '4px',
+//       display: 'inline-block'
+//     }}>
+//       <IconActivity stroke={2} color="#EA530A" size={18} />
+//     </div>,
+//       bgClass: "bg-light-green",
+//       data: apiData.lastWeek,
+//       utilizationRate: "93.7%",
+//     },
+//     {
+//       id: "thisMonth",
+//       title: "This Month",
+//       icon: <FaCalendarAlt className="me-2 text-purple" />,
+//       bgClass: "bg-light-purple",
+//       data: apiData.thisMonth,
+//       utilizationRate: "92.9%",
+//     },
+//     {
+//       id: "lastMonth",
+//       title: "Last Month",
+//       icon: <div style={{
+//       background: 'linear-gradient(135deg, #924CFE 60%, #BC75FF 100%)', // bold purple
+//       borderRadius: '8px',
+//       padding: '4px',
+//       display: 'inline-block'
+//     }}>
+//       <IconTrendingUp stroke={2} color="#fff" size={18} />
+//     </div>,
+//       bgClass: "bg-light-orange",
+//       data: apiData.lastMonth || {}, // fallback if API doesn’t provide
+//       utilizationRate: "92.5%",
+//     },
+//   ];
+// };
 
 //purchases tab
 
@@ -421,7 +573,19 @@ export const purchaseSuppplierDetailsDataFormatter = (data) => {
         title: "Total Suppliers",
         value: data?.suppliers,
         subText: "Active suppliers",
-        icon: <FaUsers className="fs-3 text-primary" />,
+        icon: <div
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            justifyContent: "center",
+            backgroundColor: "white", // ✅ background color here
+            borderRadius: "50%",       // optional: makes it circular
+            padding: "8px",            // adjust as needed
+          }}
+        >
+          <FaUsers className="fs-3 text-primary" size={18} />
+        </div>
+        ,
         bg: "#EEF4FF",
         textColor: "#2563EB",
       },
@@ -429,7 +593,14 @@ export const purchaseSuppplierDetailsDataFormatter = (data) => {
         title: "Total Quantity",
         value: `${data?.totalQuantity.toLocaleString()} GM`,
         subText: "Purchased YTD",
-        icon: <FaBoxOpen className="fs-3 text-success" />,
+        icon: <div style={{
+          background: '#fff', // vivid green gradient
+          borderRadius: '8px',
+          padding: '4px',
+          display: 'inline-block'
+        }}>
+          <IconPackage stroke={2} color="#44be71" size={18} />
+        </div>,
         bg: "#ECFDF5",
         textColor: "#047857",
       },
@@ -437,7 +608,18 @@ export const purchaseSuppplierDetailsDataFormatter = (data) => {
         title: "Total Value",
         value: `₹${data?.totalAmount.toLocaleString()}`,
         subText: "Total spend",
-        icon: <FaRupeeSign className="fs-3 text-purple" />,
+        icon: <div
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            justifyContent: "center",
+            backgroundColor: "white",
+            borderRadius: "50%", // optional, makes it circular
+            padding: "4px",
+          }}
+        >
+          <FaRupeeSign className="fs-5 text-purple" color="#6D28D9" />
+        </div>,
         bg: "#F5F3FF",
         textColor: "#6D28D9",
       },
@@ -471,12 +653,12 @@ export const purchaseTrendAnalysisDataFormatter = (data) => {
       day: "numeric",
     }),
     purchaseAmount: Number(item.purchaseValue || 0),
-    avgPrice:Number(item.unitPrice || 0),
-      // item.purchaseValue > 0
-      //   ? Number((item.purchaseValue / item.consumptionQuantity) * 100).toFixed(
-      //       2
-      //     )
-      //   : 0,
+    avgPrice: Number(item.unitPrice || 0),
+    // item.purchaseValue > 0
+    //   ? Number((item.purchaseValue / item.consumptionQuantity) * 100).toFixed(
+    //       2
+    //     )
+    //   : 0,
   }));
 
   const tableData = data.map((item) => ({
@@ -500,8 +682,8 @@ export const purchaseTrendAnalysisDataFormatter = (data) => {
       label:
         item.purchaseValue > 0
           ? `₹${((item.purchaseValue / item.consumptionQuantity) * 100).toFixed(
-              2
-            )}`
+            2
+          )}`
           : "₹0.00",
     },
   }));
@@ -520,7 +702,20 @@ export const purchaseAnalyticsOverviewDataFormatter = (apiData) => {
       avgPrice: apiData?.thisWeek?.unitPrice
         ? apiData.thisWeek.purchaseValue / apiData.thisWeek.purchaseQuantity
         : 0,
-      icon: <FaCalendarAlt size={20} />,
+      icon: <div
+        style={{
+          background: '#2d7fff',
+          borderRadius: '14px',
+          padding: '10px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: 32,
+          height: 32,
+        }}
+      >
+        <IconCalendar size={18} stroke={2} color="#fff" />
+      </div>,
       bgColor: "#E8F0FF", // light blue
       borderColor: "#4285F4",
       textColor: "#4285F4",
@@ -533,7 +728,14 @@ export const purchaseAnalyticsOverviewDataFormatter = (apiData) => {
       avgPrice: apiData?.lastWeek?.purchaseQuantity
         ? apiData.lastWeek.purchaseValue / apiData.lastWeek.purchaseQuantity
         : 0,
-      icon: <FaCalendarWeek size={20} />,
+      icon:  <div style={{
+      background: '#00c950', // bold purple
+      borderRadius: '8px',
+      padding: '4px',
+      display: 'inline-block'
+    }}>
+      <IconTrendingUp stroke={2} color="#fff" size={18} />
+    </div>,
       bgColor: "#E7FAEF", // light green
       borderColor: "#34A853",
       textColor: "#34A853",
@@ -559,7 +761,14 @@ export const purchaseAnalyticsOverviewDataFormatter = (apiData) => {
       avgPrice: apiData?.lastMonth?.purchaseQuantity
         ? apiData.lastMonth.purchaseValue / apiData.lastMonth.purchaseQuantity
         : 0,
-      icon: <FaChartLine size={20} />,
+      icon:     <div style={{
+      background: '#ff6900', // bold purple
+      borderRadius: '8px',
+      padding: '4px',
+      display: 'inline-block'
+    }}>
+      <IconTrendingUp stroke={2} color="#fff" size={18} />
+    </div>,
       bgColor: "#FFF4E5", // light orange
       borderColor: "#FB8C00",
       textColor: "#FB8C00",
@@ -620,7 +829,14 @@ export const consumptionSummaryOverViewDataFormatter = (data) => {
       value: summary?.consumptionOpeningValue || 0,
       departments: summary?.consumedDepartmentCount || 0,
       unit: item?.unit || "",
-      icon: <FaBoxOpen />,
+      icon: <div style={{
+      background: '#f8fefc', // blue gradient matching Figma style
+      borderRadius: '8px',
+      padding: '4px',
+      display: 'inline-block'
+    }}>
+      <IconShoppingCart stroke={2} color="#171717" size={16} />
+    </div>,
       bgColor: "#E7FAEF", // Light green pastel
     },
     {
@@ -630,7 +846,14 @@ export const consumptionSummaryOverViewDataFormatter = (data) => {
       value: summary?.consumptionValue || 0,
       departments: summary?.consumedItemCount || 0,
       unit: item?.unit || "",
-      icon: <FaChartLine />,
+      icon: <div style={{
+      background: '#f8fefc', // soft orange/peach gradient for Figma look
+      borderRadius: '8px',
+      padding: '4x',
+      display: 'inline-block'
+    }}>
+      <IconActivity stroke={2} color="#171717" size={16} />
+    </div>,
       bgColor: "#FFF4E5", // Light orange pastel
     },
     {
@@ -640,7 +863,14 @@ export const consumptionSummaryOverViewDataFormatter = (data) => {
       value: summary?.consumptionClosingValue || 0,
       departments: summary?.consumedClosingDepartmentCount || 0,
       unit: item?.unit || "",
-      icon: <FaCube />,
+      icon: <div style={{
+      background: '#f8fefc', // vivid green gradient
+      borderRadius: '8px',
+      padding: '4px',
+      display: 'inline-block'
+    }}>
+      <IconPackage stroke={2} color="#171717" size={16} />
+    </div>,
       bgColor: "#EEF2FF", // Light blue pastel
     },
   ];
@@ -933,17 +1163,17 @@ export const priceTrendsDataFormatter = (apiResponse) => {
       : "",
     lowestPrice: apiResponse?.lowestPrice?.item?.unitPrice,
     lowestPriceSub: apiResponse?.lowestPrice
-      ? `Low in ${apiResponse?.lowestPrice?.startDate}`
+      ? `Low in ${format(new Date(apiResponse.lowestPrice.startDate), "MMM yyyy")}`
       : "",
     highestPrice: apiResponse?.highestPrice?.item?.unitPrice,
     highestPriceSub: apiResponse?.lowestPrice
-      ? `Peak in ${apiResponse?.lowestPrice?.startDate}`
+      ? `Peak in ${format(new Date(apiResponse.highestPrice.startDate), "MMM yyyy")}`
       : "",
     percentageOfChange:
       apiResponse?.highestPrice?.item?.unitPrice -
       apiResponse?.lowestPrice?.item?.unitPrice,
     percentageOfChangeSub: apiResponse?.lowestPrice
-      ? `per ${apiResponse?.percentageOfChange}% change`
+      ? `${apiResponse?.percentageOfChange}% increase`
       : "",
   };
 
@@ -984,7 +1214,7 @@ export const stockTrendsDataFormatter = (apiResponse) => {
   if (!apiResponse || !apiResponse.list) return [];
   const cardsData = {
     currentStock: apiResponse?.currentStock,
-    currentStockSub: `Lowest Inventory`,
+    currentStockSub: `Latest Inventory`,
     currentPrice: apiResponse?.currentPrice,
     currentPriceSub: apiResponse?.currentPrice
       ? `per ${apiResponse?.item?.unitQuantity} ${apiResponse?.item?.unit}`
@@ -998,10 +1228,10 @@ export const stockTrendsDataFormatter = (apiResponse) => {
   const data = apiResponse?.list.map((entry, index) => {
     let trendIcon = <FaMinus className="text-secondary" />;
     let trendColor = "text-muted";
-    if (entry.status==="GREEN") {
+    if (entry.status === "GREEN") {
       trendIcon = <FaArrowUp className="text-success" />;
       trendColor = "text-success";
-    } else  {
+    } else {
       trendIcon = <FaArrowDown className="text-danger" />;
       trendColor = "text-danger";
     }

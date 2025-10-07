@@ -8,6 +8,7 @@ import { useDashboardContext } from "@/contexts/DashboardContext";
 import { useProductsSalesDistribution } from "@/services/product-service";
 import { productPerformancePercentileTableFormatter } from "@/utils/data_formatters/dashboardFormatter";
 import ProductPerformanceSummaryCards from "@/components/common/dashboard/card/ProductPerformanceSummaryCards";
+import { IconTrendingUp } from "@tabler/icons-react";
 
 export default function ProductPerformanceByPercentile() {
   const { startDate, endDate } = useDashboardContext();
@@ -21,13 +22,20 @@ export default function ProductPerformanceByPercentile() {
     >
       <ComponentHeader
         title={"Product Performance by Percentile"}
-        description={""}
-        titleColor={"rgb(255,79,22)"}
+        description={"Detailed metrics across different time periods"}
+        titleColor={"#000"}
         cardBgColor={"none"}
         isShowArrows={true}
         scrollRef={myScrollRef}
         isExpandable={true}
-        titleIcon={""}
+        titleIcon={<div style={{
+          background: '#fe4620', // bold purple
+          borderRadius: '12px',
+          padding: '8px',
+          display: 'inline-block'
+        }}>
+          <IconTrendingUp stroke={2} color="#fff" size={24} />
+        </div>}
         text={""}
       />
 
@@ -45,22 +53,23 @@ export default function ProductPerformanceByPercentile() {
             enddt: endDate,
           }).queryFn
         }
-        queryArgs={[{ startdt: startDate, enddt: endDate,outlet:1,userId:7 }]}
+        queryArgs={[{ startdt: startDate, enddt: endDate, outlet: 1, userId: 7 }]}
         formatter={productPerformancePercentileTableFormatter}
         shimmerCount={3}
       >
-        {( data, refetch) => {
-          const {summary, tableData } = data
+        {(data, refetch) => {
+          const { summary, tableData } = data
           return (
-          <>
-            <ProductPerformanceSummaryCards
-              summary={summary}
-              cardsContainerRef={myScrollRef}
-            />
+            <>
+              <ProductPerformanceSummaryCards
+                summary={summary}
+                cardsContainerRef={myScrollRef}
+              />
 
-            <ProductPerformanceTable data={tableData} />
-          </>
-        )}}
+              <ProductPerformanceTable data={tableData} />
+            </>
+          )
+        }}
       </ServiceRenderer>
     </Container>
   );

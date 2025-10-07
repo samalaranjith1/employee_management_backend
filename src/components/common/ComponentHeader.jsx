@@ -1,5 +1,6 @@
 "use client";
 
+import { IconArrowsMaximize } from "@tabler/icons-react";
 import React, { useEffect, useState } from "react";
 import { Badge, Col, Row, Dropdown } from "react-bootstrap";
 import {
@@ -90,14 +91,14 @@ function ComponentHeader({
         <div className="me-2">
           {titleIcon ? titleIcon : <FaBolt size={24} color="rgb(255,80,22)" />}
         </div>
-        <div className="d-flex flex-column mt-2">
+        <div className="d-flex flex-column mt-2" style={{marginTop:"-20px"}}>
           <div
             className={titleColor}
             style={{ color: titleColor, fontWeight: "bold" }}
           >
             {title}
           </div>
-          <div className="d-flex align-items-center gap-2">{description}</div>
+          <div className="d-flex align-items-center gap-2 fw-normal text-muted">{description}</div>
         </div>
       </Col>
 
@@ -105,7 +106,7 @@ function ComponentHeader({
       <Col
         xs="auto"
         className="d-flex align-items-center ms-auto gap-2"
-        style={{ position: "relative", minWidth: "max-content" }} // prevent resizing
+        style={{ position: "relative", minWidth: "max-content",marginTop:'-5px' }} // prevent resizing
       >
         {text && <Badge>{text}</Badge>}
 
@@ -163,11 +164,20 @@ function ComponentHeader({
 
         {/* Expand button */}
         {isExpandable && (
-          <FaExpand
-            size={24}
-            color="rgb(255,80,22)"
+            <div
+            style={{
+              width: 36,
+              height: 36,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              marginLeft: 'auto'
+            }}
             onClick={handleExpandClick}
-          />
+
+          >
+            <IconArrowsMaximize color="rgb(100,100,100)" size={24} />
+          </div>
         )}
       </Col>
     </Row>

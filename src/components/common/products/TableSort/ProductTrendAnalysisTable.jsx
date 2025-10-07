@@ -3,6 +3,7 @@
 import React from "react";
 import { Card, Table, ButtonGroup, ToggleButton } from "react-bootstrap";
 import { useTableSort } from "@/components/hooks/useTableSort";
+import { IconTable } from "@tabler/icons-react";
 
 const ProductTrendAnalysisTable = ({ tableData, filter, setFilter }) => {
   // 🔹 Prepare data for sorting
@@ -36,17 +37,39 @@ const ProductTrendAnalysisTable = ({ tableData, filter, setFilter }) => {
   return (
     <Card className="shadow-sm border-0">
       <Card.Body>
-        <div className="d-flex justify-content-between align-items-center mb-3 flex-wrap">
-          <div>
-            <h6 className="fw-bold mb-1">Daily Sales Analytics</h6>
-            <small className="text-muted">
-              Complete breakdown of daily sales performance and revenue data
-            </small>
+        <div className="d-flex justify-content-between align-items-center mb-3 flex-wrap" style={{ backgroundColor: "#eefdf4", padding: "10px" }}>
+          <div className="d-flex align-items-center gap-3 mb-3 flex-wrap">
+            {/* Left Column — Icon */}
+            <div
+              className="d-flex align-items-center justify-content-center"
+              style={{
+                background: "linear-gradient(135deg, #11C270 60%, #0BA360 100%)",
+                borderRadius: "16px",
+                width: "48px",
+                height: "48px",
+                flexShrink: 0,
+              }}
+            >
+              <IconTable size={24} stroke={2.5} color="#fff" />
+            </div>
+
+            {/* Right Column — Title + Subtitle */}
+            <div>
+              <h6 className="fw-bold mb-1">Daily Sales Analytics</h6>
+              <small className="text-muted">
+                Complete breakdown of daily sales performance and revenue data
+              </small>
+            </div>
           </div>
 
           {/* Filters */}
           <div>
-            <ButtonGroup>
+            <ButtonGroup
+              style={{
+                backgroundColor: "rgb(230,230,230)",
+                padding: "4px",
+                borderRadius: "30px"
+              }}>
               {["Daily", "Same Days", "Weekly", "Monthly"].map((label) => (
                 <ToggleButton
                   key={label}
@@ -92,8 +115,9 @@ const ProductTrendAnalysisTable = ({ tableData, filter, setFilter }) => {
               style={{
                 position: "sticky",
                 top: 0,
-                background: "#fff",
+                background: "#f6f5f7",
                 zIndex: 3,
+                fontWeight:'bold'
               }}
             >
               <tr>
@@ -103,10 +127,11 @@ const ProductTrendAnalysisTable = ({ tableData, filter, setFilter }) => {
                     onClick={() => handleSort(col.key)}
                     style={{
                       fontSize: "13px",
-                      color: "#6C757D",
+                      color: "#000",
+                      fontWeight:'bold',
                       cursor: "pointer",
                       padding: "12px 16px",
-                      backgroundColor: "#fff", // ensures rows don’t bleed through
+                      backgroundColor: "rgb(248,248,248)", // ensures rows don’t bleed through
                     }}
                   >
                     {col.label}
@@ -120,22 +145,28 @@ const ProductTrendAnalysisTable = ({ tableData, filter, setFilter }) => {
                 <tr key={idx}>
                   <td className="fw-bold">{row.date}</td>
                   <td style={{ color: row.totalSales.color }}>
-                    {row.totalSales.icon} {row.totalSales.value}
+                    {/* {row.totalSales.icon}  */}
+                    {row.totalSales.value}
                   </td>
                   <td style={{ color: row.netSales.color }}>
-                    {row.netSales.icon} {row.netSales.value}
+                    {/* {row.netSales.icon} */}
+                     {row.netSales.value}
                   </td>
                   <td style={{ color: row.discount.color }}>
-                    {row.discount.icon} {row.discount.value}
+                    {/* {row.discount.icon} */}
+                     {row.discount.value}
                   </td>
-                  <td style={{ color: row.tax.color }}>
-                    {row.tax.icon} {row.tax.value}
+                  <td style={{ color: row.tax.color, }}>
+                    {/* {row.tax.icon} */}
+                     {row.tax.value}
                   </td>
-                  <td style={{ color: row.itemsSold.color }}>
-                    {row.itemsSold.icon} {row.itemsSold.value}
+                  <td style={{ color: row.itemsSold.color ,fontWeight:'bold'}}>
+                    {/* {row.itemsSold.icon}  */}
+                    {row.itemsSold.value}
                   </td>
-                  <td style={{ color: row.orders.color }}>
-                    {row.orders.icon} {row.orders.value}
+                  <td style={{fontWeight:'bold'}}>
+                    {/* {row.orders.icon}  */}
+                    {row.orders.value}
                   </td>
                 </tr>
               ))}

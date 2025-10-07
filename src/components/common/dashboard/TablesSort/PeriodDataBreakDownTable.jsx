@@ -59,7 +59,7 @@ export default function PeriodDataBreakDownTable({ data = {}, filters = {} }) {
         handleExport={handleExport}
         searchable={true}
         filterable={true}
-        // exportable={true}
+      // exportable={true}
       />
 
       {/* 🔹 Table with sticky header & max-height */}
@@ -119,15 +119,15 @@ export default function PeriodDataBreakDownTable({ data = {}, filters = {} }) {
                 const rowDate = new Date(row.rawDate || row.date);
                 const isToday =
                   rowDate.getDate() === today.getDate() &&
-                  rowDate.getMonth() === today.getMonth() &&
-                  rowDate.getFullYear() === today.getFullYear();
+                  rowDate.getMonth() === today.getMonth()
+                //&& rowDate.getFullYear() === today.getFullYear();
 
                 const formattedDate = rowDate.toLocaleDateString("en-US", {
                   month: "short",
                   day: "numeric",
                 });
                 const formattedDay = rowDate.toLocaleDateString("en-US", {
-                  weekday: "short",
+                  weekday: "long",
                 });
 
                 return (
@@ -189,20 +189,30 @@ export default function PeriodDataBreakDownTable({ data = {}, filters = {} }) {
                     </td>
 
                     <td>
-                      <Badge
-                        bg=""
+                      <span
                         style={{
-                          backgroundColor: row.costColor || "#f97316",
+                          backgroundColor:
+                            row.status === "RED"
+                              ? "#dc2626" // red-600
+                              : row.status === "GREEN"
+                                ? "#16a34a" // green-600
+                                : row.status === "ORANGE"
+                                  ? "#f97316" // orange-500
+                                  : "#6b7280", // gray-500 fallback
                           fontSize: 12,
                           padding: "4px 8px",
                           borderRadius: "12px",
                           fontWeight: 500,
                           color: "#fff",
+                          display: "inline-block",
+                          minWidth: "48px", // optional: keeps size consistent
+                          textAlign: "center",
                         }}
                       >
                         {parseFloat(row.ratio).toFixed(1)}%
-                      </Badge>
+                      </span>
                     </td>
+
                   </tr>
                 );
               })

@@ -107,7 +107,7 @@ function RecipesTable({ title, data, bgColor }) {
                 gridTemplateColumns: "2fr 1fr 1fr 1fr 1fr", // match header
                 padding: "0.75rem 1rem",
                 alignItems: "center",
-                background: idx % 2 === 0 ? "#fafafa" : "#fff",
+                // background: idx % 2 === 0 ? "#fafafa" : "#fff",
                 borderBottom: "1px solid #f0f0f0",
               }}
             >

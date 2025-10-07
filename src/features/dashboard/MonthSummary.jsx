@@ -10,6 +10,7 @@ import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer
 import { monthSummaryFormatter } from "@/utils/data_formatters/dashboardFormatter";
 import { useOutletMtdMetrics } from "@/services/outlet-service";
 import ComponentHeader from "@/components/common/ComponentHeader";
+import { IconChartHistogram } from "@tabler/icons-react";
 
 export default function MonthSummary() {
   const [startDate, setStartDate] = useState(
@@ -63,14 +64,27 @@ export default function MonthSummary() {
   return (
     <Card className="p-2 pt-3 shadow-sm">
       <ComponentHeader
-        title={format(new Date(startDate), "MMMM yyyy")}
-        description="Monthly financial breakdown"
-        titleColor="rgb(255,80,22)"
+        title={"Monthly financial breakdown"}
+        description="Real time conusmption metrics and performance indicators"
+        titleColor="black"
         cardBgColor="transparent"
         isShowArrows={true}
         scrollRef={scrollContainerRef}
         isExpandable={true}
-        titleIcon={<FaBolt size={24} color="rgb(255,80,22)" />}
+        titleIcon={<div
+          style={{
+            width: 48,
+            height: 48,
+            borderRadius: 16,
+            background: "linear-gradient(135deg, #f65517 60%, #FEAD40 100%)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            boxShadow: "0 4px 12px rgba(0,0,0,.08)",
+          }}
+        >
+          <IconChartHistogram color="white" size={28} stroke={2} />
+        </div>}
         dropdownOptions={months}
         onDropdownSelect={handleMonthSelect}
         selectedValue={new Date(startDate).getMonth()}

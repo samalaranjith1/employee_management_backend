@@ -46,7 +46,7 @@ export default function ProductsIngredientsTable({ list = [] }) {
 
   return (
     <div style={{ maxHeight: "65vh", overflowY: "auto" }}>
-      <Table bordered hover className="align-middle mb-0">
+      <Table hover className="align-middle mb-0">
         <thead
           className="bg-primary text-white"
           style={{
@@ -61,7 +61,7 @@ export default function ProductsIngredientsTable({ list = [] }) {
               <th
                 key={col.key}
                 onClick={() => handleSort(col.key)}
-                style={{ cursor: "pointer", whiteSpace: "nowrap" }}
+                style={{ cursor: "pointer", whiteSpace: "nowrap",backgroundColor:'#eee' }}
               >
                 {col.label}
                 {renderSortArrow(col.key)}

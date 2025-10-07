@@ -8,6 +8,8 @@ import { useSupplierDues } from "@/services/supplier-service";
 import { supplierDuesDataFormatter } from "@/utils/data_formatters/dashboardFormatter"
 import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer";
 import { useDashboardContext } from "@/contexts/DashboardContext";
+import { IconCurrencyRupee, IconInfoOctagon } from "@tabler/icons-react";
+import ComponentHeader from "@/components/common/ComponentHeader";
 
 const SupplierDues = () => {
   const { startDate, endDate, dashboardFilter } = useDashboardContext();
@@ -60,10 +62,6 @@ const SupplierDues = () => {
       justifyContent: "space-between",
       alignItems: "center",
     },
-    totalDueText: {
-      fontSize: "0.9rem",
-      color: "#991b1b",
-    },
     totalDueAmount: {
       fontSize: "2rem",
       fontWeight: "700",
@@ -71,7 +69,7 @@ const SupplierDues = () => {
     },
     supplierCount: {
       fontSize: "0.85rem",
-      color: "#9ca3af",
+      color: "#b91c1c",
     },
     tableHeader: {
       position: "sticky",
@@ -106,13 +104,30 @@ const SupplierDues = () => {
   };
 
   return (
-    <Container fluid style={styles.mainCard} className="m-2 p-2">
+    <Container fluid className="m-2 p-2">
+      <ComponentHeader
+        title="Supplier Dues"
+        description="Outstanding payments and supplier dues tracking"
+        titleColor="black"
+        cardBgColor="transparent"
+        isShowArrows={true}
+        isExpandable={true}
+        titleIcon={<div style={{
+          background: 'linear-gradient(135deg, #FA497A 60%, #E73669 100%)', // vibrant pink gradient for Figma match
+          // vibrant pink gradient for Figma match
+          borderRadius: '12px',
+          padding: '8px',
+          display: 'inline-block'
+        }}>
+          <IconInfoOctagon stroke={2} color="#fff" size={24} />
+        </div>}
+      />
       <ServiceRenderer
         queryHook={useSupplierDues}
         queryKey={[
           "supplierDues",
           1,
-          { startdt: startDate, enddt: endDate,  },
+          { startdt: startDate, enddt: endDate, },
         ]}
         queryFn={() =>
           useSupplierDues({
@@ -122,7 +137,7 @@ const SupplierDues = () => {
           }).queryFn
         }
         queryArgs={[
-          { startdt: startDate, enddt: endDate,outlet:1,userId:7 },
+          { startdt: startDate, enddt: endDate, outlet: 1, userId: 7 },
         ]}
         formatter={supplierDuesDataFormatter}
         shimmerCount={5}
@@ -130,10 +145,18 @@ const SupplierDues = () => {
         {(formattedData) => (
           <>
             {/* Header */}
-            <div style={styles.header}>
+            {/* <div style={styles.header}>
               <div style={styles.headerLeft}>
                 <div style={styles.headerTitle}>
-                  <FaInfoCircle /> Supplier Dues
+                  <div style={{
+                    background: 'linear-gradient(135deg, #FA497A 60%, #E73669 100%)', // vibrant pink gradient for Figma match
+                    // vibrant pink gradient for Figma match
+                    borderRadius: '12px',
+                    padding: '8px',
+                    display: 'inline-block'
+                  }}>
+                    <IconInfoOctagon stroke={2} color="#fff" size={24} />
+                  </div><span style={{ color: 'black' }}> Supplier Dues</span>
                 </div>
                 <div style={styles.headerSubtitle}>
                   Outstanding payments and supplier dues tracking
@@ -142,12 +165,12 @@ const SupplierDues = () => {
               <div style={styles.headerIcon}>
                 <FaRupeeSign />
               </div>
-            </div>
+            </div> */}
 
             {/* Total Due */}
             <div style={styles.totalDueSection}>
               <div>
-                <div style={styles.totalDueText}>Total Due as of today</div>
+                <div>Total Due as of today</div>
                 <div style={styles.totalDueAmount}>
                   ₹{formattedData.summary?.totalDueAmount?.toLocaleString()}
                 </div>
@@ -155,7 +178,19 @@ const SupplierDues = () => {
                   to {formattedData.summary?.suppliers} suppliers
                 </div>
               </div>
+
+              <div
+                style={{
+                  background: '#f83062',
+                  borderRadius: '12px',
+                  padding: '8px',
+                  display: 'inline-block',
+                }}
+              >
+                <IconCurrencyRupee stroke={2} color="#fff" size={24} />
+              </div>
             </div>
+
 
             {/* Table */}
             <div style={{ maxHeight: "65vh", overflowY: "auto" }}>

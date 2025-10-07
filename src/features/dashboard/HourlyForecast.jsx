@@ -13,6 +13,7 @@ import { useProductsAll } from "@/services/product-service";
 import { useSalesHourly } from "@/services/sales-service";
 import { useDepartmentContext } from "@/contexts/DepartmentContext";
 import { FaCampground, FaChartLine, FaCircle, FaGolfBall, FaPaste } from "react-icons/fa";
+import { IconCalendar, IconChartLine, IconClipboardData, IconTarget } from "@tabler/icons-react";
 
 // ✅ Utility: format API hourly data into recharts friendly format
 const formatHourlyData = (apiData, metric) => {
@@ -38,17 +39,38 @@ const salesHourlyFormatter = (data, selectedMetric) => {
       selectedMetric === "Sales"
         ? `₹${data.totalProjectedSales ?? 0}`
         : `${data.totalProjectedOrders ?? 0}`,
-    dailyForecastIcon:<FaChartLine color="blue" size={24}/>,
+    dailyForecastIcon: <div style={{
+      background: '#2575fb',
+      borderRadius: '16px',
+      padding: '12px',
+      display: 'inline-block'
+    }}>
+      <IconChartLine stroke={2} color="#fff" size={24} />
+    </div>,
     actualSoFar:
       selectedMetric === "Sales"
         ? `₹${data.totalSales ?? 0}`
         : `${data.totalOrders ?? 0}`,
-    actualSoFarIcon:<FaPaste color="green" size={24} />,
+    actualSoFarIcon: <div style={{
+      background: 'linear-gradient(135deg, #37C088 60%, #239971 100%)',
+      borderRadius: '16px',
+      padding: '12px',
+      display: 'inline-block'
+    }}>
+      <IconClipboardData stroke={2} color="#fff" size={24} />
+    </div>,
     remainingTarget:
       selectedMetric === "Sales"
         ? `₹${data.remaningSales ?? 0}`
         : `${data.remaningOrders ?? 0}`,
-    remainingTargetIcon:<FaGolfBall  color="red" size={24}/>,
+    remainingTargetIcon: <div style={{
+      background: 'linear-gradient(135deg, #924CFE 60%, #BC75FF 100%)',
+      borderRadius: '16px',
+      padding: '12px',
+      display: 'inline-block'
+    }}>
+      <IconTarget stroke={2} color="#fff" size={24} />
+    </div>,
     graphData: formatHourlyData(data, selectedMetric),
   };
 };
@@ -94,6 +116,14 @@ export default function HourlyForecast() {
         scrollRef={myScrollRef}
         isExpandable={true}
         text="Today's Forecast →"
+        titleIcon={<div style={{
+          background: '#4a70ff', // Blue gradient
+          borderRadius: '12px',
+          padding: '8px',
+          display: 'inline-block'
+        }}>
+          <IconCalendar stroke={2} color="#fff" size={24} />
+        </div>}
       />
 
       {/* Sales Hourly Data for Selected Product */}

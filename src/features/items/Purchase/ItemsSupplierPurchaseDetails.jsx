@@ -44,7 +44,7 @@ export default function ItemsSupplierPurchaseDetails() {
                         style={{
                           fontSize: "0.9rem",
                           fontWeight: "500",
-                          color: "#6B7280",
+                          color: "#000",
                         }}
                       >
                         {card.title}

@@ -18,6 +18,9 @@ import { useItemsPriceChangeSummary } from "@/services/item-service";
 import { priceChangeDataFormatter } from "@/utils/data_formatters/dashboardFormatter";
 import { handleNavigation } from "@/utils";
 import { useRouter } from "next/navigation";
+import { IconChartColumn, IconCurrencyRupee } from "@tabler/icons-react";
+import ComponentHeader from "@/components/common/ComponentHeader";
+import { FaArrowTrendDown, FaArrowTrendUp } from "react-icons/fa6";
 
 export default function PriceChanges() {
   const { startDate, endDate } = useDashboardContext();
@@ -35,23 +38,21 @@ export default function PriceChanges() {
     },
     title: { fontWeight: "bold", fontSize: "1.2rem", color: "#6c2bd9" },
     subtitle: { fontSize: "0.9rem", color: "#6c757d" },
-    impactValue: { fontSize: "2rem", fontWeight: "bold", marginTop: "10px" },
+    impactValue: { fontSize: "2rem", fontWeight: "bold", marginTop: "10px" ,color:'#3a53e9'},
     rupeeIconWrapper: {
       position: "absolute",
       right: "20px",
       top: "50%",
       transform: "translateY(-50%)",
-      background: "linear-gradient(135deg, #9333ea, #a855f7)",
+      background: "#3a53e9",
       color: "#fff",
-      borderRadius: "50%",
-      padding: "12px",
+      borderRadius: "20%",
+      // padding: "12px",
       fontSize: "2rem",
-      boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
       justifyContent: "center",
-      gap: "6px",
     },
     sectionCard: {
       borderRadius: "12px",
@@ -112,6 +113,23 @@ export default function PriceChanges() {
         {(priceChangeData, refetch) => (
           <>
             {/* Top Header Card */}
+            <ComponentHeader
+              title="Price Changes"
+              description="Monitor ingredient price fluctuations and their cost impact"
+              titleColor="rgba(31, 28, 27, 1)"
+              cardBgColor="none"
+              isShowArrows={true}
+              scrollRef={myScrollRef}
+              isExpandable={true}
+              titleIcon={<div style={{
+                background: '#3a55ea', // blue gradient for Figma match
+                borderRadius: '12px',
+                padding: '8px',
+                display: 'inline-block'
+              }}>
+                <IconChartColumn stroke={2} color="#fff" size={20} />
+              </div>}
+            />
             <Card style={styles.headerCard} className="mb-4 p-0">
               <Card.Body
                 style={{ cursor: "pointer" }}
@@ -123,41 +141,42 @@ export default function PriceChanges() {
                   })
                 }
               >
-                <div style={styles.title}>
-                  <FaChartLine className="me-2" /> Price Changes
-                </div>
                 <div style={styles.subtitle}>
-                  Monitor ingredient price fluctuations and their cost impact
+                  Total impact of price changes this month
                 </div>
                 <div style={styles.impactValue}>
-                  <FaRupeeSign /> {priceChangeData?.topCard?.total ?? 0}
+                  ₹{priceChangeData?.topCard?.total ?? 0}
                 </div>
                 <div className="d-flex gap-4 mt-2">
-                  <span className="text-success">
-                    <FaArrowUp /> Recent: ₹
+                  <span className="text-success" style={{backgroundColor:'#d2f4e0',borderRadius:"10px"}}>
+                    <FaArrowTrendUp /> Recent: ₹
                     {priceChangeData?.topCard?.recent ?? 0}
                   </span>
-                  <span className="text-danger">
-                    <FaArrowDown /> Expected: ₹
+                  <span className="text-danger"  style={{backgroundColor:'#fff3f3',borderRadius:"10px"}}>
+                    <FaArrowTrendDown /> Expected: ₹
                     {priceChangeData?.topCard?.expected ?? 0}
                   </span>
                 </div>
                 {/* Floating Rupee Icon */}
                 <div style={styles.rupeeIconWrapper}>
-                  <div className="float-end">
-                    <FaExpand color="#fff" size={24} />
+                 <div style={{
+                    background: '#3a53e9', // blue gradient similar to Figma
+                    borderRadius: '16px',
+                    padding: '12px',
+                    display: 'inline-block'
+                  }}>
+                    <IconCurrencyRupee stroke={2} color="#fff" size={28} />
                   </div>
-                  <FaRupeeSign />
                 </div>
               </Card.Body>
             </Card>
 
             {/* Bottom Section */}
-              <PriceChangesTable
-                styles={styles}
-                recentChanges={priceChangeData?.recentChanges ?? []}
-                futureHikes={priceChangeData?.futureHikes ?? []}
-              />
+            <PriceChangesTable
+              styles={styles}
+              recentChanges={priceChangeData?.recentChanges ?? []}
+              futureHikes={priceChangeData?.futureHikes ?? []}
+            />
           </>
         )}
       </ServiceRenderer>

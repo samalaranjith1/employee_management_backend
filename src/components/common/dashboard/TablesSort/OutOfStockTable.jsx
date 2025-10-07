@@ -22,7 +22,9 @@ function OutOfStockTable({ data, getBadgeStyle }) {
   const columns = [
     { key: "name", label: "Item" },
     { key: "moq", label: "MOQ", align: "center" },
-    { key: "stock", label: "Stock / Status", align: "center" },
+    { key: "stock", label: "Stock", align: "center" },
+    { key: "status", label: "Status", align: "center" },
+
   ];
 
   return (
@@ -47,7 +49,7 @@ function OutOfStockTable({ data, getBadgeStyle }) {
               background: "#F9FAFB",
               fontWeight: "bold",
               display: "grid",
-              gridTemplateColumns: "60% 15% 25%",
+              gridTemplateColumns: "40% 15% 20% 25%",
               padding: "0.8rem 1rem",
               position: "sticky",
               top: 0,
@@ -80,7 +82,7 @@ function OutOfStockTable({ data, getBadgeStyle }) {
                 key={idx}
                 style={{
                   display: "grid",
-                  gridTemplateColumns: "60% 15% 25%",
+                  gridTemplateColumns: "40% 15% 20% 25%",
                   alignItems: "center",
                   padding: "0.6rem 1rem",
                   background: "#FDFDFD",
@@ -147,14 +149,24 @@ function OutOfStockTable({ data, getBadgeStyle }) {
                   }}
                 >
                   <div>{item.stock}</div>
-                  <span style={getBadgeStyle(item.status)}>{item.status}</span>
+                </div>
+                <div
+                  style={{
+                    textAlign: "center",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    gap: "4px",
+                  }}
+                >
+                  <span style={{...getBadgeStyle(item.status),backgroundColor:'rgba(250, 212, 212, 1)',color:'red'}}>{item.status}</span>
                 </div>
               </div>
             ))}
           </div>
 
           {/* Footer */}
-          <div
+          {/* <div
             style={{
               background: "#F9FAFB",
               padding: "0.8rem 1rem",
@@ -167,7 +179,7 @@ function OutOfStockTable({ data, getBadgeStyle }) {
             }}
           >
             Total Items: {sortedData.length}
-          </div>
+          </div> */}
         </div>
       </div>
     </BaseSurface>

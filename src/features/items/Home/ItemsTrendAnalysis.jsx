@@ -26,7 +26,7 @@ export default function ItemsTrendAnalysis() {
     switch (view) {
       case "daily":
         return useItemSummaryDaily;
-      case "sameday":
+      case "samedays":
         return useItemSummarySameDay;
       case "weekly":
         return useItemSummaryWeekly;
@@ -52,7 +52,7 @@ export default function ItemsTrendAnalysis() {
       case "monthly":
         start = subMonths(today, 5);
         break;
-      case "sameday":
+      case "samedays":
         start = subWeeks(today, 5);
         break;
       default:
@@ -67,7 +67,7 @@ export default function ItemsTrendAnalysis() {
   }, [filter]);
 
   return (
-    <div className="p-1">
+    <div className="p-1 mt-0">
       <ServiceRenderer
         queryHook={SelectedHook}
         queryKey={["itemsTrendAnalysis", filter, startDateCS, endDateCS]}

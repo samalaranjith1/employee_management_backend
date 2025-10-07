@@ -9,6 +9,7 @@ import { useDashboardContext } from "@/contexts/DashboardContext";
 import { useProductsUsageList } from "@/services/product-service";
 import { productPerformanceDetailsDataFormmatter } from "@/utils/data_formatters/dashboardFormatter";
 import ProductDetailsTable from "@/components/common/dashboard/TablesSort/ProductDetailsTable";
+import { IconPackage } from "@tabler/icons-react";
 
 const ProductPerformanceDetails = () => {
   const { startDate, endDate } = useDashboardContext();
@@ -54,13 +55,20 @@ const ProductPerformanceDetails = () => {
       {/* Header */}
       <ComponentHeader
         title={"Product Performance Details"}
-        description={""}
-        titleColor={"fw-bold mb-0 text-primary"}
+        description={"Track Department sales consumption and performance"}
+        titleColor={"black"}
         cardBgColor={"none"}
         isShowArrows={false}
         scrollRef={myScrollRef}
         isExpandable={true}
-        titleIcon={<FaCube size={20} />}
+        titleIcon={<div style={{
+          background: '#2473f8', // vivid green gradient
+          borderRadius: '12px',
+          padding: '8px',
+          display: 'inline-block'
+        }}>
+          <IconPackage stroke={2} color="#fff" size={24} />
+        </div>}
         text={""}
       />
 
@@ -78,15 +86,15 @@ const ProductPerformanceDetails = () => {
             enddt: endDate,
           }).queryFn
         }
-        queryArgs={[{ startdt: startDate, enddt: endDate,outlet:1,userId:7 }]}
+        queryArgs={[{ startdt: startDate, enddt: endDate, outlet: 1, userId: 7 }]}
         formatter={productPerformanceDetailsDataFormmatter}
         shimmerCount={6}
       >
         {(rowsData, refetch) => (
           <div style={styles.tableScrollContainer} ref={myScrollRef}>
-            <ProductDetailsTable 
+            <ProductDetailsTable
               rowsData={rowsData}
-               styles={styles}/>
+              styles={styles} />
           </div>
         )}
       </ServiceRenderer>

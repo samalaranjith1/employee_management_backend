@@ -49,10 +49,10 @@ const SuppliersItemsTable = ({ items = [] }) => {
                 style={{
                   position: "sticky",
                   top: 0,
-                  background: "#fff",
+                  background: "rgb(248,248,248)",
                   zIndex: 3,
                   fontSize: "13px",
-                  color: "#6C757D",
+                  color: "#000",
                   cursor: "pointer",
                   padding: "12px 16px",
                 }}
@@ -68,7 +68,7 @@ const SuppliersItemsTable = ({ items = [] }) => {
             <tr key={item.key} style={{ fontSize: "14px" }}>
               <td style={{ padding: "14px 16px" }}>
                 <div className="d-flex align-items-center">
-                  {item.icon}
+                  {/* {item.icon} */}
                   <div>
                     <div className="fw-semibold" style={{ color: "#1A1A1A" }}>
                       {item.name}

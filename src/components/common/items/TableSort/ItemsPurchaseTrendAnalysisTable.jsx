@@ -3,6 +3,7 @@
 import React from "react";
 import { Card, Table } from "react-bootstrap";
 import { useTableSort } from "@/components/hooks/useTableSort";
+import { IconCalendar } from "@tabler/icons-react";
 
 export default function ItemsPurchaseTrendAnalysisTable({
   tableData = [],
@@ -70,10 +71,10 @@ export default function ItemsPurchaseTrendAnalysisTable({
     avgPrice:
       finalRows.length > 0
         ? finalRows.reduce(
-            (sum, r) =>
-              sum + (parseNumber(r?.avgPrice?.label ?? r?.avgPrice) || 0),
-            0
-          ) / finalRows.length
+          (sum, r) =>
+            sum + (parseNumber(r?.avgPrice?.label ?? r?.avgPrice) || 0),
+          0
+        ) / finalRows.length
         : 0,
   };
 
@@ -81,12 +82,11 @@ export default function ItemsPurchaseTrendAnalysisTable({
     <Card
       className="shadow-lg border-0 rounded-4"
       style={{
-        background: "linear-gradient(135deg, #f6fff7, #ecfdf5)",
         boxShadow: "0 6px 20px rgba(0,0,0,0.08)",
       }}
     >
       <Card.Body>
-        <div className="d-flex align-items-center mb-3">
+        <div className="d-flex align-items-center mb-3" style={{backgroundColor:'white'}}>
           {/* Gradient icon circle */}
           <div
             style={{
@@ -100,7 +100,22 @@ export default function ItemsPurchaseTrendAnalysisTable({
               marginRight: "12px",
             }}
           >
-            <span style={{ color: "#fff", fontWeight: "bold" }}>📊</span>
+            <span style={{ color: "#fff", fontWeight: "bold" }}>
+              <div
+                style={{
+                  background: 'linear-gradient(135deg, #2196F3 0%, #18A8E7 100%)',
+                  borderRadius: '14px',
+                  padding: '10px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  width: 40,
+                  height: 40,
+                }}
+              >
+                <IconCalendar size={24} stroke={2} color="#fff" />
+              </div>
+            </span>
           </div>
           <div>
             <h5 className="fw-bold mb-0">
@@ -166,7 +181,7 @@ export default function ItemsPurchaseTrendAnalysisTable({
                     </td>
                     <td className="fw-bold text-success">
                       <span className="dot bg-success me-2"></span>
-                      {row?.totalPrice?.icon}
+                      {/* {row?.totalPrice?.icon} */}
                       {row?.totalPrice?.label ?? row?.totalPrice ?? ""}
                     </td>
                     <td className="fw-bold" style={{ color: "#6D28D9" }}>

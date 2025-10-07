@@ -7,6 +7,7 @@ import { useDepartmentsUsageList } from "@/services/department-service";
 import { useItemsContext } from "@/contexts/ItemsContext";
 import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer";
 import ItemsDepartmentAnalyticsTable from "@/components/common/items/TableSort/ItemsDepartmentAnalyticsTable";
+import { FaTable } from "react-icons/fa";
 
 export default function ItemsDepartmentAnalytics() {
   const { startDate, endDate } = useItemsContext();
@@ -31,20 +32,40 @@ export default function ItemsDepartmentAnalytics() {
       {(formattedData) => (
         <Container fluid className="p-3 bg-light rounded shadow-sm">
           {/* Header */}
-          <Row className="mb-3">
-            <Col
-            className="p-2"
-              style={{
-                backgroundColor: "rgb(239,244,255)",
-                marginTop:"-15px"
-              }}
-            >
-              <h5 className="fw-bold d-flex align-items-center">
-                <span className="me-2">📊</span> Department Analytics
+
+          <Row className="mb-3" style={{ fontFamily: "Inter, sans-serif" }}>
+            {/* ✅ Icon Column */}
+            <Col xs="auto" className="d-flex align-items-center justify-content-center p-2">
+              <div
+                style={{
+                  background: "linear-gradient(135deg, #36C194 60%, #239B63 100%)",
+                  borderRadius: "12px",
+                  padding: "12px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
+                  minWidth: "48px",
+                  minHeight: "48px",
+                }}
+              >
+                <FaTable size={24} color="#fff" />
+              </div>
+            </Col>
+
+            {/* ✅ Text Column */}
+            <Col className="p-2" style={{ backgroundColor: "rgb(239,244,255)" }}>
+              <h5 className="fw-bold mb-1" style={{ fontSize: "16px", color: "#1A1A1A" }}>
+                Department Analytics
               </h5>
-              <p className="text-muted small m-0">
-                Complete breakdown of departmental inventory and consumption
-                data
+              <p
+                className="text-muted mb-0"
+                style={{
+                  fontSize: "13px",
+                  color: "#6C757D",
+                }}
+              >
+                Complete breakdown of departmental inventory and consumption data
               </p>
             </Col>
           </Row>

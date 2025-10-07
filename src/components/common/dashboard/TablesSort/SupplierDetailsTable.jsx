@@ -76,7 +76,6 @@ export default function SupplierDetailsTable({ supplierData }) {
                 </td>
                 <td
                   style={{
-                    color: "#16a34a",
                     fontWeight: 600,
                     cursor: "pointer",
                   }}

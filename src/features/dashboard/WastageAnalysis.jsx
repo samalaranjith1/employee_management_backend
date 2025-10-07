@@ -20,11 +20,12 @@ import WastageAnalysisTopCards from "@/components/common/dashboard/card/WastageA
 import WastageAnalysisTable from "@/components/common/dashboard/TablesSort/WastageAnalysisTable";
 import { handleNavigation } from "@/utils";
 import { useRouter } from "next/navigation";
+import { IconTrash } from "@tabler/icons-react";
 
 export default function WastageAnalysis() {
   const { startDate, endDate } = useDashboardContext();
   const myScrollRef = useRef(null);
-  const router =useRouter()
+  const router = useRouter()
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -44,7 +45,14 @@ export default function WastageAnalysis() {
         isShowArrows={true}
         scrollRef={myScrollRef}
         isExpandable={true}
-        titleIcon={<FaTrashAlt color="#0aa4b3" size={24} />}
+        titleIcon={<div style={{
+          background: '#0199a5', // teal/turquoise gradient
+          borderRadius: '16px',
+          padding: '8px',
+          display: 'inline-block'
+        }}>
+          <IconTrash stroke={2} color="#fff" size={28} />
+        </div>}
       />
 
       <ServiceRenderer
@@ -53,7 +61,7 @@ export default function WastageAnalysis() {
         queryFn={() =>
           useWasteSummary({ startdt: startDate, enddt: endDate }).queryFn
         }
-        queryArgs={[{ startdt: startDate, enddt: endDate,outlet:1,userId:7 }]}
+        queryArgs={[{ startdt: startDate, enddt: endDate, outlet: 1, userId: 7 }]}
         formatter={wastageAnalysisDataFormatter}
         shimmerCount={3}
       >
@@ -65,7 +73,7 @@ export default function WastageAnalysis() {
                 handleNavigation({
                   router,
                   url: "sp/wastage_analytics",
-                  params: {startDate:startDate,endDate:endDate},
+                  params: { startDate: startDate, endDate: endDate },
                 })
               }
             >

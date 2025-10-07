@@ -13,6 +13,7 @@ import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer
 import { useDashboardContext } from "@/contexts/DashboardContext";
 import { useProductsUsageList } from "@/services/product-service";
 import { topSellingProductsDataFormatter } from "@/utils/data_formatters/dashboardFormatter";
+import { IconChartColumn, IconStar } from "@tabler/icons-react";
 
 const TopSellingProducts = () => {
   const { startDate, endDate } = useDashboardContext();
@@ -35,12 +36,19 @@ const TopSellingProducts = () => {
       <ComponentHeader
         title={"Top Selling Products"}
         description={"Analyze best-performing menu items and sales trends"}
-        titleColor={"rgba(91, 46, 234, 1) fs-4"}
+        titleColor={"#000"}
         cardBgColor={"none"}
         isShowArrows={true}
         scrollRef={myScrollRef}
         isExpandable={true}
-        titleIcon={<FaChartLine color="#5B2EEA" size={24} />}
+        titleIcon={<div style={{
+          background: '#8755ff', // purple gradient for Figma look
+          borderRadius: '12px',
+          padding: '8px',
+          display: 'inline-block'
+        }}>
+          <IconStar stroke={2} color="#fff" size={24} fill='white' />
+        </div>}
         text={""}
       />
 
@@ -56,11 +64,11 @@ const TopSellingProducts = () => {
           useProductsUsageList(1, { startdt: startDate, enddt: endDate })
             .queryFn
         }
-        queryArgs={[{ startdt: startDate, enddt: endDate ,outlet:1,userId:7}]}
+        queryArgs={[{ startdt: startDate, enddt: endDate, outlet: 1, userId: 7 }]}
         formatter={topSellingProductsDataFormatter}
         shimmerCount={3}
       >
-        {(data,refetch) => {
+        {(data, refetch) => {
           const { topCards, chartData, revenueSummary } = data || {};
 
           return (
@@ -97,21 +105,15 @@ const TopSellingProducts = () => {
                         marginBottom: 12,
                       }}
                     >
-                      <div
-                        style={{
-                          width: 36,
-                          height: 36,
-                          borderRadius: 8,
-                          background: "#EEF2FF",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          marginRight: 12,
-                        }}
-                      >
-                        <FaChartLine color="#6C5BFF" />
-                      </div>
-                      <h5 style={{ margin: 0, fontWeight: 700 }}>
+                        <div style={{
+                          background: '#3a65f3', // blue gradient for Figma match
+                          borderRadius: '12px',
+                          padding: '8px',
+                          display: 'inline-block'
+                        }}>
+                          <IconChartColumn stroke={2} color="#fff" size={20} />
+                        </div>
+                      <h5 style={{ margin: 0, fontWeight: 700,marginLeft:'5px' }}>
                         Sales vs Margin Trends
                       </h5>
                     </div>
@@ -128,7 +130,7 @@ const TopSellingProducts = () => {
                 </Col>
 
                 <Col lg={4} md={5} sm={12}>
-                  <TopSellingProductsTable revenueSummary ={revenueSummary}/>
+                  <TopSellingProductsTable revenueSummary={revenueSummary} />
                 </Col>
               </Row>
             </>

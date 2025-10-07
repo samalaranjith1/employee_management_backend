@@ -8,6 +8,7 @@ import ComponentHeader from "@/components/common/ComponentHeader";
 import { useDashboardContext } from "@/contexts/DashboardContext";
 import { usePriceManagementRecommendations } from "@/services/recommendation-service";
 import { recommendationsDatFormmatter } from "@/utils/data_formatters/dashboardFormatter";
+import { IconCoinRupee } from "@tabler/icons-react";
 
 export default function PriceManagementRecommendations() {
   const [isMobile, setIsMobile] = useState(false);
@@ -33,7 +34,7 @@ export default function PriceManagementRecommendations() {
   return (
     <Card
       className="m-2 p-3"
-      style={{ background: "rgba(53, 8, 236, 0.05)", borderRadius: "20px" }}
+      style={{ background: "#f5efff", borderRadius: "20px" }}
     >
       {/* ✅ Header */}
       <ComponentHeader
@@ -41,15 +42,20 @@ export default function PriceManagementRecommendations() {
         description={
           "Strategic actions to mitigate price impact and optimize costs"
         }
-        titleColor={textColor}
+        titleColor={"black"}
         cardBgColor={"none"}
         isShowArrows={true}
         scrollRef={myScrollRef}
         isExpandable={true}
         titleIcon={
-          <FaExclamationTriangle
-            style={{ color: textColor, fontSize: "20px" }}
-          />
+          <div style={{
+      background: '#883cdf', // purple gradient for Figma match
+      borderRadius: '12px',
+      padding: '8px',
+      display: 'inline-block'
+    }}>
+      <IconCoinRupee stroke={2} color="#fff" size={20} />
+    </div>
         }
       />
 

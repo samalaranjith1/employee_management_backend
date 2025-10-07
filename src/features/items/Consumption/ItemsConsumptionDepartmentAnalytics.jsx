@@ -1,12 +1,13 @@
 "use client";
 
 import React, { useMemo } from "react";
-import { Card, Table, Button } from "react-bootstrap";
+import { Card, Table, Button, Row, Col } from "react-bootstrap";
 import { FaArrowUpRightFromSquare } from "react-icons/fa6";
 import { useDepartmentsUsageList } from "@/services/department-service"; // ✅ Hook for fetching data
 import { useItemsContext } from "@/contexts/ItemsContext"; // ✅ ItemsContext
 import { consumptionDepartmentAnalyticsDataFormatter } from "@/utils/data_formatters/itemsPageDataFormatter";
 import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer"; // ✅ ServiceRenderer
+import { FaTable } from "react-icons/fa";
 
 export default function ItemsConsumptionDepartmentAnalytics() {
   const { startDate, endDate } = useItemsContext(); // ✅ Pull dates from ItemsContext
@@ -69,24 +70,58 @@ export default function ItemsConsumptionDepartmentAnalytics() {
       queryFn={() =>
         useDepartmentsUsageList({ startdt: startDate, enddt: endDate }).queryFn
       }
-      queryArgs={[{ startdt: startDate, enddt: endDate,outlet:1,userId:7 }]}
+      queryArgs={[{ startdt: startDate, enddt: endDate, outlet: 1, userId: 7 }]}
       formatter={consumptionDepartmentAnalyticsDataFormatter}
       shimmerCount={5}
     >
       {(tableData) => (
         <Card style={styles.card}>
-          <Card.Header
-            style={styles.header}
-            className="d-flex justify-content-between align-items-center"
-          >
-            <div>
-              <h5 style={styles.title}>Department Analytics</h5>
-              <p style={styles.subtitle}>
-                Complete breakdown of departmental inventory and consumption
-                data
-              </p>
-            </div>
+          <Card.Header style={styles.header}>
+            <Row className="align-items-center g-2">
+              {/* Column 1: Icon */}
+              <Col xs="auto">
+                <div
+                  style={{
+                    backgroundColor: "#1976d2",
+                    borderRadius: "12px",
+                    padding: "10px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    width: 44,
+                    height: 44,
+                  }}
+                >
+                  <FaTable color="#fff" size={22} />
+                </div>
+              </Col>
+
+              {/* Column 2: Title + Subtitle */}
+              <Col>
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                  <div
+                    style={{
+                      fontWeight: 600,
+                      fontSize: 16,
+                      color: "#23272E",
+                      marginBottom: 2,
+                    }}
+                  >
+                    Department Analytics
+                  </div>
+                  <div
+                    style={{
+                      color: "#878A99",
+                      fontSize: 14,
+                    }}
+                  >
+                    Complete breakdown of departmental inventory and consumption data
+                  </div>
+                </div>
+              </Col>
+            </Row>
           </Card.Header>
+
 
           <Card.Body className="p-0">
             <div className="table-responsive">

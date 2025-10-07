@@ -6,13 +6,19 @@ import ItemsConsumptionDepartmentDistributionChart from "./ItemsConsumptionDepar
 import MenuItemConsumptionAnalytics from "./MenuItemConsumptionAnalytics";
 import ItemsDepartmentDistributionChart from "../Home/ItemsDepartmentDistributionChart";
 import ItemsMenuItemConsumptionAnalysis from "../Home/ItemsMenuItemConsumptionAnalysis";
+import ItemsTrendAnalysis from "../Home/ItemsTrendAnalysis";
+import ItemsDepartmentAnalytics from "../Home/ItemsDepartmentAnalytics";
 
 function LandingPage() {
   return (
     <div>
       <ItemsConsumptionSummaryOverview />
-      <ItemsConsumptionTrendAnalysis />
-      <ItemsConsumptionDepartmentAnalytics />
+      <ItemsTrendAnalysis />
+      <ItemsDepartmentAnalytics />
+
+
+      {/* <ItemsConsumptionTrendAnalysis /> */}
+      {/* <ItemsConsumptionDepartmentAnalytics /> */}
       <ItemsDepartmentDistributionChart />
       <ItemsMenuItemConsumptionAnalysis />
       {/* <ItemsConsumptionDepartmentDistributionChart /> */}

@@ -8,6 +8,7 @@ import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer
 import { useDashboardContext } from "@/contexts/DashboardContext";
 import { useRecipeManagementRecommendations } from "@/services/recommendation-service";
 import { recommendationsDatFormmatter } from "@/utils/data_formatters/dashboardFormatter";
+import { IconTilde } from "@tabler/icons-react";
 
 export default function MenuOptimizationRecommendations() {
   const [isMobile, setIsMobile] = useState(false);
@@ -35,22 +36,25 @@ export default function MenuOptimizationRecommendations() {
   return (
     <Card
       className="m-2 p-3"
-      style={{ background: "rgba(53, 8, 236, 0.05)", borderRadius: "20px" }}
+      style={{ background: "#eef3ff", borderRadius: "20px" }}
     >
       {/* ✅ Header */}
       <ComponentHeader
         title={"Menu Optimization Recommendations"}
         description={"Strategic actions to improve overall profitability"}
-        titleColor={textColor}
+        titleColor={'black'}
         cardBgColor={"none"}
         isShowArrows={true}
         scrollRef={myScrollRef}
         isExpandable={true}
-        titleIcon={
-          <FaExclamationTriangle
-            style={{ color: textColor, fontSize: "20px" }}
-          />
-        }
+        titleIcon={ <div style={{
+      background: '#435ee9', // blue gradient for Figma look
+      borderRadius: '16=2px',
+      padding: '8px',
+      display: 'inline-block'
+    }}>
+      <IconTilde stroke={2} color="#fff" size={24} />
+    </div>}
       />
 
       {/* ✅ ServiceRenderer */}

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { Container, Row, Col, Table, Button, Card } from "react-bootstrap";
 import {
   BarChart,
@@ -11,185 +11,576 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import { FaDownload } from "react-icons/fa";
+import { FaDownload, FaFileExport } from "react-icons/fa";
 import { priceTrendsDataFormatter } from "@/utils/data_formatters/itemsPageDataFormatter";
 import { useItemPriceChangeHistory } from "@/services/item-service";
 import { useItemsContext } from "@/contexts/ItemsContext";
 import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer";
+import { FaArrowTrendDown, FaArrowTrendUp } from "react-icons/fa6";
+
+const formatDate = (dateStr) => {
+  if (!dateStr) return "";
+  const date = new Date(dateStr);
+  return date.toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+};
 
 const ItemsPriceTrends = () => {
   const { startDate, endDate } = useItemsContext();
   const [view, setView] = useState("table");
+  const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
+
+  const handleSort = (key) => {
+    setSortConfig((prev) => {
+      if (prev.key === key) {
+        return { key, direction: prev.direction === "asc" ? "desc" : "asc" };
+      }
+      return { key, direction: "asc" };
+    });
+  };
+
+  const renderSortArrow = (key) => {
+    if (sortConfig.key !== key) return "";
+    return sortConfig.direction === "asc" ? " ↑" : " ↓";
+  };
+
+  const sortedData = useMemo(() => {
+    if (!sortConfig.key) return null;
+    return (data) => {
+      const sorted = [...data].sort((a, b) => {
+        const aVal = a[sortConfig.key];
+        const bVal = b[sortConfig.key];
+
+        if (sortConfig.key.includes("Date")) {
+          return sortConfig.direction === "asc"
+            ? new Date(aVal) - new Date(bVal)
+            : new Date(bVal) - new Date(aVal);
+        }
+
+        if (typeof aVal === "number" && typeof bVal === "number") {
+          return sortConfig.direction === "asc" ? aVal - bVal : bVal - aVal;
+        }
+
+        return sortConfig.direction === "asc"
+          ? String(aVal).localeCompare(String(bVal))
+          : String(bVal).localeCompare(String(aVal));
+      });
+      return sorted;
+    };
+  }, [sortConfig]);
 
   return (
     <ServiceRenderer
       queryHook={useItemPriceChangeHistory}
-      queryKey={[
-        "itemPriceChangeHistory",
-        { startdt: startDate, enddt: endDate },
-      ]}
+      queryKey={["itemPriceChangeHistory", { startdt: startDate, enddt: endDate }]}
       queryFn={() =>
-        useItemPriceChangeHistory({ startdt: startDate, enddt: endDate })
-          .queryFn
+        useItemPriceChangeHistory({ startdt: startDate, enddt: endDate }).queryFn
       }
-      queryArgs={[
-        475,
-        { startdt: startDate, enddt: endDate, outlet: 1, userId: 7 },
-      ]}
+      queryArgs={[475, { startdt: startDate, enddt: endDate, outlet: 1, userId: 7 }]}
       formatter={priceTrendsDataFormatter}
       shimmerCount={1}
     >
-      {({ data, cardsData }) => (
-        <Container fluid className="p-4 bg-white rounded shadow-sm">
-          {/* Top Summary Section */}
-          <Row className="mb-4 text-center">
-            <Col md={3}>
-              <Card
-                className="p-3 border-0 shadow-sm rounded-lg"
-                style={{ backgroundColor: "#eaf0ff" }}
-              >
-                <h6 className="text-muted">Current Price</h6>
-                <h4 className="fw-bold text-primary">
-                  ₹{cardsData.currentPrice}
-                </h4>
-                <h6 className="fw-bold text-primary">
-                  {cardsData.curentPriceSub}
-                </h6>
-              </Card>
-            </Col>
-            <Col md={3}>
-              <Card
-                className="p-3 border-0 shadow-sm rounded-lg"
-                style={{ backgroundColor: "#fff5e6" }}
-              >
-                <h6 className="text-muted">Highest Price</h6>
-                <h4 className="fw-bold text-warning">
-                  ₹{cardsData.highestPrice}
-                </h4>
-                <h6 className="fw-bold text-warning">
-                  {cardsData.highestPriceSub}
-                </h6>
-              </Card>
-            </Col>
-            <Col md={3}>
-              <Card
-                className="p-3 border-0 shadow-sm rounded-lg"
-                style={{ backgroundColor: "#fce8f3" }}
-              >
-                <h6 className="text-muted">Lowest Price</h6>
-                <h4 className="fw-bold text-danger">
-                  ₹{cardsData.lowestPrice}
-                </h4>
-                <h6 className="fw-bold text-danger">
-                  {cardsData.lowestPriceSub}
-                </h6>
-              </Card>
-            </Col>
-            <Col md={3}>
-              <Card
-                className="p-3 border-0 shadow-sm rounded-lg"
-                style={{ backgroundColor: "#e9f8ef" }}
-              >
-                <h6 className="text-muted">Total Change</h6>
-                <h4 className="fw-bold text-success">
-                  {cardsData?.percentageOfChange}%
-                </h4>
-                <h6 className="fw-bold text-success">
-                  {cardsData.percentageOfChangeSub}
-                </h6>
-              </Card>
-            </Col>
-          </Row>
+      {({ data = [], cardsData }) => {
+        const displayedData = sortedData ? sortedData(data) : data;
 
-          {/* Controls */}
-          <Row className="mb-3 d-flex justify-content-between">
-            <Col>
-              <h5 className="fw-bold">Price Change History</h5>
-              <p className="text-muted">Monthly price trends and variations</p>
-            </Col>
-            <Col className="d-flex justify-content-end align-items-center">
-              <Button variant="outline-secondary" className="me-2">
-                <FaDownload className="me-2" /> Export
-              </Button>
-              <Button
-                variant={view === "table" ? "primary" : "outline-primary"}
-                className="me-2"
-                onClick={() => setView("table")}
-              >
-                Table View
-              </Button>
-              <Button
-                variant={view === "chart" ? "primary" : "outline-primary"}
-                onClick={() => setView("chart")}
-              >
-                Chart View
-              </Button>
-            </Col>
-          </Row>
+        return (
+          <Container fluid className="p-4 bg-white rounded shadow-sm">
+            {/* Summary Section */}
+            <Row className="mb-4 text-left">
+              <Col md={3}>
+                <Card
+                  className="p-3 border-0 shadow-sm rounded-lg"
+                  style={{ backgroundColor: "#eaf0ff" }}
+                >
+                  <h6 className="text-muted">Current Price</h6>
+                  <h4 className="fw-bold text-primary">₹{cardsData.currentPrice}</h4>
+                  <h6 className="fw-bold text-primary">{cardsData.curentPriceSub}</h6>
+                </Card>
+              </Col>
+              <Col md={3}>
+                <Card
+                  className="p-3 border-0 shadow-sm rounded-lg"
+                  style={{ backgroundColor: "#fff5e6" }}
+                >
+                  <h6 className="text-muted">Highest Price</h6>
+                  <h4 className="fw-bold text-warning">₹{cardsData.highestPrice}</h4>
+                  <h6 className="fw-bold text-warning">{cardsData.highestPriceSub}</h6>
+                </Card>
+              </Col>
+              <Col md={3}>
+                <Card
+                  className="p-3 border-0 shadow-sm rounded-lg"
+                  style={{ backgroundColor: "#fce8f3" }}
+                >
+                  <h6 className="text-muted">Lowest Price</h6>
+                  <h4 className="fw-bold text-danger">₹{cardsData.lowestPrice}</h4>
+                  <h6 className="fw-bold text-danger">{cardsData.lowestPriceSub}</h6>
+                </Card>
+              </Col>
+              <Col md={3}>
+                <Card
+                  className="p-3 border-0 shadow-sm rounded-lg"
+                  style={{ backgroundColor: "#e9f8ef" }}
+                >
+                  <h6 className="text-muted">Total Change</h6>
+                  <h4 className="fw-bold text-success">
+                    ₹ {cardsData?.percentageOfChange}
+                  </h4>
+                  <h6 className="fw-bold text-success">
+                    {cardsData.percentageOfChangeSub}
+                  </h6>
+                </Card>
+              </Col>
+            </Row>
 
-          {/* Table View */}
-          {view === "table" && (
-            <Table striped bordered hover responsive className="align-middle">
-              <thead className="table-light">
-                <tr>
-                  <th>Start Date</th>
-                  <th>End Date</th>
-                  <th>Price (₹/1000GM)</th>
-                  <th>Price Difference</th>
-                  <th>Change %</th>
-                  <th>Trend</th>
-                </tr>
-              </thead>
-              <tbody>
-                {data?.map((row, idx) => (
-                  <tr key={idx}>
-                    <td>{row.startDate}</td>
-                    <td>{row.endDate}</td>
-                    <td>₹{row.price}</td>
-                    <td
-                      className={
-                        row.priceDiff > 0
-                          ? "text-success"
-                          : row.priceDiff < 0
-                          ? "text-danger"
-                          : "text-muted"
-                      }
-                    >
-                      {row.priceDiff > 0 ? "+" : ""}
-                      {row.priceDiff}
-                    </td>
-                    <td>{row.changePercent}%</td>
-                    <td className="d-flex align-items-center gap-2">
-                      {row.trendIcon} {row.trendText}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
-          )}
-
-          {/* Chart View */}
-          {view === "chart" && (
-            <ResponsiveContainer width="100%" height={400}>
-              <BarChart
-                data={data || []}
-                margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
+            {/* Controls */}
+            <Row className="mb-3 d-flex justify-content-between">
+              <Col>
+                <h5 className="fw-bold">Price Change History</h5>
+                <p className="text-muted">Monthly price trends and variations</p>
+              </Col>
+              <Col
+                className="d-flex justify-content-end align-items-center"
+                style={{ gap: 16 }}
               >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="startDate" />
-                <YAxis />
-                <Tooltip />
-                <Bar dataKey="price" fill="#007bff" />
-              </BarChart>
-            </ResponsiveContainer>
-          )}
-        </Container>
-      )}
+                <Button
+                  style={{
+                    background: "#FF6300",
+                    border: "none",
+                    borderRadius: "10px",
+                    color: "#fff",
+                    fontWeight: 600,
+                    fontSize: "16px",
+                    padding: "8px 24px",
+                    display: "flex",
+                    alignItems: "center",
+                    boxShadow: "0 2px 8px rgba(255,99,0,0.07)",
+                  }}
+                >
+                  <FaFileExport style={{ marginRight: 8 }} />
+                  Export
+                </Button>
+
+                <div
+                  style={{
+                    background: "#F8F8F8",
+                    borderRadius: 22,
+                    display: "flex",
+                    alignItems: "center",
+                    padding: 2,
+                    boxShadow: "0 2px 8px rgba(0,0,0,0.04)",
+                  }}
+                >
+                  <button
+                    type="button"
+                    onClick={() => setView("table")}
+                    style={{
+                      border: "none",
+                      outline: "none",
+                      background: view === "table" ? "#fff" : "transparent",
+                      color: view === "table" ? "#FF6300" : "#B5B5B5",
+                      fontWeight: 600,
+                      fontSize: "15px",
+                      borderRadius: 18,
+                      padding: "8px 32px",
+                      boxShadow:
+                        view === "table" ? "0 2px 8px rgba(0,0,0,0.07)" : "none",
+                      transition: "all 0.18s",
+                      marginRight: 6,
+                    }}
+                  >
+                    Table View
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setView("chart")}
+                    style={{
+                      border: "none",
+                      outline: "none",
+                      background: view === "chart" ? "#fff" : "transparent",
+                      color: view === "chart" ? "#FF6300" : "#B5B5B5",
+                      fontWeight: 600,
+                      fontSize: "15px",
+                      borderRadius: 18,
+                      padding: "8px 32px",
+                      boxShadow:
+                        view === "chart" ? "0 2px 8px rgba(0,0,0,0.07)" : "none",
+                      transition: "all 0.18s",
+                    }}
+                  >
+                    Chart View
+                  </button>
+                </div>
+              </Col>
+            </Row>
+
+            {/* Table View */}
+            {view === "table" && (
+              <div
+                style={{
+                  maxHeight: "65vh",
+                  overflowY: "auto",
+                  overflowX: "auto",
+                  position: "relative",
+                  display: "block",
+                }}
+              >
+                <Table
+                  hover
+                  className="align-middle mb-0"
+                  style={{
+                    minWidth: "1000px",
+                    borderCollapse: "separate",
+                    borderSpacing: 0,
+                  }}
+                >
+                  <thead
+                    style={{
+                      position: "sticky",
+                      top: 0,
+                      zIndex: 2,
+                      backgroundColor: "#f8f9fa",
+                      boxShadow: "0px 2px 4px rgba(0,0,0,0.05)",
+                    }}
+                  >
+                    <tr>
+                      <th onClick={() => handleSort("startDate")}>
+                        Start Date{renderSortArrow("startDate")}
+                      </th>
+                      <th onClick={() => handleSort("endDate")}>
+                        End Date{renderSortArrow("endDate")}
+                      </th>
+                      <th onClick={() => handleSort("price")}>
+                        Price (₹/1000GM){renderSortArrow("price")}
+                      </th>
+                      <th onClick={() => handleSort("priceDiff")}>
+                        Price Difference{renderSortArrow("priceDiff")}
+                      </th>
+                      <th onClick={() => handleSort("changePercent")}>
+                        Change %{renderSortArrow("changePercent")}
+                      </th>
+                      <th>Trend</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {displayedData?.length > 0 ? (
+                      displayedData.map((row, idx) => (
+                        <tr key={idx}>
+                          <td>{formatDate(row.startDate)}</td>
+                          <td>{formatDate(row.endDate)}</td>
+                          <td>₹{row.price}</td>
+                          <td
+                            className={
+                              row.priceDiff > 0
+                                ? "text-success"
+                                : row.priceDiff < 0
+                                  ? "text-danger"
+                                  : "text-muted"
+                            }
+                          >
+                            {row.priceDiff > 0 ? <span><FaArrowTrendUp size={14}/> + ₹</span> :  row.priceDiff == 0 ? '--': <span><FaArrowTrendDown size={14}/> ₹</span>}
+                            {row.priceDiff}
+                          </td>
+                          <td>{row.changePercent}%</td>
+                          <td className="d-flex align-items-center gap-2">
+                            {row.priceDiff > 0 ? <span><FaArrowTrendUp size={14} color="green"/></span> : row.priceDiff == 0 ? '--':<span><FaArrowTrendDown size={14} color="red"/></span>}
+                           {row.trendText}
+                          </td>
+                        </tr>
+                      ))
+                    ) : (
+                      <tr>
+                        <td
+                          colSpan={6}
+                          style={{
+                            textAlign: "center",
+                            padding: "20px",
+                            color: "#888",
+                            fontStyle: "italic",
+                          }}
+                        >
+                          No data available
+                        </td>
+                      </tr>
+                    )}
+                  </tbody>
+                </Table>
+              </div>
+            )}
+
+            {/* Chart View */}
+            {view === "chart" && (
+              <ResponsiveContainer width="100%" height={400}>
+                <BarChart
+                  data={data || []}
+                  margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="startDate" />
+                  <YAxis />
+                  <Tooltip />
+                  <Bar dataKey="price" fill="#007bff" />
+                </BarChart>
+              </ResponsiveContainer>
+            )}
+          </Container>
+        );
+      }}
     </ServiceRenderer>
   );
 };
 
 export default ItemsPriceTrends;
+
+
+// "use client";
+
+// import React, { useState } from "react";
+// import { Container, Row, Col, Table, Button, Card } from "react-bootstrap";
+// import {
+//   BarChart,
+//   Bar,
+//   XAxis,
+//   YAxis,
+//   CartesianGrid,
+//   Tooltip,
+//   ResponsiveContainer,
+// } from "recharts";
+// import { FaDownload } from "react-icons/fa";
+// import { priceTrendsDataFormatter } from "@/utils/data_formatters/itemsPageDataFormatter";
+// import { useItemPriceChangeHistory } from "@/services/item-service";
+// import { useItemsContext } from "@/contexts/ItemsContext";
+// import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer";
+
+// const ItemsPriceTrends = () => {
+//   const { startDate, endDate } = useItemsContext();
+//   const [view, setView] = useState("table");
+
+//   return (
+//     <ServiceRenderer
+//       queryHook={useItemPriceChangeHistory}
+//       queryKey={[
+//         "itemPriceChangeHistory",
+//         { startdt: startDate, enddt: endDate },
+//       ]}
+//       queryFn={() =>
+//         useItemPriceChangeHistory({ startdt: startDate, enddt: endDate })
+//           .queryFn
+//       }
+//       queryArgs={[
+//         475,
+//         { startdt: startDate, enddt: endDate, outlet: 1, userId: 7 },
+//       ]}
+//       formatter={priceTrendsDataFormatter}
+//       shimmerCount={1}
+//     >
+//       {({ data, cardsData }) => (
+//         <Container fluid className="p-4 bg-white rounded shadow-sm">
+//           {/* Top Summary Section */}
+//           <Row className="mb-4 text-left">
+//             <Col md={3}>
+//               <Card
+//                 className="p-3 border-0 shadow-sm rounded-lg"
+//                 style={{ backgroundColor: "#eaf0ff" }}
+//               >
+//                 <h6 className="text-muted">Current Price</h6>
+//                 <h4 className="fw-bold text-primary">
+//                   ₹{cardsData.currentPrice}
+//                 </h4>
+//                 <h6 className="fw-bold text-primary">
+//                   {cardsData.curentPriceSub}
+//                 </h6>
+//               </Card>
+//             </Col>
+//             <Col md={3}>
+//               <Card
+//                 className="p-3 border-0 shadow-sm rounded-lg"
+//                 style={{ backgroundColor: "#fff5e6" }}
+//               >
+//                 <h6 className="text-muted">Highest Price</h6>
+//                 <h4 className="fw-bold text-warning">
+//                   ₹{cardsData.highestPrice}
+//                 </h4>
+//                 <h6 className="fw-bold text-warning">
+//                   {cardsData.highestPriceSub}
+//                 </h6>
+//               </Card>
+//             </Col>
+//             <Col md={3}>
+//               <Card
+//                 className="p-3 border-0 shadow-sm rounded-lg"
+//                 style={{ backgroundColor: "#fce8f3" }}
+//               >
+//                 <h6 className="text-muted">Lowest Price</h6>
+//                 <h4 className="fw-bold text-danger">
+//                   ₹{cardsData.lowestPrice}
+//                 </h4>
+//                 <h6 className="fw-bold text-danger">
+//                   {cardsData.lowestPriceSub}
+//                 </h6>
+//               </Card>
+//             </Col>
+//             <Col md={3}>
+//               <Card
+//                 className="p-3 border-0 shadow-sm rounded-lg"
+//                 style={{ backgroundColor: "#e9f8ef" }}
+//               >
+//                 <h6 className="text-muted">Total Change</h6>
+//                 <h4 className="fw-bold text-success">
+//                   {cardsData?.percentageOfChange}%
+//                 </h4>
+//                 <h6 className="fw-bold text-success">
+//                   {cardsData.percentageOfChangeSub}
+//                 </h6>
+//               </Card>
+//             </Col>
+//           </Row>
+
+//           {/* Controls */}
+//           <Row className="mb-3 d-flex justify-content-between">
+//             <Col>
+//               <h5 className="fw-bold">Price Change History</h5>
+//               <p className="text-muted">Monthly price trends and variations</p>
+//             </Col>
+//             <Col className="d-flex justify-content-end align-items-center" style={{ gap: 16 }}>
+//       {/* Export: solid orange, slightly rounded */}
+//       <Button
+//         style={{
+//           background: "#FF6300",
+//           border: "none",
+//           borderRadius: "10px",
+//           color: "#fff",
+//           fontWeight: 600,
+//           fontSize: "16px",
+//           padding: "8px 24px",
+//           display: "flex",
+//           alignItems: "center",
+//           boxShadow: "0 2px 8px rgba(255,99,0,0.07)",
+//         }}
+//       >
+//         <FaDownload style={{ marginRight: 8 }} />
+//         Export
+//       </Button>
+//       {/* Segmented toggle group */}
+//       <div
+//         style={{
+//           background: "#F8F8F8",
+//           borderRadius: 22,
+//           display: "flex",
+//           alignItems: "center",
+//           padding: 2,
+//           boxShadow: "0 2px 8px rgba(0,0,0,0.04)",
+//         }}
+//       >
+//         {/* Table View */}
+//         <button
+//           type="button"
+//           onClick={() => setView("table")}
+//           style={{
+//             border: "none",
+//             outline: "none",
+//             background: view === "table" ? "#fff" : "transparent",
+//             color: view === "table" ? "#FF6300" : "#B5B5B5",
+//             fontWeight: 600,
+//             fontSize: "15px",
+//             borderRadius: 18,
+//             padding: "8px 32px",
+//             boxShadow: view === "table" ? "0 2px 8px rgba(0,0,0,0.07)" : "none",
+//             transition: "all 0.18s",
+//             marginRight: 6,
+//           }}
+//         >
+//           Table View
+//         </button>
+//         {/* Chart View */}
+//         <button
+//           type="button"
+//           onClick={() => setView("chart")}
+//           style={{
+//             border: "none",
+//             outline: "none",
+//             background: view === "chart" ? "#fff" : "transparent",
+//             color: view === "chart" ? "#FF6300" : "#B5B5B5",
+//             fontWeight: 600,
+//             fontSize: "15px",
+//             borderRadius: 18,
+//             padding: "8px 32px",
+//             boxShadow: view === "chart" ? "0 2px 8px rgba(0,0,0,0.07)" : "none",
+//             transition: "all 0.18s",
+//           }}
+//         >
+//           Chart View
+//         </button>
+//       </div>
+//     </Col>
+//           </Row>
+
+//           {/* Table View */}
+//           {view === "table" && (
+//             <Table hover responsive className="align-middle">
+//               <thead className="table-light">
+//                 <tr>
+//                   <th>Start Date</th>
+//                   <th>End Date</th>
+//                   <th>Price (₹/1000GM)</th>
+//                   <th>Price Difference</th>
+//                   <th>Change %</th>
+//                   <th>Trend</th>
+//                 </tr>
+//               </thead>
+//               <tbody>
+//                 {data?.map((row, idx) => (
+//                   <tr key={idx}>
+//                     <td>{row.startDate}</td>
+//                     <td>{row.endDate}</td>
+//                     <td>₹{row.price}</td>
+//                     <td
+//                       className={
+//                         row.priceDiff > 0
+//                           ? "text-success"
+//                           : row.priceDiff < 0
+//                           ? "text-danger"
+//                           : "text-muted"
+//                       }
+//                     >
+//                       {row.priceDiff > 0 ? "+" : ""}
+//                       {row.priceDiff}
+//                     </td>
+//                     <td>{row.changePercent}%</td>
+//                     <td className="d-flex align-items-center gap-2">
+//                       {row.trendIcon} {row.trendText}
+//                     </td>
+//                   </tr>
+//                 ))}
+//               </tbody>
+//             </Table>
+//           )}
+
+//           {/* Chart View */}
+//           {view === "chart" && (
+//             <ResponsiveContainer width="100%" height={400}>
+//               <BarChart
+//                 data={data || []}
+//                 margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
+//               >
+//                 <CartesianGrid strokeDasharray="3 3" />
+//                 <XAxis dataKey="startDate" />
+//                 <YAxis />
+//                 <Tooltip />
+//                 <Bar dataKey="price" fill="#007bff" />
+//               </BarChart>
+//             </ResponsiveContainer>
+//           )}
+//         </Container>
+//       )}
+//     </ServiceRenderer>
+//   );
+// };
+
+// export default ItemsPriceTrends;
 
 // "use client";
 

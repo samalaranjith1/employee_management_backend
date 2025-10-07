@@ -39,26 +39,13 @@ export default function RecipesCards({ card, idx, widthDesktop }) {
         >
           {card.label}
         </span>
-        <span
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            width: "2rem",
-            height: "2rem",
-            borderRadius: "0.75rem",
-            backgroundColor: card.iconBg,
-            boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-            transform: "rotate(-45deg)",
-          }}
-        >
+        <span>
           {/* Icon rotated back to be upright */}
           {card.icon}
         </span>
       </div>
 
-      {/* Title */}
-      <h6
+      <h5
         style={{
           marginTop: "10px",
           fontWeight: "600",
@@ -67,7 +54,7 @@ export default function RecipesCards({ card, idx, widthDesktop }) {
         }}
       >
         {card.title}
-      </h6>
+      </h5>
       {/* Data Rows (Products, Sales, Shares) */}
       {renderDataRow("Products", card.products)}
       {renderDataRow("Total Sales", card.sales)}

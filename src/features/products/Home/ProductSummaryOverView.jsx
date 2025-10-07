@@ -6,10 +6,11 @@ import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer
 import { productSummaryOverViewDataFormatter } from "@/utils/data_formatters/productsPageDataFormatter";
 import { useProductSummary } from "@/services/product-service";
 import { useProductsContext } from "@/contexts/ProductsContext";
+import { IconChartHistogram } from "@tabler/icons-react";
 
 export default function ProductSummaryOverView() {
   const { startDate, endDate } = useProductsContext();
-  
+
   return (
     <Container fluid className="p-3">
       <ServiceRenderer
@@ -36,10 +37,15 @@ export default function ProductSummaryOverView() {
             <Row className="mb-3">
               <Col>
                 <div className="d-flex align-items-center">
-                  <span className="bg-danger text-white p-2 rounded me-2">
-                    📊
-                  </span>
-                  <div>
+                  <div style={{
+                    background: '#f75614', // orange gradient for Figma match
+                    borderRadius: '12px',
+                    padding: '8px',
+                    display: 'inline-block'
+                  }}>
+                    <IconChartHistogram stroke={2} color="#fff" size={24} />
+                  </div>
+                  <div style={{ marginLeft: '5px' }}>
                     <h6 className="mb-0 fw-bold">Summary Overview</h6>
                     <small className="text-muted">
                       Real-time consumption metrics and performance indicators
@@ -82,24 +88,53 @@ export default function ProductSummaryOverView() {
               ))}
             </Row>
             {/* Footer Metrics */}
-            <Row className="g-3">
+            <Row
+              className="g-3 flex-nowrap hide-scrollbar"
+              style={{
+                overflowX: "auto",
+                flex: "1",
+                display: "flex",
+                alignItems: "center",
+                background: "#F3FFF8",
+                // borderRadius: "12px",
+                boxShadow: "0 4px 8px rgb(0 0 0 / 0.05)",
+                whiteSpace: "nowrap",
+                scrollbarWidth: "none", // Firefox
+                msOverflowStyle: "none", // IE/Edge
+              }}
+            >
+              <style jsx>{`
+    .hide-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+  `}</style>
+
               {(formatted.footer || []).map((f, i) => (
-                <Col key={i} md className="d-flex">
+                <Col key={i} style={{ minWidth: "200px" }}>
                   <Card
-                    style={{
-                      backgroundColor: f.bg,
-                      borderRadius: "12px",
-                      border: "none",
-                    }}
-                    className="flex-fill text-center py-3 shadow-sm"
+                    className="p-3 border-0 h-100"
+                    style={{ backgroundColor: f.bg }}
                   >
-                    <div className="mb-2 fs-4 text-dark">{f.icon}</div>
-                    <h6 className="fw-bold mb-0">{f.label}</h6>
-                    <div className="fw-semibold">{f.value}</div>
+                    <Row className="align-items-center h-100 flex-nowrap">
+                      {/* Icon Column */}
+                      <Col
+                        xs="auto"
+                        className="d-flex justify-content-center align-items-center"
+                      >
+                        {f.icon}
+                      </Col>
+
+                      {/* Text Column */}
+                      <Col>
+                        <h6 className="fw-bold mb-1">{f.label}</h6>
+                        <p className="mb-0 fw-semibold">{f.value}</p>
+                      </Col>
+                    </Row>
                   </Card>
                 </Col>
               ))}
             </Row>
+
           </>
         )}
       </ServiceRenderer>

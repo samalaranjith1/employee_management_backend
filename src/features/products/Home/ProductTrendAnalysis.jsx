@@ -27,7 +27,7 @@ export default function ProductTrendAnalysis() {
     switch (view) {
       case "daily":
         return useProductSummaryDaily;
-      case "sameday":
+      case "samedays":
         return useProductSummarySameDay;
       case "weekly":
         return useProductSummaryWeekly;
@@ -47,7 +47,7 @@ export default function ProductTrendAnalysis() {
 
     switch (view) {
       case "daily":
-        startDatetemp = subDays(today, 7);
+        startDatetemp = subDays(today,7);
         break;
       case "weekly":
         startDatetemp = subWeeks(today, 5);
@@ -55,7 +55,7 @@ export default function ProductTrendAnalysis() {
       case "monthly":
         startDatetemp = subMonths(today, 5);
         break;
-      case "sameday":
+      case "samedays":
         startDatetemp = subWeeks(today, 5);
         break;
       default:
@@ -71,7 +71,7 @@ export default function ProductTrendAnalysis() {
   }, [filter]);
 
   return (
-    <div className="p-3">
+    <div className="p-0">
       <ServiceRenderer
         queryHook={SelectedHook}
         queryKey={["productTrendAnalysis", filter, startDateCS, endDateCS]}

@@ -73,7 +73,11 @@ const SupplierFinancialAnalysisTable = ({
 
           {/* Desktop Buttons */}
           <div className="d-none d-md-flex">
-            <ButtonGroup>
+            <ButtonGroup
+              style={{
+                backgroundColor: "rgb(230,230,230)",
+                padding: "4px",
+              }}>
               {["Daily", "Same Days", "Weekly", "Monthly"].map((label) => (
                 <ToggleButton
                   key={label}
@@ -105,7 +109,11 @@ const SupplierFinancialAnalysisTable = ({
 
           {/* Mobile Buttons */}
           <div className="d-flex d-md-none w-100 mt-2 justify-content-center">
-            <ButtonGroup className="w-100">
+            <ButtonGroup className="w-100"
+              style={{
+                backgroundColor: "rgb(230,230,230)",
+                padding: "4px",
+              }}>
               {["Daily", "Same Days", "Weekly", "Monthly"].map((label) => (
                 <ToggleButton
                   key={`mobile-table-${label}`}

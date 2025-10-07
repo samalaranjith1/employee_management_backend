@@ -10,6 +10,7 @@ import ActionableCard from "@/components/common/dashboard/card/ActionableCard";
 import ActionableVerticalCards from "@/components/common/dashboard/card/ActionableVerticalCards";
 import { usePathname, useRouter } from "next/navigation"; // ✅ For route detection
 import { handleNavigation } from "@/utils";
+import { IconBulb } from "@tabler/icons-react";
 
 const ActionableInsights = () => {
   const { startDate, endDate, dashboardFilter } = useDashboardContext();
@@ -37,12 +38,24 @@ const ActionableInsights = () => {
       <ComponentHeader
         title={"Actionable Insights"}
         description={"Critical issues requiring immediate attention"}
-        titleColor={"rgb(255,79,22)"}
+        titleColor={"#000"}
         cardBgColor={"none"}
         isShowArrows={true}
         scrollRef={myScrollRef}
         isExpandable={true}
-        titleIcon={""}
+        titleIcon={<div
+          style={{
+            width: 36,
+            height: 36,
+            borderRadius: 12,
+            background: "#f6a242ff", // Adjust color to match Figma
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <IconBulb color="white" size={28} stroke={2} fill='white'/>
+        </div>}
         text={`5 Active`}
         style={{ cursor: "pointer" }}
         handleExpandClick={() =>
@@ -71,9 +84,8 @@ const ActionableInsights = () => {
               >
                 <div
                   ref={myScrollRef}
-                  className={`d-flex mt-2 gap-2 mb-2 ${
-                    !isDashboardRoute ? "flex-column" : ""
-                  }`}
+                  className={`d-flex mt-2 gap-2 mb-2 ${!isDashboardRoute ? "flex-column" : ""
+                    }`}
                   style={{
                     gap: `1rem`,
                     paddingBottom: "0.5rem",

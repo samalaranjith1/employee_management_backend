@@ -9,7 +9,7 @@ export function ItemsSummaryOverviewTopCardsFirstRow({ cards = [] }) {
         <Col md={4} key={card.id}>
           <Card
             style={{ backgroundColor: card.bg }}
-            className="p-3 border-0 shadow-sm h-100"
+            className="p-3 shadow-sm h-100"
           >
             <h6 className="fw-bold d-flex align-items-center">
               {card.icon}
@@ -40,7 +40,7 @@ export function ItemsSummaryOverviewTopCardsSecondRow({ cards = [] }) {
         <Col md={4} key={card.id}>
           <Card
             style={{ backgroundColor: card.bg }}
-            className="p-3 border-0 shadow-sm h-100"
+            className="p-3 shadow-sm h-100"
           >
             <h6 className="fw-bold d-flex align-items-center">
               {card.icon}

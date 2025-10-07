@@ -1,8 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import { Card, Row, Col, Dropdown } from "react-bootstrap";
-import { FaCalendarAlt, FaShoppingCart } from "react-icons/fa";
+import { Card, Row, Col } from "react-bootstrap";
 import { startOfMonth, endOfMonth, format } from "date-fns";
 import ComponentHeader from "@/components/common/ComponentHeader";
 import SupplierDetailsTableMonth from "@/components/common/dashboard/TablesSort/SupplierDetailsTableMonth";
@@ -12,6 +11,7 @@ import { supplierManagementDataFormatter } from "@/utils/data_formatters/dashboa
 import PurchaseDistributionGraph from "@/components/common/dashboard/GraphWrapper/PurchaseDistributionGraph";
 import { handleNavigation } from "@/utils";
 import { useRouter } from "next/navigation";
+import { IconPackage, IconTruck } from "@tabler/icons-react";
 
 const styles = {
   container: { padding: "1rem", backgroundColor: "#f8fafc" },
@@ -34,27 +34,16 @@ const styles = {
   amount: { fontSize: "2rem", fontWeight: "bold", color: "#1e3a8a" },
 };
 
-const months = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-];
+const months = Array.from({ length: 12 }, (_, i) => {
+  const date = new Date(new Date().getFullYear(), i, 1);
+  return { label: format(date, "MMMM"), value: i };
+});
 
 const SupplierDuesThisMonth = () => {
-  const router = useRouter()
+  const router = useRouter();
   const now = new Date();
-  const currentMonth = now.toLocaleString("default", { month: "long" });
 
-  const [selectedMonth, setSelectedMonth] = useState(currentMonth);
+  const [selectedMonthIndex, setSelectedMonthIndex] = useState(now.getMonth());
   const [dateRange, setDateRange] = useState({
     startDate: startOfMonth(now),
     endDate: now,
@@ -62,35 +51,47 @@ const SupplierDuesThisMonth = () => {
 
   const scrollRef = useRef(null);
 
-  useEffect(() => {
-    const monthIndex = new Date(
-      `${selectedMonth} 1, ${now.getFullYear()}`
-    ).getMonth();
-    const year =
-      monthIndex > now.getMonth() ? now.getFullYear() - 1 : now.getFullYear();
-    const date = new Date(year, monthIndex, 1);
+  const handleMonthSelect = (monthIndex) => {
+    const year = monthIndex > now.getMonth() ? now.getFullYear() - 1 : now.getFullYear();
+    const firstDay = new Date(year, monthIndex, 1);
+    const lastDay = monthIndex === now.getMonth() ? now : endOfMonth(firstDay);
 
+    setSelectedMonthIndex(monthIndex);
     setDateRange({
-      startDate:
-        selectedMonth === currentMonth ? startOfMonth(now) : startOfMonth(date),
-      endDate: selectedMonth === currentMonth ? now : endOfMonth(date),
+      startDate: firstDay,
+      endDate: lastDay,
     });
-  }, [selectedMonth]);
+  };
 
   const formattedStart = format(dateRange.startDate, "yyyy-MM-dd");
   const formattedEnd = format(dateRange.endDate, "yyyy-MM-dd");
+  const selectedMonthLabel = months[selectedMonthIndex].label;
 
   return (
     <Card style={styles.container} className="m-2">
       <ComponentHeader
-        title="Supplier Dues This Month"
-        description="Monitor dues and purchases supplier-wise"
+        title="Monthly Supplier Management"
+        description="Track purchases, payments and supplier relationships"
         titleColor="rgba(124, 58, 237, 1) fs-4"
         cardBgColor="none"
         isShowArrows={false}
         scrollRef={scrollRef}
         isExpandable={true}
-        titleIcon={<FaCalendarAlt size={20} color="rgba(124,58,237,1)" />}
+        titleIcon={
+          <div
+            style={{
+              background: "#8356ff",
+              borderRadius: "12px",
+              padding: "8px",
+              display: "inline-block",
+            }}
+          >
+            <IconTruck stroke={2} color="#fff" size={24} />
+          </div>
+        }
+        dropdownOptions={months}
+        onDropdownSelect={handleMonthSelect}
+        selectedValue={selectedMonthIndex}
       />
 
       <ServiceRenderer
@@ -100,14 +101,14 @@ const SupplierDuesThisMonth = () => {
           {
             startdt: dateRange.startDate,
             enddt: dateRange.endDate,
-            month: selectedMonth,
+            month: selectedMonthLabel,
           },
         ]}
         queryFn={() =>
           useSuppliersUsageMTD({
             startdt: formattedStart,
             enddt: formattedEnd,
-            month: selectedMonth,
+            month: selectedMonthLabel,
           }).queryFn
         }
         queryArgs={[
@@ -123,30 +124,6 @@ const SupplierDuesThisMonth = () => {
       >
         {(data) => (
           <Card style={styles.sectionCard}>
-            <Row className="align-items-center mb-3">
-              <Col xs="auto">
-                <Dropdown>
-                  <Dropdown.Toggle
-                    variant="light"
-                    className="d-flex align-items-center gap-2"
-                  >
-                    <FaCalendarAlt color="#7c3aed" />
-                    {selectedMonth}
-                  </Dropdown.Toggle>
-                  <Dropdown.Menu>
-                    {months.map((month) => (
-                      <Dropdown.Item
-                        key={month}
-                        onClick={() => setSelectedMonth(month)}
-                      >
-                        {month}
-                      </Dropdown.Item>
-                    ))}
-                  </Dropdown.Menu>
-                </Dropdown>
-              </Col>
-            </Row>
-
             {/* Purchase Summary */}
             <div
               style={styles.purchaseCard}
@@ -170,29 +147,29 @@ const SupplierDuesThisMonth = () => {
               </div>
               <div
                 style={{
-                  background: "linear-gradient(90deg,#7c3aed,#6366f1)",
-                  borderRadius: "50%",
-                  padding: "0.75rem",
-                  color: "#fff",
+                  background: "#7358ff",
+                  borderRadius: "12px",
+                  padding: "8px",
+                  display: "inline-block",
                 }}
               >
-                <FaShoppingCart size={20} />
+                <IconPackage stroke={2} color="#fff" size={24} />
               </div>
             </div>
 
             {/* Graph + Table */}
             <Row>
               <Col md={6}>
-                <div className="fw-semibold mb-2">
+                {/* <div className="fw-semibold mb-2">
                   Monthly Purchase Distribution
-                </div>
+                </div> */}
                 <PurchaseDistributionGraph
                   pieData={data.pieData}
                   styles={styles}
                 />
               </Col>
               <Col md={6}>
-                <div className="fw-semibold mb-2">Top Suppliers</div>
+                {/* <div className="fw-semibold mb-2">Top Suppliers</div> */}
                 <SupplierDetailsTableMonth supplierData={data.supplierData} />
               </Col>
             </Row>
@@ -204,6 +181,218 @@ const SupplierDuesThisMonth = () => {
 };
 
 export default SupplierDuesThisMonth;
+// "use client";
+
+// import React, { useEffect, useRef, useState } from "react";
+// import { Card, Row, Col, Dropdown } from "react-bootstrap";
+// import { FaCalendarAlt, FaShoppingCart } from "react-icons/fa";
+// import { startOfMonth, endOfMonth, format } from "date-fns";
+// import ComponentHeader from "@/components/common/ComponentHeader";
+// import SupplierDetailsTableMonth from "@/components/common/dashboard/TablesSort/SupplierDetailsTableMonth";
+// import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer";
+// import { useSuppliersUsageMTD } from "@/services/supplier-service";
+// import { supplierManagementDataFormatter } from "@/utils/data_formatters/dashboardFormatter";
+// import PurchaseDistributionGraph from "@/components/common/dashboard/GraphWrapper/PurchaseDistributionGraph";
+// import { handleNavigation } from "@/utils";
+// import { useRouter } from "next/navigation";
+// import { IconPackage, IconTruck } from "@tabler/icons-react";
+
+// const styles = {
+//   container: { padding: "1rem", backgroundColor: "#f8fafc" },
+//   sectionCard: {
+//     borderRadius: "12px",
+//     border: "none",
+//     boxShadow: "0 1px 3px rgba(0,0,0,0.05)",
+//     marginBottom: "1rem",
+//     padding: "1rem",
+//   },
+//   purchaseCard: {
+//     backgroundColor: "#f1f5f9",
+//     borderRadius: "12px",
+//     padding: "1.5rem",
+//     display: "flex",
+//     justifyContent: "space-between",
+//     alignItems: "center",
+//     flex: 1,
+//   },
+//   amount: { fontSize: "2rem", fontWeight: "bold", color: "#1e3a8a" },
+// };
+
+// const months = [
+//   "January",
+//   "February",
+//   "March",
+//   "April",
+//   "May",
+//   "June",
+//   "July",
+//   "August",
+//   "September",
+//   "October",
+//   "November",
+//   "December",
+// ];
+
+// const SupplierDuesThisMonth = () => {
+//   const router = useRouter()
+//   const now = new Date();
+//   const currentMonth = now.toLocaleString("default", { month: "long" });
+
+//   const [selectedMonth, setSelectedMonth] = useState(currentMonth);
+//   const [dateRange, setDateRange] = useState({
+//     startDate: startOfMonth(now),
+//     endDate: now,
+//   });
+
+//   const scrollRef = useRef(null);
+
+//   useEffect(() => {
+//     const monthIndex = new Date(
+//       `${selectedMonth} 1, ${now.getFullYear()}`
+//     ).getMonth();
+//     const year =
+//       monthIndex > now.getMonth() ? now.getFullYear() - 1 : now.getFullYear();
+//     const date = new Date(year, monthIndex, 1);
+
+//     setDateRange({
+//       startDate:
+//         selectedMonth === currentMonth ? startOfMonth(now) : startOfMonth(date),
+//       endDate: selectedMonth === currentMonth ? now : endOfMonth(date),
+//     });
+//   }, [selectedMonth]);
+
+//   const formattedStart = format(dateRange.startDate, "yyyy-MM-dd");
+//   const formattedEnd = format(dateRange.endDate, "yyyy-MM-dd");
+
+//   return (
+//     <Card style={styles.container} className="m-2">
+//       <ComponentHeader
+//         title="Supplier Dues This Month"
+//         description="Monitor dues and purchases supplier-wise"
+//         titleColor="rgba(124, 58, 237, 1) fs-4"
+//         cardBgColor="none"
+//         isShowArrows={false}
+//         scrollRef={scrollRef}
+//         isExpandable={true}
+//         titleIcon={<div style={{
+//           background: '#8356ff', // blue gradient for Figma look
+//           borderRadius: '12px',
+//           padding: '8px',
+//           display: 'inline-block'
+//         }}>
+//           <IconTruck stroke={2} color="#fff" size={24} />
+//         </div>}
+//       />
+
+//       <ServiceRenderer
+//         queryHook={useSuppliersUsageMTD}
+//         queryKey={[
+//           "supplierDues",
+//           {
+//             startdt: dateRange.startDate,
+//             enddt: dateRange.endDate,
+//             month: selectedMonth,
+//           },
+//         ]}
+//         queryFn={() =>
+//           useSuppliersUsageMTD({
+//             startdt: formattedStart,
+//             enddt: formattedEnd,
+//             month: selectedMonth,
+//           }).queryFn
+//         }
+//         queryArgs={[
+//           {
+//             startdt: formattedStart,
+//             enddt: formattedEnd,
+//             outlet: 1,
+//             userId: 7,
+//           },
+//         ]}
+//         formatter={supplierManagementDataFormatter}
+//         shimmerCount={2}
+//       >
+//         {(data) => (
+//           <Card style={styles.sectionCard}>
+//             <Row className="align-items-center mb-3">
+//               <Col xs="auto">
+//                 <Dropdown>
+//                   <Dropdown.Toggle
+//                     variant="light"
+//                     className="d-flex align-items-center gap-2"
+//                   >
+//                     <FaCalendarAlt color="#7c3aed" />
+//                     {selectedMonth}
+//                   </Dropdown.Toggle>
+//                   <Dropdown.Menu>
+//                     {months.map((month) => (
+//                       <Dropdown.Item
+//                         key={month}
+//                         onClick={() => setSelectedMonth(month)}
+//                       >
+//                         {month}
+//                       </Dropdown.Item>
+//                     ))}
+//                   </Dropdown.Menu>
+//                 </Dropdown>
+//               </Col>
+//             </Row>
+
+//             {/* Purchase Summary */}
+//             <div
+//               style={styles.purchaseCard}
+//               className="mb-4"
+//               onClick={() =>
+//                 handleNavigation({
+//                   router,
+//                   url: "sp/purchase_analytics",
+//                   params: { startDate: formattedStart, endDate: formattedEnd },
+//                 })
+//               }
+//             >
+//               <div>
+//                 <div style={{ fontSize: "0.9rem", color: "#334155" }}>
+//                   Total Purchase MTD
+//                 </div>
+//                 <div style={styles.amount}>{data.cardData[0].value}</div>
+//                 <div style={{ fontSize: "0.85rem", color: "#64748b" }}>
+//                   from {data.cardData[0].suppliers} suppliers
+//                 </div>
+//               </div>
+//               <div style={{
+//                 background: '#7358ff', // vivid green gradient
+//                 borderRadius: '12px',
+//                 padding: '8px',
+//                 display: 'inline-block'
+//               }}>
+//                 <IconPackage stroke={2} color="#fff" size={24} />
+//               </div>
+//             </div>
+
+//             {/* Graph + Table */}
+//             <Row>
+//               <Col md={6}>
+//                 <div className="fw-semibold mb-2">
+//                   Monthly Purchase Distribution
+//                 </div>
+//                 <PurchaseDistributionGraph
+//                   pieData={data.pieData}
+//                   styles={styles}
+//                 />
+//               </Col>
+//               <Col md={6}>
+//                 <div className="fw-semibold mb-2">Top Suppliers</div>
+//                 <SupplierDetailsTableMonth supplierData={data.supplierData} />
+//               </Col>
+//             </Row>
+//           </Card>
+//         )}
+//       </ServiceRenderer>
+//     </Card>
+//   );
+// };
+
+// export default SupplierDuesThisMonth;
 // "use client";
 
 // import ComponentHeader from "@/components/common/ComponentHeader";

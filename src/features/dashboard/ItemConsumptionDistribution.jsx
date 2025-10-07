@@ -12,6 +12,7 @@ import { consumptionDistributionDataFormatter } from "@/utils/data_formatters/da
 import { useItemsConsumptionDistribution } from "@/services/item-service";
 
 import ItemConsumptionDistributionTable from "@/components/common/dashboard/TablesSort/ItemConsumptionDistributionTable";
+import { IconTarget } from "@tabler/icons-react";
 
 export default function ItemConsumptionDistribution() {
   const { startDate, endDate } = useDashboardContext();
@@ -23,12 +24,19 @@ export default function ItemConsumptionDistribution() {
       <ComponentHeader
         title={"Item Consumption Distribution"}
         description={"Sales vs Consumption with cost efficiency tracking"}
-        titleColor={"rgb(255,79,22)"}
+        titleColor={"#000"}
         cardBgColor={"none"}
         isShowArrows={true}
         scrollRef={myScrollRef}
         isExpandable={true}
-        titleIcon={<FaClock color="rgb(255,79,22)" size={24} />}
+        titleIcon={<div style={{
+          background: '#fd4621',
+          borderRadius: '16px',
+          padding: '8px',
+          display: 'inline-block'
+        }}>
+          <IconTarget stroke={2} color="#fff" size={24} />
+        </div>}
         text={""}
       />
 
@@ -62,7 +70,7 @@ export default function ItemConsumptionDistribution() {
 
             {/* Table */}
             <ItemConsumptionDistributionTable
-             data={tableData} />
+              data={tableData} />
           </>
         )}
       </ServiceRenderer>

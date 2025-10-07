@@ -8,6 +8,7 @@ import { useDashboardContext } from "@/contexts/DashboardContext";
 import ComponentHeader from "@/components/common/ComponentHeader";
 import { useWasteManagementRecommendations } from "@/services/recommendation-service";
 import { recommendationsDatFormmatter } from "@/utils/data_formatters/dashboardFormatter";
+import { IconCoinRupee } from "@tabler/icons-react";
 
 export default function CostReductionRecommendations() {
   const [isMobile, setIsMobile] = useState(false);
@@ -41,15 +42,20 @@ export default function CostReductionRecommendations() {
       <ComponentHeader
         title={"Cost Reduction Recommendations"}
         description={"Actions to minimize wastage and optimize costs"}
-        titleColor={textColor}
+        titleColor={'black'}
         cardBgColor={"none"}
         isShowArrows={true}
         scrollRef={myScrollRef}
         isExpandable={true}
         titleIcon={
-          <FaExclamationTriangle
-            style={{ color: textColor, fontSize: "20px" }}
-          />
+          <div style={{
+      background: '#883cdf', // purple gradient for Figma match
+      borderRadius: '12px',
+      padding: '8px',
+      display: 'inline-block'
+    }}>
+      <IconCoinRupee stroke={2} color="#fff" size={20} />
+    </div>
         }
       />
 

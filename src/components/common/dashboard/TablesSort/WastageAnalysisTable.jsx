@@ -4,6 +4,7 @@ import React from "react";
 import { Row, Col } from "react-bootstrap";
 import { FaBoxOpen, FaClock, FaUtensils } from "react-icons/fa";
 import { useTableSort } from "@/components/hooks/useTableSort";
+import { IconShoppingBagExclamation, IconShoppingCartExclamation, IconTrash } from "@tabler/icons-react";
 
 export default function WastageAnalysisTable({
   expiredItems,
@@ -56,7 +57,14 @@ export default function WastageAnalysisTable({
                 marginBottom: 12,
               }}
             >
-              <FaBoxOpen style={{ color: "#00bcd4" }} />
+              <div style={{
+                background: '#0196a5', // teal/turquoise gradient
+                borderRadius: '4px',
+                padding: '2px',
+                display: 'inline-block'
+              }}>
+                <IconTrash stroke={2} color="#fff" size={18} />
+              </div>
               Raw Material Wastage
             </div>
 
@@ -88,7 +96,7 @@ export default function WastageAnalysisTable({
                       </div>
                     </div>
                   </div>
-                  <div style={{ fontWeight: 600 }}>₹{item.total}</div>
+                  <div style={{ fontWeight: 600, color: 'green' }}>₹{item.total}</div>
                 </div>
               ))}
             </div>
@@ -110,7 +118,14 @@ export default function WastageAnalysisTable({
                 marginBottom: 12,
               }}
             >
-              <FaClock style={{ color: "#3f51b5" }} />
+              <div style={{
+                background: '#bd3a2b', // orange gradient
+                borderRadius: '4px',
+                padding: '2px',
+                display: 'inline-block'
+              }}>
+                <IconShoppingBagExclamation stroke={2} color="#fff" size={16} />
+              </div>
               Expired Items
             </div>
 
@@ -136,11 +151,11 @@ export default function WastageAnalysisTable({
                     <div style={{ fontSize: 12, color: "#666" }}>
                       {item.category} • {item.qty} • ₹{item.price}
                     </div>
-                    <div style={{ fontSize: 12, color: "#3f51b5" }}>
+                    <div style={{ fontSize: 12, color: "#bd3a2b" }}>
                       Expired: {item.date}
                     </div>
                   </div>
-                  <div style={{ fontWeight: 600 }}>₹{item.total}</div>
+                  <div style={{ fontWeight: 600, color: "red" }}>₹{item.total}</div>
                 </div>
               ))}
             </div>
@@ -162,7 +177,14 @@ export default function WastageAnalysisTable({
                 marginBottom: 12,
               }}
             >
-              <FaUtensils style={{ color: "#7b1fa2" }} />
+              <div style={{
+                background: '#3e5cd9', // purple gradient
+                borderRadius: '4px',
+                padding: '2px',
+                display: 'inline-block'
+              }}>
+                <IconShoppingCartExclamation stroke={2} color="#fff" size={16} />
+              </div>
               Expired Products
             </div>
 
@@ -188,11 +210,11 @@ export default function WastageAnalysisTable({
                     <div style={{ fontSize: 12, color: "#666" }}>
                       {item.category} • ₹{item.price}
                     </div>
-                    <div style={{ fontSize: 12, color: "#7b1fa2" }}>
+                    <div style={{ fontSize: 12, color: "#3e5cd9" }}>
                       Prepared: {item.date}
                     </div>
                   </div>
-                  <div style={{ fontWeight: 600 }}>₹{item.total}</div>
+                  <div style={{ fontWeight: 600, color: 'blue' }}>₹{item.total}</div>
                 </div>
               ))}
             </div>

@@ -13,6 +13,7 @@ import { outOfOfficeDataFormatter } from "@/utils/data_formatters/dashboardForma
 import { handleNavigation } from "@/utils";
 import { useRouter } from "next/navigation";
 import { FaExclamationTriangle, FaExpand } from "react-icons/fa";
+import { IconAlertTriangle } from "@tabler/icons-react";
 
 export default function InventoryDashboard() {
   const { startDate, endDate } = useDashboardContext();
@@ -54,12 +55,19 @@ export default function InventoryDashboard() {
       <ComponentHeader
         title={"Out of Stock"}
         description={"Monitor inventory levels and prevent stockouts"}
-        titleColor={"rgb(255,79,22)"}
+        titleColor={"#000"}
         cardBgColor={"none"}
         isShowArrows={true}
         scrollRef={myScrollRef}
         isExpandable={true}
-        titleIcon={""}
+        titleIcon={<div style={{
+          background: '#e5276e', // pink-red gradient
+          borderRadius: '16px',
+          padding: '12px',
+          display: 'inline-block'
+        }}>
+          <IconAlertTriangle stroke={2} color="#fff" size={24} />
+        </div>}
         text={""}
       />
 
@@ -98,6 +106,7 @@ export default function InventoryDashboard() {
             >
               <OutOfStockTopCards
                 cardBase={cardBase}
+                cardsData={formattedData?.cardsData}
                 iconStyle={iconStyle}
                 scrollRef={myScrollRef}
               />
@@ -107,11 +116,16 @@ export default function InventoryDashboard() {
             <Card className="p-2">
               <Row className="p-0">
                 <Col md={6}>
-                  <div className="d-flex align-items-center justify-content-between p-1" style={{border:'2px solid #eee'}}>
+                  <div className="d-flex align-items-center justify-content-between p-1" style={{ border: '2px solid #eee' }}>
                     {/* Column 1: Icon */}
-                    <div>
-                      <FaExclamationTriangle size={24} />
-                    </div>
+                      <div style={{
+                        background: '#e6276e', // pink-red gradient
+                        borderRadius: '12px',
+                        padding: '8px',
+                        display: 'inline-block'
+                      }}>
+                        <IconAlertTriangle stroke={2} color="#fff" size={20} />
+                      </div>
 
                     {/* Column 2: Title + Description */}
                     <div className="ms-3 flex-grow-1">
@@ -131,11 +145,16 @@ export default function InventoryDashboard() {
                   />
                 </Col>
                 <Col md={6}>
-                  <div className="d-flex align-items-center justify-content-between p-1" style={{border:'2px solid #eee'}}>
+                  <div className="d-flex align-items-center justify-content-between p-1" style={{ border: '2px solid #eee' }}>
                     {/* Column 1: Icon */}
-                    <div>
-                      <FaExclamationTriangle size={24} />
-                    </div>
+                     <div style={{
+                        background: '#833dd5', // pink-red gradient
+                        borderRadius: '12px',
+                        padding: '8px',
+                        display: 'inline-block'
+                      }}>
+                        <IconAlertTriangle stroke={2} color="#fff" size={20} />
+                      </div>
 
                     {/* Column 2: Title + Description */}
                     <div className="ms-3 flex-grow-1">

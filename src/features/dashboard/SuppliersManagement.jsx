@@ -12,6 +12,7 @@ import { useSuppliersUsage } from "@/services/supplier-service";
 import { supplierManagementDataFormatter } from "@/utils/data_formatters/dashboardFormatter";
 import { handleNavigation } from "@/utils";
 import { useRouter } from "next/navigation";
+import { IconShoppingCart, IconTruck } from "@tabler/icons-react";
 
 const SupplierManagement = () => {
   const router = useRouter()
@@ -47,7 +48,7 @@ const SupplierManagement = () => {
     amount: {
       fontSize: "1.8rem",
       fontWeight: "bold",
-      color: "#1e3a8a",
+      color: "#0d4af1ff",
     },
     pieLegend: {
       display: "flex",
@@ -76,12 +77,19 @@ const SupplierManagement = () => {
       <ComponentHeader
         title={"Supplier Management"}
         description={"Track purchases, payments, and supplier relationships"}
-        titleColor={"rgba(26, 59, 228, 1) fs-4"}
+        titleColor={"black"}
         cardBgColor={"none"}
         isShowArrows={false}
         scrollRef={myScrollRef}
         isExpandable={true}
-        titleIcon={<FaTruck size={20} color="rgba(26,59,228,1)" />}
+        titleIcon={<div style={{
+          background: '#3c62e8', // blue gradient for Figma look
+          borderRadius: '12px',
+          padding: '8px',
+          display: 'inline-block'
+        }}>
+          <IconTruck stroke={2} color="#fff" size={24} />
+        </div>}
       />
 
       {/* ✅ ServiceRenderer takes care of loading, error, retry, no data */}
@@ -100,12 +108,12 @@ const SupplierManagement = () => {
         {(formattedData, refetch) => (
           <Card style={styles.sectionCard}>
             <Card.Body>
-              <div className="d-flex align-items-center mb-3">
+              {/* <div className="d-flex align-items-center mb-3">
                 <div style={styles.iconCircle}>
                   <FaCalendarAlt />
                 </div>
                 <div className="ms-2 fw-semibold">Purchase from Suppliers</div>
-              </div>
+              </div> */}
 
               <div
                 style={styles.purchaseCard}
@@ -114,7 +122,7 @@ const SupplierManagement = () => {
                   handleNavigation({
                     router,
                     url: "sp/purchase_analytics",
-                    params: {startDate:startDate,endDate:endDate},
+                    params: { startDate: startDate, endDate: endDate },
                   })
                 }
               >
@@ -125,19 +133,17 @@ const SupplierManagement = () => {
                   <div style={styles.amount}>
                     {formattedData.cardData[0].value}
                   </div>
-                  <div style={{ fontSize: "0.85rem", color: "#64748b" }}>
+                  <div style={{ fontSize: "0.85rem", color: "#0667f0ff" }}>
                     from {formattedData.cardData[0].suppliers} suppliers
                   </div>
                 </div>
-                <div
-                  style={{
-                    backgroundColor: "#3b82f6",
-                    borderRadius: "50%",
-                    padding: "0.75rem",
-                    color: "#fff",
-                  }}
-                >
-                  <FaShoppingCart size={20} />
+                <div style={{
+                  background: '#3b5eef', // blue gradient matching Figma style
+                  borderRadius: '16px',
+                  padding: '14px',
+                  display: 'inline-block'
+                }}>
+                  <IconShoppingCart stroke={2} color="#fff" size={28} />
                 </div>
               </div>
 

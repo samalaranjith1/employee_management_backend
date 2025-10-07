@@ -10,6 +10,7 @@ import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer
 import { useDepartmentsUsageList } from "@/services/department-service";
 import { departmentPerformanceFormatter } from "@/utils/data_formatters/dashboardFormatter";
 import { useDashboardContext } from "@/contexts/DashboardContext";
+import { IconChartColumn } from "@tabler/icons-react";
 
 const DepartmentPerformance = () => {
   const myScrollRef = useRef(null);
@@ -29,15 +30,22 @@ const DepartmentPerformance = () => {
     <Container fluid className="p-3 pt-2">
       {/* Header */}
       <ComponentHeader
-        title={"Department Performance Analysis"}
-        description={"Sales vs Consumption with cost efficiency tracking"}
-        titleColor={"#6f42c1 fs-4"}
+        title={"Department Sales vs Consumption"}
+        description={"Sales, consumption and inventory trends over time"}
+        titleColor={"#000"}
         cardBgColor={"none"}
         isShowArrows={true}
         scrollRef={myScrollRef}
         isExpandable={true}
-        titleIcon={<FaPercentage color="#6f42c1" size={24} />}
-        text={"Department Level Metrics"}
+        titleIcon={<div style={{
+          background: '#3b69f6', // blue gradient for Figma match
+          borderRadius: '16px',
+          padding: '8px',
+          display: 'inline-block'
+        }}>
+          <IconChartColumn stroke={2} color="#fff" size={24} />
+        </div>}
+        // text={"Department Level Metrics"}
       />
 
       {/* ✅ ServiceRenderer for departments */}

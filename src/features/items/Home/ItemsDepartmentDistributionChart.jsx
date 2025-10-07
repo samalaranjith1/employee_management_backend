@@ -8,6 +8,7 @@ import { useItemsContext } from "@/contexts/ItemsContext";
 import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer";
 import ItemsDepartmentDistributionChartGraph from "@/components/common/items/GraphWrapper/ItemsDepartmentDistributionChartGraph";
 import ItemsDepartmentDistributionChartTable from "@/components/common/items/TableSort/ItemsDepartmentDistributionChartTable";
+import { IconChartPie2 } from "@tabler/icons-react";
 
 export default function ItemsDepartmentDistributionChart() {
   const { startDate, endDate } = useItemsContext();
@@ -41,31 +42,51 @@ export default function ItemsDepartmentDistributionChart() {
               backgroundColor: "rgb(251,244,252)",
             }}
           >
-            <Col>
-              <h5 className="fw-bold mb-0">Department Distribution Chart</h5>
-              <p className="text-muted mb-0" style={{ fontSize: "0.9rem" }}>
-                Visual breakdown of departmental metrics
-              </p>
+            {/* ✅ Column 1: Icon */}
+            <Col xs="auto" className="d-flex align-items-center">
+              <div
+                style={{
+                  background: '#b621fe',
+                  borderRadius: '12px',
+                  padding: '8px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}
+              >
+                <IconChartPie2 size={24} stroke={2} color="#fff" />
+              </div>
             </Col>
-            <Col xs="auto">
-              <Dropdown onSelect={(k) => setSelectedKey(k)}>
-                <Dropdown.Toggle
-                  variant="light"
-                  className="border rounded-pill px-3"
-                >
-                  {selectedKey === "consumptionValue"
-                    ? "Consumption Quantity (GM)"
-                    : "Net Sales"}
-                </Dropdown.Toggle>
-                <Dropdown.Menu>
-                  <Dropdown.Item eventKey="consumptionValue">
-                    Consumption Quantity (GM)
-                  </Dropdown.Item>
-                  <Dropdown.Item eventKey="netSales">Net Sales</Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
+
+            {/* ✅ Column 2: Text + Dropdown */}
+            <Col className="d-flex align-items-center justify-content-between flex-wrap">
+              <div className="me-3">
+                <h5 className="fw-bold mb-0">Department Distribution Chart</h5>
+                <p className="text-muted mb-0" style={{ fontSize: "0.9rem" }}>
+                  Visual breakdown of departmental metrics
+                </p>
+              </div>
+              <div>
+                <Dropdown onSelect={(k) => setSelectedKey(k)}>
+                  <Dropdown.Toggle
+                    variant="light"
+                    className="border rounded-pill px-3"
+                  >
+                    {selectedKey === "consumptionValue"
+                      ? "Consumption Quantity (GM)"
+                      : "Net Sales"}
+                  </Dropdown.Toggle>
+                  <Dropdown.Menu>
+                    <Dropdown.Item eventKey="consumptionValue">
+                      Consumption Quantity (GM)
+                    </Dropdown.Item>
+                    <Dropdown.Item eventKey="netSales">Net Sales</Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+              </div>
             </Col>
           </Row>
+
 
           {/* Graph + Table */}
           <Row>

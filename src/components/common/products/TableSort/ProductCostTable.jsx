@@ -46,7 +46,7 @@ export default function ProductCostTable({ ingredients = [] }) {
       label: "Recipe (Price, Qty)",
       render: (row) => (
         <>
-          <div className="fw-semibold">{row.recipe?.price}</div>
+          <div className="fw-semibold text-primary">{row.recipe?.price}</div>
           <div style={{ fontSize: "12px", color: "#6C757D" }}>
             {row.recipe?.qty}
           </div>
@@ -93,7 +93,7 @@ export default function ProductCostTable({ ingredients = [] }) {
               <th
                 key={col.key}
                 onClick={() => handleSort(col.key)}
-                style={{ cursor: "pointer", whiteSpace: "nowrap" }}
+                style={{ cursor: "pointer", whiteSpace: "nowrap" ,backgroundColor:'#eee'}}
               >
                 {col.label}
                 {renderSortArrow(col.key)}

@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { Container } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 import { summeryOverviewDataFormatter } from "@/utils/data_formatters/itemsPageDataFormatter";
 import { useItemSummary } from "@/services/item-service";
 import { useItemsContext } from "@/contexts/ItemsContext";
@@ -10,6 +10,7 @@ import {
   ItemsSummaryOverviewTopCardsSecondRow,
 } from "@/components/common/items/cards/ItemsSummaryOverviewTopCards";
 import ItemsSummaryOverviewSubCards from "@/components/common/items/cards/ItemsSummaryOverviewSubCards";
+import { IconChartHistogram } from "@tabler/icons-react";
 
 export default function ItemsSummaryOverview() {
   const { startDate, endDate } = useItemsContext();
@@ -21,17 +22,34 @@ export default function ItemsSummaryOverview() {
       queryFn={() =>
         useItemSummary({ startdt: startDate, enddt: endDate }).queryFn
       }
-      queryArgs={[74, { startdt: startDate, enddt: endDate, outlet:1, userId:7 }]}
+      queryArgs={[74, { startdt: startDate, enddt: endDate, outlet: 1, userId: 7 }]}
       formatter={summeryOverviewDataFormatter}
       shimmerCount={1}
     >
       {(formatted) => (
         <Container fluid className="p-2 card bg-light">
           {/* Header */}
-          <div className="mb-4">
-            <h5 className="fw-bold">{formatted.header.title}</h5>
-            <p className="text-muted small">{formatted.header.subtitle}</p>
-          </div>
+          <Row className="align-items-center mb-4">
+            {/* Column 1: Icon */}
+            <Col xs="auto">
+              <div
+                style={{
+                  background: 'linear-gradient(135deg, #F86F2D 60%, #F63E1D 100%)',
+                  borderRadius: '12px',
+                  padding: '8px',
+                  display: 'inline-block',
+                }}
+              >
+                <IconChartHistogram stroke={2} color="#fff" size={24} />
+              </div>
+            </Col>
+
+            {/* Column 2: Title and Subtitle */}
+            <Col style={{marginLeft:'-16px'}}>
+              <h5 className="fw-bold mb-1">{formatted.header.title}</h5>
+              <p className="text-muted small mb-0">{formatted.header.subtitle}</p>
+            </Col>
+          </Row>
 
           {/* Top Cards */}
           <ItemsSummaryOverviewTopCardsFirstRow

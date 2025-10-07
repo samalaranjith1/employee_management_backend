@@ -90,7 +90,7 @@ const ProductsSalesTable = ({ apiData }) => {
 
       {/* Scrollable Table */}
       <div style={{ maxHeight: "400px", overflowY: "auto" }}>
-        <Table bordered hover className="align-middle mb-0">
+        <Table hover className="align-middle mb-0">
           <thead
             className="table-light"
             style={{

@@ -21,7 +21,7 @@ export default function ItemConsumptionEfficiencyCard({
           key={idx}
           bgColor={card.bg}
           minWidth="280px"
-          style={{ flex: "0 0 auto", padding: "10px" }}
+          style={{ flex: "0 0 auto", padding: "20px" }}
         >
           <div className="d-flex align-items-center">
             

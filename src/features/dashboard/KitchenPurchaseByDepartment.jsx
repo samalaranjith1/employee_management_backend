@@ -9,6 +9,7 @@ import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer
 import { useDashboardContext } from "@/contexts/DashboardContext";
 import { useDepartmentsUsageList } from "@/services/department-service";
 import { departmentConsumptionFormatter } from "@/utils/data_formatters/dashboardFormatter";
+import { IconBuildingSkyscraper } from "@tabler/icons-react";
 
 export default function DepartmentConsumption() {
   const myScrollRef = useRef(null);
@@ -28,11 +29,18 @@ export default function DepartmentConsumption() {
       <ComponentHeader
         title={"Department Consumption"}
         description={"Track Department sales, consumption and performance"}
-        titleColor={"fw-bold text-primary fs-4"}
+        titleColor={"#000"}
         isShowArrows={false}
         scrollRef={myScrollRef}
         isExpandable={true}
-        titleIcon={<FaChartBar className="me-2" color="blue" size={24} />}
+        titleIcon={<div style={{
+          background: '#fe4d17', // orange-red gradient matching Figma
+          borderRadius: '16px',
+          padding: '12px',
+          display: 'inline-block'
+        }}>
+          <IconBuildingSkyscraper stroke={2} color="#fff" size={24} />
+        </div>}
       />
 
       <div
@@ -45,7 +53,7 @@ export default function DepartmentConsumption() {
         <ServiceRenderer
           queryHook={useDepartmentsUsageList}
           queryKey={["departmentConsumption"]}
-          queryArgs={[{ startdt: startDate, enddt: endDate ,outlet:1,userId:7}]}
+          queryArgs={[{ startdt: startDate, enddt: endDate, outlet: 1, userId: 7 }]}
           formatter={(raw) => departmentConsumptionFormatter(raw)}
         >
           {(data) => (

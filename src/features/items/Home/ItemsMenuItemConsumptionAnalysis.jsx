@@ -1,13 +1,14 @@
 "use client";
 
 import React from "react";
-import { Card, Row } from "react-bootstrap";
+import { Card, Col, Row } from "react-bootstrap";
 import { menuItemConsumptionAnalysisDataFormatter } from "@/utils/data_formatters/itemsPageDataFormatter";
 import { useItemProductsList } from "@/services/item-service";
 import { useItemsContext } from "@/contexts/ItemsContext";
 import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer";
 import ItemsMenuItemConsumptionAnalysisGraph from "@/components/common/items/GraphWrapper/ItemsMenuItemConsumptionAnalysisGraph";
 import ItemsMenuItemConsumptionAnalysisTable from "@/components/common/items/TableSort/ItemsMenuItemConsumptionAnalysisTable";
+import { IconPackage } from "@tabler/icons-react";
 
 export default function ItemsMenuItemConsumptionAnalysis() {
   const { startDate, endDate } = useItemsContext();
@@ -37,20 +38,41 @@ export default function ItemsMenuItemConsumptionAnalysis() {
             className="p-0 shadow-sm"
             style={{ borderRadius: "12px", background: "#fff" }}
           >
-            <div
-            className="p-3"
-              style={{
-                backgroundColor: "rgb(255,249,236)",
-              }}
-            >
-              <h5 className="fw-bold mb-2">
-                Menu Item Consumption Analysis
-              </h5>
-              <p className="text-muted small">
-                Item consumption breakdown by menu items with quantity
-                distribution
-              </p>
-            </div>
+            <Row className="align-items-center mb-3" style={{
+              backgroundColor: "#FFF9EC",
+              margin:"10px"
+            }}>
+              {/* ✅ Column 1: Icon */}
+              <Col xs="auto">
+                <div
+                  style={{
+                    background: '#FA9600', // Figma-style strong orange
+                    borderRadius: '12px',
+                    padding: '12px',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <IconPackage stroke={2} color="#fff" size={24} />
+                </div>
+              </Col>
+
+              {/* ✅ Column 2: Text content */}
+              <Col>
+                <div
+                  className="p-3"
+                  style={{
+                    borderRadius: "12px",
+                  }}
+                >
+                  <h5 className="fw-bold mb-2">Menu Item Consumption Analysis</h5>
+                  <p className="text-muted small mb-0">
+                    Item consumption breakdown by menu items with quantity distribution
+                  </p>
+                </div>
+              </Col>
+            </Row>
 
             <Row className="p-2">
               <ItemsMenuItemConsumptionAnalysisTable

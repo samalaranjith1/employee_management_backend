@@ -1,3 +1,4 @@
+import { IconCalculator, IconCurrencyRupee, IconPackage, IconTrendingUp } from "@tabler/icons-react";
 import {
   FaFileInvoice,
   FaBoxOpen,
@@ -10,7 +11,7 @@ import {
 export const suppliersSummaryOverViewDataFormatter = (apiData) => {
   if (!apiData || !apiData.summary) return { summaryCards: [] };
 
-  const { expense, payment,dues } = apiData.summary;
+  const { expense, payment, dues } = apiData.summary;
 
   // derive dues
   const duesTotal = (expense?.totalAmount || 0) - (payment?.totalAmount || 0);
@@ -20,9 +21,16 @@ export const suppliersSummaryOverViewDataFormatter = (apiData) => {
       {
         id: "expense",
         title: "Expense",
-        bgColor: "#FFF7F2",
+        bgColor: "#FFF7ED",
         iconBg: "#FF5B22",
-        icon: <FaFileInvoice size={18} color="#fff" />,
+        icon: <div style={{
+          background: '#fff7ed', // beige gradient for Figma style
+          borderRadius: '12px',
+          padding: '8px',
+          display: 'inline-block'
+        }}>
+          <IconCalculator stroke={2} color="#000" size={20} />
+        </div>,
         fields: [
           {
             label: "Purchase Amount",
@@ -39,9 +47,16 @@ export const suppliersSummaryOverViewDataFormatter = (apiData) => {
       {
         id: "payment",
         title: "Payment",
-        bgColor: "#F2FBF5",
+        bgColor: "#f0fdf4",
         iconBg: "#1AAB4A",
-        icon: <FaRupeeSign size={18} color="#fff" />,
+        icon:  <div style={{
+      background: '#f0fdf4', // blue gradient similar to Figma
+      borderRadius: '16px',
+      padding: '12px',
+      display: 'inline-block'
+    }}>
+      <IconCurrencyRupee stroke={2} color="#000" size={24} />
+    </div>,
         fields: [
           { label: "Payment Amount", value: `₹${payment?.paymentAmount || 0}` },
           { label: "Tax Amount", value: `₹${payment?.taxAmount || 0}` },
@@ -55,9 +70,9 @@ export const suppliersSummaryOverViewDataFormatter = (apiData) => {
       {
         id: "dues",
         title: "Dues",
-        bgColor: "#FFF2F3",
-        iconBg: "#E85C0D",
-        icon: <FaReceipt size={18} color="#fff" />,
+        bgColor: "#fef2f2",
+        iconBg: "#fef2f2",
+        icon: <FaReceipt size={18} color="#000" />,
         fields: [
           { label: "Total Dues", value: `₹${dues?.totalAmount}` },
           { label: "This month", value: `₹${dues?.thisMonthAmount}` },
@@ -80,10 +95,10 @@ const formatDate = (dt) => {
     day % 10 === 1 && day !== 11
       ? "st"
       : day % 10 === 2 && day !== 12
-      ? "nd"
-      : day % 10 === 3 && day !== 13
-      ? "rd"
-      : "th";
+        ? "nd"
+        : day % 10 === 3 && day !== 13
+          ? "rd"
+          : "th";
 
   const weekday = date.toLocaleDateString("en-US", { weekday: "long" });
   return {
@@ -120,8 +135,15 @@ export const supplierFinancialAnalysisDataFormatter = (apiData) => {
       title: "Supplier Financial Analysis",
       subtitle: "Daily tracking: purchase amounts and payment amounts",
       iconBg: "#6C63FF",
-      icon: <FaChartLine size={16} color="#fff" />,
-      bgColor: "#F6F5FF",
+      icon: <div style={{
+      background: '#7831fc', // bold purple
+      borderRadius: '12px',
+      padding: '8px',
+      display: 'inline-block'
+    }}>
+      <IconTrendingUp stroke={2} color="#fff" size={20} />
+    </div>,
+      bgColor: "#fff",
     },
     {
       id: "analytics",
@@ -149,9 +171,8 @@ export const rawMaterialPurchaseAnalysisDataFormatter = (apiData) => {
       key: idx,
       name: item.name || "-",
       type: item.itemType || "-",
-      unitInfo: `${item.unitQuantity}${item.unit || ""}. ₹${
-        item.unitPrice || 0
-      }`,
+      unitInfo: `${item.unitQuantity}${item.unit || ""}. ₹${item.unitPrice || 0
+        }`,
       quantity: qty,
       value: entry.totalPrice || 0,
     };
@@ -162,7 +183,14 @@ export const rawMaterialPurchaseAnalysisDataFormatter = (apiData) => {
 
   // Metadata card (for top header)
   const cardMeta = {
-    icon: <FaBoxOpen size={20} color="#fff" />,
+    icon: <div style={{
+      background: '#f16d01', // vivid green gradient
+      borderRadius: '12px',
+      padding: '8px',
+      display: 'inline-block'
+    }}>
+      <IconPackage stroke={2} color="#fff" size={20} />
+    </div>,
     iconBg: "#FF6B00",
     title: "Raw Material Purchase Analysis",
     subtitle:
@@ -187,9 +215,8 @@ export const suppliersItemsDataFormatter = (apiData) => {
         icon: <FaBoxOpen size={14} color="#6B7280" className="me-2" />,
         name: item.name || "-",
         type: item.itemType || "-",
-        unitInfo: `${item.unitQuantity}${item.unit || ""} . ₹${
-          item.unitPrice || 0
-        }`,
+        unitInfo: `${item.unitQuantity}${item.unit || ""} . ₹${item.unitPrice || 0
+          }`,
         quantity: `${entry.quantity} ${item.unit || ""}`,
         value: entry.totalPrice || 0,
       };

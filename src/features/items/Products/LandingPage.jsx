@@ -4,7 +4,7 @@ import ItemsMenuItemConsumptionAnalysis from "../Home/ItemsMenuItemConsumptionAn
 
 function LandingPage() {
   return (
-    <div>
+    <div style={{marginBottom:"60px"}}>
       <ItemsMenuItemConsumptionAnalysis />
       {/* we needs to adjust below component styling as above or do we needs to implement above 
 implementation in below component */}

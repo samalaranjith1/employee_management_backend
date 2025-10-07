@@ -25,7 +25,7 @@ export default function SupplierFinancialAnalysis() {
     switch (view) {
       case "daily":
         return useSupplierSummaryDaily;
-      case "sameday":
+      case "samedays":
         return useSupplierSummarySameDay;
       case "weekly":
         return useSupplierSummaryWeekly;
@@ -51,7 +51,7 @@ export default function SupplierFinancialAnalysis() {
       case "monthly":
         startDatetemp = subMonths(today, 5);
         break;
-      case "sameday":
+      case "samedays":
         startDatetemp = subWeeks(today, 5);
         break;
       default:

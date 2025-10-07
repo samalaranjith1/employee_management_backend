@@ -1,7 +1,8 @@
 "use client";
 
+import { IconTrendingUp } from "@tabler/icons-react";
 import React from "react";
-import { Card, ButtonGroup, Button, ToggleButton } from "react-bootstrap";
+import { Card, ButtonGroup, Button, ToggleButton, Row, Col } from "react-bootstrap";
 import {
   LineChart,
   Line,
@@ -11,6 +12,7 @@ import {
   CartesianGrid,
   ResponsiveContainer,
   Label,
+  Legend,
 } from "recharts";
 
 export default function ItemsPurchaseTrendAnalysisGraph({
@@ -24,76 +26,74 @@ export default function ItemsPurchaseTrendAnalysisGraph({
     <Card className="shadow-sm border-0 mb-4 rounded-4">
       <Card.Body>
         <div
-          className="d-flex justify-content-between align-items-center mb-3 p-3"
-          style={{
-            backgroundColor: "rgb(243,246,255)",
-          }}
+          className="mb-3 p-3"
+          style={{ backgroundColor: "rgb(243,246,255)" }}
         >
-          <div>
-            <h5 className="fw-bold mb-0">Purchase Trend Analysis</h5>
-            <small className="text-muted">
-              Purchase amounts and average pricing trends over time
-            </small>
-          </div>
-          <ButtonGroup
-            className="rounded-pill"
-            style={{ backgroundColor: "#E6E6E6" }}
-          >
-            {tabs.map((label) => {
-              const value = label.toLowerCase().replace(" ", "");
-              const selected = filter === value;
-              return (
-                <ToggleButton
-                  key={label}
-                  id={`dept-graph-${label}`}
-                  type="radio"
-                  variant="none"
-                  checked={selected}
-                  value={value}
-                  onChange={(e) => setFilter(e.currentTarget.value)}
-                  className="rounded-pill"
-                  style={{
-                    fontSize: "13px",
-                    padding: "6px 16px",
-                    backgroundColor: selected ? "#FF6600" : "transparent",
-                    color: selected ? "white" : "#888",
-                    border: "none",
-                    cursor: "pointer",
-                    userSelect: "none",
-                  }}
-                >
-                  {label}
-                </ToggleButton>
-              );
-            })}
-          </ButtonGroup>
-          {/* <ButtonGroup>
-            <Button
-              className={`tab-btn ${filter === "daily" ? "active" : ""}`}
-              onClick={() => setFilter("daily")}
-            >
-              Daily
-            </Button>
-            <Button
-              className={`tab-btn ${filter === "sameday" ? "active" : ""}`}
-              onClick={() => setFilter("sameday")}
-            >
-              Same Days
-            </Button>
-            <Button
-              className={`tab-btn ${filter === "weekly" ? "active" : ""}`}
-              onClick={() => setFilter("weekly")}
-            >
-              Weekly
-            </Button>
-            <Button
-              className={`tab-btn ${filter === "monthly" ? "active" : ""}`}
-              onClick={() => setFilter("monthly")}
-            >
-              Monthly
-            </Button>
-          </ButtonGroup> */}
+          <Row className="align-items-center">
+            {/* Icon (Col 1) */}
+            <Col xs="auto">
+              <div
+                style={{
+                  background: "linear-gradient(135deg, #924CFE 60%, #BC75FF 100%)",
+                  borderRadius: "12px",
+                  padding: "8px",
+                  display: "inline-block",
+                }}
+              >
+                <IconTrendingUp stroke={2} color="#fff" size={24} />
+              </div>
+            </Col>
+
+            {/* Title + Subtitle (Col 2) */}
+            <Col className="flex-grow-1">
+              <h5 className="fw-bold mb-0">Purchase Trend Analysis</h5>
+              <small className="text-muted">
+                Purchase amounts and average pricing trends over time
+              </small>
+            </Col>
+
+            {/* Button Group (Col 3) */}
+            <Col xs="auto">
+              <ButtonGroup
+                className="rounded-pill"
+                style={{
+                  backgroundColor: "#eee",
+                  padding: '4px',
+                  borderRadius: '10px'
+                }}
+              >
+                {tabs.map((label) => {
+                  const value = label.toLowerCase().replace(" ", "");
+                  const selected = filter === value;
+                  return (
+                    <ToggleButton
+                      key={label}
+                      id={`dept-graph-${label}`}
+                      type="radio"
+                      variant="none"
+                      checked={selected}
+                      value={value}
+                      onChange={(e) => setFilter(e.currentTarget.value)}
+                      className="rounded-pill"
+                      style={{
+                        fontSize: "13px",
+                        padding: "6px 16px",
+                        backgroundColor: selected ? "#FF6600" : "transparent",
+                        color: selected ? "white" : "#888",
+                        border: "none",
+                        cursor: "pointer",
+                        userSelect: "none",
+                      }}
+                    >
+                      {label}
+                    </ToggleButton>
+                  );
+                })}
+              </ButtonGroup>
+            </Col>
+          </Row>
         </div>
+
 
         <div style={{ width: "100%", height: 280 }}>
           <ResponsiveContainer>
@@ -107,7 +107,7 @@ export default function ItemsPurchaseTrendAnalysisGraph({
                 tickFormatter={(v) => `₹${v}`}
               >
                 <Label
-                  value="Purchase Amount"
+                  // value="Purchase Amount"
                   angle={-90}
                   position="insideLeft"
                   style={{
@@ -124,7 +124,7 @@ export default function ItemsPurchaseTrendAnalysisGraph({
                 tickFormatter={(v) => `₹${v}`}
               >
                 <Label
-                  value="Average Price"
+                  // value="Average Price"
                   angle={90}
                   position="insideRight"
                   style={{
@@ -135,6 +135,12 @@ export default function ItemsPurchaseTrendAnalysisGraph({
                 />
               </YAxis>
               <Tooltip />
+              <Legend
+                verticalAlign="bottom"
+                height={8}
+                iconType="line"
+                align="center"
+              />
               <Line
                 yAxisId="left"
                 type="monotone"

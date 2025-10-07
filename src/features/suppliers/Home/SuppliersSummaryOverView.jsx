@@ -7,6 +7,7 @@ import { useSuppliersContext } from "@/contexts/SuppliersContext";
 import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer";
 import ComponentHeader from "@/components/common/ComponentHeader";
 import SuppliersSummaryOverViewCards from "@/components/common/suppliers/cards/Home/SuppliersSummaryOverViewCards";
+import { IconChartHistogram } from "@tabler/icons-react";
 
 const SuppliersSummaryOverView = () => {
   const { startDate, endDate } = useSuppliersContext();
@@ -17,15 +18,20 @@ const SuppliersSummaryOverView = () => {
       <ComponentHeader
         title={"Summary Overview"}
         description={"Real-time consumption metrics and performance indicators"}
-        titleColor={"rgb(30,30,30)"}
+        titleColor={"#000"}
         cardBgColor={"none"}
         isShowArrows={true}
         scrollRef={scrollRef}
         isExpandable={true}
         titleIcon={
-          <span role="img" aria-label="chart">
-            📊
-          </span>
+          <div style={{
+            background: '#f95710', // orange gradient for Figma match
+            borderRadius: '12px',
+            padding: '8px',
+            display: 'inline-block'
+          }}>
+            <IconChartHistogram stroke={2} color="#fff" size={24} />
+          </div>
         }
       />
 

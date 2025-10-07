@@ -7,6 +7,7 @@ import { useItemsContext } from "@/contexts/ItemsContext";
 import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer";
 import ItemsConsumptionAnalyticsOverviewCards from "@/components/common/items/cards/ItemsConsumptionAnalyticsOverviewCards";
 import ComponentHeader from "@/components/common/ComponentHeader";
+import { IconPackage } from "@tabler/icons-react";
 
 const ItemsConsumptionAnalyticsOverview = () => {
   const { startDate, endDate } = useItemsContext();
@@ -17,12 +18,19 @@ const ItemsConsumptionAnalyticsOverview = () => {
       <ComponentHeader
         title="Consumption Analytics Overview"
         description="Comprehensive consumption metrics across different time periods for GOLD DROP OIL"
-        titleColor="rgb(255,92,0)"
+        titleColor="#000"
         cardBgColor="none"
         isShowArrows={true}
         scrollRef={scrollRef}
         isExpandable={false}
-        titleIcon={"📦"}
+        titleIcon={<div style={{
+          background: '#8f1efb', // vivid green gradient
+          borderRadius: '12px',
+          padding: '8px',
+          display: 'inline-block'
+        }}>
+          <IconPackage stroke={2} color="#fff" size={20} />
+        </div>}
       />
 
       <ServiceRenderer

@@ -3,6 +3,7 @@ import React from "react";
 import { Row, Col } from "react-bootstrap";
 import { FaArrowUp, FaExclamationTriangle } from "react-icons/fa";
 import CommonCard from "./CommonCard";
+import { IconPackage, IconTrendingDown, IconTrendingUp } from "@tabler/icons-react";
 
 export default function ActionableCard({
   data,
@@ -27,7 +28,7 @@ export default function ActionableCard({
       scrollRef={scrollRef}
       bgColor={cardBgColor}
       textColor={textColor}
-      widthDesktop = "31vw"
+      widthDesktop="31vw"
       border={`1.5px solid #CACACA`} // Mid gray border consistent with Figma style guide
       style={{
         borderTop: `7px solid ${borderTopColor}`,
@@ -37,7 +38,19 @@ export default function ActionableCard({
       }}
     >
       <Row className="align-items-center mb-2" style={{ gap: "0.5rem" }}>
-        <Col xs="auto">
+  
+        <Col
+          className="flex align-items-center gap-1"
+          style={{
+            color: priorityTextColor[data.priority],
+          }}
+        >
+          <FaExclamationTriangle  className="m-1"/>
+          {data.priority?.charAt(0).toUpperCase() +
+            data.priority?.slice(1)}{" "}
+          Priority
+        </Col>
+              <Col xs="auto">
           <div
             style={{
               backgroundColor: borderTopColor,
@@ -47,25 +60,46 @@ export default function ActionableCard({
               alignItems: "center",
               justifyContent: "center",
               color: "white",
-              width: "42px",
-              height: "42px",
             }}
           >
-            <FaArrowUp size={20} />
+            {data.priority === "low" ? (<div
+              style={{
+                width: 36,
+                height: 36,
+                borderRadius: 12,
+                background: "#45bbe9ff", // Adjust color to match Figma or differentiate as in your design
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <IconTrendingDown color="white" size={28} stroke={2} />
+            </div>) : data.priority === "high" ? <div
+              style={{
+                width: 36,
+                height: 36,
+                borderRadius: 12,
+                background: "#fd4a21",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <IconTrendingUp color="white" size={28} stroke={2} />
+            </div> : <div
+              style={{
+                width: 36,
+                height: 36,
+                borderRadius: 12,
+                background: "#e89d04",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <IconPackage color="white" size={28} stroke={2} />
+            </div>}
           </div>
-        </Col>
-        <Col
-          className="fw-semibold d-flex align-items-center gap-1"
-          style={{
-            color: priorityTextColor[data.priority],
-            fontFamily: "'Nunito Sans', sans-serif",
-            fontSize: "1rem",
-          }}
-        >
-          <FaExclamationTriangle />
-          {data.priority?.charAt(0).toUpperCase() +
-            data.priority?.slice(1)}{" "}
-          Priority
         </Col>
       </Row>
       <h6

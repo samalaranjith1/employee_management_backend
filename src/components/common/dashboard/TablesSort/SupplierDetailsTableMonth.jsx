@@ -21,9 +21,9 @@ export default function SupplierDetailsTableMonth({ supplierData }) {
   ];
 
   return (
-    <BaseSurface title="Top Suppliers" maxHeight="50vh">
+    <BaseSurface title="Top Suppliers" maxHeight="65vh">
       {/* Scroll container */}
-      <div style={{ maxHeight: "45vh", overflowY: "auto" }}>
+      <div style={{ maxHeight: "65vh", overflowY: "auto" }}>
         <Table hover>
           <thead>
             <tr>
@@ -60,8 +60,8 @@ export default function SupplierDetailsTableMonth({ supplierData }) {
                     </span>
                   </div>
                 </td>
-                <td style={{ color: "#16a34a", fontWeight: "600" }}>
-                  ₹{row.purchase.toLocaleString()}
+                <td style={{ fontWeight: "600" }}>
+                  {row.purchase.toLocaleString()}
                 </td>
                 <td>{row.items}</td>
               </tr>

@@ -25,7 +25,7 @@ export default function ItemsPurchaseTrendAnalysis() {
     switch (view) {
       case "daily":
         return useItemSummaryDaily;
-      case "sameday":
+      case "samedays":
         return useItemSummarySameDay;
       case "weekly":
         return useItemSummaryWeekly;
@@ -53,7 +53,7 @@ export default function ItemsPurchaseTrendAnalysis() {
       case "monthly":
         startDatetemp = subMonths(today, 5);
         break;
-      case "sameday":
+      case "samedays":
         startDatetemp = subWeeks(today, 5);
         break;
       default:

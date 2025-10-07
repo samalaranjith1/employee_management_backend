@@ -10,7 +10,7 @@ export default function ProductCostCards({ summaryCards = [] }) {
   return (
     <>
       {/* Header with swipe arrows */}
-      <ComponentHeader
+      {/* <ComponentHeader
         title="Product Cost"
         description="Overview of product cost distribution"
         titleColor="rgb(255,92,0)"
@@ -19,7 +19,7 @@ export default function ProductCostCards({ summaryCards = [] }) {
         scrollRef={scrollRef}
         isExpandable={false}
         titleIcon={""}
-      />
+      /> */}
 
       {/* Scrollable cards */}
       <div

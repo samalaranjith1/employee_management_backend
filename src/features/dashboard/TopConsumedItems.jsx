@@ -11,6 +11,8 @@ import { useItemsUsageList } from "@/services/item-service";
 import { topConsumedItemsDataFormatter } from "@/utils/data_formatters/dashboardFormatter";
 import { handleNavigation } from "@/utils";
 import { useRouter } from "next/navigation";
+import ComponentHeader from "@/components/common/ComponentHeader";
+import { IconTarget } from "@tabler/icons-react";
 
 // Predefined consistent colors for slices following first image palette
 const COLORS = [
@@ -29,8 +31,8 @@ const COLORS = [
 export default function TopConsumedItems() {
   const { startDate, endDate } = useDashboardContext();
   const myScrollRef = useRef(null);
-    const router = useRouter();
-  
+  const router = useRouter();
+
   // Place percent outside the edge of each sector
   const renderLabel = ({ cx, cy, midAngle, outerRadius, percent, index }) => {
     const RADIAN = Math.PI / 180;
@@ -83,8 +85,27 @@ export default function TopConsumedItems() {
               boxShadow: "0 2px 6px rgba(0,0,0,0.05)",
             }}
           >
+            <ComponentHeader
+              title={"Top Consumed Items"}
+              description={
+                "Monitor wastage patterns and consumption inefficiencies across menu items"
+              }
+              titleColor={"#000"}
+              cardBgColor={"none"}
+              isShowArrows={true}
+              isExpandable={true}
+              titleIcon={<div style={{
+                background: '#fd4b1a',
+                borderRadius: '16px',
+                padding: '8px',
+                display: 'inline-block'
+              }}>
+                <IconTarget stroke={2} color="#fff" size={24} />
+              </div>}
+              text={""}
+            />
             {/* Header */}
-            <Row className="align-items-center mb-3">
+            {/* <Row className="align-items-center mb-3">
               <Col xs="auto">
                 <div
                   style={{
@@ -111,7 +132,7 @@ export default function TopConsumedItems() {
               <Col xs="auto">
                 <FaExpand color="#A0AEC0" />
               </Col>
-            </Row>
+            </Row> */}
 
             {/* Body */}
             <Row>
@@ -215,7 +236,7 @@ export default function TopConsumedItems() {
               <Col>
                 <strong>Total Consumption:</strong>
               </Col>
-              <Col xs="auto" style={{ fontWeight: 600, color: "#FF5016" }}>
+              <Col xs="auto" style={{ fontWeight: "bold",}}>
                 ₹{totalValue.toLocaleString()}
               </Col>
             </Row>

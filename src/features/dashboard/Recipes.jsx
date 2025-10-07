@@ -13,6 +13,7 @@ import { useDashboardContext } from "@/contexts/DashboardContext";
 import { FaChartLine, FaExclamationTriangle, FaExpand } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import { handleNavigation } from "@/utils";
+import { IconAlertTriangle, IconBasketDollar, IconChefHat } from "@tabler/icons-react";
 
 const RecipesDashboard = () => {
   const myScrollRef = useRef(null);
@@ -31,7 +32,14 @@ const RecipesDashboard = () => {
         isShowArrows={true}
         scrollRef={myScrollRef}
         isExpandable={true}
-        titleIcon={""}
+        titleIcon={<div style={{
+          background: '#ed4e31', // orange-red gradient for Figma style
+          borderRadius: '12px',
+          padding: '8px',
+          display: 'inline-block'
+        }}>
+          <IconChefHat stroke={2} color="#fff" size={24} />
+        </div>}
         text={""}
       />
 
@@ -100,7 +108,14 @@ const RecipesDashboard = () => {
                 >
                   {/* Column 1: Icon */}
                   <div className="me-2">
-                    <FaExclamationTriangle color="#FF6347" size={24} />
+                    <div style={{
+                      background: '#ea266c', // pink-red gradient
+                      borderRadius: '12px',
+                      padding: '8px',
+                      display: 'inline-block'
+                    }}>
+                      <IconAlertTriangle stroke={2} color="#fff" size={20} />
+                    </div>
                   </div>
 
                   {/* Column 2: Title + description */}
@@ -131,7 +146,14 @@ const RecipesDashboard = () => {
                 >
                   {/* Column 1: Left Icon */}
                   <div className="me-2">
-                    <FaChartLine color="#32CD32" size={24} />
+                    <div style={{
+                      background: '#0ba27a', // green gradient for Figma style
+                      borderRadius: '12px',
+                      padding: '8px',
+                      display: 'inline-block'
+                    }}>
+                      <IconBasketDollar stroke={2} color="#fff" size={20} />
+                    </div>
                   </div>
 
                   {/* Column 2: Title + Description */}

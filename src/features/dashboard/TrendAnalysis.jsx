@@ -26,6 +26,7 @@ import {
 } from "@/services/outlet-service";
 import { useDashboardContext } from "@/contexts/DashboardContext";
 import { trendAnalysisFormatter } from "@/utils/data_formatters/dashboardFormatter";
+import { IconArrowsMaximize, IconTrendingUp } from "@tabler/icons-react";
 
 export default function TrendAnalysis() {
   const { startDate, endDate } = useDashboardContext();
@@ -86,11 +87,24 @@ export default function TrendAnalysis() {
         <Row className="d-flex align-items-center justify-content-between mb-3">
           <Col className="d-flex align-items-center">
             <div className="me-2">
-              <FaBolt size={24} color="rgb(255,80,22)" />
+              <div
+                style={{
+                  width: 36,
+                  height: 36,
+                  borderRadius: 12,
+                  background: "#3a6cf7", // Gradient to match Figma
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  boxShadow: "0 4px 12px rgba(0,0,0,.08)",   // Optional shadow for subtle depth
+                }}
+              >
+                <IconTrendingUp color="white" size={28} stroke={2} />
+              </div>
             </div>
             <div className="d-flex flex-column mt-2">
-              <div style={{ color: "rgb(255,80,22)", fontWeight: "bold" }}>
-                📈 Trend Analysis
+              <div className="fw-bold">
+                Trend Analysis
               </div>
               <div>Sales, consumption, and inventory trends over time</div>
             </div>
@@ -140,7 +154,17 @@ export default function TrendAnalysis() {
                 ))} */}
               </ButtonGroup>
             </div>
-            <FaExpand size={24} color="rgb(255,80,22)" />
+            <div
+              style={{
+                width: 36,
+                height: 36,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <IconArrowsMaximize color="rgb(100,100,100)" size={24} />
+            </div>
           </Col>
           <div className="d-flex d-md-none justify-content-center w-100 mt-1">
             {/* {["Daily", "Weekly", "Monthly"].map((type) => (
@@ -200,7 +224,7 @@ export default function TrendAnalysis() {
         <ServiceRenderer
           queryHook={SelectedHook} // Pass the hook itself
           queryKey={["outletSummary", view]}
-          queryArgs={[1, { startdt: startDateCS, enddt: endDateCS }]} // Args passed to the hook
+          queryArgs={[1, { startdt: startDateCS, enddt: endDateCS ,outlet:1,userId:7}]} // Args passed to the hook
           formatter={(raw) => trendAnalysisFormatter(raw, view)}
         >
           {(data) => {
@@ -221,18 +245,18 @@ export default function TrendAnalysis() {
                     data={data}
                     margin={{ top: 20, right: 40, left: 0, bottom: 0 }}
                   >
-                    <CartesianGrid strokeDasharray="3 3" />
+                    <CartesianGrid strokeDasharray="3 3" vertical={true} horizontal={true} />
                     <XAxis dataKey="name" />
 
                     <YAxis
                       yAxisId="left"
-                      tickFormatter={(value) => `₹${parseInt(value/1000)}k`}
+                      tickFormatter={(value) => `₹${parseInt(value / 1000)}k`}
                       domain={[0, "auto"]}
                     />
                     <YAxis
                       yAxisId="right"
                       orientation="right"
-                      tickFormatter={(value) => `${parseInt(value/100)}%`}
+                      tickFormatter={(value) => `${parseInt(value / 100)}%`}
                       domain={[0, 100]}
                     />
 
@@ -306,26 +330,31 @@ export default function TrendAnalysis() {
                       yAxisId="left"
                       type="monotone"
                       dataKey="Sales"
-                      stroke="#22c55e"
+                      stroke="#1faa1f"
+                      strokeWidth={2}  
                       activeDot={{ r: 8 }}
                     />
+
                     <Line
                       yAxisId="left"
                       type="monotone"
                       dataKey="Consumption"
-                      stroke="#f59e0b"
+                      stroke="#f7af37"
+                      strokeWidth={2}  
                     />
                     <Line
                       yAxisId="left"
                       type="monotone"
                       dataKey="Opening"
-                      stroke="#3b82f6"
+                      stroke="#3c82f6"
+                      strokeWidth={2}  
                     />
                     <Line
                       yAxisId="left"
                       type="monotone"
                       dataKey="Closing"
                       stroke="#8b5cf6"
+                      strokeWidth={2}
                     />
                     <Line
                       yAxisId="right"

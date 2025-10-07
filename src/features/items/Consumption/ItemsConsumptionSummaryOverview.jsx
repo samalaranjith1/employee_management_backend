@@ -7,6 +7,7 @@ import { consumptionSummaryOverViewDataFormatter } from "@/utils/data_formatters
 import { useItemSummary } from "@/services/item-service";
 import { useItemsContext } from "@/contexts/ItemsContext";
 import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer";
+import { IconChartHistogram } from "@tabler/icons-react";
 
 export default function ItemsConsumptionSummaryOverview() {
   const { startDate, endDate } = useItemsContext();
@@ -44,7 +45,14 @@ export default function ItemsConsumptionSummaryOverview() {
               }}
             >
               {/* Use an inline SVG icon or any icon component here */}
-              <FaBoxOpen size={20} />
+               <div style={{
+      background: '#f3521d', // orange gradient for Figma match
+      borderRadius: '14px',
+      padding: '10px',
+      display: 'inline-block'
+    }}>
+      <IconChartHistogram stroke={2} color="#fff" size={20} />
+    </div>
             </div>
             <div>
               <h5 className="mb-0 fw-bold" style={{ color: "#1F1F1F" }}>

@@ -8,7 +8,6 @@ export default function TopSellingProductsCards({ card }) {
     <Col xs="auto">
       <CommonCard
         bgColor={card.bg}
-        textColor={card.color}
         style={{
           borderRadius: 12,
           padding: "18px",
@@ -19,20 +18,19 @@ export default function TopSellingProductsCards({ card }) {
       >
         <div className="d-flex justify-content-between align-items-start">
           <div>
-            <div style={{ fontSize: 12, color: "#7B6CFA", fontWeight: 600 }}>
+            <div style={{ fontSize: 12, fontWeight: 600 }}>
               {card.title}
             </div>
             <div
               style={{
                 fontSize: 28,
                 fontWeight: 700,
-                color: card.color,
                 marginTop: 6,
               }}
             >
               {card.value}
             </div>
-            <div style={{ fontSize: 13, color: "#7b7b8a", marginTop: 6 }}>
+            <div style={{ fontSize: 13, color: card.color, marginTop: 6 }}>
               {card.subtitle}
             </div>
           </div>

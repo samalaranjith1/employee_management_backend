@@ -8,6 +8,7 @@ import ComponentHeader from "@/components/common/ComponentHeader";
 import { useDashboardContext } from "@/contexts/DashboardContext";
 import { useStockManagementRecommendations } from "@/services/recommendation-service";
 import { recommendationsDatFormmatter } from "@/utils/data_formatters/dashboardFormatter";
+import { IconBoltFilled } from "@tabler/icons-react";
 
 export default function ImmediateActionsRequired() {
   const [isMobile, setIsMobile] = useState(false);
@@ -33,7 +34,7 @@ export default function ImmediateActionsRequired() {
   return (
     <Card
       className="m-2 p-3"
-      style={{ background: "rgba(53, 8, 236, 0.05)", borderRadius: "20px" }}
+      style={{ background: "#eafef4", borderRadius: "20px" }}
     >
       {/* ✅ Header */}
       <ComponentHeader
@@ -41,15 +42,20 @@ export default function ImmediateActionsRequired() {
         description={
           "Urgent procurement recommendations to prevent service disruption"
         }
-        titleColor={textColor}
+        titleColor={'black'}
         cardBgColor={"none"}
         isShowArrows={true}
         scrollRef={myScrollRef}
         isExpandable={true}
         titleIcon={
-          <FaExclamationTriangle
-            style={{ color: textColor, fontSize: "20px" }}
-          />
+          <div style={{
+      background: '#06aa5f', // vivid green gradient for Figma match
+      borderRadius: '12px',
+      padding: '8px',
+      display: 'inline-block'
+    }}>
+      <IconBoltFilled color="#fff" size={24} />
+    </div>
         }
       />
 

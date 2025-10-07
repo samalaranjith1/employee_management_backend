@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { Container, Row, Col, Table, Button, Card } from "react-bootstrap";
 import {
   BarChart,
@@ -11,15 +11,62 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import { FaDownload } from "react-icons/fa";
+import { FaFileExport } from "react-icons/fa";
 import { stockTrendsDataFormatter } from "@/utils/data_formatters/itemsPageDataFormatter";
 import { useItemLeftoverStockHistory } from "@/services/item-service";
 import { useItemsContext } from "@/contexts/ItemsContext";
 import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer";
+import { format } from "date-fns";
 
 const ItemsStockTrends = () => {
   const { startDate, endDate } = useItemsContext();
   const [view, setView] = useState("table");
+  const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
+
+  // Handle sorting toggle
+  const handleSort = (key) => {
+    setSortConfig((prev) => {
+      if (prev.key === key) {
+        return { key, direction: prev.direction === "asc" ? "desc" : "asc" };
+      }
+      return { key, direction: "asc" };
+    });
+  };
+
+  // Display sorting arrows
+  const renderSortArrow = (key) => {
+    if (sortConfig.key !== key) return "";
+    return sortConfig.direction === "asc" ? " ↑" : " ↓";
+  };
+
+  // Memoized sorting function
+  const sortedDataFn = useMemo(() => {
+    if (!sortConfig.key) return null;
+    return (data) => {
+      const sorted = [...data].sort((a, b) => {
+        const aVal = a[sortConfig.key];
+        const bVal = b[sortConfig.key];
+
+        // Date sorting
+        if (sortConfig.key.toLowerCase().includes("date")) {
+          return sortConfig.direction === "asc"
+            ? new Date(aVal) - new Date(bVal)
+            : new Date(bVal) - new Date(aVal);
+        }
+
+        // Number sorting
+        if (typeof aVal === "number" && typeof bVal === "number") {
+          return sortConfig.direction === "asc" ? aVal - bVal : bVal - aVal;
+        }
+
+        // String sorting
+        return sortConfig.direction === "asc"
+          ? String(aVal).localeCompare(String(bVal))
+          : String(bVal).localeCompare(String(aVal));
+      });
+      return sorted;
+    };
+  }, [sortConfig]);
 
   return (
     <ServiceRenderer
@@ -39,186 +86,567 @@ const ItemsStockTrends = () => {
       formatter={stockTrendsDataFormatter}
       shimmerCount={1}
     >
-      {({ cardsData, data }) => (
-        <Container fluid className="p-4 bg-white rounded shadow-sm">
-          {/* Top Summary Section */}
-          <Row className="mb-4 text-center g-3">
-            <Col md={3}>
-              <Card
-                className="p-3 border-0 shadow-sm rounded-lg"
-                style={{ backgroundColor: "#f0f4ff" }}
-              >
-                <h6 className="text-muted">Current Stock</h6>
-                <h4 className="fw-bold text-primary">
-                  {cardsData?.currentStock?.toLocaleString()} {cardsData?.unit}
-                </h4>
-                <h6 className="fw-bold text-primary">
-                  {cardsData.currentStockSub}
-                </h6>
-              </Card>
-            </Col>
-            <Col md={3}>
-              <Card
-                className="p-3 border-0 shadow-sm rounded-lg"
-                style={{ backgroundColor: "#e9f8ef" }}
-              >
-                <h6 className="text-muted">Latest Price</h6>
-                <h4 className="fw-bold text-success">
-                  ₹{cardsData?.currentPrice}
-                </h4>
-                <h6 className="fw-bold text-success">
-                  {cardsData.currentPriceSub}
-                </h6>
-              </Card>
-            </Col>
-            <Col md={3}>
-              <Card
-                className="p-3 border-0 shadow-sm rounded-lg"
-                style={{ backgroundColor: "#fff7e6" }}
-              >
-                <h6 className="text-muted">Total Purchase</h6>
-                <h4 className="fw-bold text-warning">
-                  {cardsData?.totalPurchase?.toLocaleString()} {cardsData?.unit}
-                </h4>
-                <h6 className="fw-bold text-warning">
-                  {cardsData.totalPurchaseSub}
-                </h6>
-              </Card>
-            </Col>
-            <Col md={3}>
-              <Card
-                className="p-3 border-0 shadow-sm rounded-lg"
-                style={{ backgroundColor: "#f8f0ff" }}
-              >
-                <h6 className="text-muted">Total Consumption</h6>
-                <h4 className="fw-bold text-purple">
-                  {cardsData?.totalConsumption?.toLocaleString()}{" "}
-                  {cardsData?.unit}
-                </h4>
-                <h6 className="fw-bold text-purple">
-                  {cardsData.totalConsumptionSub}
-                </h6>
-              </Card>
-            </Col>
-          </Row>
+      {({ cardsData, data = [] }) => {
+        const displayedData = sortedDataFn ? sortedDataFn(data) : data;
 
-          {/* Controls */}
-          <Row className="mb-3 d-flex justify-content-between align-items-center">
-            <Col>
-              <h5 className="fw-bold">Stock Movement History</h5>
-              <p className="text-muted">
-                Daily stock trends and purchase patterns
-              </p>
-            </Col>
-            <Col className="d-flex justify-content-end align-items-center">
-              <Button variant="warning" className="me-2 text-white">
-                <FaDownload className="me-2" /> Export
-              </Button>
-              <Button
-                variant={view === "table" ? "warning" : "outline-warning"}
-                className="me-2"
-                onClick={() => setView("table")}
-              >
-                Table View
-              </Button>
-              <Button
-                variant={view === "chart" ? "warning" : "outline-warning"}
-                onClick={() => setView("chart")}
-              >
-                Chart View
-              </Button>
-            </Col>
-          </Row>
+        return (
+          <Container fluid className="p-4 bg-white rounded shadow-sm">
+            {/* Top Summary Section */}
+            <Row className="mb-4 text-left g-3">
+              <Col md={3}>
+                <Card
+                  className="p-3 border-0 shadow-sm rounded-lg"
+                  style={{ backgroundColor: "#f0f4ff" }}
+                >
+                  <h6 className="text-muted">Current Stock</h6>
+                  <h4 className="fw-bold text-primary">
+                    {cardsData?.currentStock?.toLocaleString()} {cardsData?.unit}
+                  </h4>
+                  <h6 className="fw-bold text-primary">
+                    {cardsData.currentStockSub}
+                  </h6>
+                </Card>
+              </Col>
+              <Col md={3}>
+                <Card
+                  className="p-3 border-0 shadow-sm rounded-lg"
+                  style={{ backgroundColor: "#e9f8ef" }}
+                >
+                  <h6 className="text-muted">Latest Price</h6>
+                  <h4 className="fw-bold text-success">
+                    ₹{cardsData?.currentPrice}
+                  </h4>
+                  <h6 className="fw-bold text-success">
+                    {cardsData.currentPriceSub}
+                  </h6>
+                </Card>
+              </Col>
+              <Col md={3}>
+                <Card
+                  className="p-3 border-0 shadow-sm rounded-lg"
+                  style={{ backgroundColor: "#fff7e6" }}
+                >
+                  <h6 className="text-muted">Total Purchase</h6>
+                  <h4 className="fw-bold text-warning">
+                    {cardsData?.totalPurchase?.toLocaleString()}{" "}
+                    {cardsData?.unit}
+                  </h4>
+                  <h6 className="fw-bold text-warning">
+                    {cardsData.totalPurchaseSub}
+                  </h6>
+                </Card>
+              </Col>
+              <Col md={3}>
+                <Card
+                  className="p-3 border-0 shadow-sm rounded-lg"
+                  style={{ backgroundColor: "#f8f0ff" }}
+                >
+                  <h6 className="text-muted">Total Consumption</h6>
+                  <h4 className="fw-bold text-purple">
+                    {cardsData?.totalConsumption?.toLocaleString()}{" "}
+                    {cardsData?.unit}
+                  </h4>
+                  <h6 className="fw-bold text-purple">
+                    {cardsData.totalConsumptionSub}
+                  </h6>
+                </Card>
+              </Col>
+            </Row>
 
-          {/* Table View */}
-          {view === "table" && (
-            <Table
-              bordered
-              hover
-              responsive
-              className="align-middle text-center"
-            >
-              <thead className="table-light">
-                <tr>
-                  <th>Date</th>
-                  <th>Price</th>
-                  <th>Purchase Qty</th>
-                  <th>Consumption Qty</th>
-                  <th>Closing Qty</th>
-                  <th>Closing Date</th>
-                  <th>Leftover Stock</th>
-                  <th>Leftover Stock Value</th>
-                  <th>Trend</th>
-                </tr>
-              </thead>
-              <tbody>
-                {data?.map((row, idx) => (
-                  <tr key={idx}>
-                    <td>{row.date}</td>
-                    <td>₹{row.price}</td>
-                    <td
-                      className={
-                        row.purchaseQty > 0
-                          ? "text-success fw-bold"
-                          : "text-muted"
-                      }
-                    >
-                      {row.purchaseQty.toLocaleString()} GM
-                    </td>
-                    <td
-                      className={
-                        row.consumptionQty > 0
-                          ? "text-danger fw-bold"
-                          : "text-muted"
-                      }
-                    >
-                      {row.consumptionQty.toLocaleString()} GM
-                    </td>
-                    <td
-                      className={
-                        row.closingQty > 0
-                          ? "bg-primary text-white rounded px-2"
-                          : "text-muted"
-                      }
-                    >
-                      {row.closingQty.toLocaleString()} GM
-                    </td>
-                    <td>{row.closingDate}</td>
-                    <td className="text-primary fw-bold">
-                      {row.leftoverStock.toLocaleString()} GM
-                    </td>
-                    <td className="text-success fw-bold">
-                      ₹{row.leftoverStockValue}
-                    </td>
-                    <td>{row.trendIcon}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
-          )}
+            {/* Controls */}
+            <Row className="mb-3 align-items-center">
+              <Col xs="auto">
+                <div>
+                  <h5 className="fw-bold mb-0">Stock Movement History</h5>
+                  <p className="text-muted mb-0">
+                    Daily stock trends and purchase patterns
+                  </p>
+                </div>
+              </Col>
 
-          {/* Chart View */}
-          {view === "chart" && (
-            <ResponsiveContainer width="100%" height={400}>
-              <BarChart
-                data={data || []}
-                margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
+              <Col className="d-flex justify-content-end align-items-center">
+                <div className="d-flex align-items-center" style={{ gap: 16 }}>
+                  <Button
+                    style={{
+                      background: "#FF6300",
+                      border: "none",
+                      borderRadius: "10px",
+                      color: "#fff",
+                      fontWeight: 600,
+                      fontSize: "16px",
+                      padding: "8px 24px",
+                      display: "flex",
+                      alignItems: "center",
+                      boxShadow: "0 2px 8px rgba(255,99,0,0.07)",
+                    }}
+                  >
+                    <FaFileExport style={{ marginRight: 8 }} />
+                    Export
+                  </Button>
+
+                  <div
+                    style={{
+                      background: "#F8F8F8",
+                      borderRadius: 22,
+                      display: "flex",
+                      alignItems: "center",
+                      padding: 2,
+                      boxShadow: "0 2px 8px rgba(0,0,0,0.04)",
+                    }}
+                  >
+                    <button
+                      type="button"
+                      onClick={() => setView("table")}
+                      style={{
+                        border: "none",
+                        outline: "none",
+                        background: view === "table" ? "#fff" : "transparent",
+                        color: view === "table" ? "#FF6300" : "#B5B5B5",
+                        fontWeight: 600,
+                        fontSize: "15px",
+                        borderRadius: 18,
+                        padding: "8px 32px",
+                        boxShadow:
+                          view === "table"
+                            ? "0 2px 8px rgba(0,0,0,0.07)"
+                            : "none",
+                        transition: "all 0.18s",
+                        marginRight: 6,
+                      }}
+                    >
+                      Table View
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setView("chart")}
+                      style={{
+                        border: "none",
+                        outline: "none",
+                        background: view === "chart" ? "#fff" : "transparent",
+                        color: view === "chart" ? "#FF6300" : "#B5B5B5",
+                        fontWeight: 600,
+                        fontSize: "15px",
+                        borderRadius: 18,
+                        padding: "8px 32px",
+                        boxShadow:
+                          view === "chart"
+                            ? "0 2px 8px rgba(0,0,0,0.07)"
+                            : "none",
+                        transition: "all 0.18s",
+                      }}
+                    >
+                      Chart View
+                    </button>
+                  </div>
+                </div>
+              </Col>
+            </Row>
+
+            {/* Table View */}
+            {view === "table" && (
+              <div
+                style={{
+                  maxHeight: "65vh",
+                  overflowY: "auto",
+                  overflowX: "auto",
+                  position: "relative",
+                  display: "block",
+                }}
               >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="date" />
-                <YAxis />
-                <Tooltip />
-                <Bar dataKey="leftoverStock" fill="#ff9800" />
-              </BarChart>
-            </ResponsiveContainer>
-          )}
-        </Container>
-      )}
+                <Table
+                  hover
+                  responsive
+                  className="align-middle mb-0 text-center"
+                  style={{
+                    minWidth: "1000px",
+                    borderCollapse: "separate",
+                    borderSpacing: 0,
+                  }}
+                >
+                  <thead
+                    style={{
+                      position: "sticky",
+                      top: 0,
+                      zIndex: 2,
+                      backgroundColor: "#f8f9fa",
+                      boxShadow: "0px 2px 4px rgba(0,0,0,0.05)",
+                    }}
+                  >
+                    <tr>
+                      <th onClick={() => handleSort("date")}>
+                        Date{renderSortArrow("date")}
+                      </th>
+                      <th onClick={() => handleSort("price")}>
+                        Price{renderSortArrow("price")}
+                      </th>
+                      <th onClick={() => handleSort("purchaseQty")}>
+                        Purchase Qty{renderSortArrow("purchaseQty")}
+                      </th>
+                      <th onClick={() => handleSort("consumptionQty")}>
+                        Consumption Qty{renderSortArrow("consumptionQty")}
+                      </th>
+                      <th onClick={() => handleSort("closingQty")}>
+                        Closing Qty{renderSortArrow("closingQty")}
+                      </th>
+                      <th onClick={() => handleSort("closingDate")}>
+                        Closing Date{renderSortArrow("closingDate")}
+                      </th>
+                      <th onClick={() => handleSort("leftoverStock")}>
+                        Leftover Stock{renderSortArrow("leftoverStock")}
+                      </th>
+                      <th onClick={() => handleSort("leftoverStockValue")}>
+                        Leftover Stock Value{renderSortArrow("leftoverStockValue")}
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {displayedData?.map((row, idx) => (
+                      <tr key={idx}>
+                        <td>{format(new Date(row.date), "MMM dd, yyyy")}</td>
+                        <td>₹{row.price}</td>
+                        <td
+                          className={
+                            row.purchaseQty > 0
+                              ? "text-success fw-bold"
+                              : "text-muted"
+                          }
+                        >
+                          {row.purchaseQty.toLocaleString()} GM
+                        </td>
+                        <td
+                          className={
+                            row.consumptionQty > 0
+                              ? "text-danger fw-bold"
+                              : "text-muted"
+                          }
+                        >
+                          {row.consumptionQty.toLocaleString()} GM
+                        </td>
+                        <td
+                          className={
+                            row.closingQty > 0
+                              ? "bg-primary text-white rounded px-2"
+                              : "text-muted"
+                          }
+                        >
+                          {row.closingQty.toLocaleString()} GM
+                        </td>
+                        <td>{format(new Date(row.closingDate), "MMM dd, yyyy")}</td>
+                        <td className="text-primary fw-bold">
+                          {row.leftoverStock.toLocaleString()} GM
+                        </td>
+                        <td className="text-success fw-bold">
+                          ₹{row.leftoverStockValue}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </Table>
+              </div>
+            )}
+
+            {/* Chart View */}
+            {view === "chart" && (
+              <ResponsiveContainer width="100%" height={400}>
+                <BarChart
+                  data={data || []}
+                  margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="date" />
+                  <YAxis />
+                  <Tooltip />
+                  <Bar dataKey="leftoverStock" fill="#ff9800" />
+                </BarChart>
+              </ResponsiveContainer>
+            )}
+          </Container>
+        );
+      }}
     </ServiceRenderer>
   );
 };
 
 export default ItemsStockTrends;
+// "use client";
+
+// import React, { useState } from "react";
+// import { Container, Row, Col, Table, Button, Card } from "react-bootstrap";
+// import {
+//   BarChart,
+//   Bar,
+//   XAxis,
+//   YAxis,
+//   CartesianGrid,
+//   Tooltip,
+//   ResponsiveContainer,
+// } from "recharts";
+// import { FaDownload, FaFileExport } from "react-icons/fa";
+// import { stockTrendsDataFormatter } from "@/utils/data_formatters/itemsPageDataFormatter";
+// import { useItemLeftoverStockHistory } from "@/services/item-service";
+// import { useItemsContext } from "@/contexts/ItemsContext";
+// import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer";
+// import { format } from "date-fns";
+
+// const ItemsStockTrends = () => {
+//   const { startDate, endDate } = useItemsContext();
+//   const [view, setView] = useState("table");
+
+//   return (
+//     <ServiceRenderer
+//       queryHook={useItemLeftoverStockHistory}
+//       queryKey={[
+//         "itemLeftoverStockHistory",
+//         { startdt: startDate, enddt: endDate },
+//       ]}
+//       queryFn={() =>
+//         useItemLeftoverStockHistory({ startdt: startDate, enddt: endDate })
+//           .queryFn
+//       }
+//       queryArgs={[
+//         475,
+//         { startdt: startDate, enddt: endDate, outlet: 1, userId: 7 },
+//       ]}
+//       formatter={stockTrendsDataFormatter}
+//       shimmerCount={1}
+//     >
+//       {({ cardsData, data }) => (
+//         <Container fluid className="p-4 bg-white rounded shadow-sm">
+//           {/* Top Summary Section */}
+//           <Row className="mb-4 text-left g-3">
+//             <Col md={3}>
+//               <Card
+//                 className="p-3 border-0 shadow-sm rounded-lg"
+//                 style={{ backgroundColor: "#f0f4ff" }}
+//               >
+//                 <h6 className="text-muted">Current Stock</h6>
+//                 <h4 className="fw-bold text-primary">
+//                   {cardsData?.currentStock?.toLocaleString()} {cardsData?.unit}
+//                 </h4>
+//                 <h6 className="fw-bold text-primary">
+//                   {cardsData.currentStockSub}
+//                 </h6>
+//               </Card>
+//             </Col>
+//             <Col md={3}>
+//               <Card
+//                 className="p-3 border-0 shadow-sm rounded-lg"
+//                 style={{ backgroundColor: "#e9f8ef" }}
+//               >
+//                 <h6 className="text-muted">Latest Price</h6>
+//                 <h4 className="fw-bold text-success">
+//                   ₹{cardsData?.currentPrice}
+//                 </h4>
+//                 <h6 className="fw-bold text-success">
+//                   {cardsData.currentPriceSub}
+//                 </h6>
+//               </Card>
+//             </Col>
+//             <Col md={3}>
+//               <Card
+//                 className="p-3 border-0 shadow-sm rounded-lg"
+//                 style={{ backgroundColor: "#fff7e6" }}
+//               >
+//                 <h6 className="text-muted">Total Purchase</h6>
+//                 <h4 className="fw-bold text-warning">
+//                   {cardsData?.totalPurchase?.toLocaleString()} {cardsData?.unit}
+//                 </h4>
+//                 <h6 className="fw-bold text-warning">
+//                   {cardsData.totalPurchaseSub}
+//                 </h6>
+//               </Card>
+//             </Col>
+//             <Col md={3}>
+//               <Card
+//                 className="p-3 border-0 shadow-sm rounded-lg"
+//                 style={{ backgroundColor: "#f8f0ff" }}
+//               >
+//                 <h6 className="text-muted">Total Consumption</h6>
+//                 <h4 className="fw-bold text-purple">
+//                   {cardsData?.totalConsumption?.toLocaleString()}{" "}
+//                   {cardsData?.unit}
+//                 </h4>
+//                 <h6 className="fw-bold text-purple">
+//                   {cardsData.totalConsumptionSub}
+//                 </h6>
+//               </Card>
+//             </Col>
+//           </Row>
+
+//           {/* Controls */}
+//           {/* <Row className="mb-3 d-flex justify-content-between align-items-center"> */}
+//           <Row className="mb-3 align-items-center">
+//             {/* Left: Title + Description */}
+//             <Col xs="auto">
+//               <div>
+//                 <h5 className="fw-bold mb-0">Stock Movement History</h5>
+//                 <p className="text-muted mb-0">Daily stock trends and purchase patterns</p>
+//               </div>
+//             </Col>
+
+//             {/* Right: Export + View Switch */}
+//             <Col className="d-flex justify-content-end align-items-center">
+//               <div className="d-flex align-items-center" style={{ gap: 16 }}>
+//                 <Button
+//                   style={{
+//                     background: "#FF6300",
+//                     border: "none",
+//                     borderRadius: "10px",
+//                     color: "#fff",
+//                     fontWeight: 600,
+//                     fontSize: "16px",
+//                     padding: "8px 24px",
+//                     display: "flex",
+//                     alignItems: "center",
+//                     boxShadow: "0 2px 8px rgba(255,99,0,0.07)",
+//                   }}
+//                 >
+//                   <FaFileExport style={{ marginRight: 8 }} />
+//                   Export
+//                 </Button>
+
+//                 <div
+//                   style={{
+//                     background: "#F8F8F8",
+//                     borderRadius: 22,
+//                     display: "flex",
+//                     alignItems: "center",
+//                     padding: 2,
+//                     boxShadow: "0 2px 8px rgba(0,0,0,0.04)",
+//                   }}
+//                 >
+//                   <button
+//                     type="button"
+//                     onClick={() => setView("table")}
+//                     style={{
+//                       border: "none",
+//                       outline: "none",
+//                       background: view === "table" ? "#fff" : "transparent",
+//                       color: view === "table" ? "#FF6300" : "#B5B5B5",
+//                       fontWeight: 600,
+//                       fontSize: "15px",
+//                       borderRadius: 18,
+//                       padding: "8px 32px",
+//                       boxShadow: view === "table" ? "0 2px 8px rgba(0,0,0,0.07)" : "none",
+//                       transition: "all 0.18s",
+//                       marginRight: 6,
+//                     }}
+//                   >
+//                     Table View
+//                   </button>
+//                   <button
+//                     type="button"
+//                     onClick={() => setView("chart")}
+//                     style={{
+//                       border: "none",
+//                       outline: "none",
+//                       background: view === "chart" ? "#fff" : "transparent",
+//                       color: view === "chart" ? "#FF6300" : "#B5B5B5",
+//                       fontWeight: 600,
+//                       fontSize: "15px",
+//                       borderRadius: 18,
+//                       padding: "8px 32px",
+//                       boxShadow: view === "chart" ? "0 2px 8px rgba(0,0,0,0.07)" : "none",
+//                       transition: "all 0.18s",
+//                     }}
+//                   >
+//                     Chart View
+//                   </button>
+//                 </div>
+//               </div>
+//             </Col>
+//           </Row>
+
+
+//           {/* Table View */}
+//           {view === "table" && (
+//             <Table
+//               bordered
+//               hover
+//               responsive
+//               className="align-middle text-center"
+//             >
+//               <thead className="table-light">
+//                 <tr>
+//                   <th>Date</th>
+//                   <th>Price</th>
+//                   <th>Purchase Qty</th>
+//                   <th>Consumption Qty</th>
+//                   <th>Closing Qty</th>
+//                   <th>Closing Date</th>
+//                   <th>Leftover Stock</th>
+//                   <th>Leftover Stock Value</th>
+//                   {/* <th>Trend</th> */}
+//                 </tr>
+//               </thead>
+//               <tbody>
+//                 {data?.map((row, idx) => (
+//                   <tr key={idx}>
+//                     <td>{format(new Date(row.date), "MMM dd, yyyy")}</td>
+//                     <td>₹{row.price}</td>
+//                     <td
+//                       className={
+//                         row.purchaseQty > 0
+//                           ? "text-success fw-bold"
+//                           : "text-muted"
+//                       }
+//                     >
+//                       {row.purchaseQty.toLocaleString()} GM
+//                     </td>
+//                     <td
+//                       className={
+//                         row.consumptionQty > 0
+//                           ? "text-danger fw-bold"
+//                           : "text-muted"
+//                       }
+//                     >
+//                       {row.consumptionQty.toLocaleString()} GM
+//                     </td>
+//                     <td
+//                       className={
+//                         row.closingQty > 0
+//                           ? "bg-primary text-white rounded px-2"
+//                           : "text-muted"
+//                       }
+//                     >
+//                       {row.closingQty.toLocaleString()} GM
+//                     </td>
+//                     <td>{format(new Date(row.closingDate), "MMM dd, yyyy")}</td>
+//                     <td className="text-primary fw-bold">
+//                       {row.leftoverStock.toLocaleString()} GM
+//                     </td>
+//                     <td className="text-success fw-bold">
+//                       ₹{row.leftoverStockValue}
+//                     </td>
+//                     {/* <td>{row.trendIcon}</td> */}
+//                   </tr>
+//                 ))}
+//               </tbody>
+//             </Table>
+//           )}
+
+//           {/* Chart View */}
+//           {view === "chart" && (
+//             <ResponsiveContainer width="100%" height={400}>
+//               <BarChart
+//                 data={data || []}
+//                 margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
+//               >
+//                 <CartesianGrid strokeDasharray="3 3" />
+//                 <XAxis dataKey="date" />
+//                 <YAxis />
+//                 <Tooltip />
+//                 <Bar dataKey="leftoverStock" fill="#ff9800" />
+//               </BarChart>
+//             </ResponsiveContainer>
+//           )}
+//         </Container>
+//       )}
+//     </ServiceRenderer>
+//   );
+// };
+
+// export default ItemsStockTrends;
 
 // "use client";
 

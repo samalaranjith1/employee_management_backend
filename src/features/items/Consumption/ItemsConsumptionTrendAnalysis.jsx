@@ -10,6 +10,7 @@ import {
   Tooltip,
   CartesianGrid,
   ResponsiveContainer,
+  Legend,
 } from "recharts";
 import { useItemsContext } from "@/contexts/ItemsContext";
 import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer";
@@ -22,6 +23,8 @@ import {
 } from "@/services/item-service";
 import { consumptionTrendAnalysisDataFormatter } from "@/utils/data_formatters/itemsPageDataFormatter";
 import { subDays, subWeeks, subMonths, format } from "date-fns";
+import { IconTrendingUp } from "@tabler/icons-react";
+import { FaTable } from "react-icons/fa";
 
 export default function ItemsConsumptionTrendAnalysis() {
   const { startDate, endDate } = useItemsContext();
@@ -160,7 +163,33 @@ export default function ItemsConsumptionTrendAnalysis() {
                 style={styles.cardHeader}
                 className="d-flex justify-content-between align-items-center"
               >
-                <div>📈 Trend Analysis</div>
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  {/* Icon Section */}
+                  <div
+                    style={{
+                      background: "#5654fd",
+                      borderRadius: "16px",
+                      padding: "12px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      marginRight: "12px", // spacing between icon and text
+                    }}
+                  >
+                    <IconTrendingUp stroke={2} color="#fff" size={24} />
+                  </div>
+
+                  {/* Text Section */}
+                  <div>
+                    <div style={{ fontWeight: 600, fontSize: 16, color: "#23272E" }}>
+                      Trend Analysis
+                    </div>
+                    <div style={{ color: "#878A99", fontSize: 14 }}>
+                      Sales, consumption, and inventory trends over time
+                    </div>
+                  </div>
+                </div>
+
                 <ButtonGroup size="sm">
                   {toggleOptions.map((opt) => (
                     <Button
@@ -184,6 +213,7 @@ export default function ItemsConsumptionTrendAnalysis() {
                     <XAxis dataKey="date" stroke="#6B7280" />
                     <YAxis stroke="#6B7280" />
                     <Tooltip />
+                    <Legend />
                     <Line
                       type="monotone"
                       dataKey="Opening"
@@ -219,7 +249,19 @@ export default function ItemsConsumptionTrendAnalysis() {
                 style={styles.cardHeader}
                 className="d-flex justify-content-between align-items-center"
               >
-                <div>📊 Analytics Table</div>
+                <div><div
+      style={{
+        background: '#01be56', // Your desired background color (example: blue)
+        borderRadius: '12px',
+        padding: '10px',
+        display: 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'center'
+      }}
+    >
+      <FaTable color="#fff" size={24} />
+    </div> Analytics Table</div>
+      <div> Complete breakdown of daily inventory and consumption data</div>
                 <ButtonGroup size="sm">
                   {toggleOptions.map((opt) => (
                     <Button

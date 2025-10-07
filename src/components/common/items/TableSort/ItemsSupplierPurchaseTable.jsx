@@ -3,6 +3,7 @@
 import React from "react";
 import { Card, Table } from "react-bootstrap";
 import { useTableSort } from "@/components/hooks/useTableSort";
+import { IconChartHistogram } from "@tabler/icons-react";
 
 export default function ItemsSupplierPurchaseTable({ tableMeta, tableData }) {
   const { sortedData, sortKey, direction, handleSort } =
@@ -28,14 +29,21 @@ export default function ItemsSupplierPurchaseTable({ tableMeta, tableData }) {
       <Card.Header
         className="d-flex align-items-center"
         style={{
-          backgroundColor: "#FFF7ED",
+          backgroundColor: "#FFF",
           border: "none",
           borderRadius: "16px 16px 0 0",
           padding: "16px",
         }}
       >
-        {tableMeta.icon}
-        <div>
+        <div style={{
+          background: 'linear-gradient(135deg, #F86F2D 60%, #F63E1D 100%)', // orange gradient for Figma match
+          borderRadius: '12px',
+          padding: '8px',
+          display: 'inline-block'
+        }}>
+          <IconChartHistogram stroke={2} color="#fff" size={20} />
+        </div>
+        <div style={{marginLeft:"5px"}}>
           <h6 className="mb-0 fw-bold">{tableMeta.title}</h6>
           <small className="text-muted">{tableMeta.subtitle}</small>
         </div>
@@ -70,8 +78,8 @@ export default function ItemsSupplierPurchaseTable({ tableMeta, tableData }) {
                       fontWeight: 600,
                       fontSize: "0.85rem",
                       textTransform: "uppercase",
-                      color: "#555",
-                      background: "#F9FAFB",
+                      color: "#000",
+                      background: "#eee",
                       position: "sticky",
                       top: 0,
                       zIndex: 2,

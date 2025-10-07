@@ -13,6 +13,7 @@ import {
 } from "recharts";
 import { ButtonGroup, ToggleButton, Card, Row, Col } from "react-bootstrap";
 import { FaChartLine } from "react-icons/fa";
+import { IconTrendingUp } from "@tabler/icons-react";
 
 const tabs = ["Daily", "Same Days", "Weekly", "Monthly"];
 
@@ -63,19 +64,13 @@ export default function ItemsTrendAnalysisGraph({
           }}
         >
           <Col xs="auto">
-            <div
-              style={{
-                width: 40,
-                height: 40,
-                background: "linear-gradient(135deg, #7c3aed 0%, #be22ff 100%)",
-                borderRadius: 12,
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                color: "white",
-              }}
-            >
-              <FaChartLine size={24} />
+            <div style={{
+              background: 'linear-gradient(135deg, #924CFE 60%, #BC75FF 100%)', // bold purple
+              borderRadius: '16px',
+              padding: '12px',
+              display: 'inline-block'
+            }}>
+              <IconTrendingUp stroke={2} color="#fff" size={24} />
             </div>
           </Col>
           <Col>
