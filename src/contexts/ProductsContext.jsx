@@ -84,7 +84,8 @@ export function ProductsContextProvider({ children }) {
     }
   }, [startDate, endDate, products, queryKey]);
 
-  if (startDate === null || endDate === null) return null;
+  // if (startDate === null || endDate === null) return null;
+  if (startDate === null) return null;
 
   const toggleSidebar = () => setIsSidebarOpen((prev) => !prev);
 

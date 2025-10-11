@@ -22,6 +22,7 @@ export function DepartmentContextProvider({ children }) {
 
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
+  
   const [departments, setDepartments] = useState("");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
@@ -86,8 +87,8 @@ export function DepartmentContextProvider({ children }) {
       );
     }
   }, [startDate, endDate, departments, queryKey]);
-
-  if (startDate === null || endDate === null) return null;
+//  if (startDate === null || endDate === null) return null;
+  if (startDate === null ) return null;
 
   const toggleSidebar = () => setIsSidebarOpen((prev) => !prev);
 

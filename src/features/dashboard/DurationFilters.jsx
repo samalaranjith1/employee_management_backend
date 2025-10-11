@@ -34,9 +34,49 @@ export default function DurationFilters({useAppContext}) {
     setEndDate,
   };
 
+  // useEffect(() => {
+  //   handlePreset("today", stateChanges);
+  // }, []);
   useEffect(() => {
-    handlePreset("today", stateChanges);
-  }, []);
+    if (!startDate || !endDate) return;
+  
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+  
+    const yesterday = new Date(today);
+    yesterday.setDate(today.getDate() - 1);
+  
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    start.setHours(0, 0, 0, 0);
+    end.setHours(0, 0, 0, 0);
+  
+    const isSameDay = (d1, d2) =>
+      d1.getFullYear() === d2.getFullYear() &&
+      d1.getMonth() === d2.getMonth() &&
+      d1.getDate() === d2.getDate();
+  
+    // Monday as start of week
+    const day = today.getDay(); // 0 = Sunday, 1 = Monday ...
+    const diff = day === 0 ? -6 : 1 - day;
+    const startOfWeek = new Date(today);
+    startOfWeek.setDate(today.getDate() + diff);
+  
+    const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+  
+    if (isSameDay(start, today) && isSameDay(end, today)) {
+      setActive("today");
+    } else if (isSameDay(start, yesterday) && isSameDay(end, yesterday)) {
+      setActive("yesterday");
+    } else if (isSameDay(start, startOfWeek) && isSameDay(end, today)) {
+      setActive("thisweek");
+    } else if (isSameDay(start, startOfMonth) && isSameDay(end, today)) {
+      setActive("thismonth");
+    } else {
+      setActive("custom");
+    }
+  }, [startDate, endDate]);
+  
 
   // Auto-switch between button group and modal based on width
   useEffect(() => {
