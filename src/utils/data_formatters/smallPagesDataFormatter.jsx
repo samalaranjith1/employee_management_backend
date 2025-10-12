@@ -29,7 +29,18 @@ export const salesAnalyticsFormatter = (apiData) => {
       id: "netSales",
       title: "Net Sales",
       value: `₹${apiData.netSales ?? 0}`,
-      icon: <FaChartLine color="#fff" size={24} />,
+      icon: (
+        <div
+          style={{
+            background: "#2473f9", // blue gradient similar to Figma
+            borderRadius: "16px",
+            padding: "12px",
+            display: "inline-block",
+          }}
+        >
+          <IconChartLine stroke={2} color="#fff" size={28} />
+        </div>
+      ),
       bgColor: "#F0F7FF",
       iconBg: "#165DFF",
     },
@@ -45,7 +56,18 @@ export const salesAnalyticsFormatter = (apiData) => {
       id: "totalSales",
       title: "Total Sales",
       value: `₹${apiData.totalSales ?? 0}`,
-      icon: <FaRupeeSign color="#fff" size={24} />,
+      icon: (
+        <div
+          style={{
+            background: "#229d64", // blue gradient similar to Figma
+            borderRadius: "16px",
+            padding: "12px",
+            display: "inline-block",
+          }}
+        >
+          <IconCurrencyRupee stroke={2} color="#fff" size={28} />
+        </div>
+      ),
       bgColor: "#F0FFF8",
       iconBg: "#16C784",
     },
@@ -102,7 +124,18 @@ export const consumptionHistoryFormatter = (apiData) => {
   const summaryCards = [
     {
       id: "closingStock",
-      icon: <FaCubes color="white" size={24} />,
+      icon: (
+        <div
+          style={{
+            background: "#229d64", // blue gradient similar to Figma
+            borderRadius: "16px",
+            padding: "12px",
+            display: "inline-block",
+          }}
+        >
+          <IconCurrencyRupee stroke={2} color="#fff" size={28} />
+        </div>
+      ),
       title: "Total Consumption",
       value: `₹${apiData.totalPrice?.toLocaleString() ?? 0}`,
       bgColor: "#F2FBF5",
@@ -110,7 +143,18 @@ export const consumptionHistoryFormatter = (apiData) => {
     },
     {
       id: "totalItems",
-      icon: <FaBoxTissue color="white" size={24} />,
+      icon: (
+        <div
+          style={{
+            background: "#1e68ec",
+            borderRadius: "16px",
+            padding: "12px",
+            display: "inline-block",
+          }}
+        >
+          <IconPackage stroke={2} color="#fff" size={28} />
+        </div>
+      ),
 
       title: "Total Items",
       value: apiData.totalItems ?? 0,
@@ -183,7 +227,18 @@ export const consumptionClosingFormatter = (apiData) => {
       id: "closingStock",
       title: "Total Closing Stock",
       value: `₹${apiData.totalPrice?.toLocaleString() ?? 0}`,
-      icon: <FaDoorClosed color="#fff" size={24} />,
+      icon: (
+        <div
+          style={{
+            background: "#229d64", // blue gradient similar to Figma
+            borderRadius: "16px",
+            padding: "12px",
+            display: "inline-block",
+          }}
+        >
+          <IconCurrencyRupee stroke={2} color="#fff" size={28} />
+        </div>
+      ),
       bgColor: "#F2FBF5",
       iconBg: "#21A365",
     },
@@ -191,7 +246,18 @@ export const consumptionClosingFormatter = (apiData) => {
       id: "totalItems",
       title: "Total Items",
       value: apiData.totalItems ?? 0,
-      icon: <FaCheckCircle color="#fff" size={24} />,
+      icon: (
+        <div
+          style={{
+            background: "#1e68ec",
+            borderRadius: "16px",
+            padding: "12px",
+            display: "inline-block",
+          }}
+        >
+          <IconPackage stroke={2} color="#fff" size={28} />
+        </div>
+      ),
       bgColor: "#F5F8FF",
       iconBg: "#2471EB",
     },
@@ -243,7 +309,18 @@ export const purchaseHistoryFormatter = (apiData) => {
       title: "Total Purchases",
       value: `₹${apiData.totalPrice ?? 0}`,
       // subtitle: "Overall spend",
-      icon: <FaRupeeSign color="#fff" size={24} />,
+      icon: (
+        <div
+          style={{
+            background: "#229d64", // blue gradient similar to Figma
+            borderRadius: "16px",
+            padding: "12px",
+            display: "inline-block",
+          }}
+        >
+          <IconCurrencyRupee stroke={2} color="#fff" size={28} />
+        </div>
+      ),
       bgColor: "#F0FFF5",
       iconBg: "#16A34A",
     },
@@ -252,11 +329,21 @@ export const purchaseHistoryFormatter = (apiData) => {
       title: "Total Items",
       value: apiData.totalItems ?? 0,
       // subtitle: "Units across suppliers",
-      icon: <FaBox color="#fff" size={24} />,
+      icon: (
+        <div
+          style={{
+            background: "#1e68ec",
+            borderRadius: "16px",
+            padding: "12px",
+            display: "inline-block",
+          }}
+        >
+          <IconPackage stroke={2} color="#fff" size={28} />
+        </div>
+      ),
       bgColor: "#FFF5F0",
       iconBg: "#FF5722",
     },
-
   ];
 
   const tableData = {
@@ -270,7 +357,7 @@ export const purchaseHistoryFormatter = (apiData) => {
     ],
     rows:
       apiData.list?.map((row) => ({
-        item:
+        item: (
           <>
             {row.item?.name}
             <br />
@@ -278,7 +365,8 @@ export const purchaseHistoryFormatter = (apiData) => {
               {row.item?.categoryName} · {row.item?.unitQuantity}{" "}
               {row.item?.unit} · ₹{row.item?.unitPrice}
             </span>
-          </>,
+          </>
+        ),
         supplier: row.supplier?.name ?? "-",
         quantity: row.quantity ?? 0,
         itemPrice: `₹${row.itemPrice ?? 0}`,
@@ -304,33 +392,69 @@ export const itemPriceChangeFormatter = (apiData) => {
   const summaryCards = [
     {
       id: "itemsWithPriceChange",
-      icon: <FaRegChartBar color="white" />,
+      icon: (
+        <div
+          style={{
+            background: "#226ff4",
+            borderRadius: "16px",
+            padding: "12px",
+            display: "inline-block",
+          }}
+        >
+          <IconChartBar stroke={2} color="#fff" size={28} />
+        </div>
+      ),
       title: "Items with Price Change",
-      value: `${apiData.list.length ?? 0} out of ${apiData.totalItemCount ?? 0} (+₹${apiData.netAmount ?? 0} Monthly)`,
+      value: `${apiData.list.length ?? 0} out of ${
+        apiData.totalItemCount ?? 0
+      } (+₹${apiData.netAmount ?? 0} Monthly)`,
       bgColor: "#FFF5F0",
       iconBg: "#2471EB",
-
     },
     {
       id: "priceUp",
-      icon: <FaArrowTrendUp color="white" />,
+      icon: (
+        <div
+          style={{
+            background: "#f25207",
+            borderRadius: "16px",
+            padding: "12px",
+            display: "inline-block",
+          }}
+        >
+          <IconTrendingUp stroke={2} color="#fff" size={28} />
+        </div>
+      ),
       title: "Items with Price Increase",
-      value: `${apiData.priceUpItemCount ?? 0}  (₹${apiData.priceUpAmount ?? 0} Monthly)`,
+      value: `${apiData.priceUpItemCount ?? 0}  (₹${
+        apiData.priceUpAmount ?? 0
+      } Monthly)`,
       bgColor: "#F5F8FF",
       iconBg: "#FF7800",
-
     },
     {
       id: "priceDown",
-      icon: <FaArrowTrendDown color="white" />,
+      icon: (
+        <div
+          style={{
+            background: "#2fba72",
+            borderRadius: "16px",
+            padding: "12px",
+            display: "inline-block",
+          }}
+        >
+          <IconTrendingDown stroke={2} color="#fff" size={28} />
+        </div>
+      ),
       title: "Items with Price Decrease",
       value: apiData.priceDownItemCount ?? 0,
-      value: `${apiData.priceDownItemCount ?? 0} (₹${apiData.priceDownItemAmount ?? 0} Monthly)`,
+      value: `${apiData.priceDownItemCount ?? 0} (₹${
+        apiData.priceDownItemAmount ?? 0
+      } Monthly)`,
 
       bgColor: "#F2FBF5",
       iconBg: "#21A365",
     },
-
   ];
 
   // ✅ Table Data
@@ -347,18 +471,36 @@ export const itemPriceChangeFormatter = (apiData) => {
     ],
 
     rows: apiData.list.map((row) => ({
-
-      itemName: <div style={{ display: "flex", flexDirection: "column" }}>
-        <span>{row.item?.name}</span>
-        <span>{row.item?.categoryName}. {row.item?.unitQuantity} {row.item?.unit}. {row.item?.oldPrice}</span>
-      </div>,
-      priceChanges:
+      itemName: (
         <div style={{ display: "flex", flexDirection: "column" }}>
-          <span>₹{row.oldPrice} → ₹{row.newPrice}</span>
-          <span style={{ color: (row.oldPrice - row.newPrice) > 0 ? 'green' : 'red' }}> ₹{(row.newPrice - row.oldPrice).toFixed(1)}</span>
-        </div>,
+          <span>{row.item?.name}</span>
+          <span>
+            {row.item?.categoryName}. {row.item?.unitQuantity} {row.item?.unit}.{" "}
+            {row.item?.oldPrice}
+          </span>
+        </div>
+      ),
+      priceChanges: (
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          <span>
+            ₹{row.oldPrice} → ₹{row.newPrice}
+          </span>
+          <span
+            style={{ color: row.oldPrice - row.newPrice > 0 ? "green" : "red" }}
+          >
+            {" "}
+            ₹{(row.newPrice - row.oldPrice).toFixed(1)}
+          </span>
+        </div>
+      ),
       dateOfChange: `${row.newPriceStartDate}`,
-      priceDiffPercentage: <span style={{ color: (row.oldPrice - row.newPrice) > 0 ? 'green' : 'red' }}>{row.priceDiffPercentage}%</span>,
+      priceDiffPercentage: (
+        <span
+          style={{ color: row.oldPrice - row.newPrice > 0 ? "green" : "red" }}
+        >
+          {row.priceDiffPercentage}%
+        </span>
+      ),
       projectedMonthlyCostDiff: `₹${row.projectedMonthlyCostDiff}`,
     })),
   };
@@ -413,8 +555,19 @@ export const receipesDataFormatter = (apiData) => {
           </div>
         </div>
       ),
-      icon: <FaPizzaSlice />,
-      bgColor: "#E1FAEE",
+      icon: (
+        <div
+          style={{
+            background: "#02ba71",
+            borderRadius: "16px",
+            padding: "12px",
+            display: "inline-block",
+          }}
+        >
+          <IconTrendingUp stroke={2} color="#fff" size={28} />
+        </div>
+      ),
+      bgColor: "#e9fef4",
       iconBg: "#00A650",
     },
     {
@@ -455,8 +608,19 @@ export const receipesDataFormatter = (apiData) => {
           </div>
         </div>
       ),
-      icon: <FaPizzaSlice />,
-      bgColor: "#f4ee90ff",
+      icon: (
+        <div
+          style={{
+            background: "#df9c0e",
+            borderRadius: "16px",
+            padding: "12px",
+            display: "inline-block",
+          }}
+        >
+          <IconTrendingUp stroke={2} color="#fff" size={28} />
+        </div>
+      ),
+      bgColor: "#fffcea",
       iconBg: "#00A650",
     },
     {
@@ -497,8 +661,19 @@ export const receipesDataFormatter = (apiData) => {
           </div>
         </div>
       ),
-      icon: <FaPizzaSlice />,
-      bgColor: "#f9b7a6ff",
+      icon: (
+        <div
+          style={{
+            background: "#ee2840",
+            borderRadius: "16px",
+            padding: "12px",
+            display: "inline-block",
+          }}
+        >
+          <IconTrendingDown stroke={2} color="#fff" size={28} />
+        </div>
+      ),
+      bgColor: "#fff3f2",
       iconBg: "#00A650",
     },
     // Additional cards can be added similarly if needed
@@ -549,6 +724,18 @@ export const receipesDataFormatter = (apiData) => {
 };
 
 import { FaBoxes, FaExclamationTriangle } from "react-icons/fa";
+import {
+  IconBarbell,
+  IconChartBar,
+  IconChartLine,
+  IconCheckbox,
+  IconCurrencyRupee,
+  IconGraph,
+  IconInfoTriangle,
+  IconPackage,
+  IconTrendingDown,
+  IconTrendingUp,
+} from "@tabler/icons-react";
 
 export const stockItemDataFormatter = (apiData) => {
   if (!apiData) {
@@ -562,39 +749,91 @@ export const stockItemDataFormatter = (apiData) => {
     {
       id: "currentStockValue",
       title: "Current Stock Value",
-      icon: <FaCube color="white" size={24} />,
-      value: <div>
-        <div>₹{apiData.totalItems}</div>
-        <small style={{ color: "blue", fontSize: "16px", fontWeight: 'normal' }}>Total inventory worth</small>
-      </div>,
-      bgColor: "#F0F7FF",
+      icon: (
+        <div
+          style={{
+            background: "#1e68ec",
+            borderRadius: "16px",
+            padding: "12px",
+            display: "inline-block",
+          }}
+        >
+          <IconPackage stroke={2} color="#fff" size={28} />
+        </div>
+      ),
+      value: (
+        <div>
+          <div>₹{apiData.totalItems}</div>
+          <small
+            style={{ color: "blue", fontSize: "16px", fontWeight: "normal" }}
+          >
+            Total inventory worth
+          </small>
+        </div>
+      ),
+      bgColor: "#ffffff",
       iconBg: "#165DFF",
     },
     {
       id: "zeroStockItems",
       title: "Out of Stock Items",
-      value: <div>
-        <div>₹{apiData.zeroStockItems}</div>
-        <small style={{ color: "#e82754ff", fontSize: "16px", fontWeight: 'normal' }}>Items requiring immediate</small>
-      </div>,
-      icon: <FaExclamationTriangle color="#fff" size={24} />,
-      bgColor: "#FEE5EB",
+      value: (
+        <div>
+          <div>₹{apiData.zeroStockItems}</div>
+          <small
+            style={{
+              color: "#e82754ff",
+              fontSize: "16px",
+              fontWeight: "normal",
+            }}
+          >
+            Items requiring immediate
+          </small>
+        </div>
+      ),
+      icon: (
+        <div
+          style={{
+            background: "#e9490c",
+            borderRadius: "16px",
+            padding: "12px",
+            display: "inline-block",
+          }}
+        >
+          <IconInfoTriangle stroke={2} color="#fff" size={28} />
+        </div>
+      ),
+      bgColor: "#ffffff",
       iconBg: "#ED175B",
     },
     {
       id: "belowMoqItems",
       title: "Critical Items",
-      value: <div>
-        <div>₹{apiData.belowMoqItems}</div>
-        <small style={{ color: "blue", fontSize: "16px", fontWeight: 'normal' }}>
-          Items at critically low levels
-        </small>
-      </div>,
-      icon: <FaExclamationTriangle color="#fff" size={24} />,
-      bgColor: "#FFF4DB",
+      value: (
+        <div>
+          <div>₹{apiData.belowMoqItems}</div>
+          <small
+            style={{ color: "blue", fontSize: "16px", fontWeight: "normal" }}
+          >
+            Items at critically low levels
+          </small>
+        </div>
+      ),
+      icon: (
+        <div
+          style={{
+            background: "#d98e31",
+            borderRadius: "16px",
+            padding: "12px",
+            display: "inline-block",
+          }}
+        >
+          <IconCheckbox stroke={2} color="#fff" size={28} />
+        </div>
+      ),
+      bgColor: "#ffffff",
       iconBg: "#FFB800",
     },
-
   ];
 
   const tableData = {
@@ -607,22 +846,54 @@ export const stockItemDataFormatter = (apiData) => {
       { key: "status", label: "STATUS" },
     ],
     rows: (apiData.list ?? []).map((row) => ({
-      itemName: <div>
-        <div>{row.item.name}</div>
-        <div style={{ color: "gray", fontWeight: "normal" }}>{row.item.categoryName}.{row.item.unitQuantity} {row.item.unit}. ₹{row.item.unitPrice}</div>
-      </div>,
-      currentStock: <div>
-        <div>{row.leftOverStockQuantity}  {row.item.unit}</div>
-        <div style={{ color: "gray", fontWeight: "normal" }}>₹{row.leftoverStockValue}</div>
-      </div>,
-      runway: <span style={{ color: "red", fontWeight: "bold" }}>{`${row.runwayDays} Days`}</span>,
-      moq: `${row.item.moq} ${row.item.unit}`,
-      latestClosingStock:
+      itemName: (
         <div>
-          <div>{row.leftOverStockQuantity}  {row.item.unit}</div>
+          <div>{row.item.name}</div>
+          <div style={{ color: "gray", fontWeight: "normal" }}>
+            {row.item.categoryName}.{row.item.unitQuantity} {row.item.unit}. ₹
+            {row.item.unitPrice}
+          </div>
+        </div>
+      ),
+      currentStock: (
+        <div>
+          <div>
+            {row.leftOverStockQuantity} {row.item.unit}
+          </div>
+          <div style={{ color: "gray", fontWeight: "normal" }}>
+            ₹{row.leftoverStockValue}
+          </div>
+        </div>
+      ),
+      runway: (
+        <span
+          style={{ color: "red", fontWeight: "bold" }}
+        >{`${row.runwayDays} Days`}</span>
+      ),
+      moq: `${row.item.moq} ${row.item.unit}`,
+      latestClosingStock: (
+        <div>
+          <div>
+            {row.leftOverStockQuantity} {row.item.unit}
+          </div>
           <div>{row.latestPurchaseClosingDate}</div>
-        </div>,
-      status: <div><span style={{ backgroundColor: "rgb(0,0,200)", color: 'white', padding: "5px", borderRadius: '15px' }}>Analyse</span><span>{row.statusText || '-'}</span></div>,
+        </div>
+      ),
+      status: (
+        <div>
+          <span
+            style={{
+              backgroundColor: "rgb(0,0,200)",
+              color: "white",
+              padding: "5px",
+              borderRadius: "15px",
+            }}
+          >
+            Analyse
+          </span>
+          <span>{row.statusText || "-"}</span>
+        </div>
+      ),
     })),
   };
 
