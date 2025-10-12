@@ -70,12 +70,10 @@ export default function Page() {
       {/* ✅ Top Navigation Tabs */}
       <SecondNavBar tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} useAppContext={useAppContext} />
 
-
-
       {/* ✅ Tab Content */}
       <div className="mt-2">
         {activeTab === "Dashboard" && (
-          <>
+      <div className="d-none d-md-inline">
             <MainComponentHoldingCard>
               <ConsumptionSummarry />
             </MainComponentHoldingCard>
@@ -160,7 +158,7 @@ export default function Page() {
             <MainComponentHoldingCard>
               <SupplierDues />
             </MainComponentHoldingCard>
-          </>
+          </div>
         )}
         {/* Other tabs placeholders */}
         {activeTab === "Sales" && (
@@ -204,7 +202,7 @@ export default function Page() {
           </MainComponentHoldingCard>
         )}
       </div>
-      {/* <MobileBottomNav /> */}
+      <MobileBottomNav />
     </div>
   );
 }

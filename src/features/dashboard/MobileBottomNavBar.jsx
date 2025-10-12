@@ -35,16 +35,21 @@ import SupplierDuesThisMonth from "@/features/dashboard/SupplierDuesThisMonth";
 import SupplierDues from "@/features/dashboard/SupplierDues";
 import MainComponentHoldingCard from "@/components/common/MainComponentHoldingCard";
 import ConsumptionSummarry from "./ConsumptionSummarry";
-
+import ProductPerformanceByPercentile from "./ProductPerformanceByPercentile";
+import PeriodDataBreakdown from "@/features/dashboard/PeriodDataBreakDown";
+import DepartmentConsumption from "@/features/dashboard/KitchenPurchaseByDepartment";
+import DepartmentConsumptionChart from "./DepartmentConsumptionChart";
+import TopConsumedItems from "./TopConsumedItems";
+import ItemConsumptionDistribution from "./ItemConsumptionDistribution";
 
 export default function MobileBottomNav() {
   const [activeTab, setActiveTab] = useState("home");
 
   const scrollRefs = {
     home: useRef(null),
-    items: useRef(null),
-    products: useRef(null),
-    departments: useRef(null),
+    // items: useRef(null),
+    // products: useRef(null),
+    // departments: useRef(null),
     actionable: useRef(null),
   };
 
@@ -67,23 +72,37 @@ export default function MobileBottomNav() {
               <TrendAnalysis />
             </MainComponentHoldingCard>
             <MainComponentHoldingCard>
-              <PeriodDataBreakDown />
+              <PeriodDataBreakdown />
             </MainComponentHoldingCard>
             <MainComponentHoldingCard>
               <HourlyForecast />
             </MainComponentHoldingCard>
-          </>
-        ),
-      },
-      {
-        key: "items",
-        content: (
-          <>
+            <MainComponentHoldingCard>
+              <DepartmentConsumption />
+            </MainComponentHoldingCard>
+            <MainComponentHoldingCard>
+              <DepartmentPerformanceAnalysis />
+            </MainComponentHoldingCard>
+            {/* <MainComponentHoldingCard>
+                          <DepartmentAndItemConsumption />
+                        </MainComponentHoldingCard> */}
+            <MainComponentHoldingCard>
+              <DepartmentConsumptionChart />
+            </MainComponentHoldingCard>
             <MainComponentHoldingCard>
               <ItemConsumptionEffieciency />
             </MainComponentHoldingCard>
             <MainComponentHoldingCard>
-              <DepartmentAndItemConsumption />
+              <TopConsumedItems />
+            </MainComponentHoldingCard>
+            <MainComponentHoldingCard>
+              <ItemConsumptionDistribution />
+            </MainComponentHoldingCard>
+            <MainComponentHoldingCard>
+              <WastageAnalysis />
+            </MainComponentHoldingCard>
+            <MainComponentHoldingCard>
+              <CostReductionRecommendations />
             </MainComponentHoldingCard>
             <MainComponentHoldingCard>
               <PriceChanges />
@@ -95,40 +114,92 @@ export default function MobileBottomNav() {
               <OutOfStock />
             </MainComponentHoldingCard>
             <MainComponentHoldingCard>
-              <SuppliersManagement />
-            </MainComponentHoldingCard>
-          </>
-        ),
-      },
-      {
-        key: "products",
-        content: (
-          <>
-            <MainComponentHoldingCard>
-              <TopSellingProducts />
+              <ImmediateActionsRequired />
             </MainComponentHoldingCard>
             <MainComponentHoldingCard>
               <Recipes />
             </MainComponentHoldingCard>
+            <MainComponentHoldingCard>
+              <MenuOptimizationRecommendations />
+            </MainComponentHoldingCard>
+            <MainComponentHoldingCard>
+              <TopSellingProducts />
+            </MainComponentHoldingCard>
+            <MainComponentHoldingCard>
+              <ProductPerformanceDetails />
+            </MainComponentHoldingCard>
+            <MainComponentHoldingCard>
+              <ProductPerformanceByPercentile/>
+            </MainComponentHoldingCard>
+            {/* <MainComponentHoldingCard>
+                          <RevenueContributionFromProducts />
+                        </MainComponentHoldingCard> */}
+            <MainComponentHoldingCard>
+              <SuppliersManagement />
+            </MainComponentHoldingCard>
+            <MainComponentHoldingCard>
+              <SupplierDuesThisMonth />
+            </MainComponentHoldingCard>
+            <MainComponentHoldingCard>
+              <SupplierDues />
+            </MainComponentHoldingCard>
           </>
         ),
       },
-      {
-        key: "departments",
-        content: (
-          <>
-            <MainComponentHoldingCard>
-              <KitchenPurchaseByDepartment />
-            </MainComponentHoldingCard>
-            <MainComponentHoldingCard>
-              <DepartmentPerformanceAnalysis />
-            </MainComponentHoldingCard>
-            <MainComponentHoldingCard>
-              <DepartmentAndItemConsumption />
-            </MainComponentHoldingCard>
-          </>
-        ),
-      },
+      // {
+      //   key: "items",
+      //   content: (
+      //     <>
+      //       <MainComponentHoldingCard>
+      //         <ItemConsumptionEffieciency />
+      //       </MainComponentHoldingCard>
+      //       <MainComponentHoldingCard>
+      //         <DepartmentAndItemConsumption />
+      //       </MainComponentHoldingCard>
+      //       <MainComponentHoldingCard>
+      //         <PriceChanges />
+      //       </MainComponentHoldingCard>
+      //       <MainComponentHoldingCard>
+      //         <PriceManagementRecommendations />
+      //       </MainComponentHoldingCard>
+      //       <MainComponentHoldingCard>
+      //         <OutOfStock />
+      //       </MainComponentHoldingCard>
+      //       <MainComponentHoldingCard>
+      //         <SuppliersManagement />
+      //       </MainComponentHoldingCard>
+      //     </>
+      //   ),
+      // },
+      // {
+      //   key: "products",
+      //   content: (
+      //     <>
+      //       <MainComponentHoldingCard>
+      //         <TopSellingProducts />
+      //       </MainComponentHoldingCard>
+      //       <MainComponentHoldingCard>
+      //         <Recipes />
+      //       </MainComponentHoldingCard>
+      //     </>
+      //   ),
+      // },
+      // {
+      //   key: "departments",
+      //   content: (
+      //     <>
+      //       <MainComponentHoldingCard>
+      //         <KitchenPurchaseByDepartment />
+      //       </MainComponentHoldingCard>
+      //       <MainComponentHoldingCard>
+      //         <DepartmentPerformanceAnalysis />
+      //       </MainComponentHoldingCard>
+      //       <MainComponentHoldingCard>
+      //         <DepartmentAndItemConsumption />
+      //       </MainComponentHoldingCard>
+      //     </>
+      //   ),
+      // },
       {
         key: "actionable",
         content: (
@@ -157,13 +228,13 @@ export default function MobileBottomNav() {
 
   const navItems = [
     { key: "home", icon: <FaHome size={20} />, label: "HOME" },
-    { key: "items", icon: <FaBox size={20} />, label: "ITEMS" },
-    { key: "products", icon: <FaTags size={20} />, label: "PRODUCTS" },
-    {
-      key: "departments",
-      icon: <FaBuilding size={20} />,
-      label: "DEPARTMENTS",
-    },
+    // { key: "items", icon: <FaBox size={20} />, label: "ITEMS" },
+    // { key: "products", icon: <FaTags size={20} />, label: "PRODUCTS" },
+    // {
+    //   key: "departments",
+    //   icon: <FaBuilding size={20} />,
+    //   label: "DEPARTMENTS",
+    // },
     {
       key: "actionable",
       icon: <FaClipboardList size={20} />,
