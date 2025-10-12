@@ -19,7 +19,7 @@ import { formatDate, handleCustomChange, handlePreset } from "@/utils";
 export default function ItemsSupplierProductsHeader({
   title = "Product Title",
   subtitle = "Category • Quantity",
-  price = "₹0.00",
+  price = "",
   tabs,
   setActiveTab,
   activeTab,
@@ -85,8 +85,10 @@ export default function ItemsSupplierProductsHeader({
                 <div>
                   <h5 className="mb-0 fw-bold">{title}</h5>
                   <div style={{ fontSize: "14px", color: "#FBE9E7" }}>
-                    {subtitle} •{" "}
-                    <span className="fw-semibold text-white">{price}</span>
+                    {subtitle} 
+                    {price && (
+                      <span className="fw-semibold text-white">• {price}</span>
+                    )}
                   </div>
                 </div>
               </div>

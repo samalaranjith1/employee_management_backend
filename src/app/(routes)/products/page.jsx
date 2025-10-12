@@ -8,9 +8,11 @@ import ProdcutsContent from "@/features/products/ProductsContent";
 import { FaBoxOpen, FaBullseye, FaCube, FaUserClock } from "react-icons/fa";
 import SecondNavBar from "../dashboard/@Navbar/page";
 import DurationFilters from "@/features/dashboard/DurationFilters";
+import { useProduct } from "@/services/product-service";
 
 function ProductsPage() {
   const [activeTab, setActiveTab] = useState("Home");
+  const [productsHeaderData, setProductsHeaderData] = useState(null);
   const [durationFilter, setDurationFilter] = useState("today"); // lowercase for consistency
 
   const { startDate, endDate, setStartDate, setEndDate } = useProductsContext();
@@ -19,7 +21,7 @@ function ProductsPage() {
     setEndDate: setEndDateDashboard,
   } = useDashboardContext();
 
-  const useAppContext= useProductsContext()
+  const useAppContext = useProductsContext();
   // Sync with dashboard context
   useEffect(() => {
     setStartDateDashboard(startDate);
@@ -67,52 +69,73 @@ function ProductsPage() {
     }
   }, [startDate, endDate]);
 
+    const { data: productsData, error } = useProduct(74, {
+      outlet: 1,
+      userId: 7,
+    });
+  
+    // Format the header data when productsData changes
+    useEffect(() => {
+      // if (!productsData ) return;
+      const formatted = {
+        title: productsData?.name,
+        subtitle: `${productsData?.departmentName} • ${
+          productsData?.masterProductName
+        } ${productsData?.variation} ₹${productsData?.price.toFixed(1)}`,
+        price: <div>{`Margin Cost:₹${productsData?.margin?.toFixed(
+          1
+        )} • Margin:${productsData?.marginPercentage?.toFixed(
+          2
+        )}% • Prep Time:${productsData?.preparationTime} Mins • Pieces:${
+          productsData?.pieceCount
+        } (${productsData?.pieceQuantity} ${productsData?.pieceUnit} Each)`}</div>,
+      };
+      setProductsHeaderData(formatted); // Assuming you want only the first item
+    }, [productsData]);
+    if (error) console.error("Error fetching items:", error);
+
   const navTabs = ["Home", "Sales", "Ingredients", "Cost"];
   const filters = ["Today", "Yesterday", "This Week", "This Month", "Custom"];
 
-  // 🔹 RawData for cards
-  const rawData = [
-    {
-      title: "Margin Cost",
-      value: "₹106",
-      icon: <FaBullseye />,
-      color: "#2ecc71",
-    },
-    { title: "Margin", value: "67.72%", icon: <FaCube />, color: "#3498db" },
-    {
-      title: "Prep Time",
-      value: "5 Mins",
-      icon: <FaUserClock />,
-      color: "#e67e22",
-    },
-    {
-      title: "Pieces",
-      value: "5 (15 GM Each)",
-      icon: <FaBoxOpen />,
-      color: "#9b59b6",
-    },
-  ];
-
   return (
     <div style={{ background: "#f9fafc", minHeight: "100vh" }} className="mt-5">
-      <ItemsSupplierProductsHeader
-        title="Butter Chicken (Half)"
-        subtitle="North Indian • Butter Chicken • Half • ₹320"
-        showBackButton
+      {productsHeaderData?.title ? (
+        <ItemsSupplierProductsHeader
+          title={productsHeaderData?.title}
+          subtitle={productsHeaderData?.subtitle}
+          price={productsHeaderData?.price}
+          showBackButton
+          tabs={navTabs}
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+          durationFilter={durationFilter}
+          setDurationFilter={setDurationFilter}
+          filters={filters}
+          setStartDate={setStartDate}
+          setEndDate={setEndDate}
+          startDate={startDate}
+          endDate={endDate}
+        />
+      ) : (
+        <div
+          style={{
+            backgroundColor: "#d75921",
+            color: "white",
+            width: "100vw",
+          }}
+        >
+          Loading...
+        </div>
+      )}
+      <div className="p-2 d-md-none">
+        <DurationFilters useAppContext={useAppContext} />
+      </div>
+      <SecondNavBar
         tabs={navTabs}
         activeTab={activeTab}
         setActiveTab={setActiveTab}
-        durationFilter={durationFilter}
-        setDurationFilter={setDurationFilter}
-        filters={filters}
-        setStartDate={setStartDate}
-        setEndDate={setEndDate}
-        rawData={rawData}
-        startDate={startDate}
-        endDate={endDate}
+        useAppContext={useAppContext}
       />
-      <div className="p-2 d-md-none"><DurationFilters useAppContext={useAppContext} /></div>
-      <SecondNavBar tabs={navTabs} activeTab={activeTab} setActiveTab={setActiveTab} useAppContext={useAppContext} />
 
       <Container fluid className="mt-4">
         <ProdcutsContent

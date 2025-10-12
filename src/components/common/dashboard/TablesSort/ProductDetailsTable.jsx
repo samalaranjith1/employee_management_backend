@@ -52,7 +52,7 @@ export default function ProductDetailsTable({ rowsData, styles }) {
     sortKey === key ? (direction === "asc" ? " ↑" : " ↓") : "";
 
   return (
-    <div bodyStyle={styles?.tableContainer}>
+    <div style={styles?.tableContainer}>
       {/* 🔹 Table Controls */}
       <TableControls
         searchTerm={searchTerm}

@@ -12,6 +12,22 @@ import {
 import { formatDate } from "..";
 import { IconAlertTriangle, IconChartLine, IconClipboardData, IconCurrencyDollar, IconNotes, IconPackage, IconRosetteDiscountCheck, IconShoppingCartCheck, IconSquareCheck, IconToolsKitchen2, IconTrashX, IconTrendingUp } from "@tabler/icons-react";
 
+
+export function departmentHeaderDataFormatter(apiData) {
+  if (!apiData) return {};
+
+  return {
+    id: apiData.id,
+    name: apiData.name || "Unknown Department",
+    type: apiData.type || "N/A",
+    costToSalePercentageGoal: apiData.costToSalePercentageGoal || 0,
+    productsCount: apiData.productsCount || 0,
+    teamSize: apiData.teamSize || 0,
+    teamCost: apiData.teamCost || 0,
+    disabled: apiData.disabled,
+  };
+}
+
 // utils/formatMenuItems.js
 export function productsDataFormatter(rawData) {
   const data = rawData?.list?.flat();

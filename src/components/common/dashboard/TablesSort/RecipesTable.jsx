@@ -32,7 +32,7 @@ function RecipesTable({ title, data, bgColor }) {
   return (
     <div
       title={title}
-      containerStyle={{
+      style={{
         border: "none",
         background: bgColor,
         borderRadius: "12px",
@@ -43,10 +43,10 @@ function RecipesTable({ title, data, bgColor }) {
         width: "110%",
         marginLeft: "-20px",
       }}
-      bodyStyle={{
-        flexGrow: 1,
-        overflow: "auto", // prevent double scrollbars
-      }}
+      // style={{
+      //   flexGrow: 1,
+      //   overflow: "auto", // prevent double scrollbars
+      // }}
     >
       {/* ✅ Scrollable wrapper */}
       <div

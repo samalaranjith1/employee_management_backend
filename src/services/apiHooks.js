@@ -84,6 +84,29 @@ const basePath = "https://flavourheaven.in/costonomy-services/";
 //     ...options,
 //   });
 // }
+// export function useApiQuery({
+//   key, // Array query key
+//   endpoint, // API endpoint string
+//   params = {}, // URL params
+//   config = {}, // axios config (headers, etc.)
+//   options = {}, // React Query options (select, enabled, etc.)
+// }) {
+//   return useQuery({
+//     queryKey: [...key, params], // include params in the key to trigger refetch
+//     queryFn: async () => {
+//       const { data } = await axios.get(`${basePath}${endpoint}`, {
+//         params,
+//         ...config,
+//       });
+//       return data;
+//     },
+//     staleTime: 300000, // 5 minutes
+//     cacheTime: 600000, // 10 minutes
+//     refetchOnWindowFocus: true, // Refetch on window focus
+//     keepPreviousData: true, // ✅ Prevents UI flicker when params change
+//     ...options,
+//   });
+// }
 export function useApiQuery({
   key, // Array query key
   endpoint, // API endpoint string
@@ -91,19 +114,39 @@ export function useApiQuery({
   config = {}, // axios config (headers, etc.)
   options = {}, // React Query options (select, enabled, etc.)
 }) {
+  // Stable key: changes when params change
+  const stableKey = useMemo(
+    () => [...key, JSON.stringify(params)],
+    [key, params]
+  );
+  const cacheKey = stableKey.join("|");
+  const [initialData, setInitialData] = useState();
+
+  useEffect(() => {
+    let mounted = true;
+    getItem(cacheKey).then((data) => {
+      if (mounted && data) setInitialData(data);
+    });
+    return () => {
+      mounted = false;
+    };
+  }, [cacheKey]);
+
   return useQuery({
-    queryKey: [...key, params], // include params in the key to trigger refetch
+    queryKey: stableKey,
     queryFn: async () => {
       const { data } = await axios.get(`${basePath}${endpoint}`, {
         params,
         ...config,
       });
+      if (typeof window !== "undefined") await setItem(cacheKey, data);
       return data;
     },
-    staleTime: 300000, // 5 minutes
-    cacheTime: 600000, // 10 minutes
-    refetchOnWindowFocus: true, // Refetch on window focus
-    keepPreviousData: true, // ✅ Prevents UI flicker when params change
+    initialData,
+    keepPreviousData: true, // Prevent shimmer/loading UI on param change
+    refetchOnWindowFocus: true,
+    staleTime: 300000,
+    cacheTime: 600000,
     ...options,
   });
 }

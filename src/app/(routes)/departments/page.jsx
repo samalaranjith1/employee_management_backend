@@ -113,12 +113,14 @@ useEffect(() => {
       className="mt-5 pt-2"
     >
       <DepartmentHeader
-        department={rawData.department}
+        departmentId={2}
         onManageClick={() => setShowCanvas(true)}
       />
-      <div className="p-2 d-md-none"><DurationFilters useAppContext={useAppContext} /></div>
+      <div className="p-2 d-md-none">
+        <DurationFilters useAppContext={useAppContext} />
+      </div>
       <Container fluid className="mt-4">
-        <DepartmentCards cards={rawData.cards} />
+        {/* <DepartmentCards cards={rawData.cards} /> */}
         {/* <DepartmentFilters
           durationFilter={durationFilter}
           setDurationFilter={setDurationFilter}
@@ -130,8 +132,13 @@ useEffect(() => {
           activeKey={activeKey}
           setActiveKey={setActiveKey}
         /> */}
-      <SecondNavBar tabs={navTabs} activeTab={activeKey} setActiveTab={setActiveKey} useAppContext={useAppContext} />
-{/* 
+        <SecondNavBar
+          tabs={navTabs}
+          activeTab={activeKey}
+          setActiveTab={setActiveKey}
+          useAppContext={useAppContext}
+        />
+        {/* 
         <DepartmentTabs
           navTabs={navTabs}
           activeKey={activeKey}

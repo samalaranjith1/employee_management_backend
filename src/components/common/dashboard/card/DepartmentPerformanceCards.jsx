@@ -7,10 +7,21 @@ export default function DepartmentPerformanceCards({ cards }) {
   return (
     <Col
       xs={12}
-      lg={3}
-      className="d-flex flex-lg-column flex-row gap-3 mb-3 mb-lg-0"
-      style={{ whiteSpace: "nowrap" }}
+      className="d-flex gap-3 mb-3 mb-lg-0"
+      style={{
+        overflowX: "auto", // horizontal scroll
+        WebkitOverflowScrolling: "touch", // smooth scrolling on iOS
+        scrollbarWidth: "none", // Firefox
+        msOverflowStyle: "none", // IE 10+
+      }}
     >
+      <style jsx>{`
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        .d-flex::-webkit-scrollbar {
+          display: none;
+        }
+      `}</style>
+
       {cards.map((card, idx) => (
         <CommonCard
           key={idx}
@@ -19,18 +30,17 @@ export default function DepartmentPerformanceCards({ cards }) {
           style={{
             borderLeft: `5px solid ${card.borderColor}`,
             padding: "0px",
+            flex: "0 0 auto", // prevent shrinking for horizontal scroll
           }}
-        bgColor={card.bgColor}
+          bgColor={card.bgColor}
         >
           <Card.Body>
-            <div className="d-flex d-flex-row p-0">
+            <div className="d-flex p-0 align-items-center">
               <div>
                 <h6 className="fw-bold mb-1">{card.title}</h6>
                 <h4 className="fw-bold">{card.value}</h4>
               </div>
-              <div style={{ marginLeft: "auto" }}>
-                {card.icon}
-              </div>
+              <div style={{ marginLeft: "auto" }}>{card.icon}</div>
             </div>
           </Card.Body>
         </CommonCard>
@@ -38,6 +48,46 @@ export default function DepartmentPerformanceCards({ cards }) {
     </Col>
   );
 }
+// "use client";
+// import React from "react";
+// import { Col, Card } from "react-bootstrap";
+// import CommonCard from "./CommonCard";
+
+// export default function DepartmentPerformanceCards({ cards }) {
+//   return (
+//     <Col
+//       xs={12}
+//       lg={3}
+//       className="d-flex flex-lg-column flex-row gap-3 mb-3 mb-lg-0"
+//       style={{ whiteSpace: "nowrap" }}
+//     >
+//       {cards.map((card, idx) => (
+//         <CommonCard
+//           key={idx}
+//           textColor="#000"
+//           minWidth="220px"
+//           style={{
+//             borderLeft: `5px solid ${card.borderColor}`,
+//             padding: "0px",
+//           }}
+//         bgColor={card.bgColor}
+//         >
+//           <Card.Body>
+//             <div className="d-flex d-flex-row p-0">
+//               <div>
+//                 <h6 className="fw-bold mb-1">{card.title}</h6>
+//                 <h4 className="fw-bold">{card.value}</h4>
+//               </div>
+//               <div style={{ marginLeft: "auto" }}>
+//                 {card.icon}
+//               </div>
+//             </div>
+//           </Card.Body>
+//         </CommonCard>
+//       ))}
+//     </Col>
+//   );
+// }
 // "use client";
 // import React from "react";
 // import { Col, Card } from "react-bootstrap";

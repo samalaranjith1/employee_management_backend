@@ -12,7 +12,14 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { subDays, subWeeks, subMonths, format } from "date-fns";
-import { Button, ButtonGroup, Container, Row, Col, ToggleButton } from "react-bootstrap";
+import {
+  Button,
+  ButtonGroup,
+  Container,
+  Row,
+  Col,
+  ToggleButton,
+} from "react-bootstrap";
 import { FaBolt, FaExpand } from "react-icons/fa";
 import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer";
 import { handleNavigation } from "@/utils";
@@ -96,26 +103,27 @@ export default function TrendAnalysis() {
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  boxShadow: "0 4px 12px rgba(0,0,0,.08)",   // Optional shadow for subtle depth
+                  boxShadow: "0 4px 12px rgba(0,0,0,.08)", // Optional shadow for subtle depth
                 }}
               >
                 <IconTrendingUp color="white" size={28} stroke={2} />
               </div>
             </div>
             <div className="d-flex flex-column mt-2">
-              <div className="fw-bold">
-                Trend Analysis
-              </div>
+              <div className="fw-bold">Trend Analysis</div>
               <div>Sales, consumption, and inventory trends over time</div>
             </div>
           </Col>
 
           <Col xs="auto" className="d-flex align-items-center ms-auto gap-2">
             <div className="d-none d-md-flex bg-gray">
-              <ButtonGroup className='px-2' style={{
-                backgroundColor: '#ddd',
-                borderRadius: '20px'
-              }}>
+              <ButtonGroup
+                className="px-2"
+                style={{
+                  backgroundColor: "#ddd",
+                  borderRadius: "20px",
+                }}
+              >
                 {["Daily", "SameDay", "Weekly", "Monthly"].map((label) => {
                   const value = label.toLowerCase().replace(" ", "");
                   // const view = filter === value;
@@ -132,7 +140,8 @@ export default function TrendAnalysis() {
                       style={{
                         fontSize: "13px",
                         padding: "6px 16px",
-                        backgroundColor: view === label ? "#FF6600" : "transparent",
+                        backgroundColor:
+                          view === label ? "#FF6600" : "transparent",
                         color: view === label ? "white" : "#888",
                         border: "none",
                         cursor: "pointer",
@@ -176,10 +185,13 @@ export default function TrendAnalysis() {
                   {type}
                 </Button>
               ))} */}
-            <ButtonGroup className='px-2' style={{
-              backgroundColor: '#ddd',
-              borderRadius: '20px'
-            }}>
+            <ButtonGroup
+              className="px-2"
+              style={{
+                backgroundColor: "#ddd",
+                borderRadius: "20px",
+              }}
+            >
               {["Daily", "SameDay", "Weekly", "Monthly"].map((label) => {
                 const value = label.toLowerCase().replace(" ", "");
                 // const view = filter === value;
@@ -196,7 +208,8 @@ export default function TrendAnalysis() {
                     style={{
                       fontSize: "13px",
                       padding: "6px 16px",
-                      backgroundColor: view === label ? "#FF6600" : "transparent",
+                      backgroundColor:
+                        view === label ? "#FF6600" : "transparent",
                       color: view === label ? "white" : "#888",
                       border: "none",
                       cursor: "pointer",
@@ -224,7 +237,10 @@ export default function TrendAnalysis() {
         <ServiceRenderer
           queryHook={SelectedHook} // Pass the hook itself
           queryKey={["outletSummary", view]}
-          queryArgs={[1, { startdt: startDateCS, enddt: endDateCS ,outlet:1,userId:7}]} // Args passed to the hook
+          queryArgs={[
+            1,
+            { startdt: startDateCS, enddt: endDateCS, outlet: 1, userId: 7 },
+          ]} // Args passed to the hook
           formatter={(raw) => trendAnalysisFormatter(raw, view)}
         >
           {(data) => {
@@ -245,7 +261,11 @@ export default function TrendAnalysis() {
                     data={data}
                     margin={{ top: 20, right: 40, left: 0, bottom: 0 }}
                   >
-                    <CartesianGrid strokeDasharray="3 3" vertical={true} horizontal={true} />
+                    <CartesianGrid
+                      strokeDasharray="3 3"
+                      vertical={true}
+                      horizontal={true}
+                    />
                     <XAxis dataKey="name" />
 
                     <YAxis
@@ -268,6 +288,68 @@ export default function TrendAnalysis() {
                       }
                     />
                     <Legend
+                      content={(props) => {
+                        const { payload } = props;
+                        return (
+                          <ul
+                            style={{
+                              listStyle: "none",
+                              display: "flex",
+                              justifyContent: "center",
+                              gap: "20px",
+                              padding: 0,
+                              margin: 0,
+                              flexWrap: "wrap", // ✅ allow wrapping on mobile
+                            }}
+                          >
+                            {payload.map((entry, index) => (
+                              <li
+                                key={`legend-${index}`}
+                                style={{
+                                  cursor: "pointer",
+                                  display: "flex",
+                                  alignItems: "center",
+                                  gap: "6px",
+                                  marginBottom: "6px", // ✅ add small spacing between wrapped rows
+                                }}
+                                onClick={() =>
+                                  handleNavigation({
+                                    router,
+                                    url:
+                                      entry.value === "Sales"
+                                        ? "sp/sales_analytics"
+                                        : entry.value === "Consumption"
+                                        ? "sp/consumption_analytics"
+                                        : entry.value === "Opening"
+                                        ? "sp/consumption_closing_analytics"
+                                        : entry.value === "Closing"
+                                        ? "sp/consumption_closing_analytics"
+                                        : "",
+                                    params: {
+                                      startDate: startDateCS,
+                                      endDate: endDateCS,
+                                    },
+                                  })
+                                }
+                              >
+                                <span
+                                  style={{
+                                    width: 12,
+                                    height: 12,
+                                    backgroundColor: entry.color,
+                                    display: "inline-block",
+                                    borderRadius: "3px",
+                                  }}
+                                />
+                                {entry.value}
+                              </li>
+                            ))}
+                          </ul>
+                        );
+                      }}
+                    />
+
+                    {/* <Legend
                       content={(props) => {
                         const { payload } = props;
                         return (
@@ -325,13 +407,13 @@ export default function TrendAnalysis() {
                           </ul>
                         );
                       }}
-                    />
+                    /> */}
                     <Line
                       yAxisId="left"
                       type="monotone"
                       dataKey="Sales"
                       stroke="#1faa1f"
-                      strokeWidth={2}  
+                      strokeWidth={2}
                       activeDot={{ r: 8 }}
                     />
 
@@ -340,14 +422,14 @@ export default function TrendAnalysis() {
                       type="monotone"
                       dataKey="Consumption"
                       stroke="#f7af37"
-                      strokeWidth={2}  
+                      strokeWidth={2}
                     />
                     <Line
                       yAxisId="left"
                       type="monotone"
                       dataKey="Opening"
                       stroke="#3c82f6"
-                      strokeWidth={2}  
+                      strokeWidth={2}
                     />
                     <Line
                       yAxisId="left"

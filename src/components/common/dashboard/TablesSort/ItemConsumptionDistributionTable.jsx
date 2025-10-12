@@ -55,7 +55,7 @@ export default function ItemConsumptionDistributionTable({ data }) {
   };
 
   return (
-    <div maxHeight="65vh" containerStyle={{ borderRadius: "12px" }}>
+    <div style={{ borderRadius: "12px", maxHeight:"65vh" }}>
       {/* 🔹 Controls (Search + Filter + Export) */}
       <TableControls
         searchTerm={searchTerm}

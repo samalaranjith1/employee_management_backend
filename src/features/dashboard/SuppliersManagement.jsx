@@ -131,10 +131,10 @@ const SupplierManagement = () => {
                     Total Purchase
                   </div>
                   <div style={styles.amount}>
-                    {formattedData.cardData[0].value}
+                    {formattedData?.cardData[0]?.value}
                   </div>
                   <div style={{ fontSize: "0.85rem", color: "#0667f0ff" }}>
-                    from {formattedData.cardData[0].suppliers} suppliers
+                    from {formattedData?.cardData[0]?.suppliers} suppliers
                   </div>
                 </div>
                 <div style={{
