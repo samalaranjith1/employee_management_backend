@@ -549,16 +549,21 @@ export const departmentConsumptionSummaryDataFormatter = (data) => {
       title: "Consumption %",
       value: `${safeNumber(summary.consumptionPercentage, 0)}%`,
       change: +15.2, // Placeholder for demo
-      icon: <div style={{
-        background: '#EFA14A',
-        borderRadius: '12px',
-        padding: '8px',
-        display: 'inline-block'
-      }}>
-        <IconToolsKitchen2 stroke={2} color="#fff" size={24} />
-      </div>,
+      icon: (
+        <div
+          style={{
+            background: "#EFA14A",
+            borderRadius: "12px",
+            padding: "8px",
+            display: "inline-block",
+          }}
+        >
+          <IconToolsKitchen2 stroke={2} color="#fff" size={24} />
+        </div>
+      ),
       bg: "#FFF6ED",
       textColor: "#FF6A00",
+      routeUrl: "/consumption_analytics",
       stats: [
         { label: "Sale", value: safeCurrency(summary.netSales) },
         { label: "Consumption", value: safeCurrency(summary.consumptionValue) },
@@ -576,16 +581,21 @@ export const departmentConsumptionSummaryDataFormatter = (data) => {
       title: "Consumption",
       value: safeCurrency(summary.consumptionValue),
       change: -2.1,
-      icon: <div style={{
-        background: '#2680FF',
-        borderRadius: '12px',
-        padding: '8px',
-        display: 'inline-block'
-      }}>
-        <IconShoppingCartCheck stroke={2} color="#fff" size={24} />
-      </div>,
+      icon: (
+        <div
+          style={{
+            background: "#2680FF",
+            borderRadius: "12px",
+            padding: "8px",
+            display: "inline-block",
+          }}
+        >
+          <IconShoppingCartCheck stroke={2} color="#fff" size={24} />
+        </div>
+      ),
       bg: "#F0F7FF",
       textColor: "#007BFF",
+      routeUrl: "/consumption_analytics",
       stats: [
         {
           label: "Opening Stock",
@@ -606,16 +616,21 @@ export const departmentConsumptionSummaryDataFormatter = (data) => {
       title: "Net Sales",
       value: safeCurrency(summary.netSales),
       change: +15.2,
-      icon: <div style={{
-        background: '#924CFE',
-        borderRadius: '12px',
-        padding: '8px',
-        display: 'inline-block'
-      }}>
-        <IconTrendingUp stroke={2} color="#fff" size={24} />
-      </div>,
+      icon: (
+        <div
+          style={{
+            background: "#924CFE",
+            borderRadius: "12px",
+            padding: "8px",
+            display: "inline-block",
+          }}
+        >
+          <IconTrendingUp stroke={2} color="#fff" size={24} />
+        </div>
+      ),
       bg: "#FAF5FF",
       textColor: "#9C27B0",
+      routeUrl: "/sales_analytics",
       stats: [
         { label: "Total Sales", value: safeCurrency(summary.totalSales) },
         { label: "Discount", value: safeCurrency(summary.discount) },

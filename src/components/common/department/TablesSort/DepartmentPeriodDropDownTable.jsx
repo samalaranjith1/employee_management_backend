@@ -5,11 +5,13 @@ import { Table, Badge } from "react-bootstrap";
 import { useTableSort } from "@/components/hooks/useTableSort";
 import { useTableControls } from "@/components/hooks/useTableControls";
 import { TableControls } from "@/components/common/TableControls";
-
+import { handleNavigation } from "@/utils";
+import { useRouter } from "next/navigation";
+import { useDepartmentContext } from "@/contexts/DepartmentContext";
 export default function DepartmentPeriodDropDownTable({ table = [] }) {
   // 🔹 Sorting
   const { sortedData, sortKey, direction, handleSort } = useTableSort(table);
-
+  const router = useRouter();
   // 🔹 Columns
   const columns = [
     // { key: "index", label: "#" },
@@ -42,6 +44,7 @@ export default function DepartmentPeriodDropDownTable({ table = [] }) {
 
   const renderSortArrow = (key) =>
     sortKey === key ? (direction === "asc" ? " ↑" : " ↓") : "";
+  const {startDate, endDate} = useDepartmentContext();
 
   return (
     <div>
@@ -148,13 +151,40 @@ export default function DepartmentPeriodDropDownTable({ table = [] }) {
                         {formattedDay}
                       </div>
                     </td>
-                    <td style={{ fontSize: 13 }}>
+                    <td
+                      style={{ fontSize: 13, cursor: "pointer" }}
+                      onClick={() =>
+                        handleNavigation({
+                          router,
+                          url: "sp/sales_analytics",
+                          params: { startDate: startDate, endDate: endDate },
+                        })
+                      }
+                    >
                       ₹{row.sales?.toLocaleString()}
                     </td>
-                    <td style={{ fontSize: 13 }}>
+                    <td
+                      style={{ fontSize: 13, cursor: "pointer" }}
+                      onClick={() =>
+                        handleNavigation({
+                          router,
+                          url: "sp/consumption_analytics",
+                          params: { startDate: startDate, endDate: endDate },
+                        })
+                      }
+                    >
                       ₹{row.consumption?.toLocaleString()}
                     </td>
-                    <td style={{ fontSize: 13 }}>
+                    <td
+                      style={{ fontSize: 13, cursor: "pointer" }}
+                      onClick={() =>
+                        handleNavigation({
+                          router,
+                          url: "sp/wastage_analytics",
+                          params: { startDate: startDate, endDate: endDate },
+                        })
+                      }
+                    >
                       ₹{row.waste?.toLocaleString()}
                     </td>
                     <td>

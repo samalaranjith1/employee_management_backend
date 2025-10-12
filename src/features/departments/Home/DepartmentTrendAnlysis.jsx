@@ -85,6 +85,8 @@ export default function DepartmentTrendAnalysis() {
             trendData={trendData}
             filter={filter}
             setFilter={setFilter}
+            startDateCS={startDateCS}
+            endDateCS={endDateCS}
           />
         )}
       </ServiceRenderer>

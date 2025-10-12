@@ -162,7 +162,7 @@ function ItemConsumptionEffieciencyTable({ tableData }) {
                     onClick={() =>
                       handleNavigation({
                         router,
-                        url: "items",
+                        url: "sp/sales_analytics",
                         params: {
                           startDate,
                           endDate,

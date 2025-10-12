@@ -3,9 +3,13 @@
 import React, { useEffect, useState } from "react";
 import { Card, Row, Col } from "react-bootstrap";
 import { FaUtensils, FaShoppingCart, FaChartLine } from "react-icons/fa";
-
+import { handleNavigation } from "@/utils";
+import { useRouter } from "next/navigation";
+import { useDepartmentContext } from "@/contexts/DepartmentContext";
 export default function ConsumptionSummaryCards({ cards, scrollRef }) {
   const [isMobile, setIsMobile] = useState(false);
+  const router = useRouter();
+  const { startDate,endDate } = useDepartmentContext();
 
   useEffect(() => {
     const updateMinWidth = () => {
@@ -37,8 +41,20 @@ export default function ConsumptionSummaryCards({ cards, scrollRef }) {
             background: card.bg,
             flex: "0 0 auto",
             width: isMobile ? "88vw" : "30vw",
-            minWidth:'300px',
+            minWidth: "300px",
+            cursor: "pointer",
           }}
+          onClick={() =>
+            handleNavigation({
+              router,
+              url: `sp/${card?.routeUrl}`,
+              params: {
+                startDate: startDate,
+                endDate: endDate,
+                departments: "2",
+              },
+            })
+          }
         >
           <Card.Body>
             {/* Title + Value + Change */}

@@ -14,14 +14,17 @@ import {
 } from "recharts";
 import { FaArrowUp } from "react-icons/fa";
 import { IconTrendingUp } from "@tabler/icons-react";
-
+import { handleNavigation } from "@/utils";
+import { useRouter } from "next/navigation";
 export default function DepartmentTrendAnalysisGraph({
   trendData,
   filter,
   setFilter,
+  startDateCS,
+  endDateCS,
 }) {
   const tabs = ["Daily", "Same Days", "Weekly", "Monthly"];
-
+  const router = useRouter();
   return (
     // <Card className="p-3 shadow-sm" style={{ borderRadius: "16px" }}>
     <Card
@@ -36,12 +39,14 @@ export default function DepartmentTrendAnalysisGraph({
       <Row className="align-items-center mb-3">
         <Col>
           <h5 className="fw-bold mb-0 d-flex align-items-center">
-            <div style={{
-              background: '#3a58eb', // bold purple
-              borderRadius: '12px',
-              padding: '8px',
-              display: 'inline-block',
-            }}>
+            <div
+              style={{
+                background: "#3a58eb", // bold purple
+                borderRadius: "12px",
+                padding: "8px",
+                display: "inline-block",
+              }}
+            >
               <IconTrendingUp stroke={2} color="#fff" size={20} />
             </div>
 
@@ -50,10 +55,8 @@ export default function DepartmentTrendAnalysisGraph({
               <small className="text-muted" style={{ fontWeight: "normal" }}>
                 Sales, consumption, and inventory trends over time
               </small>
-
             </div>
           </h5>
-
         </Col>
         <Col xs="auto">
           {/* <ButtonGroup>
@@ -188,6 +191,67 @@ export default function DepartmentTrendAnalysisGraph({
               width={60}
             />
             <Tooltip formatter={(value) => `₹${value.toLocaleString()}`} />
+            <Legend
+              content={(props) => {
+                const { payload } = props;
+                return (
+                  <ul
+                    style={{
+                      listStyle: "none",
+                      display: "flex",
+                      justifyContent: "center",
+                      gap: "20px",
+                      padding: 0,
+                      margin: 0,
+                      flexWrap: "wrap", // ✅ allow wrapping on mobile
+                    }}
+                  >
+                    {payload.map((entry, index) => (
+                      <li
+                        key={`legend-${index}`}
+                        style={{
+                          cursor: "pointer",
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "6px",
+                          marginBottom: "6px", // ✅ add small spacing between wrapped rows
+                        }}
+                        onClick={() =>
+                          handleNavigation({
+                            router,
+                            url:
+                              entry.value === "Sales"
+                                ? "sp/sales_analytics"
+                                : entry.value === "Consumption"
+                                ? "sp/consumption_analytics"
+                                : entry.value === "Opening"
+                                ? "sp/consumption_closing_analytics"
+                                : entry.value === "Closing"
+                                ? "sp/consumption_closing_analytics"
+                                : "",
+                            params: {
+                              startDate: startDateCS,
+                              endDate: endDateCS,
+                            },
+                          })
+                        }
+                      >
+                        <span
+                          style={{
+                            width: 12,
+                            height: 12,
+                            backgroundColor: entry.color,
+                            display: "inline-block",
+                            borderRadius: "3px",
+                          }}
+                        />
+                        {entry.value}
+                      </li>
+                    ))}
+                  </ul>
+                );
+              }}
+            />
 
             {/* Sales */}
             <Line
@@ -246,7 +310,7 @@ export default function DepartmentTrendAnalysisGraph({
           </span>
         </Col>
       </Row> */}
-      <Row className="mt-3">
+      {/* <Row className="mt-3">
         <Col className="d-flex justify-content-center gap-3">
           {[
             { label: "Sales", color: "#4CAF50" },
@@ -263,7 +327,7 @@ export default function DepartmentTrendAnalysisGraph({
             </span>
           ))}
         </Col>
-      </Row>
+      </Row> */}
     </Card>
   );
 }

@@ -9,9 +9,12 @@ import { departmentConsumptionSummaryDataFormatter } from "@/utils/data_formatte
 import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer";
 import ConsumptionSummaryCards from "@/components/common/department/cards/ConsumptionSummaryCards";
 import ComponentHeader from "@/components/common/ComponentHeader";
+import { handleNavigation } from "@/utils";
+import { useRouter } from "next/navigation";
 
 export default function DepartmentConsumptionSummary({ departmentId }) {
   const { startDate, endDate } = useDepartmentContext();
+  const router = useRouter();
 
   return (
     <div className="p-2">

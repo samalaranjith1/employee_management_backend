@@ -5,6 +5,9 @@ import { Card, Table, Badge } from "react-bootstrap";
 import { useTableSort } from "@/components/hooks/useTableSort";
 import { useTableControls } from "@/components/hooks/useTableControls";
 import { TableControls } from "@/components/common/TableControls";
+import { handleNavigation } from "@/utils";
+import { useRouter } from "next/navigation";
+import { useDepartmentContext } from "@/contexts/DepartmentContext";
 
 const DEPARTMENT_COLORS = {
   "SOUTH INDIAN": "#8750f7",
@@ -15,6 +18,8 @@ const DEPARTMENT_COLORS = {
 };
 
 export default function ItemConsumptionEfficiencyTable({ tableData = [] }) {
+  const router = useRouter();
+  const { startDate, endDate } = useDepartmentContext();
   const columns = [
     { key: "name", label: "ITEM DETAILS" },
     // { key: "department", label: "DEPARTMENT" },
@@ -130,8 +135,26 @@ export default function ItemConsumptionEfficiencyTable({ tableData = [] }) {
                     {/* ITEM DETAILS */}
                     <td>
                       <div className="fw-bold d-flex flex-column">
-                        <div className="">{row.name}</div>
-                        <div className="text-muted fw-normal">{row.subline}</div>
+                        <div
+                          className=""
+                          style={{ fontWeight: "500", cursor: "pointer" }}
+                          onClick={() =>
+                            handleNavigation({
+                              router,
+                              url: "items",
+                              params: {
+                                startDate: startDate,
+                                endDate: endDate,
+                                items: row?.itemId,
+                              },
+                            })
+                          }
+                        >
+                          {row.name}
+                        </div>
+                        <div className="text-muted fw-normal">
+                          {row.subline}
+                        </div>
                       </div>
                       <div
                         style={{
@@ -162,7 +185,24 @@ export default function ItemConsumptionEfficiencyTable({ tableData = [] }) {
                     </td> */}
 
                     {/* CONSUMED */}
-                    <td style={{ fontWeight: 600, color: "#212121" }}>
+                    <td
+                      style={{
+                        fontWeight: 600,
+                        color: "#212121",
+                        cursor: "pointer",
+                      }}
+                      onClick={() =>
+                        handleNavigation({
+                          router,
+                          url: "sp/consumption_analytics",
+                          params: {
+                            startDate,
+                            endDate,
+                            departments: row?.departmentId,
+                          },
+                        })
+                      }
+                    >
                       {row.consumed}{" "}
                       <span style={{ color: "#bbb", fontWeight: 500 }}>
                         {row.consumedUnit}
@@ -170,10 +210,27 @@ export default function ItemConsumptionEfficiencyTable({ tableData = [] }) {
                     </td>
 
                     {/* SALES */}
-                    <td style={{ color: "#0db143", fontWeight: 700 }}>
+                    <td
+                      style={{
+                        color: "#0db143",
+                        fontWeight: 700,
+                        cursor: "pointer",
+                      }}
+                      onClick={() =>
+                        handleNavigation({
+                          router,
+                          url: "sp/sales_analytics",
+                          params: {
+                            startDate,
+                            endDate,
+                            departments: row?.departmentId,
+                          },
+                        })
+                      }
+                    >
                       {row.sales}{" "}
                       <span style={{ color: "#bbb", fontWeight: 500 }}>
-                        {row.salesUnit} 
+                        {row.salesUnit}
                       </span>
                     </td>
 
@@ -181,7 +238,7 @@ export default function ItemConsumptionEfficiencyTable({ tableData = [] }) {
                     <td style={{ color: "#fd4137", fontWeight: 600 }}>
                       +{row.difference}{" "}
                       <span style={{ fontWeight: 500, color: "#fd4137" }}>
-                        {row.differenceUnit} 
+                        {row.differenceUnit}
                       </span>
                     </td>
 
