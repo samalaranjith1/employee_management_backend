@@ -9,6 +9,8 @@ import { useTableControls } from "@/components/hooks/useTableControls";
 import { useTableSort } from "@/components/hooks/useTableSort";
 import { TableControls } from "@/components/common/TableControls";
 import DOMPurify from "dompurify";
+import DurationFilters from "@/features/dashboard/DurationFilters";
+import SecondNavBar from "@/app/(routes)/dashboard/@Navbar/page";
 
 export default function AnalyticsPage({
   title,
@@ -34,6 +36,10 @@ export default function AnalyticsPage({
   exportBtn,
   filterBtn,
   search,
+  startDate:startDateC,
+  endDate:endDateC,
+  onStartDateChange,
+  onEndDateChange,
 }) {
   const pathname = usePathname();
   const showOnlyTable = pathname === "/" || pathname === "/dashboard";
@@ -133,7 +139,7 @@ export default function AnalyticsPage({
   return (
     <div style={{ position: "relative", top: "-80px" }}>
       <>
-        {!showOnlyTable &&
+        {!showOnlyTable && (
           <Container
             style={{
               borderRadius: 18,
@@ -189,9 +195,25 @@ export default function AnalyticsPage({
                   );
                 })}
               </Row>
-
+              <DurationFilters
+                useAppContext={{
+                  startDate: startDateC,
+                  endDate: endDateC,
+                  setStartDate: onStartDateChange,
+                  setEndDate: onEndDateChange,
+                }}
+              />
+              {/* <SecondNavBar
+                tabs={[]}
+                useAppContext={{
+                  startDate: startDateC,
+                  endDate: endDateC,
+                  setStartDate: onStartDateChange,
+                  setEndDate: onEndDateChange,
+                }}
+              /> */}
               {/* Date Range Pills */}
-              <Row className="mb-1" style={pillRow}>
+              {/* <Row className="mb-1" style={pillRow}>
                 <Col>
                   {dateRangeOptions.map((option) => (
                     <button
@@ -202,6 +224,7 @@ export default function AnalyticsPage({
                       {option}
                     </button>
                   ))}
+
                   {activeDateRange === "Custom" && isDatePickerOpen && (
                     <div style={{ marginTop: 12 }}>
                       <DatePicker
@@ -215,9 +238,10 @@ export default function AnalyticsPage({
                     </div>
                   )}
                 </Col>
-              </Row>
+              </Row> */}
             </Card.Body>
-          </Container>}
+          </Container>
+        )}
 
         {/* Summary Cards */}
         {/* <Row className="mb-4">
@@ -244,7 +268,12 @@ export default function AnalyticsPage({
               md={summaryCards.length === 2 ? 6 : 4} // 6 columns = 50% (≈ 50vw), else 4 (33.3%)
               className="d-flex justify-content-center"
             >
-              <Card style={{ ...summaryCard(card.bgColor), width: summaryCards.length === 2 ? "50vw" : "100%" }}>
+              <Card
+                style={{
+                  ...summaryCard(card.bgColor),
+                  width: summaryCards.length === 2 ? "50vw" : "100%",
+                }}
+              >
                 <Card.Body style={{ padding: "18px 22px" }}>
                   <div style={{ display: "flex", alignItems: "center" }}>
                     <div style={iconCircle(card.iconBg)}>{card.icon}</div>

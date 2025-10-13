@@ -32,6 +32,7 @@ export default function DurationFilters({useAppContext}) {
     setShowCalendar,
     setStartDate,
     setEndDate,
+    setShowModal,
   };
 
   // useEffect(() => {
@@ -95,6 +96,7 @@ export default function DurationFilters({useAppContext}) {
 
   const handleSelect = (key) => {
     handlePreset(key, stateChanges);
+    console.log('ramarama')
 
     // ✅ If "custom", keep modal open for date picking
     if (key === "custom") {
@@ -152,13 +154,12 @@ export default function DurationFilters({useAppContext}) {
                       startDate={startDate ? new Date(startDate) : null}
                       endDate={endDate ? new Date(endDate) : null}
                       onChange={(dates) => {
-                        handleCustomChange(dates, stateChanges)
-                        if (dates){
-                          const [start,end] =dates;
-                          if (start && end) setShowModal(false)
+                        handleCustomChange(dates, stateChanges);
+                        if (dates) {
+                          const [start, end] = dates;
+                          if (start && end) setShowModal(false);
                         }
-                      }
-                      }
+                      }}
                       inline
                     />
                     <div className="d-flex justify-content-end mt-2">
@@ -177,19 +178,76 @@ export default function DurationFilters({useAppContext}) {
           </>
         ) : (
           // ✅ Full view (desktop button group)
-          <ButtonGroup className="gap-2 flex-wrap">
-            {presetOptions.map(({ key, label }) => (
-              <Button
-                key={key}
-                variant={active === key ? "success" : "outline-primary"}
-                className="border px-3"
-                onClick={() => handlePreset(key, stateChanges)}
-                size="sm"
-              >
-                {label}
-              </Button>
-            ))}
-          </ButtonGroup>
+            <ButtonGroup
+              className="gap-2 flex-wrap"
+              style={{
+                display: "flex",
+                gap: "12px",
+                flexWrap: "wrap",
+                alignItems: "center",
+              }}
+            >
+              {presetOptions.map(({ key, label }) => {
+                const isActive = active === key;
+                return (
+                  <Button
+                    key={key}
+                    onClick={() => handleSelect(key)}
+                    size="sm"
+                    style={{
+                      borderRadius: "40px",
+                      padding: "8px 20px",
+                      fontSize: "15px",
+                      fontWeight: isActive ? 600 : 500,
+                      border: isActive
+                        ? "1.8px solid #FF6600" // bright orange border
+                        : "1.5px solid #E0E0E0", // light gray border
+                      color: isActive ? "#FF6600" : "#4F4F4F", // orange active, gray inactive
+                      backgroundColor: isActive ? "#FFF6F0" : "#FFFFFF", // light orange background when active
+                      transition: "all 0.2s ease-in-out",
+                      cursor: "pointer",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.target.style.backgroundColor = isActive
+                        ? "#FFF3EB"
+                        : "#F8F8F8"; // subtle hover
+                    }}
+                    onMouseLeave={(e) => {
+                      e.target.style.backgroundColor = isActive
+                        ? "#FFF6F0"
+                        : "#FFFFFF";
+                    }}
+                  >
+                    {label}
+                  </Button>
+                );
+              })}
+
+              {active === "custom" && showCalendar && (
+                <div
+                  className="mt-3"
+                  style={{
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "center",
+                  }}
+                >
+                  <DatePicker
+                    selectsRange
+                    startDate={startDate ? new Date(startDate) : null}
+                    endDate={endDate ? new Date(endDate) : null}
+                    onChange={(dates) => {
+                      handleCustomChange(dates, stateChanges);
+                      if (dates) {
+                        const [start, end] = dates;
+                        if (start && end) setShowCalendar(false);
+                      }
+                    }}
+                    inline
+                  />
+                </div>
+              )}
+            </ButtonGroup>
         )}
       </div>
     </Container>
