@@ -13,6 +13,7 @@ import { useDashboardContext } from "@/contexts/DashboardContext";
 import { useRouter } from "next/navigation";
 import { handleNavigation } from "@/utils";
 import { IconChartColumn } from "@tabler/icons-react";
+import '@/app/globals.css';
 
 export default function DepartmentConsumptionChart() {
   const { startDate, endDate } = useDashboardContext();
@@ -63,10 +64,11 @@ export default function DepartmentConsumptionChart() {
       justifyContent: "space-between", // pushes text left and value right
       alignItems: "center",
       alignItems: "flex-start",
+      marginTop: '-5px'
     },
 
     scrollBox: {
-      maxHeight: "250px",
+      maxHeight: "65vh",
       overflowY: "auto",
       paddingRight: "6px",
     },
@@ -97,6 +99,17 @@ export default function DepartmentConsumptionChart() {
 
   return (
     <Container fluid className="p-2">
+      <div style={styles.header}>
+        <div style={{
+          background: 'linear-gradient(135deg, #316FEA 60%, #2680FF 100%)', // blue gradient for Figma match
+          borderRadius: '12px',
+          padding: '8px',
+          display: 'inline-block'
+        }}>
+          <IconChartColumn stroke={2} color="#fff" size={20} />
+        </div>
+        <span className="c_medium_text_semi_bold c_black_3">Department Consumption</span>
+      </div>
       <ServiceRenderer
         queryHook={useDepartmentsUsageList}
         queryKey={[
@@ -118,59 +131,64 @@ export default function DepartmentConsumptionChart() {
           return (
             <Card style={styles.card}>
               {/* Header */}
-              <div style={styles.header}>
-                <div style={{
-                  background: 'linear-gradient(135deg, #316FEA 60%, #2680FF 100%)', // blue gradient for Figma match
-                  borderRadius: '16px',
-                  padding: '8px',
-                  display: 'inline-block'
-                }}>
-                  <IconChartColumn stroke={2} color="#fff" size={24} />
-                </div>
-                <span>Department Consumption</span>
-              </div>
 
-              <Row>
+              <Row style={{ height: "65vh" }}>
                 {/* Pie Chart */}
-                <Col md={6} sm={12} className="d-flex justify-content-center">
-                  <ResponsiveContainer width="100%" height={250}>
-                    <PieChart>
-                      <Pie
-                        data={chartData}
-                        dataKey="value"
-                        nameKey="name"
-                        innerRadius={60}
-                        outerRadius={100}
-                        paddingAngle={3}
-                        label={({ percent }) =>
-                          `${(percent * 100).toFixed(1)}%`
-                        }
-                      >
-                        {chartData.map((entry, index) => (
-                          <Cell key={`cell-${index}`} fill={entry.color} />
-                        ))}
-                      </Pie>
-                      <Tooltip content={<CustomTooltip />} />
-                    </PieChart>
-                  </ResponsiveContainer>
+                <Col
+                  md={6}
+                  sm={12}
+                  className="d-flex justify-content-center align-items-center"
+                >
+                  <div
+                    style={{
+                      width: "100%",
+                      maxWidth: 400,      // max width for chart
+                      height: 300,        // fixed height for mobile visibility
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center", // vertical center inside the div
+                    }}
+                  >
+                    <ResponsiveContainer width="100%" height="100%">
+                      <PieChart>
+                        <Pie
+                          data={chartData}
+                          dataKey="value"
+                          nameKey="name"
+                          innerRadius={60}
+                          outerRadius={125}   // relative to container, scales nicely
+                          paddingAngle={0}
+                          label={({ percent }) => `${(percent * 100).toFixed(1)}%`}
+                          cx="50%"
+                          cy="50%"
+                        >
+                          {chartData.map((entry, index) => (
+                            <Cell key={`cell-${index}`} fill={entry.color} />
+                          ))}
+                        </Pie>
+                        <Tooltip content={<CustomTooltip />} />
+                      </PieChart>
+                    </ResponsiveContainer>
+                  </div>
                 </Col>
 
+
                 {/* Legend / Details */}
-                <Col md={6} sm={12}>
+                <Col md={6} sm={12} style={{ height: "65vh" }}>
                   <div style={styles.scrollBox}>
                     {chartData.map((item, idx) => (
                       <div key={idx} style={styles.legendItem}>
                         <div style={styles.legendLabel}>
                           <span style={styles.colorDot(item.color)}></span>
-                          <span>{item.name}</span>
+                          <span className="c_small_text_semi_bold_600">{item.name}</span>
                         </div>
                         <div
                           style={{
                             display: "flex",
                             flexDirection: "column",
-                            alignItems: "flex-start", // ensures left alignment
-                            minWidth: "100px", // ensures consistent width for all values
-                            fontFamily: "monospace", // optional: better number alignment
+                            alignItems: "flex-start",
+                            minWidth: "100px",
+                            fontFamily: "monospace",
                           }}
                           onClick={() =>
                             handleNavigation({
@@ -184,49 +202,23 @@ export default function DepartmentConsumptionChart() {
                             })
                           }
                         >
-                          <div>₹{item.value.toLocaleString()}</div>
-                          <div style={{ color: "#6c757d", fontSize: "0.8rem" }}>
+                          <div className="c_small_text_extra_bold">₹{item.value.toLocaleString()}</div>
+                          <div className="c_normal_text_semi_regular c_gray_3">
                             {(item.percentage * 100).toFixed(1)}%
                           </div>
                         </div>
                       </div>
                     ))}
-
-                    {/* {chartData.map((item, idx) => (
-                      <div key={idx} style={styles.legendItem}>
-                        <div style={styles.legendLabel}>
-                          <span style={styles.colorDot(item.color)}></span>
-                          <span>{item.name}</span>
-                        </div>
-                        <div
-                          onClick={() =>
-                            handleNavigation({
-                              router,
-                              url: "sp/consumption_analytics",
-                              params: {
-                                startDate: startDate,
-                                endDate: endDate,
-                                departments: item?.departmentId
-                              },
-                            })
-                          }
-                        >
-                          ₹{item.value.toLocaleString()}{" "}
-                          <div
-                            style={{ color: "#6c757d", fontSize: "0.8rem" }}
-                          >
-                            {(item.percentage * 100).toFixed(1)}%
-                          </div>
-                        </div>
-                      </div>
-                    ))} */}
                   </div>
                   <div style={styles.total}>
-                    <span>Total Purchases:</span>
-                    <span style={{paddingRight:'3vw'}}>₹{total?.toLocaleString()}</span>
+                    <span className="c_small_text_extra_bold">Total Purchases:</span>
+                    <span style={{ paddingRight: "3vw" }} className="c_small_text_extra_bold">
+                      ₹{total?.toLocaleString()}
+                    </span>
                   </div>
                 </Col>
               </Row>
+
             </Card>
           );
         }}

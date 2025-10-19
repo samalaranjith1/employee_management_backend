@@ -40,3 +40,217 @@ a {
     color-scheme: dark;
   }
 }
+
+.c_primary {
+  color: #ff6000;
+}
+
+#c_primary {
+  color: #ff6000
+}
+
+.c_secondary {
+  color: #232425
+}
+
+.c_info {
+  color: #2f80ed
+}
+
+.c_positive {
+  color: #27ae60
+}
+
+.c_medium {
+  color: #e2b93b
+}
+
+.c_negative {
+  color: #d3403c
+}
+
+.c_black_1 {
+  color: #000000
+}
+
+.c_black_2 {
+  color: #1d1d1d
+}
+
+.c_black_3 {
+  color: #282828
+}
+
+.c_white {
+  color: #ffffff
+}
+
+.c_gray_1 {
+  color: #333333
+}
+
+.c_gray_2 {
+  color: #4f4f4f
+}
+
+.c_gray_3 {
+  color: #828282
+}
+
+.c_gray_4 {
+  color: #bdbdbd
+}
+
+.c_gray_5 {
+  color: #e0e0e0
+}
+
+.c_bg_gray_5 {
+  background-color: #f4f7fc
+}
+.c_heading_1 {
+  font-size: 56px;
+  line-height: 61.6px;
+}
+
+.c_heading_2 {
+  font-size: 48px;
+  line-height: 52.8px;
+}
+
+.c_heading_3 {
+  font-size: 40px;
+  line-height: 44px;
+}
+
+.c_heading_4 {
+  font-size: 32px;
+  line-height: 35.2px;
+}
+
+.c_heading_5 {
+  font-size: 24px;
+  line-height: 26.4px;
+}
+
+.c_heading_6 {
+  font-size: 20px;
+  line-height: 22px;
+}
+
+.c_large_text_bold {
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: bold;
+}
+
+.c_large_text_regular {
+  font-size: 20px;
+  line-height: 28px;
+}
+
+.c_medium_text_bold {
+  font-size: 18px;
+  line-height: 25.2px;
+  font-weight: bold;
+}
+.c_medium_text_semi_bold {
+  font-size: 18px;
+  line-height: 25.2px;
+  font-weight: 600;
+}
+
+.c_medium_text_regular {
+  font-size: 20px;
+  line-height: 28px;
+}
+
+.c_normal_text_bold {
+  font-size: 16px;
+  line-height: 22.4px;
+  font-weight: bold
+}
+
+.c_normal_text_extra_bold {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 800;
+}
+.c_normal_text_regular {
+  font-size: 16px;
+  line-height: 22.4px;
+}
+.c_normal_text_semi_regular {
+  font-size: 14px;
+  line-height: 18px;
+}
+.c_small_text_semi_bold {
+  font-size: 14px;
+  line-height: 19.6px;
+  font-weight: 500;
+}
+.c_small_text_semi_bold_600 {
+  font-size: 14px;
+  line-height: 19.6px;
+  font-weight: 600;
+}
+
+.c_small_text_bold {
+  font-size: 14px;
+  line-height: 19.6px;
+  font-weight: bold;
+}
+.c_table_columns_semi_bold {
+  font-size: 14px;
+  line-height: 25.2px;
+  font-weight: 600;
+  color:#464f60;
+}
+.c_table_cells_regular {
+  font-size: 14px;
+  /* line-height: 25.2px; */
+  font-weight: 500;
+  color:#171c26;
+}
+.c_table_sub_cells_regular {
+  font-size: 12px;
+  /* line-height: 18px; */
+  font-weight: 400;
+  color:#697182;
+}
+
+.c_small_text_extra_bold {
+  font-size: 14px;
+  line-height: 19.6px;
+  font-weight: 800;
+}
+
+.c_small_text_regular {
+  font-size: 14px;
+  line-height: 19.6px;
+}
+
+/* Core layout container */
+.app-container {
+  width: 100%;
+  max-width: 1280px;         /* ✅ limit to 80% of viewport width */
+  margin: 0 auto;          /* ✅ center horizontally */
+}
+
+/* Optional: for a nice look on smaller screens */
+@media (max-width: 1280px) {
+  .app-container {
+    max-width: 100vw;      /* ✅ use full width on smaller screens */
+  }
+}
+
+html {
+  font-size: clamp(12px, 1vw + 6px, 14px);
+}
+
+.a-container{
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+  border:'20px solid red'
+}

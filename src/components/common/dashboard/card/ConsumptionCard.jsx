@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import CommonCard from "./CommonCard";
 import { handleNavigation } from "@/utils";
 import { useDashboardContext } from "@/contexts/DashboardContext";
+import "@/app/globals.css";
 
 export default function ConsumptionCard({
   title,
@@ -42,45 +43,30 @@ export default function ConsumptionCard({
           params: { startDate: startDate, endDate: endDate ,departments:'2'},
         })
       }
-      style={{ cursor: "pointer" }}
+      style={{ cursor: "pointer"}}
+      className="col-md-4"
     >
-      {/* <CommonCard
-        bgColor={bgColor}
-        textColor={textColor}
-        style={{
-          minWidth: isMobile ? "88vw" : "30vw",
-          flexShrink: 0,
-          borderRadius: "12px",
-          boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
-          border: "2px solid gray",
-          backgroundColor: bgColor || "#fff",
-          color: textColor || "#000",
-          cursor: "pointer",
-        }}
-      >
-       */}
       <CommonCard
         bgColor={bgColor}
         style={{
-          minWidth: isMobile ? "88vw" : "30vw",
+          // minWidth: isMobile ? "88vw" : "31.5vw",
+          minWidth: isMobile ? "88%" : "98%", 
           flexShrink: 0,
           borderRadius: "12px",
-          border: "1.5px solid #c0bfc7", // Medium gray border like Figma
+          // border: "0.1px solid #c0bfc7", // Medium gray border like Figma
           backgroundColor: bgColor || "#faf8f7", // Pastel background close to Figma
-          color: textColor || "#000000",
+          // color: textColor || "#000000",
           boxShadow: "none", // Remove drop shadow, use subtle border
           cursor: "pointer",
-          padding: "16px 20px", // Consistent padding
+          // padding: "16px 20px", // Consistent padding
         }}
       >
         <div className="d-flex justify-content-between align-items-center mb-2">
           <div>
             <h6
-              className="text-uppercase"
+              className="c_small_text_semi_bold c_gray_3"
               style={{
-                fontSize: "0.8rem",
                 letterSpacing: "0.05em",
-                color: "#a1a1a1", // Muted gray color for heading
               }}
             >
               {title}
@@ -88,8 +74,7 @@ export default function ConsumptionCard({
             <h4
               className="fw-bold mb-0"
               style={{
-                fontSize: "1.5rem",
-                color: textColor || "#000000",
+                color: "#000000",
                 lineHeight: 1.1,
               }}
             >
@@ -103,7 +88,7 @@ export default function ConsumptionCard({
           {rows.map((row, idx) => (
             <li
               key={idx}
-              className="d-flex justify-content-between align-items-center mb-1 rounded p-1"
+              className="d-flex justify-content-between align-items-center mb-1 rounded p-1 c_small_text_regular"
               style={{
                 backgroundColor: row.highlightBg || "transparent",
                 color: "black",
@@ -112,14 +97,13 @@ export default function ConsumptionCard({
               <span
                 // className="text-secondary"
                 style={{
-                  fontSize: "0.9rem",
                   color: textColor,
                   // fontWeight: "bold",
                 }}
               >
                 {row.label}
               </span>
-              <span className="fw-bold" style={{ fontSize: "0.9rem" }}>
+              <span className="fw-bold" >
                 {row.value}
               </span>
             </li>

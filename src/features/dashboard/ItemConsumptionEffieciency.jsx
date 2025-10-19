@@ -47,8 +47,8 @@ const ItemConsumptionEfficiency = () => {
         scrollRef={myScrollRef}
         isExpandable={true}
         titleIcon={<div style={{
-          background: '#fd4b1a',
-          borderRadius: '16px',
+          background: '#fc3830',
+          borderRadius: '12px',
           padding: '8px',
           display: 'inline-block'
         }}>

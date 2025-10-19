@@ -70,13 +70,13 @@ export default function MonthSummary() {
         cardBgColor="transparent"
         isShowArrows={true}
         scrollRef={scrollContainerRef}
-        isExpandable={true}
+        isExpandable={false}
         titleIcon={<div
           style={{
-            width: 48,
-            height: 48,
-            borderRadius: 16,
-            background: "linear-gradient(135deg, #f65517 60%, #FEAD40 100%)",
+            width: 40,
+            height: 40,
+            borderRadius: 12,
+            background: "linear-gradient(135deg, #ff5d00, #e7483b 100%)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",

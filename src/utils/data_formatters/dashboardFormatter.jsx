@@ -123,19 +123,19 @@ import { IconArrowRight, IconBasketDollar, IconFoldDown, IconFolderSymlink, Icon
 export function consumptionSummaryFormatter(data) {
   return [
     {
-      title: "CONSUMPTION %",
+      title: "Consumption %",
       percentage: `${data.current?.consumptionPercentage?.toFixed(0)}%`,
       percentageChange: "+2.1%",
       icon: <div style={{
-        background: '#EFA14A',
+        background: 'linear-gradient(90deg, #f29f38, #c27e2a)',
         borderRadius: '12px',
         padding: '8px',
         display: 'inline-block'
       }}>
         <IconToolsKitchen2 stroke={2} color="#fff" size={24} />
       </div>,
-      textColor: "#bc4b00",
-      bgColor: "#fff9f1",
+      textColor: "#d38421",
+      bgColor: "#fff8f0",
       routeUrl: "/consumption_analytics", // 🔹 direct
       rows: [
         {
@@ -155,18 +155,18 @@ export function consumptionSummaryFormatter(data) {
       ],
     },
     {
-      title: "CONSUMPTION",
+      title: "Consumption",
       percentage: `₹${data.current?.consumptionValue?.toLocaleString()}`,
       percentageChange: "-1.5%",
       icon: <div style={{
-        background: '#2680FF',
+        background: 'linear-gradient(90deg, #2779ff, #195ce0)',
         borderRadius: '12px',
         padding: '8px',
         display: 'inline-block'
       }}>
         <IconShoppingCartCheck stroke={2} color="#fff" size={24} />
       </div>,
-      textColor: "#1d40af",
+      textColor: "#1d63e7",
       bgColor: "#f2f7ff",
       routeUrl: "/consumption_analytics", // 🔹 direct
       rows: [
@@ -185,19 +185,19 @@ export function consumptionSummaryFormatter(data) {
       ],
     },
     {
-      title: "NET SALES",
+      title: "Net Sales",
       percentage: `₹${data.current?.netSales.toLocaleString()}`,
       percentageChange: "+8.3%",
       icon: <div style={{
-        background: '#924CFE',
+        background: 'linear-gradient(90deg, #a93fff, #6d1dad)',
         borderRadius: '12px',
         padding: '8px',
         display: 'inline-block'
       }}>
         <IconTrendingUp stroke={2} color="#fff" size={24} />
       </div>,
-      textColor: "#5b21b6",
-      bgColor: "#faf6ff",
+      textColor: "#7722ba",
+      bgColor: "#faf5ff",
       routeUrl: "/sales_analytics", // 🔹 direct
       rows: [
         {
@@ -218,7 +218,7 @@ export function monthSummaryFormatter(data) {
 
   return [
     {
-      title: "PROFIT",
+      title: "Profit",
       percentageChange: "+15.2%", // replace with actual calc if API gives
       value: formatCurrency(data.current.margin),
       trend: "up",
@@ -238,7 +238,7 @@ export function monthSummaryFormatter(data) {
       routeUrl: "",
     },
     {
-      title: "EXPENSES",
+      title: "Expenses",
       percentageChange: "+5.8%",
       value: formatCurrency(data.current.totalPaymentAmount),
       trend: "up",
@@ -258,7 +258,7 @@ export function monthSummaryFormatter(data) {
       routeUrl: "purchase_analytics",
     },
     {
-      title: "SALES",
+      title: "Sales",
       percentageChange: "+12.4%",
       value: formatCurrency(data.current?.netSales),
       trend: "up",
@@ -278,7 +278,7 @@ export function monthSummaryFormatter(data) {
       ],
     },
     {
-      title: "NET CONSUMPTION",
+      title: "Net Consumption",
       percentageChange: "-3.2%",
       value: formatCurrency(data.current?.netConsumptionValue),
       trend: "down",
@@ -303,7 +303,7 @@ export function monthSummaryFormatter(data) {
       ],
     },
     {
-      title: "CREDIT",
+      title: "Credit",
       percentageChange: "-3.2%",
       value: formatCurrency(data.current.creditAmount),
       trend: "down",
@@ -327,7 +327,7 @@ export function monthSummaryFormatter(data) {
       ],
     },
     {
-      title: "DEBIT",
+      title: "Debit",
       percentageChange: "-3.2%",
       value: formatCurrency(data.current.debitAmount),
       trend: "down",
@@ -435,7 +435,8 @@ export function trendAnalysisFormatter(data, view) {
           : view === "Monthly"
             ? format(parseISO(item.startDate), "MMM")
             : format(parseISO(item.startDate), "MMM d"),
-
+      startDate: item.startDate,
+      endDate: item.endDate,
       Sales: item.netSales ?? 0,
       Consumption: item?.consumptionValue ?? 0,
       Opening: item.consumptionOpeningValue ?? 0,
@@ -524,14 +525,14 @@ export function periodDataBreakdownFormatter(raw, view) {
   // 🔹 Cards (from current summary)
   const cards = [
     {
-      title: "COST RATIO",
+      title: "Cost Ratio",
       value: `${(current.consumptionPercentage || 0).toFixed(1)}%`,
       change: "-2.1%", // placeholder until API provides delta
       color: current.consumptionPercentage > 60 ? "danger" : "success",
       bg: "white"
     },
     {
-      title: `AVERAGE ${view.toUpperCase()} SALES`,
+      title: `Average ${view.toUpperCase()} Sales`,
       value: formatCurrency(current.netSales),
       change: "+8.3%",
       color: "success",
@@ -539,14 +540,14 @@ export function periodDataBreakdownFormatter(raw, view) {
 
     },
     {
-      title: `AVERAGE ${view.toUpperCase()} CONSUMPTION`,
+      title: `Avg. ${view.toUpperCase()} Consumption`,
       value: formatCurrency(current.consumptionValue),
       change: "+5.7%",
       color: "success",
       bg: "white"
     },
     {
-      title: `AVERAGE ${view.toUpperCase()} WASTE`,
+      title: `Average ${view.toUpperCase()} Waste`,
       value: formatCurrency(current.wasteAmount),
       change: "-12.4%",
       color: "danger",
@@ -580,11 +581,11 @@ export function periodDataBreakdownFormatter(raw, view) {
 function getBackgroundColor(status) {
   switch (status?.toLowerCase()) {
     case "red":
-      return "#ff0000"; // Red
+      return "#dc2620"; // Red
     case "orange":
-      return "#0a2ee5ff"; // Yellow
+      return "#de6e2a"; // Yellow
     case "green":
-      return "#257a0bff"; // Green
+      return "#5d9d4a"; // Green
     default:
       return "#ffffff"; // Fallback
   }
@@ -618,30 +619,30 @@ export function departmentPerformanceFormatter(apiData) {
       value: `₹${Number(apiData.totalSales).toLocaleString()}`,
       icon: <div style={{
         background: '#27a869', // vibrant orange-red
-        borderRadius: '16px',
-        padding: '12px',
+        borderRadius: '12px',
+        padding: '8px',
         display: 'inline-block'
       }}>
         <IconShoppingCartCheck stroke={2} color="#fff" size={24} />
       </div>,
       iconColorClass: "text-primary",
       borderColor: "#11974bff",
-      bgColor: "#cff9d6ff"
+      bgColor: "#f0fff0"
     },
     {
       title: "Total Consumption",
       value: `₹${Number(apiData.netConsumptionValue).toLocaleString()}`,
       icon: <div style={{
         background: '#216cf2', // vibrant orange-red
-        borderRadius: '16px',
-        padding: '12px',
+        borderRadius: '12px',
+        padding: '8px',
         display: 'inline-block'
       }}>
         <IconShoppingCartCheck stroke={2} color="#fff" size={24} />
       </div>,
       iconColorClass: "text-success",
       borderColor: "#a4a4ffff",
-      bgColor: "#eaeffaff"
+      bgColor: "#f4f8ff"
 
     },
     {
@@ -649,39 +650,38 @@ export function departmentPerformanceFormatter(apiData) {
       value: `${apiData.consumptionPercentage}%`,
       icon: <div style={{
         background: '#ef4f08', // vibrant orange-red
-        borderRadius: '16px',
-        padding: '12px',
+        borderRadius: '12px',
+        padding: '8px',
         display: 'inline-block'
       }}>
         <IconShoppingCartCheck stroke={2} color="#fff" size={24} />
       </div>,
       iconColorClass: "text-warning",
       borderColor: "#f97316",
-      bgColor: "#fff5e6"
-
+      bgColor: "#fff7f2"
     },
     {
       title: "Total Cost %",
       value: `${apiData.targetConsumptionPercentage}%`,
       icon: <div style={{
         background: '#9534e3', // bold purple
-        borderRadius: '16px',
-        padding: '12px',
+        borderRadius: '12px',
+        padding: '8px',
         display: 'inline-block'
       }}>
         <IconTrendingUp stroke={2} color="#fff" size={24} />
       </div>,
-      iconColorClass: "text-purple", // make sure you define this class
+      iconColorClass: "#a93fff", // make sure you define this class
       borderColor: "#a855f7",
-      bgColor: "#efe5f7ff"
+      bgColor: "#faf6ff"
 
     },
   ];
 
   const graph = apiData.list.map((item) => ({
     title: item?.department?.name || "Unknown",
-    sales: Number(item?.netSales || 0),
-    consumption: Number(item?.consumptionValue || 0),
+    sales: Number(item?.netSales?.toLocaleString() || 0),
+    consumption: Number(item?.consumptionValue?.toLocaleString() || 0),
     cost: Number(item?.consumptionPercentage || 0),
     status: item?.status || "N/A",
   }));
@@ -742,7 +742,7 @@ export function itemConsumptionEfficiencyDataFormatter(data) {
       label: "Total Items",
       value:
         (data.redItems ?? 0) + (data.greenItems ?? 0) + (data.orangeItems ?? 0),
-      bg: "#ddf0f5ff",
+      bg: "#f4f8ff",
 
     },
     {
@@ -756,7 +756,7 @@ export function itemConsumptionEfficiencyDataFormatter(data) {
       </div>,
       label: "Critical Items",
       value: data.redItems ?? 0,
-      bg: "#d1f0cfff",
+      bg: "#f0fff0",
 
     },
 
@@ -771,7 +771,7 @@ export function itemConsumptionEfficiencyDataFormatter(data) {
       </div>,
       label: "Total Waste",
       value: formatCurrency(data.burn),
-      bg: "#fff3e0",
+      bg: "#fff7f2",
 
     },
     {
@@ -785,7 +785,7 @@ export function itemConsumptionEfficiencyDataFormatter(data) {
       </div>,
       label: "Avg Waste",
       value: formatPercentage(data.avgBurn),
-      bg: "#f9e5f9ff",
+      bg: "#faf6ff",
     },
   ];
 
@@ -929,71 +929,75 @@ export const consumptionDistributionDataFormatter = (apiData) => {
     {
       label: "Total Items",
       value: apiData.itemCount ?? 0,
-      bgColor: "#2370f6",
+      bgColor: "#f4f8ff",
       amount: apiData.consumptionValue
         ? `₹${apiData.consumptionValue.toLocaleString()}`
         : "₹0",
       color: "#E8F0FF",
+      textColor:'#1859da',
       icon: <div style={{
         background: '#2370f6', // vibrant orange-red
-        borderRadius: '16px',
-        padding: '12px',
+        borderRadius: '12px',
+        padding: '8px',
         display: 'inline-block'
       }}>
-        <IconShoppingCartCheck stroke={2} color="#fff" size={30} />
+        <IconShoppingCartCheck stroke={2} color="#fff" size={24} />
       </div>
     },
     {
       label: "High Consumption",
       value: apiData.high?.count ?? 0,
-      bgColor: "#239f65",
+      bgColor: "#f0fff0",
       amount: apiData.high?.value
         ? `₹${apiData.high.value.toLocaleString()}`
         : "₹0",
       color: "#E8F8F0",
+      textColor:"#15774f",
       icon: <div style={{
         background: '#239f65', // matching green gradient from Figma
-        borderRadius: '16px',
-        padding: '12px',
+        borderRadius: '12px',
+        padding: '8px',
         display: 'inline-block'
       }}>
-        <IconFoldUp stroke={2} color="#fff" size={30} />
+        <IconFoldUp stroke={2} color="#fff" size={24} />
       </div>
 
     },
     {
       label: "Medium Consumption",
       value: apiData.medium?.count ?? 0,
-      bgColor: "#eb9d03",
+      bgColor: "#fdf8e0",
       amount: apiData.medium?.value
         ? `₹${apiData.medium.value.toLocaleString()}`
         : "₹0",
       color: "#FFF8E1",
+      textColor:"#e88603",
       icon: <div style={{
         background: '#eb9d03', // vibrant orange gradient
-        borderRadius: '16px',
-        padding: '12px',
+        borderRadius: '12px',
+        padding: '8px',
         display: 'inline-block'
       }}>
-        <IconFolderSymlink stroke={2} color="#fff" size={30} />
+        <IconFolderSymlink stroke={2} color="#fff" size={24} />
       </div>
 
     },
     {
       label: "Low Consumption",
       value: apiData.low?.count ?? 0,
-      bgColor: "#f15107",
+      bgColor: "#fff7f2",
       amount: apiData.low?.value
         ? `₹${apiData.low.value.toLocaleString()}`
         : "₹0",
       color: "#FFEAEA",
+      textColor:'#bf1e38',
       icon: <div style={{
         background: '#f15107', // vibrant orange gradient
-        borderRadius: '16px',
-        padding: '12px',
+        borderRadius: '12px',
+        padding: '8px',
         display: 'inline-block'
       }}>
-        <IconFoldDown stroke={2} color="#fff" size={30} />
+        <IconFoldDown stroke={2} color="#fff" size={24} />
       </div>
     },
   ];

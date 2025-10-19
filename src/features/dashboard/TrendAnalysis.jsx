@@ -34,6 +34,7 @@ import {
 import { useDashboardContext } from "@/contexts/DashboardContext";
 import { trendAnalysisFormatter } from "@/utils/data_formatters/dashboardFormatter";
 import { IconArrowsMaximize, IconTrendingUp } from "@tabler/icons-react";
+import "@/app/globals.css";
 
 export default function TrendAnalysis() {
   const { startDate, endDate } = useDashboardContext();
@@ -90,14 +91,14 @@ export default function TrendAnalysis() {
 
   return (
     <Container fluid className="m-1">
-      <Container fluid className="p-2 bg-white rounded shadow-sm">
+      <Container fluid className="p-1 bg-white rounded shadow-sm">
         <Row className="d-flex align-items-center justify-content-between mb-3">
           <Col className="d-flex align-items-center">
             <div className="me-2">
               <div
                 style={{
-                  width: 36,
-                  height: 36,
+                  width: 40,
+                  height: 40,
                   borderRadius: 12,
                   background: "#3a6cf7", // Gradient to match Figma
                   display: "flex",
@@ -109,16 +110,16 @@ export default function TrendAnalysis() {
                 <IconTrendingUp color="white" size={28} stroke={2} />
               </div>
             </div>
-            <div className="d-flex flex-column mt-2">
-              <div className="fw-bold">Trend Analysis</div>
-              <div>Sales, consumption, and inventory trends over time</div>
+            <div className="d-flex flex-column ">
+              <div className="c_medium_text_bold">Trend Analysis</div>
+              {/* <div>Sales, consumption, and inventory trends over time</div> */}
             </div>
           </Col>
 
           <Col xs="auto" className="d-flex align-items-center ms-auto gap-2">
             <div className="d-none d-md-flex bg-gray">
               <ButtonGroup
-                className="px-2"
+                // className="px-2"
                 style={{
                   backgroundColor: "#ddd",
                   borderRadius: "20px",
@@ -136,13 +137,15 @@ export default function TrendAnalysis() {
                       checked={view}
                       value={value}
                       onClick={() => getDateRange(label)}
-                      className="rounded-pill"
+                      className="rounded-pill c_small_text_regular"
                       style={{
                         fontSize: "13px",
                         padding: "6px 16px",
                         backgroundColor:
-                          view === label ? "#FF6600" : "transparent",
-                        color: view === label ? "white" : "#888",
+                          //   view === label ? "#FF6600" : "transparent",
+                          // color: view === label ? "#fefefe" : "#888",
+                          view === label ? "#fefefe" : "transparent",
+                        color: view === label ? "#FF6600" : "#888",
                         border: "none",
                         cursor: "pointer",
                         userSelect: "none",
@@ -186,7 +189,7 @@ export default function TrendAnalysis() {
                 </Button>
               ))} */}
             <ButtonGroup
-              className="px-2"
+              // className="px-2"
               style={{
                 backgroundColor: "#ddd",
                 borderRadius: "20px",
@@ -209,8 +212,10 @@ export default function TrendAnalysis() {
                       fontSize: "13px",
                       padding: "6px 16px",
                       backgroundColor:
-                        view === label ? "#FF6600" : "transparent",
-                      color: view === label ? "white" : "#888",
+                        //   view === label ? "#FF6600" : "transparent",
+                        // color: view === label ? "white" : "#888",
+                        view === label ? "#fefefe" : "transparent",
+                      color: view === label ? "#FF6600" : "#888",
                       border: "none",
                       cursor: "pointer",
                       userSelect: "none",
@@ -233,14 +238,15 @@ export default function TrendAnalysis() {
           </div>
         </Row>
 
-        {/* ServiceRenderer handles service + formatter */}
         <ServiceRenderer
-          queryHook={SelectedHook} // Pass the hook itself
+          queryHook={SelectedHook}
           queryKey={["outletSummary", view]}
           queryArgs={[
             1,
-            { startdt: startDateCS, enddt: endDateCS, outlet: 1, userId: 7 },
-          ]} // Args passed to the hook
+            // { startdt: startDateCS, enddt: endDateCS, outlet: 1, userId: 7 },
+            { startdt: startDate, enddt: endDate, outlet: 1, userId: 7 },
+
+          ]}
           formatter={(raw) => trendAnalysisFormatter(raw, view)}
         >
           {(data) => {
@@ -256,18 +262,13 @@ export default function TrendAnalysis() {
             })();
             return (
               <>
-                <ResponsiveContainer width="100%" height={400}>
+                {/* <ResponsiveContainer width="100%" height={400}>
                   <LineChart
                     data={data}
                     margin={{ top: 20, right: 40, left: 0, bottom: 0 }}
                   >
-                    <CartesianGrid
-                      strokeDasharray="3 3"
-                      vertical={true}
-                      horizontal={true}
-                    />
+                    <CartesianGrid strokeDasharray="3 3" vertical horizontal />
                     <XAxis dataKey="name" />
-
                     <YAxis
                       yAxisId="left"
                       tickFormatter={(value) => `₹${parseInt(value / 1000)}k`}
@@ -276,17 +277,15 @@ export default function TrendAnalysis() {
                     <YAxis
                       yAxisId="right"
                       orientation="right"
-                      tickFormatter={(value) => `${parseInt(value / 100)}%`}
+                      tickFormatter={(value) => `${parseInt(value)}%`}
                       domain={[0, 100]}
                     />
-
                     <Tooltip
                       formatter={(value, name) =>
-                        name === "consumptionPercentage"
-                          ? `${value}%`
-                          : `₹${value}`
+                        name === "consumptionPercentage" ? `${value}%` : `₹${value}`
                       }
                     />
+
                     <Legend
                       content={(props) => {
                         const { payload } = props;
@@ -299,7 +298,7 @@ export default function TrendAnalysis() {
                               gap: "20px",
                               padding: 0,
                               margin: 0,
-                              flexWrap: "wrap", // ✅ allow wrapping on mobile
+                              flexWrap: "wrap",
                             }}
                           >
                             {payload.map((entry, index) => (
@@ -310,67 +309,7 @@ export default function TrendAnalysis() {
                                   display: "flex",
                                   alignItems: "center",
                                   gap: "6px",
-                                  marginBottom: "6px", // ✅ add small spacing between wrapped rows
-                                }}
-                                onClick={() =>
-                                  handleNavigation({
-                                    router,
-                                    url:
-                                      entry.value === "Sales"
-                                        ? "sp/sales_analytics"
-                                        : entry.value === "Consumption"
-                                        ? "sp/consumption_analytics"
-                                        : entry.value === "Opening"
-                                        ? "sp/consumption_closing_analytics"
-                                        : entry.value === "Closing"
-                                        ? "sp/consumption_closing_analytics"
-                                        : "",
-                                    params: {
-                                      startDate: startDateCS,
-                                      endDate: endDateCS,
-                                    },
-                                  })
-                                }
-                              >
-                                <span
-                                  style={{
-                                    width: 12,
-                                    height: 12,
-                                    backgroundColor: entry.color,
-                                    display: "inline-block",
-                                    borderRadius: "3px",
-                                  }}
-                                />
-                                {entry.value}
-                              </li>
-                            ))}
-                          </ul>
-                        );
-                      }}
-                    />
-
-                    {/* <Legend
-                      content={(props) => {
-                        const { payload } = props;
-                        return (
-                          <ul
-                            style={{
-                              listStyle: "none",
-                              display: "flex",
-                              justifyContent: "center", // 🔹 center align
-                              gap: "20px",
-                              padding: 0,
-                              margin: 0,
-                            }}
-                          >
-                            {payload.map((entry, index) => (
-                              <li
-                                key={`legend-${index}`}
-                                style={{
-                                  cursor: "pointer",
-                                  display: "flex",
-                                  alignItems: "center",
-                                  gap: "6px",
+                                  marginBottom: "6px",
                                 }}
                                 onClick={() =>
                                   handleNavigation({
@@ -407,7 +346,349 @@ export default function TrendAnalysis() {
                           </ul>
                         );
                       }}
-                    /> */}
+                    />
+
+                    {[
+                      {
+                        key: "Sales",
+                        color: "#1faa1f",
+                        url: "sp/sales_analytics",
+                      },
+                      {
+                        key: "Consumption",
+                        color: "#f7af37",
+                        url: "sp/consumption_analytics",
+                      },
+                      {
+                        key: "Opening",
+                        color: "#3c82f6",
+                        url: "sp/consumption_closing_analytics",
+                      },
+                      {
+                        key: "Closing",
+                        color: "#8b5cf6",
+                        url: "sp/consumption_closing_analytics",
+                      },
+                      {
+                        key: "consumptionPercentage",
+                        color: "#ef4444",
+                        url: "sp/consumption_analytics",
+                        yAxisId: "right",
+                        dashed: true,
+                      },
+                    ].map((line) => (
+                      <Line
+                        key={line.key}
+                        yAxisId={line.yAxisId || "left"}
+                        type="monotone"
+                        dataKey={line.key}
+                        stroke={line.color}
+                        strokeWidth={2}
+                        strokeDasharray={line.dashed ? "5 5" : undefined}
+                        dot={{
+                          r: 3,
+                          fill: 'white',
+                          cursor: "pointer",
+                          onClick: (e, payload) => {
+                            const dataPoint = payload?.payload;
+                            handleNavigation({
+                              router,
+                              url: line.url,
+                              params: {
+                                startDate: dataPoint?.startDate || startDateCS,
+                                endDate: dataPoint?.endDate || endDateCS,
+                                name: dataPoint?.name, 
+                              },
+                            });
+                          },
+                        }}
+                        activeDot={{
+                          r: 8,
+                          onClick: (e, payload) => {
+                            const dataPoint = payload?.payload;
+                            handleNavigation({
+                              router,
+                              url: line.url,
+                              params: {
+                                startDate: dataPoint?.startDate || startDateCS,
+                                endDate: dataPoint?.endDate || endDateCS,
+                                name: dataPoint?.name,
+                              },
+                            });
+                          },
+                        }}
+                      />
+                    ))}
+                  </LineChart>
+                </ResponsiveContainer> */}
+                <div
+                  style={{
+                    width: "100%",
+                    overflowX: "auto",
+                  }}
+                >
+                  <div
+                    style={{
+                      minWidth: "1200px", // chart keeps same width as desktop
+                    }}
+                  >
+                    <ResponsiveContainer width="100%" height={400}>
+                      <LineChart
+                        data={data}
+                        margin={{ top: 20, right: 40, left: 0, bottom: 0 }}
+                      >
+                        <CartesianGrid strokeDasharray="3 3" vertical horizontal />
+                        <XAxis dataKey="name" />
+                        <YAxis
+                          yAxisId="left"
+                          tickFormatter={(value) => `₹${parseInt(value / 1000)}k`}
+                          domain={[0, "auto"]}
+                        />
+                        <YAxis
+                          yAxisId="right"
+                          orientation="right"
+                          tickFormatter={(value) => `${parseInt(value)}%`}
+                          domain={[0, 100]}
+                        />
+                        <Tooltip
+                          formatter={(value, name) =>
+                            name === "consumptionPercentage" ? `${value}%` : `₹${value.toLocaleString()}`
+                          }
+                        />
+
+                        {/* 🔹 Custom Legend stays same */}
+                        <Legend
+                          content={(props) => {
+                            const { payload } = props;
+                            return (
+                              <ul
+                                style={{
+                                  listStyle: "none",
+                                  display: "flex",
+                                  justifyContent: "center",
+                                  gap: "20px",
+                                  padding: 0,
+                                  margin: 0,
+                                  flexWrap: "wrap",
+                                }}
+                              >
+                                {payload.map((entry, index) => (
+                                  <li
+                                    key={`legend-${index}`}
+                                    style={{
+                                      cursor: "pointer",
+                                      display: "flex",
+                                      alignItems: "center",
+                                      gap: "6px",
+                                      marginBottom: "6px",
+                                    }}
+                                    onClick={() =>
+                                      handleNavigation({
+                                        router,
+                                        url:
+                                          entry.value === "Sales"
+                                            ? "sp/sales_analytics"
+                                            : entry.value === "Consumption"
+                                              ? "sp/consumption_analytics"
+                                              : entry.value === "Opening"
+                                                ? "sp/consumption_closing_analytics"
+                                                : entry.value === "Closing"
+                                                  ? "sp/consumption_closing_analytics"
+                                                  : "",
+                                        params: {
+                                          startDate: startDateCS,
+                                          endDate: endDateCS,
+                                        },
+                                      })
+                                    }
+                                  >
+                                    <span
+                                      style={{
+                                        width: 12,
+                                        height: 12,
+                                        backgroundColor: entry.color,
+                                        display: "inline-block",
+                                        borderRadius: "3px",
+                                      }}
+                                    />
+                                    {entry.value}
+                                  </li>
+                                ))}
+                              </ul>
+                            );
+                          }}
+                        />
+
+                        {/* 🔹 Clickable Lines and Points */}
+                        {[
+                          {
+                            key: "Sales",
+                            color: "#1faa1f",
+                            url: "sp/sales_analytics",
+                          },
+                          {
+                            key: "Consumption",
+                            color: "#f7af37",
+                            url: "sp/consumption_analytics",
+                          },
+                          {
+                            key: "Opening",
+                            color: "#3c82f6",
+                            url: "sp/consumption_closing_analytics",
+                          },
+                          {
+                            key: "Closing",
+                            color: "#8b5cf6",
+                            url: "sp/consumption_closing_analytics",
+                          },
+                          {
+                            key: "consumptionPercentage",
+                            color: "#ef4444",
+                            url: "sp/consumption_analytics",
+                            yAxisId: "right",
+                            dashed: true,
+                          },
+                        ].map((line) => (
+                          <Line
+                            key={line.key}
+                            yAxisId={line.yAxisId || "left"}
+                            type="monotone"
+                            dataKey={line.key}
+                            stroke={line.color}
+                            strokeWidth={2}
+                            strokeDasharray={line.dashed ? "5 5" : undefined}
+                            dot={{
+                              r: 3,
+                              fill: "white",
+                              cursor: "pointer",
+                              onClick: (e, payload) => {
+                                const dataPoint = payload?.payload;
+                                handleNavigation({
+                                  router,
+                                  url: line.url,
+                                  params: {
+                                    startDate: dataPoint?.startDate || startDateCS,
+                                    endDate: dataPoint?.endDate || endDateCS,
+                                    name: dataPoint?.name,
+                                  },
+                                });
+                              },
+                            }}
+                            activeDot={{
+                              r: 8,
+                              onClick: (e, payload) => {
+                                const dataPoint = payload?.payload;
+                                handleNavigation({
+                                  router,
+                                  url: line.url,
+                                  params: {
+                                    startDate: dataPoint?.startDate || startDateCS,
+                                    endDate: dataPoint?.endDate || endDateCS,
+                                    name: dataPoint?.name,
+                                  },
+                                });
+                              },
+                            }}
+                          />
+                        ))}
+                      </LineChart>
+                    </ResponsiveContainer>
+                  </div>
+                </div>
+
+
+                {/* <ResponsiveContainer width="100%" height={400}>
+                  <LineChart
+                    data={data}
+                    margin={{ top: 20, right: 40, left: 0, bottom: 0 }}
+                  >
+                    <CartesianGrid
+                      strokeDasharray="3 3"
+                      vertical={true}
+                      horizontal={true}
+                    />
+                    <XAxis dataKey="name" />
+
+                    <YAxis
+                      yAxisId="left"
+                      tickFormatter={(value) => `₹${parseInt(value / 1000)}k`}
+                      domain={[0, "auto"]}
+                    />
+                    <YAxis
+                      yAxisId="right"
+                      orientation="right"
+                      tickFormatter={(value) => `${parseInt(value)}%`}
+                      domain={[0, 100]}
+                    />
+
+                    <Tooltip
+                      formatter={(value, name) =>
+                        name === "consumptionPercentage"
+                          ? `${value}%`
+                          : `₹${value}`
+                      }
+                    />
+                    <Legend
+                      content={(props) => {
+                        const { payload } = props;
+                        return (
+                          <ul
+                            style={{
+                              listStyle: "none",
+                              display: "flex",
+                              justifyContent: "center",
+                              gap: "20px",
+                              padding: 0,
+                              margin: 0,
+                              flexWrap: "wrap",  
+                            }}
+                          >
+                            {payload.map((entry, index) => (
+                              <li
+                                key={`legend-${index}`}
+                                style={{
+                                  cursor: "pointer",
+                                  display: "flex",
+                                  alignItems: "center",
+                                  gap: "6px",
+                                  marginBottom: "6px",  
+                                }}
+                                onClick={() =>
+                                  handleNavigation({
+                                    router,
+                                    url:
+                                      entry.value === "Sales"
+                                        ? "sp/sales_analytics"
+                                        : entry.value === "Consumption"
+                                          ? "sp/consumption_analytics"
+                                          : entry.value === "Opening"
+                                            ? "sp/consumption_closing_analytics"
+                                            : entry.value === "Closing"
+                                              ? "sp/consumption_closing_analytics"
+                                              : "",
+                                    params: {
+                                      startDate: startDateCS,
+                                      endDate: endDateCS,
+                                    },
+                                  })
+                                }
+                              >
+                                <span
+                                  style={{
+                                    width: 12,
+                                    height: 12,
+                                    backgroundColor: entry.color,
+                                    display: "inline-block",
+                                    borderRadius: "3px",
+                                  }}
+                                />
+                                {entry.value}
+                              </li>
+                            ))}
+                          </ul>
+                        );
+                      }}
+                    />
                     <Line
                       yAxisId="left"
                       type="monotone"
@@ -446,7 +727,7 @@ export default function TrendAnalysis() {
                       strokeDasharray="5 5"
                     />
                   </LineChart>
-                </ResponsiveContainer>
+                </ResponsiveContainer> */}
                 {/* 
                 <Row className="mt-3 text-center fw-bold d-none d-md-flex">
                   <Col style={{ color: "#22c55e" }}>
@@ -467,7 +748,7 @@ export default function TrendAnalysis() {
           }}
         </ServiceRenderer>
       </Container>
-    </Container>
+    </Container >
   );
 }
 

@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { Card, Col, Row, Dropdown } from "react-bootstrap";
 import { FaChartLine } from "react-icons/fa";
+import '@/app/globals.css';
 
 function HourlyForecastFilterCard({
   products,
@@ -28,17 +29,19 @@ function HourlyForecastFilterCard({
     <Row>
       {/* Filters and Cards Sidebar */}
       <Col lg={3}>
-        <Card className="rounded-lg shadow-sm mb-4">
-          <Card.Body>
-            <Card.Title className="h6 fw-bold mb-3">Filters</Card.Title>
+        <div className="rounded-lg card border-0 shadow-sm mb-4">
+            {/* <Card.Title className="h6 fw-bold mb-3">Filters</Card.Title> */}
 
             {/* Product Dropdown */}
             <div className="mb-3">
-              <p className="text-secondary mb-1">Products</p>
+              <p className="c_black_3  mb-1 c_medium_text_semi_bold">Products</p>
               <Dropdown onSelect={(eventKey) => setSelectedProduct(eventKey)}>
                 <Dropdown.Toggle
                   variant="light"
-                  className="w-100 text-start d-flex align-items-center justify-content-between"
+                  style={{
+                    background:"#f4f4f4"
+                  }}
+                  className="w-100 text-start d-flex align-items-center justify-content-between c_small_text_semi_bold"
                 >
                   {selectedProduct}
                 </Dropdown.Toggle>
@@ -61,13 +64,17 @@ function HourlyForecastFilterCard({
 
             {/* Metric Dropdown */}
             <div className="mb-3">
-              <p className="text-secondary mb-1">Metrics</p>
+              <p className="c_black_3  mb-1 c_medium_text_semi_bold">Metrics</p>
               <Dropdown onSelect={(eventKey) => setSelectedMetric(eventKey)}>
                 <Dropdown.Toggle
                   variant="light"
-                  className="w-100 text-start d-flex align-items-center justify-content-between"
+                  style={{
+                    background:"#f4f4f4"
+                  }}
+                  className="w-100 text-start d-flex align-items-center justify-content-between c_small_text_semi_bold"
                 >
-                  <FaChartLine className="me-2" /> {selectedMetric}
+                  {/* <FaChartLine className="me-2" />  */}
+                  {selectedMetric}
                 </Dropdown.Toggle>
                 <Dropdown.Menu
                   className="w-100"
@@ -85,19 +92,18 @@ function HourlyForecastFilterCard({
                 </Dropdown.Menu>
               </Dropdown>
             </div>
-          </Card.Body>
-        </Card>
+        </div>
 
         {/* Daily Forecast Cards */}
         <Card
           className="rounded-lg shadow-sm mb-3"
-          style={{ backgroundColor: "#e9f1ff", borderColor: "#e9f1ff" }}
+          style={{ backgroundColor: "#f2f7ff", borderColor: "#f2f7ff" }}
         >
           <Card.Body>
             <div className="d-flex d-flex-row">
               <div>
-                <h6 className="fw-bold mb-1 text-primary">Daily Forecast</h6>
-                <h4 className="fw-bold text-dark">
+                <h6 className="c_small_text_semi_bold c_gray_3">Daily Forecast</h6>
+                <h4 className="c_heading_5 c_black_3 fw-800">
                   {currentData.dailyForecast}
                 </h4>
               </div>
@@ -110,13 +116,13 @@ function HourlyForecastFilterCard({
 
         <Card
           className="rounded-lg shadow-sm mb-3"
-          style={{ backgroundColor: "#dff8e9", borderColor: "#dff8e9" }}
+          style={{ backgroundColor: "#edffed", borderColor: "#edffed" }}
         >
           <Card.Body>
             <div className="d-flex d-flex-row">
               <div>
-                <h6 className="fw-bold mb-1 text-success">Actual So Far</h6>
-                <h4 className="fw-bold text-dark">{currentData.actualSoFar}</h4>
+                <h6 className="c_small_text_semi_bold c_gray_3">Actual So Far</h6>
+                <h4 className="c_heading_5 c_black_3 fw-800">{currentData.actualSoFar}</h4>
               </div>
               <div style={{ marginLeft: "auto" }}>
                 {currentData.actualSoFarIcon}
@@ -127,13 +133,13 @@ function HourlyForecastFilterCard({
 
         <Card
           className="rounded-lg shadow-sm mb-3"
-          style={{ backgroundColor: "#ffe9e9", borderColor: "#ffe9e9" }}
+          style={{ backgroundColor: "#f5f1ff", borderColor: "#f5f1ff" }}
         >
           <Card.Body>
             <div className="d-flex d-flex-row">
               <div>
-                <h6 className="fw-bold mb-1 text-danger">Remaining Target</h6>
-                <h4 className="fw-bold text-dark">
+                <h6 className="c_small_text_semi_bold c_gray_3">Remaining Target</h6>
+                <h4 className="c_heading_5 c_black_3 fw-800">
                   {currentData.remainingTarget}
                 </h4>
               </div>
@@ -150,7 +156,7 @@ function HourlyForecastFilterCard({
         <Card className="rounded-lg shadow-sm mb-4">
           <Card.Body>
             <div className="d-flex justify-content-between align-items-center mb-3">
-              <Card.Title className="h6 fw-bold mb-0">
+              <Card.Title className="h6 c_medium_text_semi_bold mb-0">
                 {selectedMetric} Forecast by Hour
               </Card.Title>
             </div>

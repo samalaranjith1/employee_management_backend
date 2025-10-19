@@ -2,6 +2,7 @@
 import React, { useEffect } from "react";
 import DurationFilters from "@/features/dashboard/DurationFilters"; // ✅ use DateFilter directly
 import "./navbar.module.css";
+import "@/app/globals.css";
 
 const SecondNavBar = ({ tabs,activeTab, setActiveTab,useAppContext }) => {
 
@@ -25,7 +26,7 @@ const SecondNavBar = ({ tabs,activeTab, setActiveTab,useAppContext }) => {
           key={label}
           onClick={() => setActiveTab(label)
           }
-          className={`dashboard-tab ${activeTab === label ? "active" : ""}`}
+          className={`dashboard-tab ${activeTab === label ? "c_normal_text_extra_bold c_black_1" : "c_normal_text_regular c_gray_3"}`}
           aria-pressed={activeTab === label}
           type="button"
           style={{

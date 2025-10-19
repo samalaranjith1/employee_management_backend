@@ -28,7 +28,7 @@ export default function ConsumptionSummarry() {
         scrollRef={myScrollRef}
         isExpandable={true}
         titleIcon={<div style={{
-          background: '#FF6254',
+          background: 'linear-gradient(90deg, #FF5D00 0%, #E7483B 100%)',
           borderRadius: '12px',
           padding: '8px',
           display: 'inline-block'
@@ -61,7 +61,7 @@ export default function ConsumptionSummarry() {
             ref={myScrollRef}
             className="d-flex"
             style={{
-              gap: `16px`,
+              gap: `4px`,
               paddingBottom: "0.5rem",
               overflowX: "auto",
               msOverflowStyle: "none",

@@ -1,7 +1,7 @@
 "use client";
 
 import { formatDate } from "@/utils";
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 const DashboardContext = createContext();
 
@@ -15,6 +15,15 @@ export function DashboardContextProvider({ children }) {
       endDate:endDate
     })
 
+     const [isMobile, setIsMobile] = useState(false);
+    
+      // detect mobile
+      useEffect(() => {
+        const checkScreen = () => setIsMobile(window.innerWidth < 768);
+        checkScreen();
+        window.addEventListener("resize", checkScreen);
+        return () => window.removeEventListener("resize", checkScreen);
+      }, []);
   const toggleSidebar = () => setIsSidebarOpen((prev) => !prev);
   const contextValues = {
     isSidebarOpen,
@@ -25,6 +34,7 @@ export function DashboardContextProvider({ children }) {
     setEndDate,
     toggleSidebar,
     dashboardFilter,
+    isMobile, setIsMobile
   };
 
   return (

@@ -4,6 +4,7 @@ import { Row, Col } from "react-bootstrap";
 import { FaArrowUp, FaExclamationTriangle } from "react-icons/fa";
 import CommonCard from "./CommonCard";
 import { IconPackage, IconTrendingDown, IconTrendingUp } from "@tabler/icons-react";
+import "@/app/globals.css";
 
 export default function ActionableCard({
   data,
@@ -11,6 +12,7 @@ export default function ActionableCard({
   bgColor,
   textColor,
   scrollRef,
+  priorityBorderColor
 }) {
   // Map text color per priority for label
   const priorityTextColor = {
@@ -21,14 +23,14 @@ export default function ActionableCard({
 
   // Background and border top adjusted too
   const cardBgColor = bgColor[data.priority];
-  const borderTopColor = priorityColors[data.priority];
+  const borderTopColor = priorityBorderColor[data.priority];
 
   return (
     <CommonCard
       scrollRef={scrollRef}
       bgColor={cardBgColor}
       textColor={textColor}
-      widthDesktop="31vw"
+      widthDesktop="31%"
       border={`1.5px solid #CACACA`} // Mid gray border consistent with Figma style guide
       style={{
         borderTop: `7px solid ${borderTopColor}`,
@@ -40,7 +42,7 @@ export default function ActionableCard({
       <Row className="align-items-center mb-2" style={{ gap: "0.5rem" }}>
   
         <Col
-          className="flex align-items-center gap-1"
+          className="flex align-items-center gap-1 c_small_text_bold"
           style={{
             color: priorityTextColor[data.priority],
           }}
@@ -110,11 +112,13 @@ export default function ActionableCard({
           marginBottom: "0.25rem",
           fontFamily: "'Nunito Sans', sans-serif",
         }}
+        className="c_large_text_bold"
       >
         {data.title}
       </h6>
       <span
         dangerouslySetInnerHTML={{ __html: data.message }}
+        // className=".c_small_text_regular"
         style={{
           fontSize: "0.95rem",
           color: "#555555", // Mid gray for body text

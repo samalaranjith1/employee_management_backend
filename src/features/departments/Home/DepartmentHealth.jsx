@@ -136,7 +136,7 @@ export default function DepartmentHealth() {
                 >
                   <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
                     <span className="pe-1">{card.title}</span>
-                    <FaArrowTrendUp />
+                    {/* <FaArrowTrendUp /> */}
                   </div>
                 </div>
 

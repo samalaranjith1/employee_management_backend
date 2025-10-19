@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import CommonCard from "./CommonCard";
+import '@/app/globals.css';
 
 export default function ItemConsumptionEfficiencyCard({
   summaryCards,
@@ -9,7 +10,7 @@ export default function ItemConsumptionEfficiencyCard({
   return (
     <div
       ref={scrollRef}
-      className="d-flex gap-3 mb-4"
+      className="d-flex gap-3 mb-4 align-items-center"
       style={{
         overflowX: "auto",
         scrollbarWidth: "none",
@@ -21,15 +22,16 @@ export default function ItemConsumptionEfficiencyCard({
           key={idx}
           bgColor={card.bg}
           minWidth="280px"
+          widthDesktop='23%'
           style={{ flex: "0 0 auto", padding: "20px" }}
         >
           <div className="d-flex align-items-center">
             
             <div>
-               <div style={{ fontSize: "13px", color: "#555" }}>
+               <div className="c_small_text_semi_bold_600 c_gray_3">
                 {card.label}
               </div>
-              <div style={{ fontSize: "18px", fontWeight: "bold" }}>
+              <div className="c_small_text_extra_bold c_heading_5">
                 {card.value}
               </div>
              

@@ -110,14 +110,14 @@ export default function ServiceRenderer({
   }
 
   /** Fetching state */
-  if (isFetching && data) {
-    return (
-      <Container fluid className="py-3">
-        <span>Updating...</span>
-        {children(formatter ? formatter(data) : data, refetch)}
-      </Container>
-    );
-  }
+  // if (isFetching && data) {
+  //   return (
+  //     <Container fluid className="py-3">
+  //       <span>Updating...</span>
+  //       {children(formatter ? formatter(data) : data, refetch)}
+  //     </Container>
+  //   );
+  // }
 
   /** Apply formatter */
   const formattedData = formatter ? formatter(data) : data;

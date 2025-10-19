@@ -45,7 +45,7 @@ const DepartmentPerformance = () => {
         }}>
           <IconChartColumn stroke={2} color="#fff" size={24} />
         </div>}
-        // text={"Department Level Metrics"}
+      // text={"Department Level Metrics"}
       />
 
       {/* ✅ ServiceRenderer for departments */}
@@ -69,20 +69,25 @@ const DepartmentPerformance = () => {
         shimmerCount={2}
       >
         {({ cards, graph }) => (
-          <Row>
+          <Row className="justify-content-between align-items-start g-2">
             {/* Left: Cards */}
-            <DepartmentPerformanceCards cards={cards} />
+            <Col xs={12} lg={3} className="d-flex justify-content-start">
+              <div className="w-100 m-2-r"> {/* Adds small inner padding instead of m-1 */}
+                <DepartmentPerformanceCards cards={cards} />
+              </div>
+            </Col>
+
             {/* Right: Graph */}
-            <Col xs={12} lg={9}>
-              <Card className="shadow-sm">
+            <Col xs={12} lg={9} className="d-flex justify-content-end">
+              <Card className="shadow-sm w-100">
                 <Card.Body>
-                  <h6 className="fw-bold mb-3">
+                  {/* <h6 className="fw-bold mb-3">
                     Department Sales vs Consumption Analysis
                   </h6>
                   <p className="text-muted">
-                    Bars show sales & consumption values, line shows cost
-                    percentage
-                  </p>
+                    Bars show sales & consumption values, line shows cost percentage
+                  </p> */}
+
                   <div
                     style={{
                       width: isMobile ? "95vw" : "100%",
@@ -91,40 +96,12 @@ const DepartmentPerformance = () => {
                   >
                     <DepartmentPerformanceGraph data={graph} />
                   </div>
-
-                  {/* Cost Ratio Tags */}
-                  {/* <div className="mt-3 d-none d-md-flex flex-wrap gap-3">
-                    {graph.slice(0, 3).map((dept) => (
-                      <div
-                        key={dept.name}
-                        className="d-flex align-items-center gap-2"
-                      >
-                        <strong>{dept.title}</strong>
-                        <Badge
-                          bg={
-                            dept.cost <= 60
-                              ? "success"
-                              : dept.cost <= 65
-                              ? "warning"
-                              : "danger"
-                          }
-                        >
-                          {dept.cost}%
-                        </Badge>
-                      </div>
-                    ))}
-                  </div> */}
-
-                  {/* Legend */}
-                  {/* <div className="mt-3">
-                    <Badge bg="success">≤60% Excellent</Badge>{" "}
-                    <Badge bg="warning">60-65% Good</Badge>{" "}
-                    <Badge bg="danger">65% Needs Attention</Badge>
-                  </div> */}
                 </Card.Body>
               </Card>
             </Col>
           </Row>
+
+
         )}
       </ServiceRenderer>
     </Container>

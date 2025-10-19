@@ -19,10 +19,15 @@ const ActionableInsights = () => {
   const pathname = usePathname(); // ✅ get current path
 
   const priorityColors = {
-    high: "#FF3B30",
-    medium: "#FFCC00",
-    low: "#FF9F0A",
+    high: "#c10008",
+    medium: "#ba4d00",
+    low: "#47a4efff",
   };
+  const priorityBorderColor={
+    high:"#fa2c37",
+    medium:'#fe9900',
+    low:'#47a4efff'
+  }
   const bgColor = {
     high: "#fef2f2",
     medium: "#fffbeb",
@@ -35,7 +40,7 @@ const ActionableInsights = () => {
 
   return (
     <Container fluid className="shadow-sm">
-      <ComponentHeader
+      {isDashboardRoute && <ComponentHeader
         title={"Actionable Insights"}
         description={"Critical issues requiring immediate attention"}
         titleColor={"#000"}
@@ -45,10 +50,10 @@ const ActionableInsights = () => {
         isExpandable={true}
         titleIcon={<div
           style={{
-            width: 36,
-            height: 36,
+            width: 40,
+            height: 40,
             borderRadius: 12,
-            background: "#f6a242ff", // Adjust color to match Figma
+            background: "linear-gradient(90deg, #ff9200, #db6200)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -56,7 +61,7 @@ const ActionableInsights = () => {
         >
           <IconBulb color="white" size={28} stroke={2} fill='white'/>
         </div>}
-        text={`5 Active`}
+        // text={`5 Active`}
         style={{ cursor: "pointer" }}
         handleExpandClick={() =>
           handleNavigation({
@@ -65,7 +70,7 @@ const ActionableInsights = () => {
             params: { startDate: startDate, endDate: endDate },
           })
         }
-      />
+      />}
       <ServiceRenderer
         queryHook={useOutletActionableInsights}
         queryArgs={[1, { startdt: startDate, enddt: endDate }]}
@@ -104,6 +109,7 @@ const ActionableInsights = () => {
                         priorityColors={priorityColors}
                         bgColor={bgColor}
                         textColor={textColor}
+                        priorityBorderColor={priorityBorderColor}
                       />
                     ) : (
                       <ActionableVerticalCards

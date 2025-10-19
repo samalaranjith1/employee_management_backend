@@ -52,12 +52,12 @@ export default function Page() {
     "Dashboard",
     "Sales",
     "Consumption",
-    "Closing",
     "Purchase",
     "Recipe",
-    "Stock",
-    "Item Price",
     "Wastage",
+    "Closing",
+    "Item Price",
+    "Stock",
   ];
 
   return (
@@ -74,7 +74,7 @@ export default function Page() {
       <div className="mt-2">
         {activeTab === "Dashboard" && (
       <div className="d-none d-md-inline">
-            <MainComponentHoldingCard>
+            {/* <MainComponentHoldingCard>
               <ConsumptionSummarry />
             </MainComponentHoldingCard>
             <MainComponentHoldingCard>
@@ -91,25 +91,22 @@ export default function Page() {
             </MainComponentHoldingCard>
             <MainComponentHoldingCard>
               <HourlyForecast />
-            </MainComponentHoldingCard>
+            </MainComponentHoldingCard> 
             <MainComponentHoldingCard>
               <DepartmentConsumption />
             </MainComponentHoldingCard>
             <MainComponentHoldingCard>
               <DepartmentPerformanceAnalysis />
             </MainComponentHoldingCard>
-            {/* <MainComponentHoldingCard>
-              <DepartmentAndItemConsumption />
-            </MainComponentHoldingCard> */}
             <MainComponentHoldingCard>
               <DepartmentConsumptionChart />
             </MainComponentHoldingCard>
             <MainComponentHoldingCard>
               <ItemConsumptionEffieciency />
-            </MainComponentHoldingCard>
+            </MainComponentHoldingCard> 
             <MainComponentHoldingCard>
               <TopConsumedItems />
-            </MainComponentHoldingCard>
+            </MainComponentHoldingCard> */}
             <MainComponentHoldingCard>
               <ItemConsumptionDistribution />
             </MainComponentHoldingCard>

@@ -31,11 +31,11 @@ export default function ItemConsumptionDistribution() {
         isExpandable={true}
         titleIcon={<div style={{
           background: '#fd4621',
-          borderRadius: '16px',
+          borderRadius: '12px',
           padding: '8px',
           display: 'inline-block'
         }}>
-          <IconTarget stroke={2} color="#fff" size={24} />
+          <IconTarget stroke={2} color="#fff" size={20} />
         </div>}
         text={""}
       />

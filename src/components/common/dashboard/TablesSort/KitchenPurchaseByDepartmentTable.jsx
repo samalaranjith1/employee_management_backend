@@ -8,6 +8,7 @@ import { TableControls } from "@/components/common/TableControls";
 import { handleNavigation } from "@/utils";
 import { useRouter } from "next/navigation";
 import { useDashboardContext } from "@/contexts/DashboardContext";
+import '@/app/globals.css';
 
 function KitchenPurchaseByDepartmentTable({ data = [], badgeStyle }) {
   const { sortedData, sortKey, direction, handleSort } = useTableSort(data);
@@ -67,7 +68,6 @@ function KitchenPurchaseByDepartmentTable({ data = [], badgeStyle }) {
   return (
     <BaseSurface maxHeight="65vh">
       {/* 🔹 Table Controls */}
-      <div className="mb-2">
         <TableControls
           searchTerm={searchTerm}
           setSearchTerm={setSearchTerm}
@@ -77,9 +77,8 @@ function KitchenPurchaseByDepartmentTable({ data = [], badgeStyle }) {
           handleExport={handleExport}
           searchable={true}
           filterable={true}
-          exportable={true}
+          exportable={false}
         />
-      </div>
 
       {/* 🔹 Scrollable Table Container */}
       <div style={{ maxHeight: "60vh", overflowY: "auto", overflowX: "auto" }}>
@@ -88,7 +87,7 @@ function KitchenPurchaseByDepartmentTable({ data = [], badgeStyle }) {
           style={{ minWidth: "900px" }}
         >
           <thead>
-            <tr>
+            <tr className="c_table_columns_semi_bold">
               {columns.map((col) => (
                 <th
                   key={col.key}
@@ -100,6 +99,7 @@ function KitchenPurchaseByDepartmentTable({ data = [], badgeStyle }) {
                     zIndex: 2,
                     cursor: "pointer",
                   }}
+                  className="c_table_columns_semi_bold"
                 >
                   {col.label}
                   {renderSortArrow(col.key)}
@@ -116,7 +116,7 @@ function KitchenPurchaseByDepartmentTable({ data = [], badgeStyle }) {
                       case "name":
                         return (
                           <td key={col.key}>
-                            <div className="fw-bold">{dept.name}</div>
+                            <div className="c_table_cells_regular">{dept.name}</div>
                           </td>
                         );
                       case "consumptionPct":
@@ -125,10 +125,10 @@ function KitchenPurchaseByDepartmentTable({ data = [], badgeStyle }) {
                             <span
                               style={{
                                 ...badgeStyle,
-                                backgroundColor: `${hexToRgba(dept.bg, 1)}`,
-                                color: "white",
-                                fontWeight: "bold",
+                                backgroundColor: `${hexToRgba(dept.bg, 0.05)}`,
+                                color: `${hexToRgba(dept.bg, 1)}`,
                               }}
+                              className="c_table_columns_semi_bold"
                             >
                               {dept[col.key]}%
                             </span>
@@ -136,7 +136,7 @@ function KitchenPurchaseByDepartmentTable({ data = [], badgeStyle }) {
                         );
                       case "netConsumptionPct":
                         return (
-                          <td key={col.key}>
+                          <td key={col.key} className="c_table_cells_regular c_black_3">
                             <span>{dept[col.key]}%</span>
                           </td>
                         );
@@ -155,13 +155,14 @@ function KitchenPurchaseByDepartmentTable({ data = [], badgeStyle }) {
                                 },
                               })
                             }
+                            className="c_table_columns_semi_bold c_black_3"
                           >
                             {dept.sales}
                           </td>
                         );
                       case "netConsumption":
                         return (
-                          <td key={col.key} className="fw-bold">
+                          <td key={col.key} className="c_table_columns_semi_bold c_black_3">
                             {dept.netConsumption}
                           </td>
                         );
@@ -180,6 +181,7 @@ function KitchenPurchaseByDepartmentTable({ data = [], badgeStyle }) {
                                 },
                               })
                             }
+                            className="c_table_columns_semi_bold c_black_3"
                           >
                             {dept[col.key]}
                           </td>

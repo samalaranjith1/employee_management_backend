@@ -1,26 +1,21 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import { Nunito_Sans } from "next/font/google";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Header from "@/components/common/LayOut/Header";
 import { GlobalDashboardProvider } from "@/contexts";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+// ✅ Load Nunito Sans font
+const nunitoSans = Nunito_Sans({
+  variable: "--font-nunito-sans",
   subsets: ["latin"],
+  weight: ["300", "400", "600", "700"], // common weights (can adjust if needed)
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-// Metadata export supported in app router
+// ✅ Metadata export supported in App Router
 export const metadata = {
   title: "Costonomy",
   description: "Manage your restaurants easily with Costonomy.",
-  // viewport: "width=device-width, initial-scale=1",
   keywords: "restaurant management, cost control, inventory, food service",
   authors: [{ name: "Ranjith" }],
-  // themeColor: "#3508ec",
   openGraph: {
     title: "Costonomy",
     description: "Manage your restaurants easily with Costonomy.",
@@ -42,16 +37,24 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
-      <body>
-        <GlobalDashboardProvider>
-          <Header />
-          {children}
-        </GlobalDashboardProvider>
+    <html lang="en" className={nunitoSans.variable}>
+      <body style={{ fontFamily: "var(--font-nunito-sans)" }}>
+        <div className="app-container" style={{
+          maxWidth: "1280px", // limit the width
+          margin: "0 auto",   // center horizontally
+          width: "100%",      // make it responsive for smaller screens
+          padding: "0 16px",  // optional inner padding
+        }}>
+          <GlobalDashboardProvider>
+            <Header />
+            {children}
+          </GlobalDashboardProvider>
+        </div>
       </body>
     </html>
   );
 }
+
 // export default function RootLayout({ children }) {
 //   return (
 //     <html lang="en">

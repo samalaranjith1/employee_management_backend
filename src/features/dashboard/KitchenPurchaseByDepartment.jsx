@@ -35,8 +35,8 @@ export default function DepartmentConsumption() {
         isExpandable={true}
         titleIcon={<div style={{
           background: '#fe4d17', // orange-red gradient matching Figma
-          borderRadius: '16px',
-          padding: '12px',
+          borderRadius: '12px',
+          padding: '8px',
           display: 'inline-block'
         }}>
           <IconBuildingSkyscraper stroke={2} color="#fff" size={24} />

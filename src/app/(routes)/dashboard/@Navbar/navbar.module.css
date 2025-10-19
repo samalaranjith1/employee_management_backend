@@ -98,7 +98,7 @@
 .dashboard-tab.active {
   color: #222;
   font-weight: 600;
-  border-bottom: 3px solid #ff6600;
+  border-bottom: 2px solid #ff6000;
 }
 
 .dashboard-tab:last-child {

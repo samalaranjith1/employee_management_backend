@@ -6,6 +6,7 @@ import { useTableControls } from "@/components/hooks/useTableControls";
 import { TableControls } from "@/components/common/TableControls";
 import { handleNavigation } from "@/utils";
 import { useRouter } from "next/navigation";
+import '@/app/globals.css';
 
 export default function PeriodDataBreakDownTable({ data = {}, filters = {} }) {
   const router = useRouter();
@@ -50,7 +51,7 @@ export default function PeriodDataBreakDownTable({ data = {}, filters = {} }) {
   return (
     <div>
       {/* 🔹 Controls */}
-      <TableControls
+      {/* <TableControls
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
         filters={tableFilters}
@@ -60,7 +61,7 @@ export default function PeriodDataBreakDownTable({ data = {}, filters = {} }) {
         searchable={true}
         filterable={true}
       // exportable={true}
-      />
+      /> */}
 
       {/* 🔹 Table with sticky header & max-height */}
       <div
@@ -91,8 +92,7 @@ export default function PeriodDataBreakDownTable({ data = {}, filters = {} }) {
                   key={col.key}
                   onClick={() => handleSort(col.key)}
                   style={{
-                    background: "#fafafa",
-                    fontWeight: 600,
+                    background: "#f4f7fc",
                     fontSize: "0.85rem",
                     textTransform: "uppercase",
                     color: "#555",
@@ -103,16 +103,21 @@ export default function PeriodDataBreakDownTable({ data = {}, filters = {} }) {
                     padding: "12px 16px",
                     minWidth: col.key === "date" ? "150px" : "120px",
                     borderBottom: "1px solid #eee",
+                    textAlign: "left",
+                    display: "table-cell",
+                    justifyContent: "flex-start",
                   }}
+                  className="c_table_columns_semi_bold"
                 >
                   {col.label}
                   {renderSortArrow(col.key)}
                 </th>
+
               ))}
             </tr>
           </thead>
 
-          <tbody>
+          <tbody className="c_table_cells_regular">
             {filteredData.length > 0 ? (
               filteredData.map((row, idx) => {
                 const today = new Date();
@@ -131,9 +136,9 @@ export default function PeriodDataBreakDownTable({ data = {}, filters = {} }) {
                 });
 
                 return (
-                  <tr key={idx} style={{ borderBottom: "1px solid #eee" }}>
+                  <tr key={idx} style={{ borderBottom: "1px solid #eee", textAlign: "left" }} >
                     <td style={{ padding: "14px 16px" }}>
-                      <div className="fw-semibold" style={{ fontSize: 14 }}>
+                      <div className="fw-semibold" style={{ fontSize: 14, textAlign: "left" }}>
                         {formattedDate}{" "}
                         {isToday && (
                           <span className="text-muted" style={{ fontSize: 12 }}>
@@ -143,14 +148,14 @@ export default function PeriodDataBreakDownTable({ data = {}, filters = {} }) {
                       </div>
                       <div
                         className="text-muted"
-                        style={{ fontSize: 12, marginTop: 2 }}
+                        style={{ fontSize: 12, marginTop: 2, textAlign: "left" }}
                       >
                         {formattedDay}
                       </div>
                     </td>
 
                     <td
-                      style={{ fontSize: 13, cursor: "pointer" }}
+                      style={{ cursor: "pointer", textAlign: "left" }}
                       onClick={() =>
                         handleNavigation({
                           router,
@@ -158,12 +163,13 @@ export default function PeriodDataBreakDownTable({ data = {}, filters = {} }) {
                           params: filters,
                         })
                       }
+                      className="c_table_columns_semi_bold"
                     >
                       {row.sales?.toLocaleString()}
                     </td>
 
                     <td
-                      style={{ fontSize: 13, cursor: "pointer" }}
+                      style={{ cursor: "pointer", textAlign: "left" }}
                       onClick={() =>
                         handleNavigation({
                           router,
@@ -171,12 +177,13 @@ export default function PeriodDataBreakDownTable({ data = {}, filters = {} }) {
                           params: filters,
                         })
                       }
+                      className="c_table_columns_semi_bold"
                     >
                       {row.consumption?.toLocaleString()}
                     </td>
 
                     <td
-                      style={{ fontSize: 13, cursor: "pointer" }}
+                      style={{ cursor: "pointer" }}
                       onClick={() =>
                         handleNavigation({
                           router,
@@ -184,6 +191,7 @@ export default function PeriodDataBreakDownTable({ data = {}, filters = {} }) {
                           params: filters,
                         })
                       }
+                      className="c_table_columns_semi_bold"
                     >
                       {row.waste?.toLocaleString()}
                     </td>
@@ -193,11 +201,11 @@ export default function PeriodDataBreakDownTable({ data = {}, filters = {} }) {
                         style={{
                           backgroundColor:
                             row.status === "RED"
-                              ? "#dc2626" // red-600
+                              ? "#d32e29" // red-600
                               : row.status === "GREEN"
-                                ? "#16a34a" // green-600
+                                ? "#288128" // green-600
                                 : row.status === "ORANGE"
-                                  ? "#f97316" // orange-500
+                                  ? "#de6e2a" // orange-500
                                   : "#6b7280", // gray-500 fallback
                           fontSize: 12,
                           padding: "4px 8px",

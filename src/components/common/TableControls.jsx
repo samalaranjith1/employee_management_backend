@@ -2,6 +2,7 @@
 
 import React from "react";
 import { Form, Button, InputGroup } from "react-bootstrap";
+import '@/app/globals.css';
 
 export function TableControls({
   searchTerm,
@@ -16,7 +17,7 @@ export function TableControls({
 }) {
   return (
     <div
-      className="d-flex justify-content-between align-items-center flex-wrap gap-2 bg-light pt-4"
+      className="d-flex justify-content-between align-items-center flex-wrap gap-2 c_bg_gray_5 pt-4"
       style={{ padding: "0 10px" }}
     >
       {/* 🔹 Search */}

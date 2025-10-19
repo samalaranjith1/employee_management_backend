@@ -14,7 +14,8 @@ import PeriodDataBreakDownTable from "@/components/common/dashboard/TablesSort/P
 import PeriodBreakDownCard from "@/components/common/dashboard/card/PeriodBreakDownCard";
 import { FaHistory } from "react-icons/fa";
 import { IconArrowsMaximize, IconCalendar, IconTrendingUp } from "@tabler/icons-react";
-
+import { useDashboardContext } from "@/contexts/DashboardContext";
+import '@/app/globals.css';
 // Hook selector
 const useDataFetchMethod = (view) => {
   switch (view) {
@@ -32,6 +33,7 @@ const useDataFetchMethod = (view) => {
 };
 
 export default function PeriodDataBreakdown() {
+  const { startDate, endDate } = useDashboardContext()
   const [activeTab, setActiveTab] = useState("Daily");
   const [startDateCS, setStartDateCS] = useState("");
   const [endDateCS, setEndDateCS] = useState("");
@@ -74,8 +76,8 @@ export default function PeriodDataBreakdown() {
         <Col className="d-flex flex-row gap-2">
           <div
             style={{
-              width: 36,
-              height: 36,
+              width: 40,
+              height: 40,
               borderRadius: 12,
               background: "#Fe481d", // Adjust color to match your Figma design
               display: "flex",
@@ -85,15 +87,84 @@ export default function PeriodDataBreakdown() {
           >
             <IconCalendar color="white" size={28} stroke={2} />
           </div>
-          <div style={{ marginTop: '-5px' }}>
-            <h5 className="fw-bold mb-0">Period Data Breakdown</h5>
-            <small className="text-muted">
+          <div style={{ marginTop: '+8px' }}>
+            <h5 className="fw-bold mb-0 c_medium_text_bold">Period Data Breakdown</h5>
+            {/* <small className="text-muted">
               Detailed metrics across different time periods
-            </small>
+            </small> */}
           </div>
         </Col>
-        <Col xs="auto" className="d-flex flex-row">
-          {/* Tabs */}
+        <Col xs="auto" className="d-flex flex-row justify-content-center align-items-center">
+  {/* Tabs */}
+  <div className="d-none d-md-flex bg-gray" style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+    <ButtonGroup
+      className="rounded-pill"
+      style={{
+        backgroundColor: "#E6E6E6",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      {tabs.map((label) => {
+        const selected = activeTab === label;
+        return (
+          <ToggleButton
+            key={label}
+            id={`period-${label}`}
+            type="radio"
+            variant="none"
+            checked={selected}
+            value={label}
+            onClick={() => setActiveTab(label)}
+            className="rounded-pill"
+            style={{
+              fontSize: "13px",
+              padding: "6px 16px",
+              backgroundColor: selected ? "#FF6600" : "transparent",
+              color: selected ? "white" : "#888",
+              border: "none",
+              cursor: "pointer",
+              userSelect: "none",
+            }}
+          >
+            {label === "SameDay" ? "Same Days" : label}
+          </ToggleButton>
+        );
+      })}
+    </ButtonGroup>
+  </div>
+
+  {/* Maximize Icon */}
+  <div
+    style={{
+      width: 36,
+      height: 36,
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      marginLeft: "12px", // optional spacing from tabs
+    }}
+  >
+    <IconArrowsMaximize color="rgb(100,100,100)" size={24} />
+  </div>
+</Col>
+
+
+      </Row>
+      <div
+        className="d-flex d-sm-none bg-gray"
+        style={{
+          justifyContent: "center", // center children horizontally
+          alignItems: "center",     // center children vertically
+          width: "100%",            // full width
+          padding: "0 16px",        // optional horizontal padding
+          margin: "0 auto",  
+          marginBottom:'5px'       // center container if it has max-width
+        }}
+      >
+        {/* Tabs */}
+        <div className="d-flex d-sm-none bg-gray">
           <ButtonGroup
             className="rounded-pill"
             style={{
@@ -111,13 +182,16 @@ export default function PeriodDataBreakdown() {
                   variant="none"
                   checked={selected}
                   value={label}
-                  onChange={() => setActiveTab(label)}
+                  onClick={() => setActiveTab(label)}
                   className="rounded-pill"
                   style={{
                     fontSize: "13px",
                     padding: "6px 16px",
                     backgroundColor: selected ? "#FF6600" : "transparent",
                     color: selected ? "white" : "#888",
+                    backgroundColor:
+                      activeTab === label ? "#fefefe" : "transparent",
+                    color: activeTab === label ? "#FF6600" : "#888",
                     border: "none",
                     cursor: "pointer",
                     userSelect: "none",
@@ -128,20 +202,8 @@ export default function PeriodDataBreakdown() {
               );
             })}
           </ButtonGroup>
-          <div
-            style={{
-              width: 36,
-              height: 36,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              marginLeft: 'auto'
-            }}
-          >
-            <IconArrowsMaximize color="rgb(100,100,100)" size={24} />
-          </div>
-        </Col>
-      </Row>
+        </div>
+      </div>
 
       {/* Info banner for SameDay */}
       {activeTab === "SameDay" && (
@@ -175,10 +237,12 @@ export default function PeriodDataBreakdown() {
         queryArgs={[
           1,
           {
-            startdt: startDateCS,
-            enddt: endDateCS,
-            outlet:1,
-            userId:7
+            // startdt: startDateCS,
+            // enddt: endDateCS,
+            startdt: startDate,
+            enddt: endDate,
+            outlet: 1,
+            userId: 7
           },
         ]}
         formatter={(raw) => periodDataBreakdownFormatter(raw, activeTab)}
@@ -190,10 +254,10 @@ export default function PeriodDataBreakdown() {
               style={{
                 display: "flex",
                 overflowX: "auto",
-                paddingLeft: "0.5rem",
-                paddingRight: "0.5rem",
+                // paddingLeft: "0.5rem",
+                // paddingRight: "0.5rem",
                 marginBottom: "1rem",
-                gap: "1rem",
+                gap: "0.2rem",
                 WebkitOverflowScrolling: "touch",
                 scrollbarWidth: "none", // Firefox
                 msOverflowStyle: "none", // IE/Edge

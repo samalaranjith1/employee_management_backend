@@ -1,6 +1,6 @@
 "use client";
 
-import { IconArrowsMaximize } from "@tabler/icons-react";
+import { IconArrowLeft, IconArrowRight, IconArrowsMaximize } from "@tabler/icons-react";
 import React, { useEffect, useState } from "react";
 import { Badge, Col, Row, Dropdown } from "react-bootstrap";
 import {
@@ -9,6 +9,7 @@ import {
   FaExpand,
   FaBolt,
 } from "react-icons/fa";
+import "@/app/globals.css";
 
 function ComponentHeader({
   title,
@@ -21,7 +22,7 @@ function ComponentHeader({
   isExpandable,
   text = "",
   titleIcon = null,
-  handleExpandClick = () => {},
+  handleExpandClick = () => { },
   // Dropdown props
   dropdownOptions = [], // array of { label, value }
   onDropdownSelect = null, // function handler
@@ -83,22 +84,20 @@ function ComponentHeader({
 
   return (
     <Row
-      className="d-flex align-items-center justify-content-between mb-3 pe-2 pt-1"
+      className="d-flex align-items-center justify-content-between mb-3 pe-2 pt-2"
       style={{ backgroundColor: cardBgColor }}
     >
       {/* Left Section */}
       <Col className="d-flex align-items-center">
-        <div className="me-2">
+        {/* Icon */}
+        <div className="me-2 d-flex align-items-center">
           {titleIcon ? titleIcon : <FaBolt size={24} color="rgb(255,80,22)" />}
         </div>
-        <div className="d-flex flex-column mt-2" style={{marginTop:"-20px"}}>
-          <div
-            className={titleColor}
-            style={{ color: titleColor, fontWeight: "bold" }}
-          >
-            {title}
-          </div>
-          <div className="d-flex align-items-center gap-2 fw-normal text-muted">{description}</div>
+
+        {/* Title & optional description */}
+        <div className="d-flex flex-column justify-content-center">
+          <div className="c_medium_text_semi_bold">{title}</div>
+          {/* <div className="d-flex align-items-center gap-2 fw-normal text-muted">{description}</div> */}
         </div>
       </Col>
 
@@ -106,7 +105,7 @@ function ComponentHeader({
       <Col
         xs="auto"
         className="d-flex align-items-center ms-auto gap-2"
-        style={{ position: "relative", minWidth: "max-content",marginTop:'-5px' }} // prevent resizing
+        style={{ position: "relative", minWidth: "max-content", marginTop: '-5px' }} // prevent resizing
       >
         {text && <Badge>{text}</Badge>}
 
@@ -114,10 +113,19 @@ function ComponentHeader({
         {dropdownOptions.length > 0 && onDropdownSelect && (
           <Dropdown>
             <Dropdown.Toggle
+              border='none'
               variant="outline-secondary"
               id="component-header-dropdown"
               size="sm"
-              style={{ minWidth: "120px" }} // optional: ensure toggle width
+              style={{
+                borderRadius: "40px",      // fully rounded
+                backgroundColor: "#ffffff", // white background
+                border: "1px solid #c0c0c0", // gray border
+                color: "#000000",           // text color
+                minWidth: "100px",          // optional width
+                padding: "0.25rem 0.75rem", // adjust padding if needed
+                fontWeight: "600",
+              }} // optional: ensure toggle width
             >
               {dropdownOptions.find((o) => o.value === selectedValue)?.label ||
                 "Select"}
@@ -146,25 +154,64 @@ function ComponentHeader({
 
         {/* Scroll arrows */}
         {isClient && isShowArrows && showScrollButtons && (
-          <div className="d-none d-md-flex gap-3 me-2">
-            <FaChevronLeft
-              size={18}
-              className="text-muted"
-              style={{ cursor: "pointer" }}
+          <div className="d-flex flex-row">
+            <div
+              className="d-none d-md-flex gap-3 me-1"
+              style={{
+                backgroundColor: "#ffffff", // white background
+                border: "1px solid #c0c0c0", // gray border
+                borderRadius: "50%", // circular
+                width: "16px",
+                height: "16px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                cursor: "pointer",
+                lineHeight: 0, // ✅ ensures the icon is centered
+              }}
               onClick={slideLeft}
-            />
-            <FaChevronRight
-              size={18}
-              className="text-muted"
-              style={{ cursor: "pointer" }}
+            >
+              <FaChevronLeft
+                style={{
+                  color: "#FF9200", // orange icon
+                  width: "10px",
+                  height: "10px",
+                  display: "block", // ✅ remove inline-block extra spacing
+                }}
+              />
+            </div>
+
+            <div
+              className="d-none d-md-flex gap-3"
+              style={{
+                backgroundColor: "#ffffff", // white background
+                border: "1px solid #c0c0c0", // gray border
+                borderRadius: "50%", // circular
+                width: "16px",
+                height: "16px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                cursor: "pointer",
+                lineHeight: 0, // ✅ ensures icon centers perfectly
+              }}
               onClick={slideRight}
-            />
+            >
+              <FaChevronRight
+                style={{
+                  color: "#FF9200", // orange icon
+                  width: "10px",
+                  height: "10px",
+                  display: "block", // ✅ remove inline-block spacing
+                }}
+              />
+            </div>
           </div>
         )}
 
         {/* Expand button */}
         {isExpandable && (
-            <div
+          <div
             style={{
               width: 36,
               height: 36,

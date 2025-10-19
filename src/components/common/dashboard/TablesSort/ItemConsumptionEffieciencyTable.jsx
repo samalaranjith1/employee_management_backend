@@ -8,6 +8,7 @@ import { TableControls } from "@/components/common/TableControls";
 import { handleNavigation } from "@/utils";
 import { useRouter } from "next/navigation";
 import { useDashboardContext } from "@/contexts/DashboardContext";
+import "@/app/globals.css";
 
 function ItemConsumptionEffieciencyTable({ tableData }) {
   const { startDate, endDate } = useDashboardContext();
@@ -62,7 +63,7 @@ function ItemConsumptionEffieciencyTable({ tableData }) {
         handleExport={handleExport}
         searchable={true}
         filterable={true}
-        exportable={true}
+        exportable={false}
       />
 
       <div style={{ maxHeight: "60vh", overflowY: "auto", overflowX: "auto" }}>
@@ -72,7 +73,7 @@ function ItemConsumptionEffieciencyTable({ tableData }) {
           style={{ minWidth: "800px" }}
         >
           <thead
-            className="table-light"
+            // className="table-light"
             style={{ position: "sticky", top: 0, zIndex: 5 }}
           >
             <tr>
@@ -80,7 +81,7 @@ function ItemConsumptionEffieciencyTable({ tableData }) {
                 <th
                   key={col.key}
                   onClick={() => handleSort(col.key)}
-                  style={{ cursor: "pointer" }}
+                  style={{ cursor: "pointer",fontWeight: '600',color:'#464f60',backgroundColor:"#f4f7fc"  }}
                 >
                   {col.label}
                   {renderSortArrow(col.key)}
@@ -95,7 +96,7 @@ function ItemConsumptionEffieciencyTable({ tableData }) {
                   <td>
                     <div style={{ display: "flex", flexDirection: "column" }}>
                       <span
-                        style={{ fontWeight: "500", cursor: "pointer" }}
+                        style={{cursor: "pointer" }}
                         onClick={() =>
                           handleNavigation({
                             router,
@@ -107,10 +108,12 @@ function ItemConsumptionEffieciencyTable({ tableData }) {
                             },
                           })
                         }
+                        className="c_table_cells_regular c_gray_2"
+
                       >
                         {row.item}
                       </span>
-                      <small style={{ color: "#6c757d" }}>
+                      <small className="c_gray_3 c_table_sub_cells_regular">
                         {row.dept} • {row.unitQuantity}
                         {row.unit} • ₹{row.unitPrice}
                       </small>
@@ -131,13 +134,27 @@ function ItemConsumptionEffieciencyTable({ tableData }) {
                       })
                     }
                   >
-                    <Badge bg="white" text="primary">
+                    <div bg="#faf8ff" text="primary" style={{
+                      backgroundColor:'#faf8ff',
+                      border:"1px solid #8b5cf6",
+                      color:'#8200da',
+                      display:'flex',
+                      justifyContent:'center',
+                      alignItems:'center',
+                      borderRadius:'12px',
+                      fontSize:"10px",
+                      fontWeight:'500',
+                    }}>
                       {row.dept || row.department?.name || "-"}
-                    </Badge>
+                    </div>
                   </td>
 
                   <td
-                    style={{ cursor: "pointer" }}
+                    style={{ cursor: "pointer" ,
+                      fontSize:'14px',
+                      fontWeight:'700',
+                      color:'#464f60',
+                    }}
                     onClick={() =>
                       handleNavigation({
                         router,
@@ -150,14 +167,16 @@ function ItemConsumptionEffieciencyTable({ tableData }) {
                       })
                     }
                   >
-                    {row.consumed}
+                    <div>{Number(row.consumed.split(' ')[0]).toLocaleString()}</div>
+                    <span className="">{row.consumed.split(' ')[1].toLowerCase()}</span>
                   </td>
 
                   <td
                     style={{
                       cursor: "pointer",
-                      color: "green",
-                      fontWeight: "bold",
+                      color: "#288128",
+                      fontWeight: "700",
+                      fontSize:'14px',
                     }}
                     onClick={() =>
                       handleNavigation({
@@ -171,16 +190,17 @@ function ItemConsumptionEffieciencyTable({ tableData }) {
                       })
                     }
                   >
-                    {row.sales}
+                    <div>{Number(row.sales.split(' ')[0]).toLocaleString()}</div>
+                    <span className="">{row.sales.split(' ')[1].toLowerCase()}</span>
                   </td>
 
                   <td
                     style={{
-                      color: row.diff.startsWith("+") ? "red" : "green",
+                      color: row.diff.startsWith("+") ? "#dc2620" : "green",
                       fontWeight: "bold",
                     }}
                   >
-                    {row.diff}
+                     <div>{row.diff[0]}{Number(row.diff.split(' ')[0]).toLocaleString()}</div>
                   </td>
 
                   <td>
@@ -193,20 +213,22 @@ function ItemConsumptionEffieciencyTable({ tableData }) {
                         fontSize: "0.85rem",
                         backgroundColor:
                           row.status === "red"
-                            ? "#ff0000"
+                            ? "#d33418"
                             : row.status === "green"
-                            ? "#00ff00"
+                            ? "#e2ffe2"
                             : row.status === "orange"
-                            ? "#fff7e6"
+                            ? "#fe9900"
                             : "#f0f0f0",
                         color: "white",
+                        fontWeight:'600',
+                        fontSize:'14px',
                       }}
                     >
                       {row.waste}
                     </span>
                   </td>
 
-                  <td style={{ color: "red", fontWeight: "bold" }}>
+                  <td style={{ color: "#dc2620", fontWeight: "bold" }}>
                     {row.cost}
                   </td>
 
@@ -220,20 +242,22 @@ function ItemConsumptionEffieciencyTable({ tableData }) {
                         fontSize: "0.85rem",
                         backgroundColor:
                           row.status === "red"
-                            ? "#fddede"
+                            ? "#ffedec"
                             : row.status === "green"
                             ? "#d1fae5"
                             : row.status === "orange"
-                            ? "#fff7e6"
+                            ? "#e2ffe2"
                             : "#f0f0f0",
                         color:
                           row.status === "red"
-                            ? "#dc2626"
+                            ? "#e0251b"
                             : row.status === "green"
                             ? "#059669"
                             : row.status === "orange"
-                            ? "#f97316"
+                            ? "#5d9d4a"
                             : "#333",
+                            fontWeight:'600',
+                            fontSize:'14px',  
                       }}
                     >
                       {row.wasteType}

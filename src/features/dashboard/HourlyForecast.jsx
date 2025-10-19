@@ -16,19 +16,41 @@ import { FaCampground, FaChartLine, FaCircle, FaGolfBall, FaPaste } from "react-
 import { IconCalendar, IconChartLine, IconClipboardData, IconTarget } from "@tabler/icons-react";
 
 // ✅ Utility: format API hourly data into recharts friendly format
+// const formatHourlyData = (apiData, metric) => {
+//   if (!apiData?.list) return [];
+
+//   return apiData.list.map((item) => ({
+//     hour: `${item.hr}:00`,
+//     forecast:
+//       metric === "Sales"
+//         ? item.projectedSales?.netSales ?? 0
+//         : item.projectedSales?.orders ?? 0,
+//     actual:
+//       metric === "Sales" ? item.sales?.netSales ?? 0 : item.sales?.orders ?? 0,
+//   }));
+// };
 const formatHourlyData = (apiData, metric) => {
   if (!apiData?.list) return [];
 
-  return apiData.list.map((item) => ({
-    hour: `${item.hr}:00`,
-    forecast:
-      metric === "Sales"
-        ? item.projectedSales?.netSales ?? 0
-        : item.projectedSales?.orders ?? 0,
-    actual:
-      metric === "Sales" ? item.sales?.netSales ?? 0 : item.sales?.orders ?? 0,
-  }));
+  return apiData.list.map((item) => {
+    // Convert 24-hour to 12-hour format with AM/PM
+    let hour = item.hr;
+    const ampm = hour >= 12 ? "PM" : "AM";
+    hour = hour % 12;
+    if (hour === 0) hour = 12;
+
+    return {
+      hour: `${hour} ${ampm}`, // e.g., "1 PM"
+      forecast:
+        metric === "Sales"
+          ? item.projectedSales?.netSales ?? 0
+          : item.projectedSales?.orders ?? 0,
+      actual:
+        metric === "Sales" ? item.sales?.netSales ?? 0 : item.sales?.orders ?? 0,
+    };
+  });
 };
+
 
 // ✅ Formatter for SalesHourly response
 const salesHourlyFormatter = (data, selectedMetric) => {
@@ -37,10 +59,10 @@ const salesHourlyFormatter = (data, selectedMetric) => {
   return {
     dailyForecast:
       selectedMetric === "Sales"
-        ? `₹${data.totalProjectedSales ?? 0}`
+        ? `₹${data.totalProjectedSales.toLocaleString() ?? 0}`
         : `${data.totalProjectedOrders ?? 0}`,
     dailyForecastIcon: <div style={{
-      background: '#2575fb',
+      background: 'linear-gradient(90deg, #2779ff, #195ce0 100%)',
       borderRadius: '16px',
       padding: '12px',
       display: 'inline-block'
@@ -49,10 +71,10 @@ const salesHourlyFormatter = (data, selectedMetric) => {
     </div>,
     actualSoFar:
       selectedMetric === "Sales"
-        ? `₹${data.totalSales ?? 0}`
+        ? `₹${data.totalSales.toLocaleString() ?? 0}`
         : `${data.totalOrders ?? 0}`,
     actualSoFarIcon: <div style={{
-      background: 'linear-gradient(135deg, #37C088 60%, #239971 100%)',
+      background: 'linear-gradient(90deg, #37Cb7a, #117852 100%)',
       borderRadius: '16px',
       padding: '12px',
       display: 'inline-block'
@@ -61,10 +83,10 @@ const salesHourlyFormatter = (data, selectedMetric) => {
     </div>,
     remainingTarget:
       selectedMetric === "Sales"
-        ? `₹${data.remaningSales ?? 0}`
+        ? `₹${data.remaningSales.toLocaleString() ?? 0}`
         : `${data.remaningOrders ?? 0}`,
     remainingTargetIcon: <div style={{
-      background: 'linear-gradient(135deg, #924CFE 60%, #BC75FF 100%)',
+      background: 'linear-gradient(90deg, #a93fff, #6d1dad 100%)',
       borderRadius: '16px',
       padding: '12px',
       display: 'inline-block'
@@ -115,7 +137,7 @@ export default function HourlyForecast() {
         isShowArrows={false}
         scrollRef={myScrollRef}
         isExpandable={true}
-        text="Today's Forecast →"
+        // text="Today's Forecast →"
         titleIcon={<div style={{
           background: '#4a70ff', // Blue gradient
           borderRadius: '12px',
@@ -132,11 +154,11 @@ export default function HourlyForecast() {
           queryHook={useSalesHourly}
           queryKey={[
             "salesHourly",
-            selectedProduct.id,
+            selectedProduct?.id,
             { startdt: startDate, enddt: endDate },
           ]}
           queryFn={() =>
-            useSalesHourly(selectedProduct.id, {
+            useSalesHourly(selectedProduct?.id, {
               startdt: startDate,
               enddt: endDate,
             }).queryFn
@@ -147,7 +169,7 @@ export default function HourlyForecast() {
               enddt: endDate,
               outlet: 1,
               userId: 7,
-              products: selectedProduct.id,
+              products: selectedProduct?.id || "",
             },
           ]}
           shimmerCount={1}

@@ -1,19 +1,20 @@
 "use client";
 import React from "react";
 import { Card } from "react-bootstrap";
+import '@/app/globals.css';
 
 export default function PeriodBreakDownCard({ idx, card, scrollRef }) {
   return (
     <Card
       key={idx}
       ref={scrollRef}
-      className="h-100 d-flex flex-column justify-content-center"
+      className="h-100 d-flex flex-column justify-content-center col-md-3"
       style={{
         backgroundColor: card.bg || "fff", // fallback if bg missing
         borderRadius: "12px",
-        border: "1px solid gray",
+        border: "0.2px solid gray",
         boxShadow: "0 2px 8px rgba(0, 0, 0, 0.03)",
-        minWidth: "260px", // keep horizontal scroll usability
+        minWidth: "240px", // keep horizontal scroll usability
       }}
     >
       <Card.Body className="d-flex align-items-center">
@@ -35,14 +36,13 @@ export default function PeriodBreakDownCard({ idx, card, scrollRef }) {
         {/* Text content */}
         <div>
           <div
-            className="fw-semibold text-muted"
+            className="c_gray_3 c_small_text_bold"
             style={{ fontSize: 13 }}
           >
             {card.title}
           </div>
           <div
-            className="fw-bold"
-            style={{ fontSize: 18 }}
+            className="c_normal_text_extra_bold"
           >
             {card.value}
           </div>

@@ -6,7 +6,7 @@ import BaseSurface from "./BaseSurface";
 import { useTableSort } from "@/components/hooks/useTableSort";
 import { useTableControls } from "@/components/hooks/useTableControls";
 import { TableControls } from "@/components/common/TableControls";
-
+import '@/app/globals.css'
 export default function ItemConsumptionDistributionTable({ data }) {
   const { sortedData, sortKey, direction, handleSort } = useTableSort(data);
 
@@ -66,7 +66,7 @@ export default function ItemConsumptionDistributionTable({ data }) {
         handleExport={handleExport}
         searchable={true}
         filterable={true}
-        exportable={true}
+        exportable={false}
       />
 
       <div style={{ overflowX: "auto", maxHeight: "60vh", overflowY: "auto" }}>
@@ -81,7 +81,7 @@ export default function ItemConsumptionDistributionTable({ data }) {
               position: "sticky",
               top: 0,
               zIndex: 5,
-              backgroundColor: "#F9FAFB",
+              backgroundColor: "#464f60",
             }}
           >
             <tr>
@@ -89,7 +89,7 @@ export default function ItemConsumptionDistributionTable({ data }) {
                 <th
                   key={col.key}
                   onClick={() => handleSort(col.key)}
-                  style={{ cursor: "pointer" }}
+                  style={{ cursor: "pointer",color:"#464f60" }}
                 >
                   {col.label}
                   {renderSortArrow(col.key)}
