@@ -9,6 +9,7 @@ import { useProductsSalesDistribution } from "@/services/product-service";
 import { productPerformancePercentileTableFormatter } from "@/utils/data_formatters/dashboardFormatter";
 import ProductPerformanceSummaryCards from "@/components/common/dashboard/card/ProductPerformanceSummaryCards";
 import { IconTrendingUp } from "@tabler/icons-react";
+import '@/app/globals.css'
 
 export default function ProductPerformanceByPercentile() {
   const { startDate, endDate } = useDashboardContext();
@@ -18,12 +19,11 @@ export default function ProductPerformanceByPercentile() {
     <Container
       fluid
       className="p-2"
-      style={{ backgroundColor: "#fff9f2", borderRadius: 12 }}
     >
       <ComponentHeader
         title={"Product Performance by Percentile"}
         description={"Detailed metrics across different time periods"}
-        titleColor={"#000"}
+        titleColor={'#232425'}
         cardBgColor={"none"}
         isShowArrows={true}
         scrollRef={myScrollRef}
@@ -34,7 +34,7 @@ export default function ProductPerformanceByPercentile() {
           padding: '8px',
           display: 'inline-block'
         }}>
-          <IconTrendingUp stroke={2} color="#fff" size={24} />
+          <IconTrendingUp stroke={2} color="#fff" size={20} />
         </div>}
         text={""}
       />

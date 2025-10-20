@@ -69,7 +69,6 @@ export default function ProductPerformanceTable({ data }) {
       bodyStyle={{ padding: 0 }}
     >
       {/* 🔹 Controls (Search + Filter + Export) */}
-      <div className="p-3 pb-0">
         <TableControls
           searchTerm={searchTerm}
           setSearchTerm={setSearchTerm}
@@ -79,19 +78,18 @@ export default function ProductPerformanceTable({ data }) {
           handleExport={handleExport}
           searchable={true}
           filterable={true}
-          exportable={true}
+          exportable={false}
         />
-      </div>
 
       <div style={{ maxHeight: "65vh", overflowY: "auto", overflowX: "auto" }}>
         <Table
           hover
           className="mb-0"
-          style={{ minWidth: 900, backgroundColor: "#fff7f0" }}
+          style={{ minWidth: 900 }}
         >
           <thead
             style={{
-              backgroundColor: "#fff2e8",
+              backgroundColor: "#f4f7fc",
               position: "sticky",
               top: 0,
               zIndex: 2,
@@ -102,7 +100,12 @@ export default function ProductPerformanceTable({ data }) {
                 <th
                   key={col.key}
                   onClick={() => handleSort(col.key)}
-                  style={{ cursor: "pointer", fontWeight: 600 }}
+                  style={{
+                    cursor: "pointer", fontWeight: 600,
+                    backgroundColor: "#f4f7fc",
+                    color: '#464f60',
+                    fontSize: '14px'
+                  }}
                 >
                   {col.label}
                   {renderSortArrow(col.key)}
@@ -145,24 +148,28 @@ export default function ProductPerformanceTable({ data }) {
                           style={{
                             width: 8,
                             height: 28,
+                            fontSize:'14px',
+                            fontWeight:700,
+                            color:'#171c26',
                             backgroundColor:
-                              barColors[barColor] || "#27ae60",
-                            borderRadius: 4,
+                              barColors[barColor] || "#288128",
+                            borderRadius: 5,
                           }}
                         />
                         {percentile}
                       </td>
-                      <td style={{ fontWeight: "bold" }}>{products}</td>
-                      <td>{sales}</td>
-                      <td>{salesPercent}</td>
-                      <td>{margin}</td>
-                      <td>{marginPercent}</td>
+                      <td style={{ fontWeight: "700",fontSize:'14px',color:'#464f60' }}>{products}</td>
+                      <td style={{ fontWeight: "700",fontSize:'14px',color:'#464f60' }}>{sales}</td>
+                      <td style={{ fontWeight: "700",fontSize:'14px',color:'#464f60' }}>{salesPercent}</td>
+                      <td style={{ fontWeight: "700",fontSize:'14px',color:'#464f60' }}>{margin}</td>
+                      <td style={{ fontWeight: "700",fontSize:'14px',color:'#464f60' }}>{marginPercent}</td>
                       <td>
                         <span
                           style={{
                             backgroundColor: classColor.bg,
                             color: classColor.color,
-                            fontWeight: 600,
+                            fontWeight: 700,
+                            fontSize:"14px",
                             padding: "4px 10px",
                             borderRadius: "10px",
                             display: "inline-block",

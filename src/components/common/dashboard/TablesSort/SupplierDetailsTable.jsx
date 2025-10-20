@@ -6,6 +6,7 @@ import { useTableSort } from "@/components/hooks/useTableSort";
 import { handleNavigation } from "@/utils";
 import { useRouter } from "next/navigation";
 import { useDashboardContext } from "@/contexts/DashboardContext";
+import '@/app/globals.css';
 
 export default function SupplierDetailsTable({ supplierData }) {
   // ✅ Sorting hook
@@ -43,7 +44,7 @@ export default function SupplierDetailsTable({ supplierData }) {
             style={{
               position: "sticky",
               top: 0,
-              backgroundColor: "#fff",
+              backgroundColor: "#f4f7fc",
               zIndex: 5,
             }}
           >
@@ -51,7 +52,11 @@ export default function SupplierDetailsTable({ supplierData }) {
               {columns.map((col) => (
                 <th
                   key={col.key}
-                  style={{ fontWeight: 600, cursor: "pointer" }}
+                  style={{
+                    fontWeight: 600, cursor: "pointer",
+                    backgroundColor: "#f4f7fc",
+                    color: "#464f60"
+                  }}
                   onClick={() => sort.handleSort(col.key)}
                 >
                   {col.label}
@@ -64,20 +69,34 @@ export default function SupplierDetailsTable({ supplierData }) {
             {sort.sortedData.map((row, idx) => (
               <tr key={idx}>
                 <td>
-                  <div className="fw-semibold">{row.supplier}</div>
+                  <div style={{
+                    fontWeight: 500,
+                    fontSize: '14px',
+                    color: '#171c26'
+                  }}>{row.supplier}</div>
                   <div className="d-flex gap-1">
-                    <Badge bg="light" text="dark">
+                    <div style={{
+                      fontWeight: 400,
+                      fontSize: '12px',
+                      color: '#687182'
+                    }}>
                       {row.category}
-                    </Badge>
-                    <span style={{ color: "#64748b", fontSize: "0.85rem" }}>
+                    </div>
+                    <span style={{
+                      fontWeight: 400,
+                      fontSize: '12px',
+                      color: '#687182'
+                    }}>
                       {row.location}
                     </span>
                   </div>
                 </td>
                 <td
                   style={{
-                    fontWeight: 600,
+                    fontWeight: 700,
                     cursor: "pointer",
+                    fontSize: "14px",
+                    color: "#464f60"
                   }}
                   onClick={() =>
                     handleNavigation({
@@ -93,7 +112,12 @@ export default function SupplierDetailsTable({ supplierData }) {
                 >
                   {row.purchase}
                 </td>
-                <td>{row.items}</td>
+                <td style={{
+                  fontWeight: 700,
+                  cursor: "pointer",
+                  fontSize: "14px",
+                  color: "#464f60"
+                }}>{row.items}</td>
               </tr>
             ))}
           </tbody>

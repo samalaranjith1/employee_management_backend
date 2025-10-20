@@ -10,7 +10,7 @@ import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer
 import { useDashboardContext } from "@/contexts/DashboardContext";
 import { IconCurrencyRupee, IconInfoOctagon } from "@tabler/icons-react";
 import ComponentHeader from "@/components/common/ComponentHeader";
-
+import '@/app/globals.css'
 const SupplierDues = () => {
   const { startDate, endDate, dashboardFilter } = useDashboardContext();
 
@@ -63,44 +63,51 @@ const SupplierDues = () => {
       alignItems: "center",
     },
     totalDueAmount: {
-      fontSize: "2rem",
-      fontWeight: "700",
-      color: "#b91c1c",
+      fontWeight: "800",
+      color: "#f62d52",
+      fontSize:"24px"
     },
     supplierCount: {
       fontSize: "0.85rem",
-      color: "#b91c1c",
+      color: "#f62d52",
+      fontWeight:'500'
     },
     tableHeader: {
       position: "sticky",
       top: 0,
-      backgroundColor: "#fff",
+      backgroundColor: "#f4f7fc",
       zIndex: 1,
-      fontSize: "0.85rem",
+      fontSize: "14px",
       fontWeight: "600",
-      color: "#991b1b",
+      color: "#464f60",
       borderBottom: "2px solid #f1f5f9",
     },
     supplierName: {
-      fontWeight: "600",
-      fontSize: "0.9rem",
+      fontWeight: "500",
+      fontSize: "14px",
+      color:'#171c26'
     },
     locationText: {
-      fontSize: "0.8rem",
-      color: "#9ca3af",
+      fontSize: "12px",
+      color: "#687182",
+      fontWeight: "400",
     },
     badge: {
-      backgroundColor: "#f1f5f9",
-      color: "#000",
-      fontSize: "0.75rem",
-      fontWeight: "500",
-      borderRadius: "8px",
+      color: "#687182",
+      fontSize: "12px",
+      fontWeight: "400",
       padding: "0.25rem 0.5rem",
     },
     redAmount: {
-      color: "#b91c1c",
-      fontWeight: "600",
+      color: "#dc2620",
+      fontWeight: "700",
+      fontSize:"14px"
     },
+    blackAmount:{
+      color:'#464f60',
+      fontWeight:"600",
+      fontSize:'14px'
+    }
   };
 
   return (
@@ -170,7 +177,7 @@ const SupplierDues = () => {
             {/* Total Due */}
             <div style={styles.totalDueSection}>
               <div>
-                <div>Total Due as of today</div>
+                <div className="c_black_3 c_small_text_semi_bold">Total Due as of today</div>
                 <div style={styles.totalDueAmount}>
                   ₹{formattedData.summary?.totalDueAmount?.toLocaleString()}
                 </div>

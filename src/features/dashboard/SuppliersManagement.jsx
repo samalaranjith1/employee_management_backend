@@ -13,6 +13,7 @@ import { supplierManagementDataFormatter } from "@/utils/data_formatters/dashboa
 import { handleNavigation } from "@/utils";
 import { useRouter } from "next/navigation";
 import { IconShoppingCart, IconTruck } from "@tabler/icons-react";
+import '@/app/globals.css';
 
 const SupplierManagement = () => {
   const router = useRouter()
@@ -38,7 +39,7 @@ const SupplierManagement = () => {
       color: "#1d4ed8",
     },
     purchaseCard: {
-      backgroundColor: "#f1f5f9",
+      backgroundColor: "#f7faff",
       borderRadius: "12px",
       padding: "1rem",
       display: "flex",
@@ -46,9 +47,9 @@ const SupplierManagement = () => {
       alignItems: "center",
     },
     amount: {
-      fontSize: "1.8rem",
-      fontWeight: "bold",
-      color: "#0d4af1ff",
+      fontSize: "24px",
+      fontWeight: "800",
+      color: "#3a4ecd",
     },
     pieLegend: {
       display: "flex",
@@ -77,7 +78,7 @@ const SupplierManagement = () => {
       <ComponentHeader
         title={"Supplier Management"}
         description={"Track purchases, payments, and supplier relationships"}
-        titleColor={"black"}
+        titleColor={"#232425"}
         cardBgColor={"none"}
         isShowArrows={false}
         scrollRef={myScrollRef}
@@ -127,13 +128,13 @@ const SupplierManagement = () => {
                 }
               >
                 <div>
-                  <div style={{ fontSize: "0.9rem", color: "#334155" }}>
+                  <div style={{ fontSize: "14px",fontWeight:'500', color: "#5c6471" }}>
                     Total Purchase
                   </div>
                   <div style={styles.amount}>
                     {formattedData?.cardData[0]?.value}
                   </div>
-                  <div style={{ fontSize: "0.85rem", color: "#0667f0ff" }}>
+                  <div style={{ fontSize: "12px",fontWeight:"500", color: "#1859da" }}>
                     from {formattedData?.cardData[0]?.suppliers} suppliers
                   </div>
                 </div>

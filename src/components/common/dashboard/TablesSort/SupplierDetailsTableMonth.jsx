@@ -21,7 +21,7 @@ export default function SupplierDetailsTableMonth({ supplierData }) {
   ];
 
   return (
-    <BaseSurface title="Top Suppliers" maxHeight="65vh">
+    <BaseSurface title="Supplier Details" maxHeight="65vh">
       {/* Scroll container */}
       <div style={{ maxHeight: "65vh", overflowY: "auto" }}>
         <Table hover>
@@ -33,10 +33,11 @@ export default function SupplierDetailsTableMonth({ supplierData }) {
                   style={{
                     position: "sticky",
                     top: 0,
-                    background: "#fff",
+                    background: "#f4f7fc",
                     zIndex: 2,
                     cursor: "pointer",
                     fontWeight: 600,
+                    fontSize: '14px'
                   }}
                   onClick={() => sort.handleSort(col.key)}
                 >
@@ -50,20 +51,34 @@ export default function SupplierDetailsTableMonth({ supplierData }) {
             {sort.sortedData.map((row, idx) => (
               <tr key={idx}>
                 <td>
-                  <div className="fw-semibold">{row.supplier}</div>
+                  <div style={{
+                    color: "#171c26",
+                    fontWeight: "600",
+                    fontSize: "14px"
+                  }}>{row.supplier}</div>
                   <div className="d-flex gap-1">
-                    <Badge bg="light" text="dark">
+                    <div style={{
+                      color: "#687182",
+                      fontWeight: "400",
+                      fontSize: "12px"
+                    }}>
                       {row.category}
-                    </Badge>
-                    <span style={{ color: "#64748b", fontSize: "0.85rem" }}>
+                    </div>
+                    <span style={{
+                      color: "#687182",
+                      fontWeight: "400",
+                      fontSize: "12px"
+                    }}>
                       {row.location}
                     </span>
                   </div>
                 </td>
-                <td style={{ fontWeight: "600" }}>
+                <td style={{ fontWeight: "700", fontSize: '14px', color: "#464f60" }}>
                   {row.purchase.toLocaleString()}
                 </td>
-                <td>{row.items}</td>
+                <td style={{
+                  fontWeight: "700", fontSize: '14px', color: "#464f60"
+                }}>{row.items}</td>
               </tr>
             ))}
           </tbody>

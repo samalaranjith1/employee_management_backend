@@ -35,7 +35,10 @@ const ProductPerformanceDetails = () => {
     stickyTh: {
       position: "sticky",
       top: 0,
-      background: "#fff",
+      background: "#f4f7fc",
+      fontSize:'14px',
+      fontWeight:'600',
+      color:"#464f60",
       zIndex: 10,
       boxShadow: "0 2px 2px -1px rgba(0, 0, 0, 0.1)",
     },
@@ -56,7 +59,7 @@ const ProductPerformanceDetails = () => {
       <ComponentHeader
         title={"Product Performance Details"}
         description={"Track Department sales consumption and performance"}
-        titleColor={"black"}
+        titleColor={"#232425"}
         cardBgColor={"none"}
         isShowArrows={false}
         scrollRef={myScrollRef}

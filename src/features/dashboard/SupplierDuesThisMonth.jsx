@@ -12,6 +12,7 @@ import PurchaseDistributionGraph from "@/components/common/dashboard/GraphWrappe
 import { handleNavigation } from "@/utils";
 import { useRouter } from "next/navigation";
 import { IconPackage, IconTruck } from "@tabler/icons-react";
+import '@/app/globals.css';
 
 const styles = {
   container: { padding: "1rem", backgroundColor: "#f8fafc" },
@@ -23,7 +24,7 @@ const styles = {
     padding: "1rem",
   },
   purchaseCard: {
-    backgroundColor: "#f1f5f9",
+    backgroundColor: "#f9f7ff",
     borderRadius: "12px",
     padding: "1.5rem",
     display: "flex",
@@ -31,7 +32,7 @@ const styles = {
     alignItems: "center",
     flex: 1,
   },
-  amount: { fontSize: "2rem", fontWeight: "bold", color: "#1e3a8a" },
+  amount: { fontSize: "24px", fontWeight: "800", color: "#6e48d7" },
 };
 
 const months = Array.from({ length: 12 }, (_, i) => {
@@ -72,7 +73,7 @@ const SupplierDuesThisMonth = () => {
       <ComponentHeader
         title="Monthly Supplier Management"
         description="Track purchases, payments and supplier relationships"
-        titleColor="rgba(124, 58, 237, 1) fs-4"
+        titleColor="#232425"
         cardBgColor="none"
         isShowArrows={false}
         scrollRef={scrollRef}
@@ -137,11 +138,11 @@ const SupplierDuesThisMonth = () => {
               }
             >
               <div>
-                <div style={{ fontSize: "0.9rem", color: "#334155" }}>
+                <div style={{ fontSize: "14px", color: "#5c6471",fontWeight:'500' }}>
                   Total Purchase MTD
                 </div>
                 <div style={styles.amount}>{data.cardData[0].value}</div>
-                <div style={{ fontSize: "0.85rem", color: "#64748b" }}>
+                <div style={{ fontSize: "12px", color: "#6e48d7" ,fontWeight:'500'}}>
                   from {data.cardData[0].suppliers} suppliers
                 </div>
               </div>

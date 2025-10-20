@@ -1640,8 +1640,8 @@ export function productPerformancePercentileTableFormatter(data) {
       label: "Total Products",
       value: data.productCount ?? 0,
       amount: formatCurrency(data.totalSales),
-      bgColor: "#dbe9ff",
-      textColor: "#2a4cfa",
+      bgColor: "#eef5fe",
+      textColor: "#1859da",
       description: 'Menu Item analyzed',
       icon: <div style={{
         background: '#1c62e5', // vibrant orange-red
@@ -1656,8 +1656,8 @@ export function productPerformancePercentileTableFormatter(data) {
       label: data.high?.definition?.split(":")[0] ?? "High",
       value: data.high?.count ?? 0,
       amount: formatCurrency(data.high?.value),
-      bgColor: "#dbffea",
-      textColor: "#23864b",
+      bgColor: "#f0fff0",
+      textColor: "#15774f",
       description: 'Top 50% products',
       icon: <div style={{
         background: '#33c376', // bold purple
@@ -1672,8 +1672,8 @@ export function productPerformancePercentileTableFormatter(data) {
       label: data.medium?.definition?.split(":")[0] ?? "Medium",
       value: data.medium?.count ?? 0,
       amount: formatCurrency(data.medium?.value),
-      bgColor: "#fff6d4",
-      textColor: "#d08e00",
+      bgColor: "#fef9e6",
+      textColor: "#e88603",
       description: 'Next 40% products',
       icon: <div style={{
         background: '#dc7e05', // orange gradient for Figma style
@@ -1688,8 +1688,8 @@ export function productPerformancePercentileTableFormatter(data) {
       label: data.low?.definition?.split(":")[0] ?? "Low",
       value: data.low?.count ?? 0,
       amount: formatCurrency(data.low?.value),
-      bgColor: "#ffeaea",
-      textColor: "#d93939",
+      bgColor: "#fef2f2",
+      textColor: "#bf1e38",
       description: 'Bottom 10% products',
       icon: <div
         style={{

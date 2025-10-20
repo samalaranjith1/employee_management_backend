@@ -3,6 +3,7 @@
 import React from "react";
 import { Card } from "react-bootstrap";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
+import '@/app/globals.css';
 
 export default function PurchaseDistributionGraph({ pieData, styles }) {
   // Custom label renderer with percentage + leader line
@@ -51,7 +52,7 @@ export default function PurchaseDistributionGraph({ pieData, styles }) {
 
   return (
     <>
-      <div className="fw-semibold mb-2">Purchase Distribution</div>
+      <div className="c_medium_text_semi_bold c_black_2">Purchase Distribution</div>
       <Card className="p-3">
         <div className="chart-wrapper">
           <ResponsiveContainer width="100%" height={350}>
@@ -59,8 +60,8 @@ export default function PurchaseDistributionGraph({ pieData, styles }) {
               <Pie
                 data={pieData}
                 innerRadius={50}
-                outerRadius={80}
-                paddingAngle={2}
+                outerRadius={120}
+                paddingAngle={0}
                 dataKey="value"
                 isAnimationActive={true}
                 labelLine={false}
@@ -81,7 +82,42 @@ export default function PurchaseDistributionGraph({ pieData, styles }) {
             </PieChart>
           </ResponsiveContainer>
         </div>
-        <div style={styles.pieLegend}>
+        <div
+          style={{
+            ...styles.pieLegend,
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr", // two per row
+            gap: "8px 12px",
+          }}
+        >
+          {pieData.slice(0, 6).map((item, idx) => (
+            <div
+              key={idx}
+              style={{
+                ...styles.legendItem,
+                display: "flex",
+                alignItems: "center",
+                gap: "8px",
+                fontSize: "14px",
+                fontWeight: 600,
+                color: "#333",
+              }}
+            >
+              {/* ✅ Colored circle bubble */}
+              <div
+                style={{
+                  width: "12px",
+                  height: "12px",
+                  borderRadius: "50%",
+                  backgroundColor: item.color,
+                  flexShrink: 0,
+                }}
+              ></div>
+              <span>{item.name}</span>
+            </div>
+          ))}
+        </div>
+        {/* <div style={styles.pieLegend}>
           {pieData.slice(0, 5).map((item, idx) => (
             <div style={styles.legendItem} key={idx}>
               <div
@@ -93,7 +129,7 @@ export default function PurchaseDistributionGraph({ pieData, styles }) {
               {item.name}
             </div>
           ))}
-        </div>
+        </div> */}
       </Card>
     </>
   );

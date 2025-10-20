@@ -63,7 +63,7 @@ export default function ProductDetailsTable({ rowsData, styles }) {
         handleExport={handleExport}
         searchable={true}
         filterable={true}
-        exportable={true}
+        exportable={false}
       />
 
       {/* 🔹 Table Scroll Container */}
@@ -90,7 +90,12 @@ export default function ProductDetailsTable({ rowsData, styles }) {
                   <td>
                     <div
                       className="fw-bold"
-                      style={{ cursor: "pointer" }}
+                      style={{
+                        cursor: "pointer",
+                        fontSize: "14px",
+                        fontWeight: '500',
+                        color: '#171c26'
+                      }}
                       onClick={() =>
                         handleNavigation({
                           router,
@@ -101,12 +106,26 @@ export default function ProductDetailsTable({ rowsData, styles }) {
                     >
                       {row.product}
                     </div>
-                    <small className="text-muted">{row.details}</small>
+                    <small style={{
+                      cursor: "pointer",
+                      fontSize: "12px",
+                      fontWeight: '400',
+                      color: '#687182'
+                    }}>{row.details}</small>
                   </td>
-                  <td className="fw-bold">{row.items}</td>
+                  <td style={{
+                    fontSize: "14px",
+                    fontWeight: 600,
+                    color: '#464f60'
+                  }}>{row.items}</td>
                   <td
                     className="text-success fw-bold"
-                    style={{ cursor: "pointer" }}
+                    style={{
+                      cursor: "pointer",
+                      fontSize: '14px',
+                      fontWeight: "700",
+                      color: "#288128"
+                    }}
                     onClick={() =>
                       handleNavigation({
                         router,
@@ -121,9 +140,21 @@ export default function ProductDetailsTable({ rowsData, styles }) {
                   >
                     {row.netSales}
                   </td>
-                  <td className="text-danger fw-bold">{row.discount}</td>
-                  <td className="fw-bold">{row.tax}</td>
-                  <td className="text-danger fw-bold">{row.makingCost}</td>
+                  <td style={{
+                    fontWeight: '700',
+                    fontSize: "14px",
+                    color: '#c32924'
+                  }}>{row.discount}</td>
+                  <td style={{
+                    fontSize: "14px",
+                    fontWeight: 600,
+                    color: '#464f60'
+                  }}>{row.tax}</td>
+                  <td style={{
+                    fontWeight: '700',
+                    fontSize: "14px",
+                    color: '#c32924'
+                  }}>{row.makingCost}</td>
                   <td>
                     <div className="text-success fw-bold">{row.margin}</div>
                     <span
