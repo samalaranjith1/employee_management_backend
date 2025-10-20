@@ -66,10 +66,10 @@ const ProductsSalesTable = ({ apiData }) => {
 
   const columns = [
     { key: "date", label: "Date" },
-    { key: "totalSalesNum", label: "Total Sales (₹)" },
-    { key: "netSalesNum", label: "Net Sales (₹)" },
-    { key: "discountNum", label: "Discount (₹)" },
-    { key: "taxNum", label: "Tax (₹)" },
+    { key: "totalSalesNum", label: "Total Sales" },
+    { key: "netSalesNum", label: "Net Sales" },
+    { key: "discountNum", label: "Discount" },
+    { key: "taxNum", label: "Tax" },
     { key: "itemsSoldNum", label: "Items Sold" },
     { key: "ordersNum", label: "Orders" },
   ];
@@ -116,15 +116,15 @@ const ProductsSalesTable = ({ apiData }) => {
           <tbody>
             {sortedData.map((row, idx) => (
               <tr key={idx}>
-                <td className="text-muted" style={{ whiteSpace: "pre-line" }}>
+                <td className="" style={{ whiteSpace: "pre-line", fontWeight:600,fontSize:"14px",color:"#232425" }}>
                   {row.date}
                 </td>
-                <td className="fw-semibold">₹{row.totalSales}</td>
-                <td className="fw-semibold">₹{row.netSales}</td>
-                <td className="fw-semibold text-danger">-₹{row.discount}</td>
-                <td className="fw-semibold">₹{row.tax}</td>
-                <td className="fw-semibold">{row.itemsSold}</td>
-                <td className="fw-semibold">{row.orders}</td>
+                <td className="" style={{fontWeight:600,fontSize:"14px",color:"#232425"}}>₹{row.totalSales}</td>
+                <td className="" style={{fontWeight:600,fontSize:"14px",color:"#232425"}}>₹{row.netSales}</td>
+                <td className="" style={{fontWeight:600,fontSize:"14px",color:"#232425"}}>₹{row.discount}</td>
+                <td className="" style={{fontWeight:600,fontSize:"14px",color:"#232425"}}>₹{row.tax}</td>
+                <td className="" style={{fontWeight:600,fontSize:"14px",color:"#232425"}}>{row.itemsSold}</td>
+                <td className="" style={{fontWeight:600,fontSize:"14px",color:"#232425"}}>{row.orders}</td>
               </tr>
             ))}
           </tbody>

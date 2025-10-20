@@ -36,8 +36,8 @@ export default function ProductCostTable({ ingredients = [] }) {
       label: "Item (Raw Material)",
       render: (row) => (
         <>
-          <div className="fw-semibold">{row.name}</div>
-          <div style={{ fontSize: "12px", color: "#6C757D" }}>{row.alias}</div>
+          <div className=""style={{fontWeight:700, fontSize:"14px", color:"#232425"}}>{row.name}</div>
+          <div style={{ fontSize: "12px", color: "#6C757D",fontWeight:400 }}>{row.alias}</div>
         </>
       ),
     },
@@ -46,9 +46,9 @@ export default function ProductCostTable({ ingredients = [] }) {
       label: "Recipe (Price, Qty)",
       render: (row) => (
         <>
-          <div className="fw-semibold text-primary">{row.recipe?.price}</div>
-          <div style={{ fontSize: "12px", color: "#6C757D" }}>
-            {row.recipe?.qty}
+          <div className=""style={{fontWeight:700,fontSize:"14px",color:"#155DFC"}}>{row.recipe?.price}</div>
+          <div style={{ fontSize: "12px", color: "#6C757D",fontWeight:400 }}>
+            {row.recipe?.qty?.toLowerCase()}
           </div>
         </>
       ),
@@ -58,9 +58,9 @@ export default function ProductCostTable({ ingredients = [] }) {
       label: "Total Cost (Price, Qty)",
       render: (row) => (
         <>
-          <div className="fw-semibold">{row.totalCost?.price}</div>
+          <div className="" style={{fontWeight:700,fontSize:"14px", color:"#0a0a0a"}}>{row.totalCost?.price}</div>
           <div style={{ fontSize: "12px", color: "#6C757D" }}>
-            {row.totalCost?.qty}
+            {row.totalCost?.qty?.toLowerCase()}
           </div>
         </>
       ),
@@ -69,7 +69,7 @@ export default function ProductCostTable({ ingredients = [] }) {
       key: "distributionRaw",
       label: "Total Cost Distribution",
       render: (row) => (
-        <span className="fw-semibold" style={{ color: "#2A55FF" }}>
+        <span className="" style={{ color: "#2A55FF",fontWeight:600,fontSize:"14px" }}>
           {row.distribution}
         </span>
       ),
@@ -93,7 +93,7 @@ export default function ProductCostTable({ ingredients = [] }) {
               <th
                 key={col.key}
                 onClick={() => handleSort(col.key)}
-                style={{ cursor: "pointer", whiteSpace: "nowrap" ,backgroundColor:'#eee'}}
+                style={{ cursor: "pointer", whiteSpace: "nowrap" ,backgroundColor:'#f4f7fc',fontSize:"14px",fontWeight:700}}
               >
                 {col.label}
                 {renderSortArrow(col.key)}

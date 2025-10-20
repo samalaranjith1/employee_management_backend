@@ -14,6 +14,7 @@ import { useDashboardContext } from "@/contexts/DashboardContext";
 import { handleCustomChange, handlePreset } from "@/utils";
 import { presetOptions } from "@/constants";
 import "./css/datefilter.module.css";
+import { usePathname } from "next/navigation";
 
 export default function DurationFilters({useAppContext}) {
   // const { startDate, endDate, setStartDate, setEndDate } =
@@ -24,6 +25,8 @@ export default function DurationFilters({useAppContext}) {
   const [showCalendar, setShowCalendar] = useState(false);
   const [isCompact, setIsCompact] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const location = usePathname()
+  const isEndDF = ['/products','/departments','/items','/dashboard','/suppliers'].includes(location)
 
   const containerRef = useRef(null);
 
@@ -109,7 +112,7 @@ export default function DurationFilters({useAppContext}) {
   return (
     <Container fluid ref={containerRef}>
       <div className="p-0">
-        {isCompact ? (
+        {isCompact || isEndDF ? (
           <>
             <Button
               variant="outline-primary"
@@ -178,6 +181,7 @@ export default function DurationFilters({useAppContext}) {
           </>
         ) : (
           // ✅ Full view (desktop button group)
+          <div className="d-none d-md-flex">
             <ButtonGroup
               className="gap-2 flex-wrap"
               style={{
@@ -248,6 +252,7 @@ export default function DurationFilters({useAppContext}) {
                 </div>
               )}
             </ButtonGroup>
+            </div>
         )}
       </div>
     </Container>

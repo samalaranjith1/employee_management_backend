@@ -52,7 +52,7 @@ export default function ProductsIngredientsTable({ list = [] }) {
           style={{
             position: "sticky",
             top: 0,
-            background: "#0d6efd",
+            background: "#f4f7fc",
             zIndex: 10,
           }}
         >
@@ -61,7 +61,7 @@ export default function ProductsIngredientsTable({ list = [] }) {
               <th
                 key={col.key}
                 onClick={() => handleSort(col.key)}
-                style={{ cursor: "pointer", whiteSpace: "nowrap",backgroundColor:'#eee' }}
+                style={{ cursor: "pointer", whiteSpace: "nowrap",backgroundColor:'#f4f7fc',fontWeight:700,fontSize:"14px",color:"#232425" }}
               >
                 {col.label}
                 {renderSortArrow(col.key)}
@@ -72,7 +72,7 @@ export default function ProductsIngredientsTable({ list = [] }) {
         <tbody>
           {sortedData.length > 0 ? (
             sortedData.map((row, idx) => (
-              <tr key={idx}>
+              <tr key={idx} style={{fontWeight:500, fontSize:"14px"}}>
                 {columns.map((col) => (
                   <td key={col.key}>{row[col.display]}</td>
                 ))}

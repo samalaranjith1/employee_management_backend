@@ -450,6 +450,7 @@ export const productsCostDataFormatter = (apiData) => {
       value: apiData?.itemsSold, // Placeholder (replace with actual if available in API)
       bgColor: "#F3F6FF",
       textColor: "#2A55FF",
+      bgIcon:'#DBEAFE',
       icon: <FaShoppingCart size={20} color="#2A55FF" />,
     },
     {
@@ -458,6 +459,7 @@ export const productsCostDataFormatter = (apiData) => {
       value: apiData.totalIngredientCount || 0,
       bgColor: "#F2FBF5",
       textColor: "#1AAB4A",
+      bgIcon:"#DCFCE7",
       icon: <FaCube size={20} color="#1AAB4A" />,
     },
     {
@@ -466,6 +468,7 @@ export const productsCostDataFormatter = (apiData) => {
       value: `₹${apiData?.totalIngredientCost.toFixed(1)}`,
       bgColor: "#FFF7F2",
       textColor: "#E85C0D",
+      bgIcon:"#FFEDD4",
       icon: <FaRupeeSign size={20} color="#E85C0D" />,
     },
   ];

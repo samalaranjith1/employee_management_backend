@@ -52,10 +52,10 @@ export default function ProductsIngredientsCards({ list }) {
           }}
         >
           <div className="text-left">
-            <h6 className="text-secondary fw-bold text-uppercase">
+            <div className="" style={{fontWeight:600,fontSize:"14px",color:"#0a0a0a"}}>
               Total Items
-            </h6>
-            <h4 className="fw-bold mb-0">{totalItems}</h4>
+            </div>
+            <div className=""style={{fontWeight:700,fontSize:"24px",color:"#0a0a0a"}}>{totalItems}</div>
           </div>
         </CommonCard>
 
@@ -70,10 +70,10 @@ export default function ProductsIngredientsCards({ list }) {
           }}
         >
           <div className="text-left">
-            <h6 className="text-secondary text-uppercase">
+            <div className=""style={{fontWeight:600,fontSize:"14px",color:"#0a0a0a"}}>
               Total Cost
-            </h6>
-            <h4 className="fw-bold mb-0">₹{totalCost}</h4>
+            </div>
+            <div className=""style={{fontWeight:700,fontSize:"24px",color:"#0a0a0a"}}>₹{totalCost}</div>
           </div>
         </CommonCard>
       </div>

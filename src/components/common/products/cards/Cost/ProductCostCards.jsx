@@ -47,15 +47,21 @@ export default function ProductCostCards({ summaryCards = [] }) {
           >
             <div>
               <div className="d-flex align-items-center mb-2">
-                {card.icon}
+                <div style={{
+                  padding:'10px',
+                  borderRadius:'12px',
+                  border:'1px solid #ddd',
+                  backgroundColor:card.bgIcon,
+                  marginRight:'10px'
+                }}>{card.icon}</div>
                 <span
-                  className="ms-2 fw-semibold"
-                  style={{ color: "#333", fontSize: "14px" }}
+                  className=""
+                  style={{ color: "#0a0a0a", fontSize: "14px",fontWeight:600 }}
                 >
                   {card.label}
                 </span>
               </div>
-              <h4 className="fw-bold" style={{ color: card.textColor }}>
+              <h4 className="" style={{ color: card.textColor,fontWeight:700,fontSize:"24px" }}>
                 {card.value}
               </h4>
             </div>
