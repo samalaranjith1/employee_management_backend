@@ -24,16 +24,16 @@ function PriceChangesTable({ styles, recentChanges, futureHikes }) {
       }}
     >
       {/* Scrollable content */}
-      <div style={{ flex: 1, overflowY: "auto", padding: "8px" }}>
+      <div style={{ flex: 1, overflowY: "auto", padding: "8px" ,backgroundColor:'#eee'}}>
         {sortHook.sortedData.map((item, idx) => (
           <div
             key={idx}
-            className="d-flex justify-content-between align-items-center mb-3"
+            className="d-flex justify-content-between align-items-center mb-2"
             style={{
               backgroundColor: "#fff",
               borderRadius: "12px",
               padding: "16px",
-              boxShadow: "0 1px 4px rgba(0,0,0,0.05)",
+              boxShadow: "0 2px 4px rgba(0,0,0,0.15)",
               cursor: "pointer",
             }}
             onClick={() =>
@@ -46,16 +46,16 @@ function PriceChangesTable({ styles, recentChanges, futureHikes }) {
           >
             {/* Left Column */}
             <div>
-              <div className="fw-bold" style={{ fontSize: "1rem" }}>
+              <div style={{ fontSize: "14px", fontWeight:"700", color:"#232425" }}>
                 {item.name}
               </div>
-              <div className="text-muted" style={{ fontSize: "0.85rem" }}>
+              <div  style={{ fontSize: "12px", fontWeight:"400", color:"#687182" }}>
                 {item.category}
               </div>
-              <div className="text-muted" style={{ fontSize: "0.85rem" }}>
+              <div style={{ fontSize: "12px",fontWeight:"400", color:"#687182" }}>
                 ₹{item.oldPrice} → ₹{item.newPrice}
               </div>
-              <div className={dateClass} style={{ fontSize: "0.8rem" }}>
+              <div className={dateClass} style={{ fontSize: "12px", fontWeight:"400", color:"#687182" }}>
                 {dateLabel}: {item.date}
               </div>
             </div>
@@ -63,7 +63,7 @@ function PriceChangesTable({ styles, recentChanges, futureHikes }) {
             {/* Right Column */}
             <div className="text-end">
               <div style={item.up ? styles.priceUp : styles.priceDown}>
-                {item.up ? "+" : ""}₹{item.change}
+                {Number(item.up)?.toLocaleString() ? "+" : ""}₹{Number(item.change)?.toLocaleString()}
               </div>
               <div style={item.up ? styles.priceUp : styles.priceDown}>
                 {item.percent}%

@@ -1041,7 +1041,7 @@ export function wastageAnalysisDataFormatter(data) {
       value: data.totalWastage?.amount ?? 0,
       sub: "",
       bgLight: "#e8f9f3",
-      bgSolid: "#1abc9c",
+      bgSolid: "#e6fff9",
       icon: <div style={{
         background: '#2eba99', // teal/turquoise gradient
         borderRadius: '12px',
@@ -1056,7 +1056,7 @@ export function wastageAnalysisDataFormatter(data) {
       value: data.rawMaterial?.amount ?? 0,
       sub: `(${data.rawMaterial?.count ?? 0} Items)`,
       bgLight: "#e8f5e9",
-      bgSolid: "#2ecc71",
+      bgSolid: "#f0fff0",
       icon: <div style={{
         background: '#209962', // vivid green gradient
         borderRadius: '12px',
@@ -1071,7 +1071,7 @@ export function wastageAnalysisDataFormatter(data) {
       value: data.expiredItems?.amount ?? 0,
       sub: `(${data.expiredItems?.count ?? 0} Items)`,
       bgLight: "#fff3e0",
-      bgSolid: "#e67e22",
+      bgSolid: "#fff7f2",
       icon: <div style={{
         background: '#e9490b', // orange gradient
         borderRadius: '12px',
@@ -1086,7 +1086,7 @@ export function wastageAnalysisDataFormatter(data) {
       value: data.expiredProducts?.amount ?? 0,
       sub: `(${data.expiredProducts?.count ?? 0} Items)`,
       bgLight: "#f3e5f5",
-      bgSolid: "#9b59b6",
+      bgSolid: "#faf6ff",
       icon: <div style={{
         background: '#a43cf8', // purple gradient
         borderRadius: '12px',
@@ -1147,7 +1147,7 @@ export function priceChangeDataFormatter(data) {
 
   const recentChanges = data?.recent?.map((item) => ({
     name: item.item?.name || "",
-    category: `${item.item?.categoryName || ""} • ${item.projectedMonthlyQty || ""
+    category: `${item.item?.categoryName || ""} • ${Number(item.projectedMonthlyQty)?.toLocaleString() || ""
       }`,
     oldPrice: item.oldPrice,
     newPrice: item.newPrice,
@@ -1161,7 +1161,7 @@ export function priceChangeDataFormatter(data) {
 
   const futureHikes = data?.future?.map((item) => ({
     name: item.item?.name || "",
-    category: `${item.item?.categoryName || ""} • ${item.projectedMonthlyQty || ""
+    category: `${item.item?.categoryName || ""} • ${Number(item.projectedMonthlyQty)?.toLocaleString() || ""
       }`,
     oldPrice: item.oldPrice,
     newPrice: item.newPrice,
@@ -1231,7 +1231,7 @@ export function outOfOfficeDataFormatter(data) {
       count: data.zeroStockItems,
       sub: "Zero inventory remaining",
       bgColor: "#feeff1",
-      textColor: "#C62828",
+      textColor: "#cf0d44",
       icon: (
         <div style={{
           background: "#e00a48",
@@ -1239,7 +1239,7 @@ export function outOfOfficeDataFormatter(data) {
           padding: "8px",
           display: "inline-block"
         }}>
-          <IconShoppingCartExclamation stroke={2} color="#fff" size={24} />
+          <IconShoppingCartExclamation stroke={2} color="#fff" size={20} />
         </div>
       ),
     },
@@ -1248,7 +1248,7 @@ export function outOfOfficeDataFormatter(data) {
       count: data.belowMoqItems,
       sub: "Require immediate attention",
       bgColor: "#fff8ee",
-      textColor: "#E78C27",
+      textColor: "#e64b02",
       icon: (
         <div style={{
           background: "#f75b01",
@@ -1256,7 +1256,7 @@ export function outOfOfficeDataFormatter(data) {
           padding: "8px",
           display: "inline-block"
         }}>
-          <IconShoppingCartCheck stroke={2} color="#fff" size={24} />
+          <IconShoppingCartCheck stroke={2} color="#fff" size={20} />
         </div>
       ),
     },
@@ -1265,7 +1265,7 @@ export function outOfOfficeDataFormatter(data) {
       count: data.totalItems,
       sub: "Tracking inventory levels",
       bgColor: "#f7f3ff",
-      textColor: "#1e68ed",
+      textColor: "#1b61e5",
       icon: (
         <div style={{
           background: "#1e68ed",
@@ -1273,7 +1273,7 @@ export function outOfOfficeDataFormatter(data) {
           padding: "8px",
           display: "inline-block"
         }}>
-          <IconPackage stroke={2} color="#fff" size={24} />
+          <IconPackage stroke={2} color="#fff" size={20} />
         </div>
       ),
     },
@@ -1343,15 +1343,15 @@ export function recipesDataFormatter(data) {
       label: "High Margin",
       icon: <div style={{
         background: '#08a358', // bold purple
-        borderRadius: '16px',
-        padding: '12px',
+        borderRadius: '12px',
+        padding: '8px',
         display: 'inline-block'
       }}>
-        <IconTrendingUp stroke={2} color="#fff" size={24} />
+        <IconTrendingUp stroke={2} color="#fff" size={20} />
       </div>,
       bg: "#eafef4",
       labelColor: "#28A745",
-      textColor: "#1E4620",
+      textColor: "#1e7d1e",
     },
     {
       title: data.moderateProducts?.name ?? "Moderate Products",
@@ -1361,15 +1361,15 @@ export function recipesDataFormatter(data) {
       label: "Medium Margin",
       icon: <div style={{
         background: '#f39e04', // bold purple
-        borderRadius: '16px',
-        padding: '12px',
+        borderRadius: '12px',
+        padding: '8px',
         display: 'inline-block'
       }}>
-        <IconTrendingUp stroke={2} color="#fff" size={24} />
+        <IconTrendingUp stroke={2} color="#fff" size={20} />
       </div>,
       bg: "#FFFBEA",
       labelColor: "#F4B400",
-      textColor: "#4E3B00",
+      textColor: "#ba4d00",
     },
     {
       title: data.lossMakingProducts?.name ?? "Loss Making Products",
@@ -1379,8 +1379,8 @@ export function recipesDataFormatter(data) {
       label: "Low Margin",
       icon: <div
         style={{
-          width: 48,
-          height: 48,
+          width: 40,
+          height: 40,
           borderRadius: 12,
           background: "#f02740", // Adjust color to match Figma or differentiate as in your design
           display: "flex",
@@ -1388,11 +1388,11 @@ export function recipesDataFormatter(data) {
           justifyContent: "center",
         }}
       >
-        <IconTrendingDown color="white" size={28} stroke={2} />
+        <IconTrendingDown color="white" size={24} stroke={2} />
       </div>,
       bg: "#fef2f3",
       labelColor: "#D32F2F",
-      textColor: "#5C0000",
+      textColor: "#c70036",
     },
   ];
 
@@ -1410,7 +1410,7 @@ export function recipesDataFormatter(data) {
       costPct: item.product?.costPercentage
         ? `${item.product.costPercentage}%`
         : "0%",
-      costPctColor: "#F87171",
+      costPctColor: "#dc2620",
       price: `₹${item.product?.price ?? 0}`,
       status: item.status ?? "Unknown",
     })) ?? [];
@@ -1456,9 +1456,9 @@ export function topSellingProductsDataFormatter(data) {
       }}>
         <IconShoppingCartCheck stroke={2} color="#fff" size={24} />
       </div>,
-      bg: "#EEF2FF",
+      bg: "#eef5fe",
       iconBg: "#7C5CFF",
-      color: "#2E2EA8",
+      color: "#1859da",
     },
     {
       id: 2,
@@ -1473,9 +1473,9 @@ export function topSellingProductsDataFormatter(data) {
       }}>
         <IconTrendingUp stroke={2} color="#fff" size={24} />
       </div>,
-      bg: "#cefbeeff",
+      bg: "#f0fff0",
       iconBg: "#6C7A86",
-      color: "#222831",
+      color: "#15774f",
     },
     {
       id: 3,
@@ -1490,9 +1490,9 @@ export function topSellingProductsDataFormatter(data) {
       }}>
         <IconArrowRight stroke={2} color="#fff" size={28} />
       </div>,
-      bg: "#f7fad4ff",
+      bg: "#fef9e6",
       iconBg: "#07A875",
-      color: "#0F6A43",
+      color: "#e88603",
     },
     {
       id: 4,
@@ -1501,8 +1501,8 @@ export function topSellingProductsDataFormatter(data) {
       subtitle: "Bottom 10% products",
       icon: <div
         style={{
-          width: 48,
-          height: 48,
+          width: 40,
+          height: 40,
           borderRadius: 12,
           background: "#c11e38", // Adjust color to match Figma or differentiate as in your design
           display: "flex",
@@ -1510,18 +1510,19 @@ export function topSellingProductsDataFormatter(data) {
           justifyContent: "center",
         }}
       >
-        <IconTrendingDown color="white" size={28} stroke={2} />
+        <IconTrendingDown color="white" size={24} stroke={2} />
       </div>,
-      bg: "#fae0e2ff",
+      bg: "#fef2f3",
       iconBg: "#F29F05",
-      color: "#8a0007ff",
+      color: "#bf1e38",
     },
   ];
 
   // --- Chart Data (Top Products by Sales/Margin) ---
   const chartData = (data.list || []).map((item) => ({
     name: item.product?.name || "Unknown",
-    sales: item.sales?.netSales || 0,
+    sales: item.sales?.netSales
+  ? (item.sales.netSales) : 0,
     margin: item.marginPercentage || 0,
   }));
 
@@ -1535,12 +1536,12 @@ export function topSellingProductsDataFormatter(data) {
       icon: <div style={{
         background: '#0f957b', // green gradient for Figma style
         borderRadius: '12px',
-        padding: '8px',
+        padding: '8px 10px',
         display: 'inline-block'
       }}>
-        <IconBasketDollar stroke={2} color="#fff" size={20} />
+        <IconBasketDollar stroke={2} color="#fff" size={24} />
       </div>,
-      textColor: '#0f957b',
+      textColor: '#15774f',
       bgColor: "#f0fff0",
     },
     {
@@ -1550,12 +1551,12 @@ export function topSellingProductsDataFormatter(data) {
       icon: <div style={{
         background: '#226ef3', // vibrant orange-red
         borderRadius: '12px',
-        padding: '8px',
+        padding: '8px 10px',
         display: 'inline-block'
       }}>
-        <IconShoppingCartCheck stroke={2} color="#fff" size={20} />
+        <IconShoppingCartCheck stroke={2} color="#fff" size={24} />
       </div>,
-      textColor: '#226ef3',
+      textColor: '#1859da',
       bgColor: "#eef5fe",
     },
     {
@@ -1565,12 +1566,12 @@ export function topSellingProductsDataFormatter(data) {
       icon: <div style={{
         background: '#9a36ea', // purple gradient
         borderRadius: '12px',
-        padding: '8px',
+        padding: '8px 10px',
         display: 'inline-block'
       }}>
-        <IconShoppingCartExclamation stroke={2} color="#fff" size={20} />
+        <IconShoppingCartExclamation stroke={2} color="#fff" size={24} />
       </div>,
-      textColor: '#9a36ea',
+      textColor: '#8e30da',
       bgColor: "#faf6ff",
     },
   ];

@@ -4,7 +4,7 @@ import React from "react";
 import { Row, Col } from "react-bootstrap";
 import { FaBoxOpen, FaClock, FaUtensils } from "react-icons/fa";
 import { useTableSort } from "@/components/hooks/useTableSort";
-import { IconShoppingBagExclamation, IconShoppingCartExclamation, IconTrash } from "@tabler/icons-react";
+import { IconArrowsMaximize, IconShoppingBagExclamation, IconShoppingCartExclamation, IconTrash } from "@tabler/icons-react";
 
 export default function WastageAnalysisTable({
   expiredItems,
@@ -47,7 +47,41 @@ export default function WastageAnalysisTable({
       {rawSort.sortedData.length > 0 && (
         <Col md={colSize}>
           <div style={tableCardStyle}>
-            <div
+            <div style={tableCardStyle}>
+              <div
+                style={{
+                  fontWeight: 600,
+                  fontSize: 16,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between", // ✅ push icon to right
+                  marginBottom: 12,
+                  color: "#232425",
+                }}
+              >
+                {/* Left side: icon + label */}
+                <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                  <div
+                    style={{
+                      background: "#3e5cd9",
+                      borderRadius: "4px",
+                      padding: "2px",
+                      display: "inline-block",
+                    }}
+                  >
+                    <IconShoppingCartExclamation stroke={2} color="#fff" size={16} />
+                  </div>
+                  Raw Material Wastage
+                </div>
+
+                {/* Right side: expand icon */}
+                <div>
+                  <IconArrowsMaximize />
+                </div>
+              </div>
+            </div>
+
+            {/* <div
               style={{
                 fontWeight: 600,
                 fontSize: 16,
@@ -55,6 +89,7 @@ export default function WastageAnalysisTable({
                 alignItems: "center",
                 gap: 8,
                 marginBottom: 12,
+                color: '#232425'
               }}
             >
               <div style={{
@@ -66,9 +101,9 @@ export default function WastageAnalysisTable({
                 <IconTrash stroke={2} color="#fff" size={18} />
               </div>
               Raw Material Wastage
-            </div>
+            </div> */}
 
-            <div
+            {/* <div
               style={{
                 display: "flex",
                 justifyContent: "space-between",
@@ -80,7 +115,7 @@ export default function WastageAnalysisTable({
             >
               <span>Name / Category</span>
               <span>Total{renderSortArrow(rawSort, "total")}</span>
-            </div>
+            </div> */}
 
             <div style={scrollBodyStyle}>
               {rawSort.sortedData.map((item, idx) => (
@@ -90,13 +125,13 @@ export default function WastageAnalysisTable({
                       {item.icon}
                     </div>
                     <div>
-                      <div style={{ fontWeight: 500 }}>{item.name}</div>
-                      <div style={{ fontSize: 12, color: "#666" }}>
+                      <div style={{ fontWeight: 700,color:"#232425",fontSize:'14px' }}>{item.name}</div>
+                      <div style={{fontSize: 12, color: "#687182",fontWeight:'400'  }}>
                         {item.category} • {item.qty} • ₹{item.price}
                       </div>
                     </div>
                   </div>
-                  <div style={{ fontWeight: 600, color: 'green' }}>₹{item.total}</div>
+                  <div style={{ fontWeight: 800, color: '#007595' ,fontSize:'16px'}}>₹{item.total}</div>
                 </div>
               ))}
             </div>
@@ -108,7 +143,41 @@ export default function WastageAnalysisTable({
       {expiredItemsSort.sortedData.length > 0 && (
         <Col md={colSize}>
           <div style={tableCardStyle}>
-            <div
+            <div style={tableCardStyle}>
+              <div
+                style={{
+                  fontWeight: 600,
+                  fontSize: 16,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between", // ✅ push icon to right
+                  marginBottom: 12,
+                  color: "#232425",
+                }}
+              >
+                {/* Left side: icon + label */}
+                <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                  <div
+                    style={{
+                      background: "#3e5cd9",
+                      borderRadius: "4px",
+                      padding: "2px",
+                      display: "inline-block",
+                    }}
+                  >
+                    <IconShoppingCartExclamation stroke={2} color="#fff" size={16} />
+                  </div>
+                  Expired Items
+                </div>
+
+                {/* Right side: expand icon */}
+                <div>
+                  <IconArrowsMaximize />
+                </div>
+              </div>
+            </div>
+
+            {/* <div
               style={{
                 fontWeight: 600,
                 fontSize: 16,
@@ -116,6 +185,7 @@ export default function WastageAnalysisTable({
                 alignItems: "center",
                 gap: 8,
                 marginBottom: 12,
+                color: '#232425'
               }}
             >
               <div style={{
@@ -127,9 +197,9 @@ export default function WastageAnalysisTable({
                 <IconShoppingBagExclamation stroke={2} color="#fff" size={16} />
               </div>
               Expired Items
-            </div>
+            </div> */}
 
-            <div
+            {/* <div
               style={{
                 display: "flex",
                 justifyContent: "space-between",
@@ -141,21 +211,21 @@ export default function WastageAnalysisTable({
             >
               <span>Name / Category</span>
               <span>Total{renderSortArrow(expiredItemsSort, "total")}</span>
-            </div>
+            </div> */}
 
             <div style={scrollBodyStyle}>
               {expiredItemsSort.sortedData.map((item, idx) => (
                 <div key={idx} style={rowCardStyle}>
                   <div>
-                    <div style={{ fontWeight: 500 }}>{item.name}</div>
-                    <div style={{ fontSize: 12, color: "#666" }}>
+                    <div style={{ fontWeight: 700,color:"#232425",fontSize:'14px' }}>{item.name}</div>
+                    <div style={{ fontSize: 12, color: "#687182",fontWeight:'400' }}>
                       {item.category} • {item.qty} • ₹{item.price}
                     </div>
                     <div style={{ fontSize: 12, color: "#bd3a2b" }}>
                       Expired: {item.date}
                     </div>
                   </div>
-                  <div style={{ fontWeight: 600, color: "red" }}>₹{item.total}</div>
+                  <div style={{ fontWeight: 800, color: '#d5473f' ,fontSize:'16px' }}>₹{item.total}</div>
                 </div>
               ))}
             </div>
@@ -167,7 +237,40 @@ export default function WastageAnalysisTable({
       {expiredProductsSort.sortedData.length > 0 && (
         <Col md={colSize}>
           <div style={tableCardStyle}>
-            <div
+            <div style={tableCardStyle}>
+              <div
+                style={{
+                  fontWeight: 600,
+                  fontSize: 16,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between", // ✅ push icon to right
+                  marginBottom: 12,
+                  color: "#232425",
+                }}
+              >
+                {/* Left side: icon + label */}
+                <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                  <div
+                    style={{
+                      background: "#3e5cd9",
+                      borderRadius: "4px",
+                      padding: "2px",
+                      display: "inline-block",
+                    }}
+                  >
+                    <IconShoppingCartExclamation stroke={2} color="#fff" size={16} />
+                  </div>
+                  Expired Products
+                </div>
+
+                {/* Right side: expand icon */}
+                <div>
+                  <IconArrowsMaximize />
+                </div>
+              </div>
+            </div>
+            {/* <div
               style={{
                 fontWeight: 600,
                 fontSize: 16,
@@ -175,6 +278,7 @@ export default function WastageAnalysisTable({
                 alignItems: "center",
                 gap: 8,
                 marginBottom: 12,
+                color:'#232425'
               }}
             >
               <div style={{
@@ -186,9 +290,10 @@ export default function WastageAnalysisTable({
                 <IconShoppingCartExclamation stroke={2} color="#fff" size={16} />
               </div>
               Expired Products
-            </div>
+              <div className="text-end" style={{float:'right'}}><IconArrowsMaximize /></div>
+            </div> */}
 
-            <div
+            {/* <div
               style={{
                 display: "flex",
                 justifyContent: "space-between",
@@ -200,21 +305,21 @@ export default function WastageAnalysisTable({
             >
               <span>Name / Category</span>
               <span>Total{renderSortArrow(expiredProductsSort, "total")}</span>
-            </div>
+            </div> */}
 
             <div style={scrollBodyStyle}>
               {expiredProductsSort.sortedData.map((item, idx) => (
                 <div key={idx} style={rowCardStyle}>
                   <div>
-                    <div style={{ fontWeight: 500 }}>{item.name}</div>
-                    <div style={{ fontSize: 12, color: "#666" }}>
+                    <div style={{ fontWeight: 700,color:"#232425",fontSize:'14px' }}>{item.name}</div>
+                    <div style={{ fontSize: 12, color: "#687182",fontWeight:'400' }}>
                       {item.category} • ₹{item.price}
                     </div>
                     <div style={{ fontSize: 12, color: "#3e5cd9" }}>
                       Prepared: {item.date}
                     </div>
                   </div>
-                  <div style={{ fontWeight: 600, color: 'blue' }}>₹{item.total}</div>
+                  <div style={{fontWeight: 800, color: '#4760e4' ,fontSize:'16px'}}>₹{item.total}</div>
                 </div>
               ))}
             </div>

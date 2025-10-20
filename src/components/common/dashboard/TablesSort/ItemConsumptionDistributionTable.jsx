@@ -46,11 +46,11 @@ export default function ItemConsumptionDistributionTable({ data }) {
 
   const getBadgeVariant = (classification) => {
     if (classification === "High Consumption")
-      return { bg: "#FFEAEA", color: "#E53935" };
+      return { bg: "#FFEAEA", color: "#dc2620" };
     if (classification === "Medium Consumption")
-      return { bg: "#FFF8E1", color: "#FBC02D" };
+      return { bg: "#fff5e7", color: "#d58e23" };
     if (classification === "Low Consumption")
-      return { bg: "#E8F8F0", color: "#43A047" };
+      return { bg: "#f1fff1", color: "#288128" };
     return { bg: "#EEE", color: "#000" };
   };
 
@@ -89,7 +89,7 @@ export default function ItemConsumptionDistributionTable({ data }) {
                 <th
                   key={col.key}
                   onClick={() => handleSort(col.key)}
-                  style={{ cursor: "pointer",color:"#464f60" }}
+                  style={{ cursor: "pointer",color:"#464f60",backgroundColor:'#f4f7fc' }}
                 >
                   {col.label}
                   {renderSortArrow(col.key)}
@@ -106,7 +106,7 @@ export default function ItemConsumptionDistributionTable({ data }) {
                       case "percentile": {
                         const badge = getBadgeVariant(row.classification);
                         return (
-                          <td key={col.key} className="fw-medium" style={{ color: badge.color }}>
+                          <td key={col.key} className="fw-bold" style={{ color: badge.color }}>
                             {row.percentile}
                           </td>
                         );
@@ -116,18 +116,25 @@ export default function ItemConsumptionDistributionTable({ data }) {
                         return (
                           <td key={col.key}>
                             <div className="fw-bold">{row.items}</div>
-                            <small className="text-muted">
-                              {row.percentItems} of items
+                            <small style={{
+                              color:'#464f60',
+                              fontSize:'14px',
+                              fontWeight:'700'
+                            }}>
+                              {row.percentItems} <small className="text-muted">of items</small>
                             </small>
                           </td>
                         );
 
                       case "value":
                         return (
-                          <td key={col.key} className="text-success fw-bold">
+                          <td key={col.key} className="text-success fw-bold" style={{
+                            color:'#288128',
+                            fontWeight:'700',
+                            fontSize:'14px'
+                          }}>
                             <div>₹{row.value.toLocaleString()}</div>
-                            <small className="text-success fw-normal">
-                              <FaArrowUp size={10} className="me-1" />
+                            <small className="text-success fw-bold">
                               consumption
                             </small>
                           </td>
@@ -136,8 +143,12 @@ export default function ItemConsumptionDistributionTable({ data }) {
                       case "percentValue":
                         return (
                           <td key={col.key} className="fw-bold">
-                            <div>{row.percentValue}</div>
-                            <small className="text-muted fw-normal">
+                            <div style={{
+                              color:'#464f60',
+                              fontSize:'14px',
+                              fontWeight:'700'
+                            }}>{row.percentValue}</div>
+                            <small className="text-muted fw-bold">
                               of total value
                             </small>
                           </td>

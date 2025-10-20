@@ -34,7 +34,7 @@ function TopSellingProductsGraph({ chartData }) {
             yAxisId="right"
             type="monotone"
             dataKey="margin"
-            stroke="#f3a92d"
+            stroke="#f59e0c"
             strokeWidth={3}
             dot={{
               r: 5,

@@ -33,7 +33,7 @@ export default function ImmediateActionsRequired() {
 
   return (
     <Card
-      className="m-2 p-3"
+      className="p-3"
       style={{ background: "#eafef4", borderRadius: "20px" }}
     >
       {/* ✅ Header */}
@@ -42,7 +42,7 @@ export default function ImmediateActionsRequired() {
         description={
           "Urgent procurement recommendations to prevent service disruption"
         }
-        titleColor={'black'}
+        titleColor={'#232425'}
         cardBgColor={"none"}
         isShowArrows={true}
         scrollRef={myScrollRef}

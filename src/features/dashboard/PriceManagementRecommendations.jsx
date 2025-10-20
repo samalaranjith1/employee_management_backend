@@ -33,7 +33,7 @@ export default function PriceManagementRecommendations() {
 
   return (
     <Card
-      className="m-2 p-3"
+      className="p-3"
       style={{ background: "#f5efff", borderRadius: "20px" }}
     >
       {/* ✅ Header */}
@@ -42,7 +42,7 @@ export default function PriceManagementRecommendations() {
         description={
           "Strategic actions to mitigate price impact and optimize costs"
         }
-        titleColor={"black"}
+        titleColor={"#232425"}
         cardBgColor={"none"}
         isShowArrows={true}
         scrollRef={myScrollRef}

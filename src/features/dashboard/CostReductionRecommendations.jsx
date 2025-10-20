@@ -35,14 +35,14 @@ export default function CostReductionRecommendations() {
 
   return (
     <Card
-      className="m-2 p-3"
+      className="p-3"
       style={{ background: "rgba(156, 39, 176, 0.05)", borderRadius: "20px" }}
     >
       {/* ✅ Header */}
       <ComponentHeader
         title={"Cost Reduction Recommendations"}
         description={"Actions to minimize wastage and optimize costs"}
-        titleColor={'black'}
+        titleColor={'#232425'}
         cardBgColor={"none"}
         isShowArrows={true}
         scrollRef={myScrollRef}

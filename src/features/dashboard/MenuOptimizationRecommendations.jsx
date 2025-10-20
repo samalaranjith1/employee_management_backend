@@ -35,14 +35,14 @@ export default function MenuOptimizationRecommendations() {
 
   return (
     <Card
-      className="m-2 p-3"
+      className="p-3"
       style={{ background: "#eef3ff", borderRadius: "20px" }}
     >
       {/* ✅ Header */}
       <ComponentHeader
         title={"Menu Optimization Recommendations"}
         description={"Strategic actions to improve overall profitability"}
-        titleColor={'black'}
+        titleColor={'#232425'}
         cardBgColor={"none"}
         isShowArrows={true}
         scrollRef={myScrollRef}

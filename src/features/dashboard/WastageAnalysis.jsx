@@ -40,7 +40,7 @@ export default function WastageAnalysis() {
       <ComponentHeader
         title="Wastage Analysis"
         description="Track and minimize food waste across all categories"
-        titleColor="rgba(31, 28, 27, 1)"
+        titleColor="#232425"
         cardBgColor="none"
         isShowArrows={true}
         scrollRef={myScrollRef}
@@ -102,7 +102,7 @@ export default function WastageAnalysis() {
                 boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
                 display: "flex",
                 flexDirection: "column",
-                height: "300px",
+                maxHeight: "300px",
               }}
               scrollBodyStyle={{ flex: 1, overflowY: "auto" }}
             />

@@ -1,40 +1,46 @@
 "use client";
 
+import { useDashboardContext } from "@/contexts/DashboardContext";
 import React from "react";
+import { Row, Col } from "react-bootstrap";
 
 export default function WastageAnalysisTopCards({
   cardsData = [],
   scrollRef,
   statCard,
 }) {
+  const { isMobile } = useDashboardContext();
+
   return (
     <div
       ref={scrollRef}
+      className={`hide-scrollbar`}
       style={{
+        overflowX: isMobile ? "auto" : "visible",
         display: "flex",
+        flexWrap: isMobile ? "nowrap" : "wrap",
         gap: 15,
-        overflowX: "auto",
         padding: "10px 0",
         scrollbarWidth: "none",
         msOverflowStyle: "none",
         ...statCard,
       }}
-      className="hide-scrollbar"
     >
       {cardsData.map((card, idx) => (
         <div
           key={idx}
+          className={isMobile ? "flex-shrink-0" : "col-md-3"}
           style={{
-            flex: "0 0 auto",
+            flex: isMobile ? "0 0 85%" : "0 0 23%", // Mobile: swipeable, desktop: 4 per row
             background: card.bgLight,
             borderRadius: 16,
             padding: "16px 20px",
-            width: 280,
             height: 110,
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
             boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
+            minWidth: isMobile ? "280px" : "auto",
           }}
         >
           {/* Left: Text Section */}
@@ -42,21 +48,22 @@ export default function WastageAnalysisTopCards({
             <div
               style={{
                 fontSize: 14,
-                fontWeight: 500,
-                color: "#555",
+                fontWeight: 600,
+                color: "#6d6d6d",
                 marginBottom: 4,
               }}
             >
               {card.title}
             </div>
-            <div style={{ fontWeight: 700, fontSize: 20, color: "#000" }}>
+            <div style={{ fontWeight: 800, fontSize: 24, color: "#232425" }}>
               ₹{card.value.toLocaleString()}
             </div>
             {card.sub && (
               <div
                 style={{
                   fontSize: 12,
-                  color: "#777",
+                  color: "#232425",
+                  fontWeight:'400',
                   marginTop: 2,
                 }}
               >
@@ -87,6 +94,97 @@ export default function WastageAnalysisTopCards({
     </div>
   );
 }
+// "use client";
+
+// import { useDashboardContext } from "@/contexts/DashboardContext";
+// import React from "react";
+
+// export default function WastageAnalysisTopCards({
+//   cardsData = [],
+//   scrollRef,
+//   statCard,
+// }) {
+//   const {isMobile}=useDashboardContext()
+//   return (
+//     <div
+//       ref={scrollRef}
+//       style={{
+//         display: "flex",
+//         gap: 15,
+//         overflowX: "auto",
+//         padding: "10px 0",
+//         scrollbarWidth: "none",
+//         msOverflowStyle: "none",
+//         ...statCard,
+//       }}
+//       className="hide-scrollbar"
+//     >
+//       {cardsData.map((card, idx) => (
+//         <div
+//           key={idx}
+//           style={{
+//             flex: "0 0 auto",
+//             background: card.bgLight,
+//             borderRadius: 16,
+//             padding: "16px 20px",
+//             width: 300,
+//             height: 110,
+//             display: "flex",
+//             justifyContent: "space-between",
+//             alignItems: "center",
+//             boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
+//           }}
+//         >
+//           {/* Left: Text Section */}
+//           <div style={{ flex: 1 }}>
+//             <div
+//               style={{
+//                 fontSize: 14,
+//                 fontWeight: 500,
+//                 color: "#555",
+//                 marginBottom: 4,
+//               }}
+//             >
+//               {card.title}
+//             </div>
+//             <div style={{ fontWeight: 700, fontSize: 20, color: "#000" }}>
+//               ₹{card.value.toLocaleString()}
+//             </div>
+//             {card.sub && (
+//               <div
+//                 style={{
+//                   fontSize: 12,
+//                   color: "#777",
+//                   marginTop: 2,
+//                 }}
+//               >
+//                 {card.sub}
+//               </div>
+//             )}
+//           </div>
+
+//           {/* Right: Icon Box */}
+//           <div
+//             style={{
+//               width: 44,
+//               height: 44,
+//               borderRadius: 12,
+//               background: card.bgSolid,
+//               display: "flex",
+//               justifyContent: "center",
+//               alignItems: "center",
+//               color: "#fff",
+//               fontSize: 20,
+//               flexShrink: 0,
+//             }}
+//           >
+//             {card.icon}
+//           </div>
+//         </div>
+//       ))}
+//     </div>
+//   );
+// }
 // "use client";
 // import React from "react";
 

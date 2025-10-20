@@ -13,7 +13,7 @@ import { useDashboardContext } from "@/contexts/DashboardContext";
 import { FaChartLine, FaExclamationTriangle, FaExpand } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import { handleNavigation } from "@/utils";
-import { IconAlertTriangle, IconBasketDollar, IconChefHat } from "@tabler/icons-react";
+import { IconAlertTriangle, IconArrowsMaximize, IconBasketDollar, IconChefHat, IconMaximize } from "@tabler/icons-react";
 
 const RecipesDashboard = () => {
   const myScrollRef = useRef(null);
@@ -27,7 +27,7 @@ const RecipesDashboard = () => {
         description={
           "Analyze product profitability and optimize menu offerings"
         }
-        titleColor={"rgba(22, 20, 20, 1)"}
+        titleColor={"#232425"}
         cardBgColor={"none"}
         isShowArrows={true}
         scrollRef={myScrollRef}
@@ -104,7 +104,7 @@ const RecipesDashboard = () => {
               <Col md={6} className="mb-4">
                 <div
                   className="card-header border-0 pb-2 p-1 d-flex align-items-center p-2"
-                  style={{ backgroundColor: "rgb(240,240,240)" }}
+                  style={{ backgroundColor: "#fff" }}
                 >
                   {/* Column 1: Icon */}
                   <div className="me-2">
@@ -120,21 +120,26 @@ const RecipesDashboard = () => {
 
                   {/* Column 2: Title + description */}
                   <div className="flex-grow-1">
-                    <h6 className="card-title mb-0">Loss Making Products</h6>
+                    <h6 style={{
+                      fontSize:'18px',
+                      fontWeight:'600',
+                      color:'#232425',
+                      marginTop:"+5px"
+                    }}>Loss Making Products</h6>
                     <p className="card-text text-muted mb-0">
-                      Monitor inventory levels and prevent stockouts
+                      {/* Monitor inventory levels and prevent stockouts */}
                     </p>
                   </div>
 
                   {/* Column 3: Expand icon */}
                   <div>
-                    <FaExpand size={18} style={{ cursor: "pointer" }} />
+                    <IconArrowsMaximize size={18} style={{ cursor: "pointer" }} />
                   </div>
                 </div>
 
                 <RecipesTable
                   data={recipesData?.lossProducts || []}
-                  bgColor={"#FFF5F5"}
+                  bgColor={"#fff"}
                 />
               </Col>
 
@@ -142,7 +147,7 @@ const RecipesDashboard = () => {
               <Col md={6} className="mb-4">
                 <div
                   className="card-header border-0 pb-2 p-1 d-flex align-items-center p-2"
-                  style={{ backgroundColor: "rgb(240,240,240)" }}
+                  style={{ backgroundColor: "#fff" }}
                 >
                   {/* Column 1: Left Icon */}
                   <div className="me-2">
@@ -158,21 +163,26 @@ const RecipesDashboard = () => {
 
                   {/* Column 2: Title + Description */}
                   <div className="flex-grow-1">
-                    <h6 className="card-title mb-0">Profitable Products</h6>
-                    <p className="card-text text-muted mb-0">
+                    <h6 style={{
+                      fontSize:'18px',
+                      fontWeight:'600',
+                      color:'#232425',
+                      marginTop:"+5px"
+                    }}>Profitable Products</h6>
+                    {/* <p className="card-text text-muted mb-0">
                       Monitor inventory levels and prevent stockouts
-                    </p>
+                    </p> */}
                   </div>
 
                   {/* Column 3: Expand Icon */}
                   <div>
-                    <FaExpand size={18} style={{ cursor: "pointer" }} />
+                    <IconArrowsMaximize size={18} style={{ cursor: "pointer" }} />
                   </div>
                 </div>
 
                 <RecipesTable
                   data={recipesData?.profitProducts || []}
-                  bgColor={"#F0FFF4"}
+                  bgColor={"#fff"}
                 />
               </Col>
             </Row>

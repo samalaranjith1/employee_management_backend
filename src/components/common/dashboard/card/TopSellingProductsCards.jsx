@@ -2,8 +2,11 @@
 import React from "react";
 import { Col } from "react-bootstrap";
 import CommonCard from "./CommonCard";
+import '@/app/globals.css';
+import { useDashboardContext } from "@/contexts/DashboardContext";
 
 export default function TopSellingProductsCards({ card }) {
+  const { isMobile } = useDashboardContext()
   return (
     <Col xs="auto">
       <CommonCard
@@ -18,32 +21,33 @@ export default function TopSellingProductsCards({ card }) {
       >
         <div className="d-flex justify-content-between align-items-start">
           <div>
-            <div style={{ fontSize: 12, fontWeight: 600 }}>
+            <div style={{ fontSize: '14px', fontWeight: 600, color: '#6d6d6d' }}>
               {card.title}
             </div>
             <div
               style={{
-                fontSize: 28,
-                fontWeight: 700,
+                fontSize: 24,
+                fontWeight: 800,
                 marginTop: 6,
+                color: "#232425"
               }}
             >
               {card.value}
             </div>
-            <div style={{ fontSize: 13, color: card.color, marginTop: 6 }}>
+            <div style={{ fontSize: 12, color: card.color, marginTop: 6 }}>
               {card.subtitle}
             </div>
           </div>
           <div
             style={{
-              width: 44,
-              height: 44,
+              width: 40,
+              height: 40,
               borderRadius: 10,
-              background: card.iconBg,
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
               color: "white",
+              marginTop: 20,
             }}
           >
             {card.icon}

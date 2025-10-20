@@ -20,9 +20,9 @@ export default function RecommendationsCard({
       <div className="d-flex justify-content-between align-items-center">
         <div
           style={{
-            fontWeight: 600,
+            fontWeight: 700,
             color: textColor,
-            fontSize: "15px",
+            fontSize: "14px",
             marginBottom: "5px",
           }}
         >
@@ -39,7 +39,7 @@ export default function RecommendationsCard({
           {rec.title}
         </div> */}
       </div>
-      <div style={{ fontSize: "13px", color: "#333" }}>{rec.desc}</div>
+      <div style={{ fontSize: "12px",fontweight:400, color: "#687182" }}>{rec.desc}</div>
     </CommonCard>
   );
 }

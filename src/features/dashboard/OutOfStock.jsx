@@ -13,10 +13,10 @@ import { outOfOfficeDataFormatter } from "@/utils/data_formatters/dashboardForma
 import { handleNavigation } from "@/utils";
 import { useRouter } from "next/navigation";
 import { FaExclamationTriangle, FaExpand } from "react-icons/fa";
-import { IconAlertTriangle } from "@tabler/icons-react";
+import { IconAlertTriangle, IconArrowsMaximize } from "@tabler/icons-react";
 
 export default function InventoryDashboard() {
-  const { startDate, endDate } = useDashboardContext();
+  const { startDate, endDate, isMobile } = useDashboardContext();
   const myScrollRef = useRef(null);
   const router = useRouter()
 
@@ -29,20 +29,22 @@ export default function InventoryDashboard() {
       display: "inline-block",
     };
     if (status.toLowerCase() === "orange") {
-      return { ...base, background: "#f4d292ff", color: "#E78C27" };
+      return { ...base, background: "#fff7ea", color: "#cc6629" };
     }
     if (status.toLowerCase() === "red") {
-      return { ...base, background: "#e6c4c6ff", color: "#E74C3C" };
+      return { ...base, background: "#fff0f0", color: "#dc2620" };
     }
     if (status.toLowerCase() === "green") {
-      return { ...base, background: "#acf7d9ff", color: "#723ce7ff" };
+      return { ...base, background: "#ddf4ebff", color: "#07fc17f8" };
     }
     return base;
   };
 
   const cardBase = {
-    flex: "0 0 30vw",
-    minWidth: "250px",
+    flex: "0 0 25vw",
+    display: 'flex',
+    flexShrink: 1,
+    minWidth: isMobile ? "88vw" : '30vw',
     borderRadius: "12px",
     padding: "1rem",
     color: "#000",
@@ -55,18 +57,18 @@ export default function InventoryDashboard() {
       <ComponentHeader
         title={"Out of Stock"}
         description={"Monitor inventory levels and prevent stockouts"}
-        titleColor={"#000"}
+        titleColor={"#232425"}
         cardBgColor={"none"}
         isShowArrows={true}
         scrollRef={myScrollRef}
         isExpandable={true}
         titleIcon={<div style={{
           background: '#e5276e', // pink-red gradient
-          borderRadius: '16px',
-          padding: '12px',
+          borderRadius: '12px',
+          padding: '8px',
           display: 'inline-block'
         }}>
-          <IconAlertTriangle stroke={2} color="#fff" size={24} />
+          <IconAlertTriangle stroke={2} color="#fff" size={20} />
         </div>}
         text={""}
       />
@@ -102,7 +104,7 @@ export default function InventoryDashboard() {
                   params: { startDate: startDate, endDate: endDate },
                 })
               }
-              style={{ cursor: "pointer" }}
+              style={{ cursor: "pointer", width: '100%' }}
             >
               <OutOfStockTopCards
                 cardBase={cardBase}
@@ -113,29 +115,37 @@ export default function InventoryDashboard() {
             </div>
 
             {/* Horizontal Card Tables */}
-            <Card className="p-2">
+            <Container fluid className="mt-2 ">
               <Row className="p-0">
-                <Col md={6}>
-                  <div className="d-flex align-items-center justify-content-between p-1" style={{ border: '2px solid #eee' }}>
+                <Col md={6} style={{
+                  border:'2px solid #eee',
+                  borderRadius:'10px'
+                }}>
+                  <div className="d-flex align-items-center justify-content-between p-1">
                     {/* Column 1: Icon */}
-                      <div style={{
-                        background: '#e6276e', // pink-red gradient
-                        borderRadius: '12px',
-                        padding: '8px',
-                        display: 'inline-block'
-                      }}>
-                        <IconAlertTriangle stroke={2} color="#fff" size={20} />
-                      </div>
+                    <div style={{
+                      background: '#e6276e', // pink-red gradient
+                      borderRadius: '12px',
+                      padding: '8px',
+                      display: 'inline-block'
+                    }}>
+                      <IconAlertTriangle stroke={2} color="#fff" size={20} />
+                    </div>
 
                     {/* Column 2: Title + Description */}
                     <div className="ms-3 flex-grow-1">
-                      <h6 className="mb-1">Items</h6>
-                      <p className="mb-0 text-muted">Monitor inventory levels and prevent stock out</p>
+                      <h6 style={{
+                        fontSize: '18px',
+                        fontWeight: "600",
+                        color: '#232425',
+                        marginTop: '+5px'
+                      }}>Items</h6>
+                      {/* <p className="mb-0 text-muted">Monitor inventory levels and prevent stock out</p> */}
                     </div>
 
                     {/* Column 3: Number */}
                     <div className="text-end">
-                      <FaExpand />
+                      <IconArrowsMaximize />
                     </div>
                   </div>
 
@@ -144,27 +154,35 @@ export default function InventoryDashboard() {
                     getBadgeStyle={getBadgeStyle}
                   />
                 </Col>
-                <Col md={6}>
-                  <div className="d-flex align-items-center justify-content-between p-1" style={{ border: '2px solid #eee' }}>
+                <Col md={6} style={{
+                  border:'2px solid #eee',
+                  borderRadius:'10px'
+                }}>
+                  <div className="d-flex align-items-center justify-content-between p-1">
                     {/* Column 1: Icon */}
-                     <div style={{
-                        background: '#833dd5', // pink-red gradient
-                        borderRadius: '12px',
-                        padding: '8px',
-                        display: 'inline-block'
-                      }}>
-                        <IconAlertTriangle stroke={2} color="#fff" size={20} />
-                      </div>
+                    <div style={{
+                      background: '#833dd5', // pink-red gradient
+                      borderRadius: '12px',
+                      padding: '8px',
+                      display: 'inline-block'
+                    }}>
+                      <IconAlertTriangle stroke={2} color="#fff" size={20} />
+                    </div>
 
                     {/* Column 2: Title + Description */}
                     <div className="ms-3 flex-grow-1">
-                      <h6 className="mb-1">Base Items</h6>
-                      <p className="mb-0 text-muted">Monitor inventory levels and prevent stock out</p>
+                      <h6 style={{
+                        fontSize: '18px',
+                        fontWeight: "600",
+                        color: '#232425',
+                        marginTop: '+5px'
+                      }}>Base Items</h6>
+                      {/* <p className="mb-0 text-muted">Monitor inventory levels and prevent stock out</p> */}
                     </div>
 
                     {/* Column 3: Number */}
                     <div className="text-end">
-                      <FaExpand />
+                      <IconArrowsMaximize />
                     </div>
                   </div>
                   <OutOfStockTable
@@ -173,7 +191,7 @@ export default function InventoryDashboard() {
                   />
                 </Col>
               </Row>
-            </Card>
+            </Container>
           </>
         )}
       </ServiceRenderer>

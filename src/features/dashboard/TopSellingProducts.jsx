@@ -36,7 +36,7 @@ const TopSellingProducts = () => {
       <ComponentHeader
         title={"Top Selling Products"}
         description={"Analyze best-performing menu items and sales trends"}
-        titleColor={"#000"}
+        titleColor={"#232425"}
         cardBgColor={"none"}
         isShowArrows={true}
         scrollRef={myScrollRef}
@@ -47,7 +47,7 @@ const TopSellingProducts = () => {
           padding: '8px',
           display: 'inline-block'
         }}>
-          <IconStar stroke={2} color="#fff" size={24} fill='white' />
+          <IconStar stroke={2} color="#fff" size={20} fill='white' />
         </div>}
         text={""}
       />
@@ -113,7 +113,7 @@ const TopSellingProducts = () => {
                         }}>
                           <IconChartColumn stroke={2} color="#fff" size={20} />
                         </div>
-                      <h5 style={{ margin: 0, fontWeight: 700,marginLeft:'5px' }}>
+                      <h5 style={{ margin: 0, fontWeight: 600,marginLeft:'5px' ,color:'#232425'}}>
                         Sales vs Margin Trends
                       </h5>
                     </div>

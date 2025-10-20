@@ -72,8 +72,9 @@ function TopSellingProductsTable({ revenueSummary = [] }) {
               <div>
                 <div
                   style={{
-                    fontSize: 13,
-                    color: "#7b7b8a",
+                    fontSize: 14,
+                    color: "#6d6d6d",
+                    fontWeight:'600',
                     display: "flex",
                     justifyContent: item.title
                       .toLowerCase()
@@ -91,9 +92,10 @@ function TopSellingProductsTable({ revenueSummary = [] }) {
                 {/* Amount */}
                 <div
                   style={{
-                    fontSize: 22,
+                    fontSize: 24,
                     fontWeight: 800,
                     marginTop: 6,
+                    color:'#232425'
                   }}
                 >
                   {item.amount}

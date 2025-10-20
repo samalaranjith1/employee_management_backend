@@ -29,7 +29,7 @@ export default function PriceChanges() {
 
   const styles = {
     headerCard: {
-      background: "linear-gradient(90deg, #f0e9ff, #ffffff)",
+      background: "#f7faff",
       borderRadius: "12px",
       padding: "20px",
       border: "none",
@@ -37,8 +37,8 @@ export default function PriceChanges() {
       overflow: "hidden",
     },
     title: { fontWeight: "bold", fontSize: "1.2rem", color: "#6c2bd9" },
-    subtitle: { fontSize: "0.9rem", color: "#6c757d" },
-    impactValue: { fontSize: "2rem", fontWeight: "bold", marginTop: "10px" ,color:'#3a53e9'},
+    subtitle: { fontSize: "0.9rem", color: "#5c6471", fontSize: "12px", fontWeight: '500' },
+    impactValue: { fontSize: "24px", fontWeight: "800", marginTop: "10px", color: '#3a4ecd' },
     rupeeIconWrapper: {
       position: "absolute",
       right: "20px",
@@ -91,6 +91,23 @@ export default function PriceChanges() {
 
   return (
     <Container fluid className="p-2 shadow-sm">
+      <ComponentHeader
+        title="Price Changes"
+        description="Monitor ingredient price fluctuations and their cost impact"
+        titleColor="#232425"
+        cardBgColor="none"
+        isShowArrows={true}
+        scrollRef={myScrollRef}
+        isExpandable={true}
+        titleIcon={<div style={{
+          background: '#3a55ea', // blue gradient for Figma match
+          borderRadius: '12px',
+          padding: '8px',
+          display: 'inline-block'
+        }}>
+          <IconChartColumn stroke={2} color="#fff" size={20} />
+        </div>}
+      />
       {/* ✅ ServiceRenderer manages loading, error, retry, no data */}
       <ServiceRenderer
         queryHook={useItemsPriceChangeSummary}
@@ -113,23 +130,7 @@ export default function PriceChanges() {
         {(priceChangeData, refetch) => (
           <>
             {/* Top Header Card */}
-            <ComponentHeader
-              title="Price Changes"
-              description="Monitor ingredient price fluctuations and their cost impact"
-              titleColor="rgba(31, 28, 27, 1)"
-              cardBgColor="none"
-              isShowArrows={true}
-              scrollRef={myScrollRef}
-              isExpandable={true}
-              titleIcon={<div style={{
-                background: '#3a55ea', // blue gradient for Figma match
-                borderRadius: '12px',
-                padding: '8px',
-                display: 'inline-block'
-              }}>
-                <IconChartColumn stroke={2} color="#fff" size={20} />
-              </div>}
-            />
+
             <Card style={styles.headerCard} className="mb-4 p-0">
               <Card.Body
                 style={{ cursor: "pointer" }}
@@ -148,18 +149,18 @@ export default function PriceChanges() {
                   ₹{priceChangeData?.topCard?.total ?? 0}
                 </div>
                 <div className="d-flex gap-4 mt-2">
-                  <span className="text-success" style={{backgroundColor:'#d2f4e0',borderRadius:"10px"}}>
+                  <span className="text-success" style={{ backgroundColor: '#e9ffec', borderRadius: "10px", color: '#288128', fontWeight: '700', fontSize: '10px' }}>
                     <FaArrowTrendUp /> Recent: ₹
                     {priceChangeData?.topCard?.recent ?? 0}
                   </span>
-                  <span className="text-danger"  style={{backgroundColor:'#fff3f3',borderRadius:"10px"}}>
+                  <span className="text-danger" style={{ backgroundColor: '#fff3f3', borderRadius: "10px", color: '#d13333', fontWeight: '700', fontSize: '10px' }}>
                     <FaArrowTrendDown /> Expected: ₹
                     {priceChangeData?.topCard?.expected ?? 0}
                   </span>
                 </div>
                 {/* Floating Rupee Icon */}
                 <div style={styles.rupeeIconWrapper}>
-                 <div style={{
+                  <div style={{
                     background: '#3a53e9', // blue gradient similar to Figma
                     borderRadius: '16px',
                     padding: '12px',

@@ -10,7 +10,7 @@ export default function OutOfStockTopCards({ cardsData = [], cardBase, scrollRef
         display: "flex",
         gap: "1rem",
         overflowX: "auto",
-        padding: "1rem 0",
+        // padding: "1rem 0",
       }}
     >
       {cardsData.map((card, idx) => (
@@ -24,9 +24,9 @@ export default function OutOfStockTopCards({ cardsData = [], cardBase, scrollRef
           <div className="d-flex justify-content-between align-items-center" style={{ width: "100%" }}>
             {/* Left column */}
             <div>
-              <h6 style={{ fontWeight: "bold" }}>{card.title}</h6>
-              <h2 style={{ fontWeight: "bold" }}>{card.count}</h2>
-              <p style={{color:card.textColor}}>{card.sub}</p>
+              <h6 style={{ fontWeight: "600",fontSize:'14px',color:'#6d6d6d' }}>{card.title}</h6>
+              <h2 style={{ fontWeight: "800" ,fontSize:'24px',color:"#232425"}}>{card.count}</h2>
+              <p style={{color:card.textColor,fontSize:'12px',fontWeight:'500'}}>{card.sub}</p>
             </div>
             {/* Right column (icon) */}
             <div>

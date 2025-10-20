@@ -33,11 +33,10 @@ function RecipesTable({ title, data, bgColor }) {
     <div
       title={title}
       style={{
-        border: "none",
         background: bgColor,
         borderRadius: "12px",
-        padding: "1rem",
-        height: "65vh",
+        padding: "0 1rem",
+        maxHeight: "65vh",
         display: "flex",
         flexDirection: "column",
         width: "110%",
@@ -75,7 +74,6 @@ function RecipesTable({ title, data, bgColor }) {
               position: "sticky",
               top: 0,
               zIndex: 1000,
-              borderBottom: "1px solid #ddd",
             }}
           >
             {columns.map((col) => (
@@ -89,6 +87,11 @@ function RecipesTable({ title, data, bgColor }) {
                         ? "center"
                         : "right",
                   cursor: "pointer",
+                  backgroundColor:'#f5f5f5',
+                  padding:'8px 0px',
+                  fontSize:'14px',
+                  fontWeight:'600',
+                  color:"#464f60"
                 }}
                 onClick={() => sort.handleSort(col.key)}
               >
@@ -112,14 +115,14 @@ function RecipesTable({ title, data, bgColor }) {
               }}
             >
               <div>
-                <div style={{ fontWeight: 500 }}>{item.product}</div>
+                <div style={{ fontWeight: 500 ,color:'#171c26',fontSize:'14px'}}>{item.product}</div>
                 {item.subtitle && (
-                  <div style={{ fontSize: "0.85rem", color: "#666" }}>
+                  <div style={{ fontSize: "12px",fontWeight:"400", color: "#687182" }}>
                     {item.subtitle}
                   </div>
                 )}
               </div>
-              <div style={{ textAlign: "center" }}>
+              <div style={{ textAlign:'center',fontSize:'14px', fontWeight:'700',color:'#464f60'}}>
                 <div>{item.items}</div>
                 {item.stock && (
                   <div style={{ fontSize: "0.8rem", color: "#999" }}>
@@ -128,7 +131,7 @@ function RecipesTable({ title, data, bgColor }) {
                 )}
               </div>
               <div
-                style={{ textAlign: "right", cursor: "pointer" }}
+                style={{ textAlign: "right", cursor: "pointer",fontSize:'14px', fontWeight:'700',color:'#464f60' }}
                 onClick={() =>
                   handleNavigation({
                     router,
@@ -144,7 +147,7 @@ function RecipesTable({ title, data, bgColor }) {
                 {item.cost}
               </div>
               <div
-                style={{ textAlign: "right", cursor: "pointer" }}
+                style={{ textAlign: "right", cursor: "pointer" ,fontSize:'14px', fontWeight:'700',color:'#464f60'}}
                 onClick={() =>
                   handleNavigation({
                     router,
@@ -173,7 +176,6 @@ function RecipesTable({ title, data, bgColor }) {
                   {item.costPct}
                 </span>
               </div>
-
             </div>
           ))}
         </div>
