@@ -78,14 +78,14 @@ export default function ConsumptionForecastTable({ tableData = [] }) {
                   style={{
                     cursor: "pointer",
                     fontWeight: 600,
-                    fontSize: "0.85rem",
+                    fontSize: "14px",
                     textTransform: "uppercase",
                     color: "#555",
                     padding: "12px 16px",
                     borderBottom: "1px solid #eee",
                     position: "sticky", // 🔹 make sticky
                     top: 0, // 🔹 stick to top
-                    background: "#fafafa", // 🔹 background for visibility
+                    background: "#f4f7fc", // 🔹 background for visibility
                     zIndex: 10, // 🔹 ensure above table rows
                   }}
                 >
@@ -99,19 +99,19 @@ export default function ConsumptionForecastTable({ tableData = [] }) {
             {filteredData.length > 0 ? (
               filteredData.map((row, idx) => (
                 <tr key={idx} style={{ borderBottom: "1px solid #eee" }}>
-                  <td style={{ padding: "14px 16px" }}>{row.day}</td>
+                  <td style={{ padding: "14px 16px", fontWeight:700, fontSize:"14px", color:"#171c26" }}>{row.day}</td>
                   <td style={{ padding: "14px 16px" }}>
                     <div>
-                      <div>{row.name}</div>
-                      <div className="'text-muted" style={{fontSize:"small"}}> 
-                        <span>{row.category}</span> . 
-                        <span>{row.unitQuantity} {row.unit}</span> .
-                        <span>₹{row.unitPrice}</span>
+                      <div style={{fontSize:"14px", fontWeight:700, color:"#171c26"} }>{row.name}</div>
+                      <div className="'text-muted" style={{fontSize:"12px", fontweight:500, color:"#687182"}}> 
+                        <span style={{fontSize:"12px", fontweight:500, color:"#687182"}}>{row.category}</span> . 
+                        <span style={{fontSize:"12px", fontweight:500, color:"#687182"}}>{row.unitQuantity} {row.unit}</span> .
+                        <span style={{fontSize:"12px", fontweight:500, color:"#687182"}}>₹{row.unitPrice}</span>
                       </div>
                     </div>
                     </td>
-                  <td style={{ padding: "14px 16px" }}>{row.quantity} {row.unit.toLowerCase()}</td>
-                  <td style={{ padding: "14px 16px" }}>₹{row.totalPrice}</td>
+                  <td style={{ padding: "14px 16px", fontWeight:700, fontSize:"14px", color:"#464f60" }}>{row.quantity.toLocaleString()} {row.unit.toLowerCase()}</td>
+                  <td style={{ padding: "14px 16px", fontweight:500, fontSize:"14px", color:"#464f60" }}>₹{row.totalPrice.toLocaleString()}</td>
                 </tr>
               ))
             ) : (

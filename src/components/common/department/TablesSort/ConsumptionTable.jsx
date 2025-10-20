@@ -52,7 +52,7 @@ export default function ConsumptionTable({ tableData = [] }) {
                   style={{
                     background: "#fafafa",
                     fontWeight: 600,
-                    fontSize: "0.85rem",
+                    fontSize: "14px",
                     textTransform: "uppercase",
                     color: "#555",
                     position: "sticky",

@@ -7,18 +7,8 @@ import { handleNavigation } from "@/utils";
 import { useRouter } from "next/navigation";
 import { useDepartmentContext } from "@/contexts/DepartmentContext";
 export default function ConsumptionSummaryCards({ cards, scrollRef }) {
-  const [isMobile, setIsMobile] = useState(false);
   const router = useRouter();
-  const { startDate,endDate } = useDepartmentContext();
-
-  useEffect(() => {
-    const updateMinWidth = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    updateMinWidth();
-    window.addEventListener("resize", updateMinWidth);
-    return () => window.removeEventListener("resize", updateMinWidth);
-  }, []);
+  const { startDate,endDate,isMobile } = useDepartmentContext();
 
   if (!cards) return null;
 
@@ -34,14 +24,18 @@ export default function ConsumptionSummaryCards({ cards, scrollRef }) {
       }}
     >
       {cards.map((card) => (
-        <Card
+        <div className="col-md-4">
+          <Card
           key={card.id}
           className="card-item border-0 rounded-4 p-4"
           style={{
+             flexShrink: 5,
+             flexGrow:1,
             background: card.bg,
-            flex: "0 0 auto",
-            width: isMobile ? "88vw" : "30vw",
+            flex: "0 2px auto",
+            width: isMobile ? "88vw" : "31vw",
             minWidth: "300px",
+            maxWidth:'400px',
             cursor: "pointer",
           }}
           onClick={() =>
@@ -60,18 +54,14 @@ export default function ConsumptionSummaryCards({ cards, scrollRef }) {
             {/* Title + Value + Change */}
             <Row className="justify-content-between align-items-center mb-3">
               <Col>
-                <h6 className="text-muted" style={{ fontWeight: 400 }}>
+                <h6 style={{ fontWeight: 600,fontSize:'14px',color:'#6d6d6d' }}>
                   {card.title}
                 </h6>
-                <h3 className="fw-bold mb-1">{card.value}</h3>
-                {/* <small
-                  className={`fw-semibold ${
-                    card.change >= 0 ? "text-success" : "text-danger"
-                  }`}
-                  style={{ letterSpacing: "0.03em" }}
-                >
-                  {card.change >= 0 ? "▲" : "▼"} {Math.abs(card.change)}%
-                </small> */}
+                <h3 style={{
+                  fontWeight:'800',
+                  fontSize:'24px',
+                  color:'#232425'
+                }}>{card.value}</h3>
               </Col>
               <Col xs="auto">
                 <div
@@ -97,21 +87,23 @@ export default function ConsumptionSummaryCards({ cards, scrollRef }) {
             {card.stats.map((s, i) => (
               <Row key={i} className="mb-1">
                 <Col xs={7}>
-                  <small className="fw-semibold" style={{ color: "#666" }}>
+                  <small style={{ color: card.textColor,fontWeight:'600',fontSize:'14px' }}>
                     {s.label}
                   </small>
                 </Col>
-                <Col xs={5} className="text-end fw-bold">
+                <Col xs={5} className="text-end"  style={{ color: "#232425",fontWeight:'800',fontSize:'14px' }}>
                   {s.value}
                 </Col>
               </Row>
             ))}
           </Card.Body>
         </Card>
+        </div>
       ))}
     </div>
   );
-} // "use client";
+} 
+// "use client";
 
 // import React, { useEffect, useState } from "react";
 // import { Card, Row, Col } from "react-bootstrap";

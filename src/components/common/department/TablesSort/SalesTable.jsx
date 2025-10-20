@@ -86,11 +86,11 @@ function SalesTable({ products }) {
                   key={col.key}
                   onClick={() => handleSort(col.key)}
                   style={{
-                    background: "#fafafa",
-                    fontWeight: 600,
-                    fontSize: "0.85rem",
+                    backgroundColor: "#f4f7fc",
+                    fontWeight: 700,
+                    fontSize: "14px",
                     textTransform: "uppercase",
-                    color: "#555",
+                    color: "#464f60",
                     position: "sticky",
                     top: 0,
                     zIndex: 2,
@@ -115,38 +115,38 @@ function SalesTable({ products }) {
 
                   {/* Product */}
                   <td style={{ padding: "14px 16px", minWidth: "250px" }}>
-                    <div className="fw-semibold">{item.name}</div>
-                    <div className="text-muted small">
+                    <div className="" style={{fontWeight:700, fontSize:"14px", color:"#171c26"}}>{item.name}</div>
+                    <div className="text-muted small"style={{fontWeight:400, fontsize:"12px", color:"#687182"}}>
                       {item.department} • {item.price}
                     </div>
                   </td>
 
                   {/* Items */}
-                  <td style={{ padding: "14px 16px" }}>{item.items}</td>
+                  <td style={{ padding: "14px 16px", fontWeight:600, fontsize:"14px", color:"#464f60" }}>{item.items.toLocaleString()}</td>
 
                   {/* Net Sales */}
                   <td
-                    className="fw-semibold"
-                    style={{ color: "green", padding: "14px 16px" }}
+                    className=""
+                    style={{ color: "#288128", padding: "14px 16px", fontWeight:700, fontsize:"14px" }}
                   >
                     {item.netSales}
                   </td>
 
                   {/* Discount */}
-                  <td style={{ color: "red", padding: "14px 16px" }}>
+                  <td style={{ color: "#C32924", padding: "14px 16px", fontWeight:700, fontsize:"14px" }}>
                     {item.discount}
                   </td>
 
                   {/* Tax */}
-                  <td style={{ padding: "14px 16px" }}>{item.tax}</td>
+                  <td style={{ padding: "14px 16px", fontWeight:700, fontsize:"14px", color:"#464F60" }}>{item.tax}</td>
 
                   {/* Making Cost */}
-                  <td style={{ color: "red", padding: "14px 16px" }}>
+                  <td style={{ color: "#C32924", padding: "14px 16px", fontsize:"14px", fontWeight:700 }}>
                     {item.makingCost}
                   </td>
 
                   {/* Margin */}
-                  <td style={{ padding: "14px 16px" }}>
+                  <td style={{ padding: "14px 16px", fontweight:700, fontsize:"14px", color:"#288128" }}>
                     <div className="fw-semibold text-success">
                       {item.margin}
                     </div>

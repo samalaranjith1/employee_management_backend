@@ -331,7 +331,8 @@ const ItemsStockTrends = () => {
                         >
                           {row.closingQty.toLocaleString()} GM
                         </td>
-                        <td>{format(new Date(row.closingDate), "MMM dd, yyyy")}</td>
+                        {console.log(row.closingDate )}
+                        <td>{row.closingDate !=='-' ? format(new Date(row.closingDate), "MMM dd, yyyy"):'- -'}</td>
                         <td className="text-primary fw-bold">
                           {row.leftoverStock.toLocaleString()} GM
                         </td>

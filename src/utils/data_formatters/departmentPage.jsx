@@ -10,7 +10,7 @@ import {
   FaTrashAlt,
 } from "react-icons/fa";
 import { formatDate } from "..";
-import { IconAlertTriangle, IconChartLine, IconClipboardData, IconCurrencyDollar, IconNotes, IconPackage, IconRosetteDiscountCheck, IconShoppingCartCheck, IconSquareCheck, IconToolsKitchen2, IconTrashX, IconTrendingUp } from "@tabler/icons-react";
+import { IconAlertTriangle, IconChartLine, IconClipboardData, IconCurrencyDollar, IconNotes, IconPackage, IconRosetteDiscountCheck, IconShoppingCartCheck, IconSquareCheck, IconToolsKitchen2, IconTrash, IconTrashX, IconTrendingUp } from "@tabler/icons-react";
 
 
 export function departmentHeaderDataFormatter(apiData) {
@@ -279,7 +279,7 @@ export const departmentClosingDataFormatter = (apiData) => {
   const topCardsData = [
     {
       title: "Total Closing",
-      value: `₹${totalClosing}`,
+      value: `₹${totalClosing.toLocaleString()}`,
       icon: <div className="me-2">
         <div style={{
           background: '#fff2f2', // pink-red gradient
@@ -561,8 +561,8 @@ export const departmentConsumptionSummaryDataFormatter = (data) => {
           <IconToolsKitchen2 stroke={2} color="#fff" size={24} />
         </div>
       ),
-      bg: "#FFF6ED",
-      textColor: "#FF6A00",
+      bg: "#FFF8F0",
+      textColor: "#d38421",
       routeUrl: "/consumption_analytics",
       stats: [
         { label: "Sale", value: safeCurrency(summary.netSales) },
@@ -593,8 +593,8 @@ export const departmentConsumptionSummaryDataFormatter = (data) => {
           <IconShoppingCartCheck stroke={2} color="#fff" size={24} />
         </div>
       ),
-      bg: "#F0F7FF",
-      textColor: "#007BFF",
+      bg: "#f2f7ff",
+      textColor: "#1d63e7",
       routeUrl: "/consumption_analytics",
       stats: [
         {
@@ -629,7 +629,7 @@ export const departmentConsumptionSummaryDataFormatter = (data) => {
         </div>
       ),
       bg: "#FAF5FF",
-      textColor: "#9C27B0",
+      textColor: "#7722ba",
       routeUrl: "/sales_analytics",
       stats: [
         { label: "Total Sales", value: safeCurrency(summary.totalSales) },
@@ -695,11 +695,11 @@ export const departmentHealthDataFormatter = (data) => {
   };
 
   return [
-    getCard("Today", data.today, "#FF5C00"),
-    getCard("Yesterday", data.yesterday, "#FF0000"),
-    getCard("This Week", data.thisWeek, "#007BFF"),
-    getCard("Last Week", data.lastWeek, "#9C27B0"),
-    getCard("This Month", data.thisMonth, "#388E3C"),
+    getCard("Today", data.today, "#f54900"),
+    getCard("Yesterday", data.yesterday, "#e7000b"),
+    getCard("This Week", data.thisWeek, "#165dfb"),
+    getCard("Last Week", data.lastWeek, "#8200da"),
+    getCard("This Month", data.thisMonth, "#007a56"),
   ];
 };
 
@@ -755,14 +755,14 @@ export function departmentPeriodDropDownDataFormatter(data) {
     {
       title: "Avg. Daily Consumption",
       value: `₹${Math.round(totalConsumption / data.length).toLocaleString()}`,
-      icon: <IconChartLine color="white" />,
+      icon: <IconChartLine color="white" size={40}/>,
       iconBg: "#216cf1",
       bg: "#fff"
     },
     {
       title: "Average Daily Waste",
       value: `₹${totalWaste.toLocaleString()}`,
-      icon: <FaTrashAlt size={20} color="#fff" />,
+      icon: <IconTrash  color="#fff" size={40} />,
       iconBg: "#f97316",
       bg: "#fff"
     }
@@ -889,14 +889,14 @@ export const itemConsumptionEfficiencyDataFormatter = (data) => {
         value: `${data.avgBurn}%`,
         bgLight: "#f5eefc", // pastel purple
         bgSolid: "#b197fc", // solid purple
-        icon:  <div style={{
-      background: '#8f30db', // bold purple
-      borderRadius: '16px',
-      padding: '12px',
-      display: 'inline-block'
-    }}>
-      <IconTrendingUp stroke={2} color="#fff" size={24} />
-    </div>,
+        icon: <div style={{
+          background: '#8f30db', // bold purple
+          borderRadius: '16px',
+          padding: '12px',
+          display: 'inline-block'
+        }}>
+          <IconTrendingUp stroke={2} color="#fff" size={24} />
+        </div>,
       },
     ],
     tableData: data?.list.map((item, idx) => ({

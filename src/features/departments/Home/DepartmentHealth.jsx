@@ -132,7 +132,7 @@ export default function DepartmentHealth() {
                 {/* Title with small arrow */}
                 <div
                   className="d-flex justify-content-between align-items-center mb-2"
-                  style={{ fontSize: "0.9rem", fontWeight: "600", color: card.color }}
+                  style={{ fontSize: "14px", fontWeight: "600", color: "#6d6d6d" }}
                 >
                   <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
                     <span className="pe-1">{card.title}</span>
@@ -159,20 +159,24 @@ export default function DepartmentHealth() {
 
                 {/* Sale */}
                 <div className="d-flex justify-content-between mb-1">
-                  <span style={{ color: card.color, fontWeight: "600" }}>Sale</span>
-                  <span style={{ color: card.color, fontWeight: "600" }}>{card.sale}</span>
+                  <span style={{ color: card.color, fontWeight: "600",fontSize:'14px'}}>Sale</span>
+                  <span style={{ color: card.color, fontWeight: "800",fontSize:'14px' }}>{card.sale}</span>
                 </div>
 
                 {/* Consumption */}
                 <div className="d-flex justify-content-between mb-2">
-                  <span style={{ color: "#000",}}>Consumption</span>
-                  <span style={{ fontWeight: "700" }}>{card.consumption}</span>
+                  <span style={{ color: "#1e1e1e",fontSize:'14px',fontWeight:'#600',}}>Consumption</span>
+                  <span style={{ fontWeight: "800" ,color:'@232425',fontSize:'14px'}}>{card.consumption}</span>
                 </div>
+                <hr style={{
+                  height:'1px',
+                  backgroundColor:'#eee'
+                }}/>
 
                 {/* Net Consumption */}
                 <div
                   className="text-center"
-                  style={{ fontSize: "0.85rem", color: "#999" }}
+                  style={{ fontSize: "12px", color: "#7b7bb",fontWeight:'600' }}
                 >
                   Net Consumption: {card.netConsumption}
                 </div>

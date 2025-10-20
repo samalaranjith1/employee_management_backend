@@ -13,9 +13,11 @@ import { departmentPeriodDropDownDataFormatter } from "@/utils/data_formatters/d
 
 import DepartmentPeriodDropDownCards from "@/components/common/department/cards/DepartmentPeriodDropDownCards";
 import DepartmentPeriodDropDownTable from "@/components/common/department/TablesSort/DepartmentPeriodDropDownTable";
-import { IconCalendar } from "@tabler/icons-react";
+import { IconArrowsMaximize, IconCalendar } from "@tabler/icons-react";
+import { useDepartmentContext } from "@/contexts/DepartmentContext";
 
 export default function DepartmentPeriodDropDown() {
+  const {startDate,endDate,isMobile} =useDepartmentContext()
   const [filter, setFilter] = useState("daily");
 
   const useDataFetchMethod = (view) => {
@@ -53,10 +55,12 @@ export default function DepartmentPeriodDropDown() {
 
         {/* Text Column */}
         <Col>
-          <h5 className="fw-bold mb-0">Period Data Breakdown</h5>
-          <small className="text-muted">
-            Detailed metrics across different time periods
-          </small>
+          <h5 className="fw-bold mb-0" style={{
+            color:'#232425',
+            fontSize:"18px",
+            fontWeight:'600',
+            marginLeft:'-10px'
+          }}>Period Data Breakdown</h5>
         </Col>
         <Col xs="auto">
           {/* <ButtonGroup>
@@ -109,6 +113,8 @@ export default function DepartmentPeriodDropDown() {
                     padding: "6px 16px",
                     backgroundColor: selected ? "#FF6600" : "transparent",
                     color: selected ? "white" : "#888",
+                     backgroundColor: selected ? "white" : "transparent",
+                    color: selected ? "#FF6600" : "#888",
                     border: "none",
                     cursor: "pointer",
                     userSelect: "none",
@@ -119,6 +125,7 @@ export default function DepartmentPeriodDropDown() {
               );
             })}
           </ButtonGroup>
+          {!isMobile && <span style={{color:"#232425"}}><IconArrowsMaximize /></span>}
         </Col>
       </Row>
 
@@ -126,7 +133,7 @@ export default function DepartmentPeriodDropDown() {
       <ServiceRenderer
         queryHook={SelectedHook}
         queryKey={["departmentPeriodDropDown", filter]}
-        queryArgs={[2, { userId: 7, outlet: 1 }]}
+        queryArgs={[2, { userId: 7, outlet: 1 ,startdt:startDate,enddt:endDate}]}
         formatter={departmentPeriodDropDownDataFormatter}
         shimmerCount={2}
       >

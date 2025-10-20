@@ -18,7 +18,7 @@ export default function ItemConsumptionEfficiency() {
       <ComponentHeader
         title="Item Consumption Efficiency"
         description="Monitor wastage patterns and consumption inefficiencies across menu items"
-        titleColor="#000"
+        titleColor="#232425"
         cardBgColor="none"
         isShowArrows={true}
         isExpandable={true}

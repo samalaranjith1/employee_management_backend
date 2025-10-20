@@ -20,8 +20,8 @@ export default function ClosingCards({ title, value, icon, color }) {
       <div className="d-flex align-items-left">
         <div style={{ fontSize: "24px", color }}>{icon}</div>
         <div className="ms-3">
-          <div className="fw-semibold text-secondary">{title}</div>
-          <div className="fs-5 fw-bold">{value}</div>
+          <div style={{fontWeight:600, fontSize:"14px", color:"#6d6d6d"}}>{title}</div>
+          <div style={{fontWeight:800, fontSize:"18px", color:"#232425"}}>{value}</div>
         </div>
       </div>
     </CommonCard>

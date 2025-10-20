@@ -121,10 +121,10 @@ const RecipesDashboard = () => {
                   {/* Column 2: Title + description */}
                   <div className="flex-grow-1">
                     <h6 style={{
-                      fontSize:'18px',
-                      fontWeight:'600',
-                      color:'#232425',
-                      marginTop:"+5px"
+                      fontSize: '18px',
+                      fontWeight: '600',
+                      color: '#232425',
+                      marginTop: "+5px"
                     }}>Loss Making Products</h6>
                     <p className="card-text text-muted mb-0">
                       {/* Monitor inventory levels and prevent stockouts */}
@@ -164,10 +164,10 @@ const RecipesDashboard = () => {
                   {/* Column 2: Title + Description */}
                   <div className="flex-grow-1">
                     <h6 style={{
-                      fontSize:'18px',
-                      fontWeight:'600',
-                      color:'#232425',
-                      marginTop:"+5px"
+                      fontSize: '18px',
+                      fontWeight: '600',
+                      color: '#232425',
+                      marginTop: "+5px"
                     }}>Profitable Products</h6>
                     {/* <p className="card-text text-muted mb-0">
                       Monitor inventory levels and prevent stockouts

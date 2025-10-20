@@ -90,11 +90,11 @@ export default function DepartmentPeriodDropDownTable({ table = [] }) {
                   key={col.key}
                   onClick={() => handleSort(col.key)}
                   style={{
-                    background: "#fafafa",
-                    fontWeight: 600,
-                    fontSize: "0.85rem",
+                    background: "#f4f7fc",
+                    fontWeight: 700,
+                    fontSize: "14px",
                     textTransform: "uppercase",
-                    color: "#555",
+                    color: "#464f60",
                     position: "sticky",
                     top: 0,
                     zIndex: 2,
@@ -135,24 +135,24 @@ export default function DepartmentPeriodDropDownTable({ table = [] }) {
                     style={{ borderBottom: "1px solid #eee" }}
                   >
                     {/* <td style={{ padding: "14px 16px" }}>{row.index}</td> */}
-                    <td style={{ padding: "14px 16px" }}>
-                      <div className="fw-semibold" style={{ fontSize: 14 }}>
+                    <td style={{ padding: "14px 16px", fontWeight:600, fontSize:"14px", color:"#171c26" }}>
+                      <div className="" style={{ fontSize: 14 }}>
                         {formattedDate}{" "}
                         {isToday && (
-                          <span className="text-muted" style={{ fontSize: 12 }}>
+                          <span className="" style={{ fontSize: "12px", fontWeight:400, color:"#171c26" }}>
                             (Today)
                           </span>
                         )}
                       </div>
                       <div
                         className="text-muted"
-                        style={{ fontSize: 12, marginTop: 2 }}
+                        style={{ fontSize: "12px", marginTop: 2, fontWeight:400, color:"#687182" }}
                       >
                         {formattedDay}
                       </div>
                     </td>
                     <td
-                      style={{ fontSize: 13, cursor: "pointer" }}
+                      style={{ fontSize: "14px", cursor: "pointer", fontWeight:700, color:"#464f60" }}
                       onClick={() =>
                         handleNavigation({
                           router,
@@ -164,7 +164,7 @@ export default function DepartmentPeriodDropDownTable({ table = [] }) {
                       ₹{row.sales?.toLocaleString()}
                     </td>
                     <td
-                      style={{ fontSize: 13, cursor: "pointer" }}
+                      style={{ fontSize: "14px", cursor: "pointer", fontWeight:700, color: "#464f60" }}
                       onClick={() =>
                         handleNavigation({
                           router,
@@ -176,7 +176,7 @@ export default function DepartmentPeriodDropDownTable({ table = [] }) {
                       ₹{row.consumption?.toLocaleString()}
                     </td>
                     <td
-                      style={{ fontSize: 13, cursor: "pointer" }}
+                      style={{ fontSize:"14px", fontWeight:700, cursor: "pointer",color:"#464f60" }}
                       onClick={() =>
                         handleNavigation({
                           router,

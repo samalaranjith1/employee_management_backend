@@ -22,10 +22,18 @@ export function DepartmentContextProvider({ children }) {
 
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
-  
+
   const [departments, setDepartments] = useState("");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
+  // detect mobile
+  useEffect(() => {
+    const checkScreen = () => setIsMobile(window.innerWidth < 768);
+    checkScreen();
+    window.addEventListener("resize", checkScreen);
+    return () => window.removeEventListener("resize", checkScreen);
+  }, []);
   // Hydrate from sessionStorage
   useEffect(() => {
     if (!queryKey) return;
@@ -87,8 +95,8 @@ export function DepartmentContextProvider({ children }) {
       );
     }
   }, [startDate, endDate, departments, queryKey]);
-//  if (startDate === null || endDate === null) return null;
-  if (startDate === null ) return null;
+  //  if (startDate === null || endDate === null) return null;
+  if (startDate === null) return null;
 
   const toggleSidebar = () => setIsSidebarOpen((prev) => !prev);
 
@@ -102,6 +110,7 @@ export function DepartmentContextProvider({ children }) {
     departments,
     setDepartments,
     toggleSidebar,
+    isMobile, setIsMobile
   };
 
   return (

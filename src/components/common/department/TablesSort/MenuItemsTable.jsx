@@ -90,11 +90,11 @@ const filtersConfig = {
                   key={col.key}
                   onClick={() => handleSort(col.key)}
                   style={{
-                    background: "#fafafa",
-                    fontWeight: 600,
+                    background: "#f4f7fc",
+                    fontWeight: 700,
                     fontSize: "0.85rem",
                     textTransform: "uppercase",
-                    color: "#555",
+                    color: "#464f60",
                     position: "sticky",
                     top: 0,
                     zIndex: 2,
@@ -114,42 +114,46 @@ const filtersConfig = {
                 <tr key={item.id} style={{ borderBottom: "1px solid #eee" }}>
                   {/* Item */}
                   <td style={{ padding: "14px 16px" }}>
-                    <div style={{ fontWeight: 600, color: "#222" }}>
+                    <div style={{ fontWeight: 600, color: "#171c26",fontSize:"14px" }}>
                       {item.name}
                     </div>
                     <div className="d-flex gap-2 mt-2">
-                      <Badge
+                      <div
                         bg="light"
                         text="dark"
                         style={{
                           border: "1px solid #ddd",
-                          fontSize: "0.75rem",
-                          padding: "4px 8px",
+                          padding: "2px 4px",
                           borderRadius: "6px",
+                          color:'#37383b',
+                          fontSize:"12px"
                         }}
                       >
                         {item.variation}
-                      </Badge>
-                      <Badge
+                      </div>
+                      <div
                         bg={item.veg ? "success" : "warning"}
                         text="dark"
                         style={{
-                          fontSize: "0.75rem",
-                          padding: "4px 8px",
+                          backgroundColor:item.veg?"#eaffea":'#f9f0e2',
+                          color:item.veg?"#5d9d4a":'#cd861b',
+                          fontSize: "12px",
+                          fontWeight:'500',
+                          padding: "2px 4px",
                           borderRadius: "6px",
                         }}
                       >
                         {item.veg ? "Veg" : "Non-Veg"}
-                      </Badge>
+                      </div>
                     </div>
                   </td>
 
                   {/* Price */}
                   <td
                     style={{
-                      fontWeight: 600,
-                      color: "#2d2d2d",
-                      fontSize: "0.95rem",
+                      fontWeight: 700,
+                      color: "#464f60",
+                      fontSize: "14px",
                       padding: "14px 16px",
                     }}
                   >
@@ -157,12 +161,12 @@ const filtersConfig = {
                   </td>
 
                   {/* Making Cost */}
-                  <td style={{ color: "#444", padding: "14px 16px" }}>
+                  <td style={{ color: "#464f60", padding: "14px 16px" ,fontSize:'14px',fontWeight:'500'}}>
                     {item.makingCost}
                   </td>
 
                   {/* Margin */}
-                  <td style={{ color: "#444", padding: "14px 16px" }}>
+                  <td style= {{ color: "#464f60", padding: "14px 16px" ,fontSize:'14px',fontWeight:'500'}}>
                     {item.margin}
                   </td>
 
@@ -173,8 +177,8 @@ const filtersConfig = {
                       style={{
                         borderRadius: "16px",
                         padding: "6px 14px",
-                        fontWeight: 600,
-                        fontSize: "0.8rem",
+                        fontWeight: 500,
+                        fontSize: "14px",
                       }}
                     >
                       {item.marginPercentage}
@@ -183,8 +187,8 @@ const filtersConfig = {
 
                   {/* Pieces */}
                   <td style={{ padding: "14px 16px" }}>
-                    <div style={{ fontWeight: 600 }}>{item.pieces.count}</div>
-                    <div style={{ fontSize: "12px", color: "#666" }}>
+                    <div style={{ fontWeight: 500,fontSize:'14px',color:"#464f60"}}>{item.pieces.count}</div>
+                    <div style={{ fontSize: "12px", color: "#14px",fontWeight:500 }}>
                       {item.pieces.label}
                     </div>
                   </td>

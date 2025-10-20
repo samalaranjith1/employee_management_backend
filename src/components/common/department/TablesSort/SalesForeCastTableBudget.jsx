@@ -78,9 +78,9 @@ export default function SalesForeCastTableBudget({ tableData = [] }) {
                   key={col.key}
                   onClick={() => handleSort(col.key)}
                   style={{
-                    background: "#fafafa",
-                    fontWeight: 600,
-                    fontSize: "0.85rem",
+                    background: "#f4f7fc",
+                    fontWeight: 700,
+                    fontSize: "14px",
                     textTransform: "uppercase",
                     color: "#555",
                     position: "sticky",
@@ -107,15 +107,15 @@ export default function SalesForeCastTableBudget({ tableData = [] }) {
                   className={row.day === "Total" ? "fw-bold" : ""}
                   style={{ borderBottom: "1px solid #eee" }}
                 >
-                  <td style={{ padding: "14px 16px" }}>{row.day}</td>
-                  <td style={{ padding: "14px 16px" }}>
+                  <td style={{ padding: "14px 16px", fontWeight:700, fontSize:"14px", color:"#171c26" }}>{row.day}</td>
+                  <td style={{ padding: "14px 16px", fontWeight:500, fontSize:"14px", color:"#464f60" }}>
                     <FaRupeeSign /> {Math.round(row.budget).toLocaleString()}
                   </td>
-                  <td style={{ padding: "14px 16px" }}>
+                  <td style={{ padding: "14px 16px", fontWeight:700,fontSize:"14px", color:"#464f60" }}>
                     <FaRupeeSign /> {Math.round(row.sales).toLocaleString()}
                   </td>
-                  <td style={{ padding: "14px 16px" }}>{row.orders}</td>
-                  <td style={{ padding: "14px 16px" }}>{row.items}</td>
+                  <td style={{ padding: "14px 16px", fontWeight:500, fontSize:"14px", color:"#464f60" }}>{row.orders}</td>
+                  <td style={{ padding: "14px 16px", fontWeight:500, fontSize:"14px", color:"#464f60" }}>{row.items}</td>
                 </tr>
               ))
             ) : (
@@ -140,27 +140,27 @@ export default function SalesForeCastTableBudget({ tableData = [] }) {
                 fontWeight: 700,
                 position: "sticky",
                 bottom: 0,
-                backgroundColor: "#fafafa",
+                backgroundColor: "#red",
                 borderTop: "2px solid #eee",
               }}
             >
-              <td style={{ padding: "12px 16px" }}>Total</td>
-              <td style={{ padding: "12px 16px" }}>
+              <td style={{ padding: "12px 16px", color:"#171c26", fontsize:"14px",backgroundColor:'#f4f7fc' }}>Total</td>
+              <td style={{ padding: "12px 16px", fontWeight:500, fontSize:"14px", color:"#464f60", backgroundColor:'#f4f7fc' }}>
                 <FaRupeeSign />{" "}
                 {Math.round(
                   filteredData.reduce((sum, row) => sum + row.budget, 0)
                 ).toLocaleString()}
               </td>
-              <td style={{ padding: "12px 16px" }}>
+              <td style={{ padding: "12px 16px", fontWeight:700, fontSize:"14px", color:"#464f60", backgroundColor:'#f4f7fc' }}>
                 <FaRupeeSign />{" "}
                 {Math.round(
                   filteredData.reduce((sum, row) => sum + row.sales, 0)
                 ).toLocaleString()}
               </td>
-              <td style={{ padding: "12px 16px" }}>
+              <td style={{ padding: "12px 16px", fontWeight:500, fontSize:"14px", color:"#464f60", backgroundColor:'#f4f7fc' }}>
                 {filteredData.reduce((sum, row) => sum + row.orders, 0)}
               </td>
-              <td style={{ padding: "12px 16px" }}>
+              <td style={{ padding: "12px 16px",fontWeight:500, fontSize:"14px", color:"#464f60", backgroundColor:'#f4f7fc' }}>
                 {filteredData.reduce((sum, row) => sum + row.items, 0)}
               </td>
             </tr>

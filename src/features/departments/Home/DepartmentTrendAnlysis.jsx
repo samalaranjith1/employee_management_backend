@@ -13,9 +13,12 @@ import DepartmentTrendAnalysisGraph from "@/components/common/department/GraphWr
 
 import { subDays, subWeeks, subMonths, format } from "date-fns";
 import { departmentTrendAnalysisDataFormatter } from "@/utils/data_formatters/departmentPage";
+import { ButtonGroup, Col, Row, ToggleButton } from "react-bootstrap";
+import { IconArrowsMaximize, IconTrendingUp } from "@tabler/icons-react";
+import { useDepartmentContext } from "@/contexts/DepartmentContext";
 
 export default function DepartmentTrendAnalysis() {
-  const { startDate, endDate } = useDashboardContext();
+  const { startDate, endDate,isMobile } = useDepartmentContext();
   const [filter, setFilter] = useState("daily");
   const [startDateCS, setStartDateCS] = useState("");
   const [endDateCS, setEndDateCS] = useState("");
@@ -67,20 +70,86 @@ export default function DepartmentTrendAnalysis() {
   useEffect(() => {
     getDateRange(filter);
   }, [filter]);
-
+  const tabs = ["Daily", "Same Days", "Weekly", "Monthly"];
   return (
     <div className="p-3">
+      <Row className="align-items-center mb-3">
+        <Col>
+          <h5 className="fw-bold mb-0 d-flex align-items-center">
+            <div
+              style={{
+                background: "#3a58eb", // bold purple
+                borderRadius: "12px",
+                padding: "8px",
+                display: "inline-block",
+                marginRight:'10px'
+              }}
+            >
+              <IconTrendingUp stroke={2} color="#fff" size={20} />
+            </div>
+
+            <div className="d-flex flex-column">
+              <span className="ps-1" style={{
+                color:'#232425',
+                fontWeight:'600',
+                fontSize:'18px'
+              }}>Trend Analysis</span>
+              {/* <small className="text-muted" style={{ fontWeight: "normal" }}>
+                Sales, consumption, and inventory trends over time
+              </small> */}
+            </div>
+          </h5>
+        </Col>
+        <Col xs="auto">
+          <ButtonGroup
+            className="rounded-pill"
+            style={{ backgroundColor: "#E6E6E6" }}
+          >
+            {tabs.map((label) => {
+              const value = label.toLowerCase().replace(" ", "");
+              const selected = filter === value;
+              return (
+                <ToggleButton
+                  key={label}
+                  id={`dept-graph-${label}`}
+                  type="radio"
+                  variant="none"
+                  checked={selected}
+                  value={value}
+                  onChange={(e) => setFilter(e.currentTarget.value)}
+                  className="rounded-pill"
+                  style={{
+                    fontSize: "13px",
+                    padding: "6px 16px",
+                    backgroundColor: selected ? "#FF6600" : "transparent",
+                    color: selected ? "white" : "#888",
+                     backgroundColor: selected ? "white" : "transparent",
+                    color: selected ? "#FF6600" : "#888",
+                    border: "none",
+                    cursor: "pointer",
+                    userSelect: "none",
+                  }}
+                >
+                  {label}
+                </ToggleButton>
+              );
+            })}
+          </ButtonGroup>
+        {!isMobile &&<span className="ml-5"><IconArrowsMaximize size={20} color='#232425'/></span>}
+        </Col>
+      </Row>
+
       <ServiceRenderer
         queryHook={SelectedHook}
         queryKey={["departmentTrendAnalysis", filter, startDateCS, endDateCS]}
         queryArgs={[
           2,
-          { startdt: startDateCS, enddt: endDateCS, userId: 7, outlet: 1 },
+          { startdt: startDate, enddt: endDate, userId: 7, outlet: 1 },
         ]}
         formatter={departmentTrendAnalysisDataFormatter}
         shimmerCount={2}
       >
-        {( trendData ) => (
+        {(trendData) => (
           <DepartmentTrendAnalysisGraph
             trendData={trendData}
             filter={filter}

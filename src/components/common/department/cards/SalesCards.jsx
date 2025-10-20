@@ -15,7 +15,7 @@ export default function SalesCards({ label, value, icon }) {
   return (
     <CommonCard
       style={{
-        minWidth: isMobile ? "88vw" : "30vw",
+        minWidth: isMobile ? "88vw" : "20vw",
         flexShrink: 0,
         borderRadius: "12px",
         boxShadow: "0 4px 12px rgba(0,0,0,0.1)",

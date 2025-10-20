@@ -76,11 +76,11 @@ export default function ClosingTable({ tableData = [] }) {
                   position: "sticky",
                   top: 0,
                   zIndex: 10,
-                  background: "#fafafa",
+                  background: "#f4f7fc",
                   fontWeight: 600,
-                  fontSize: "0.85rem",
+                  fontSize: "14px",
                   textTransform: "uppercase",
-                  color: "#555",
+                  color: "#464f60",
                   cursor: "pointer",
                   padding: "12px 16px",
                   minWidth: col.minWidth,
@@ -121,16 +121,16 @@ export default function ClosingTable({ tableData = [] }) {
             {filteredData.length > 0 ? (
               filteredData.map((row, idx) => (
                 <tr key={idx} style={{ borderBottom: "1px solid #eee" }}>
-                  <td style={{ padding: "14px 16px", minWidth: "250px" }}>
+                  <td style={{ padding: "14px 16px", minWidth: "250px", fontWeight:600, fontSize:"14px", color:"#171c26" }}>
                     <div className="fw-semibold">{row.item}</div>
-                    <div className="text-muted small">
+                    <div className="text-muted small" style={{fontWeight:400, fontSize:"12px", color:"#687182"}}>
                       {row.category} • {row.quantity} • ₹{row.totalPrice}
                     </div>
                   </td>
-                  <td style={{ padding: "14px 16px", minWidth: "120px" }}>
+                  <td style={{ padding: "14px 16px", minWidth: "120px", fontWeight:500, fontSize:"14px", color:"#464f60" }}>
                     {row.quantity}
                   </td>
-                  <td style={{ padding: "14px 16px", minWidth: "120px" }}>
+                  <td style={{ padding: "14px 16px", minWidth: "120px", fontWeight:700, fontSize:"14px", color:"#464f60" }}>
                     ₹{row.totalPrice}
                   </td>
                 </tr>

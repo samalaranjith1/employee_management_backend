@@ -103,14 +103,15 @@ export default function SalesForeCastByItemTable({ tableData = [] }) {
                     onClick={() => handleSort(col.key)}
                     className="sticky-header"
                     style={{
-                      fontWeight: 600,
-                      fontSize: "0.85rem",
+                      fontWeight: 700,
+                      fontSize: "14px",
                       textTransform: "uppercase",
-                      color: "#555",
+                      color: "#464f60",
                       cursor: "pointer",
                       padding: "12px 16px",
                       minWidth: col.width ? `${col.width}%` : "120px",
                       borderBottom: "1px solid #eee",
+                      backgroundColor:"#f4f7fc"
                     }}
                   >
                     {col.key === "day" ? (
@@ -130,12 +131,12 @@ export default function SalesForeCastByItemTable({ tableData = [] }) {
               {filteredData.length > 0 ? (
                 filteredData.map((row, idx) => (
                   <tr key={idx} style={{ borderBottom: "1px solid #eee" }}>
-                    <td style={{ padding: "14px 16px" }}>{row.day}</td>
-                    <td style={{ padding: "14px 16px" }}>{row.item}</td>
-                    <td style={{ padding: "14px 16px" }}>{row.orders}</td>
-                    <td style={{ padding: "14px 16px" }}>{row.itemsSold}</td>
-                    <td style={{ padding: "14px 16px" }}>{row.netSales}</td>
-                    <td style={{ padding: "14px 16px" }}>{row.discount}</td>
+                    <td style={{ padding: "14px 16px",fontWeight:700, fontSize:"14px", color:"#171c26" }}>{row.day}</td>
+                    <td style={{ padding: "14px 16px", fontWeight:700, fontSize:"14px", color:"#171c26" }}>{row.item}</td>
+                    <td style={{ padding: "14px 16px",fontWeight:500, fontSize:"14px", color:"#171c26" }}>{row.orders}</td>
+                    <td style={{ padding: "14px 16px",fontWeight:500, fontSize:"14px", color:"#171c26" }}>{row.itemsSold}</td>
+                    <td style={{ padding: "14px 16px",fontWeight:700, fontSize:"14px", color:"#171c26" }}>{row.netSales}</td>
+                    <td style={{ padding: "14px 16px",fontWeight:500, fontSize:"14px", color:"#171c26" }}>{row.discount}</td>
                   </tr>
                 ))
               ) : (
