@@ -104,7 +104,7 @@ export default function ItemsPurchaseTrendAnalysisTable({
               <div
                 style={{
                   background: 'linear-gradient(135deg, #2196F3 0%, #18A8E7 100%)',
-                  borderRadius: '14px',
+                  borderRadius: '12px',
                   padding: '10px',
                   display: 'flex',
                   alignItems: 'center',
@@ -113,17 +113,17 @@ export default function ItemsPurchaseTrendAnalysisTable({
                   height: 40,
                 }}
               >
-                <IconCalendar size={24} stroke={2} color="#fff" />
+                <IconCalendar size={20} stroke={2} color="#fff" />
               </div>
             </span>
           </div>
           <div>
-            <h5 className="fw-bold mb-0">
+            <h5 className=" mb-0" style={{fontWeight:700, fontSize:"18px"}}>
               {filter.charAt(0).toUpperCase() + filter.slice(1)} Purchase Data
             </h5>
-            <small className="text-muted">
+            {/* <small className="text-muted">
               Detailed breakdown of purchase metrics by date
-            </small>
+            </small> */}
           </div>
         </div>
 
@@ -146,11 +146,11 @@ export default function ItemsPurchaseTrendAnalysisTable({
                     key={col.key}
                     onClick={() => handleSort(col.key)}
                     style={{
-                      background: "#f5f5f5",
+                      background: "#f4f7fc",
                       fontWeight: 700,
-                      fontSize: "0.8rem",
+                      fontSize: "14px",
                       textTransform: "uppercase",
-                      color: "#000",
+                      color: "#232425",
                       position: "sticky",
                       top: 0,
                       zIndex: 2,
@@ -169,22 +169,22 @@ export default function ItemsPurchaseTrendAnalysisTable({
               {finalRows.length > 0 ? (
                 finalRows.map((row, idx) => (
                   <tr key={idx}>
-                    <td className="fw-semibold">
+                    <td className="" style={{fontWeight:600, fontSize:"14px", color:"#232425"}}>
                       <span className="bg-secondary me-2"></span>
                       {/* {row?.date?.icon} */}
                       {row?.date?.label ?? row?.date ?? ""}
                     </td>
-                    <td className="fw-bold text-primary">
+                    <td className="text-primary" style={{fontWeight:600, fontSize:"14px", color:"#155DFC"}}>
                       <span className="dot bg-primary me-2"></span>
                       {/* {row?.quantity?.icon} */}
                       {row?.quantity?.label ?? row?.quantity ?? ""}
                     </td>
-                    <td className="fw-bold text-success">
+                    <td className="text-success" style={{fontWeight:600, fontSize:"14px", color:"#00A63E"}}>
                       <span className="dot bg-success me-2"></span>
                       {/* {row?.totalPrice?.icon} */}
                       {row?.totalPrice?.label ?? row?.totalPrice ?? ""}
                     </td>
-                    <td className="fw-bold" style={{ color: "#6D28D9" }}>
+                    <td className="" style={{ color: "#9810FA", fontWeight:600, fontSize:"14px" }}>
                       <span
                         className="dot"
                         style={{ background: "#6D28D9" }}
@@ -213,7 +213,7 @@ export default function ItemsPurchaseTrendAnalysisTable({
             {/* Colored footer row */}
             {finalRows.length > 0 && (
               <tfoot>
-                <tr style={{ background: "#f0fdf4", fontWeight: "bold" }}>
+                <tr style={{ background: "#f4f7fc", fontWeight: 600, fontSize:"14px" }}>
                   <td>Total</td>
                   <td className="text-primary">{footer.quantity}</td>
                   <td className="text-success">{footer.totalPrice}</td>

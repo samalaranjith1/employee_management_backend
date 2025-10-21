@@ -25,14 +25,14 @@ export default function ItemsConsumptionAnalyticsOverviewCards({ item }) {
         style={{
           display: "flex",
           alignItems: "center",
-          marginBottom: "20px",
+          marginBottom: "",
         }}
       >
         {item.icon}
         <span
           style={{
             fontWeight: 700,
-            fontSize: "18px",
+            fontSize: "14px",
             marginLeft: "12px",
             // color: item.textColor,
             letterSpacing: 0.5,
@@ -48,33 +48,33 @@ export default function ItemsConsumptionAnalyticsOverviewCards({ item }) {
           border: "0",
           borderRadius: "12px",
           background: "#F2F6FA",
-          marginBottom: "14px",
+          marginBottom: "",
           padding: "20px 18px 16px 18px",
         }}
       >
         <div style={{ display: "flex", justifyContent: "space-between", width: "100%" }}>
           {/* Consumption Section */}
           <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
-            <div style={{ color: "#878A99", fontWeight: 500, fontSize: 14, marginBottom: 4 }}>
+            <div style={{ color: "#878A99", fontWeight: 500, fontSize: 14 }}>
               Consumption
             </div>
-            <div style={{ fontWeight: 700, fontSize: 22, color: "#23272E", marginBottom: 2 }}>
+            <div style={{ fontWeight: 700, fontSize: 14, color: "#232425"}}>
               {item.data?.consumptionQuantity || 0}
             </div>
-            <div style={{ color: "#A0A4A8", fontSize: 13, fontWeight: 500 }}>
+            <div style={{ color: "#717182", fontSize: 13, fontWeight: 500 }}>
               GM
             </div>
           </div>
 
           {/* Total Section */}
           <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end" }}>
-            <div style={{ color: "#f3f6fa", fontWeight: 500, fontSize: 14, marginBottom: 4 }}>
+            <div style={{ color: "#f3f6fa", fontWeight: 500, fontSize:"14px", marginBottom: 4 }}>
               Total
             </div>
-            <div style={{ fontWeight: 700, fontSize: 22, color: "#23272E", marginBottom: 2 }}>
+            <div style={{ fontWeight: 700, fontSize:"14px", color: "#232425", marginBottom: 2 }}>
               ₹{item.data?.consumptionValue || 0}
             </div>
-            <div style={{ color: "#A0A4A8", fontSize: 13, fontWeight: 500 }}>
+            <div style={{ color: "#717182", fontSize:"14px", fontWeight: 500 }}>
               Total
             </div>
           </div>
@@ -96,13 +96,13 @@ export default function ItemsConsumptionAnalyticsOverviewCards({ item }) {
         <div style={{ display: "flex", justifyContent: "space-between", width: "100%" }}>
           {/* Net Consumption Section */}
           <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
-            <div style={{ color: "#878A99", fontWeight: 500, fontSize: 14, marginBottom: 4 }}>
+            <div style={{ color: "#717182", fontWeight: 500, fontSize:"14px"}}>
               Net Consumption
             </div>
-            <div style={{ fontWeight: 700, fontSize: 22, color: "#23272E", marginBottom: 2 }}>
+            <div style={{ fontWeight: 700, fontSize: "14px", color: "#232425"}}>
               {item.data?.netConsumptionQuantity || 0}
             </div>
-            <div style={{ color: "#A0A4A8", fontSize: 13, fontWeight: 500 }}>
+            <div style={{ color: "#717182", fontSize:"14px", fontWeight: 500 }}>
               GM
             </div>
           </div>
@@ -112,10 +112,10 @@ export default function ItemsConsumptionAnalyticsOverviewCards({ item }) {
             <div style={{ color: "#f3f6fa", fontWeight: 500, fontSize: 14, marginBottom: 4 }}>
               Total
             </div>
-            <div style={{ fontWeight: 700, fontSize: 22, color: "#23272E", marginBottom: 2 }}>
+            <div style={{ fontWeight: 700, fontSize: 14, color: "#232425", marginBottom: 2 }}>
               ₹{item.data?.netConsumptionValue || 0}
             </div>
-            <div style={{ color: "#A0A4A8", fontSize: 13, fontWeight: 500 }}>
+            <div style={{ color: "#717182", fontSize: 13, fontWeight: 500 }}>
               Total
             </div>
           </div>
@@ -126,8 +126,8 @@ export default function ItemsConsumptionAnalyticsOverviewCards({ item }) {
       {/* Utilization */}
       <div
         style={{
-          fontWeight: "700",
-          fontSize: "15px",
+          fontWeight: "600",
+          fontSize: "14px",
           marginTop: "8px",
           textAlign: "right",
           backgroundColor: "#fff",
@@ -136,8 +136,8 @@ export default function ItemsConsumptionAnalyticsOverviewCards({ item }) {
           justifyContent: "space-between"
         }}
       >
-        <div>Utilization Rate </div>
-        <div style={{ backgroundColor: "#cff7cfff", padding: "2px",color: "#15BE5B", }}>{item.utilizationRate}</div>
+        <div style={{fontSize:"14px", fontWeight:600, color:"#717182"}}>Utilization Rate </div>
+        <div style={{ backgroundColor: "#cff7cfff", padding: "2px",color: "#008236", }}>{item.utilizationRate}</div>
       </div>
     </Card>
   );

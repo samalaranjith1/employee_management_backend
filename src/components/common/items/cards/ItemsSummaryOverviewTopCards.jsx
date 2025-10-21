@@ -11,7 +11,7 @@ export function ItemsSummaryOverviewTopCardsFirstRow({ cards = [] }) {
             style={{ backgroundColor: card.bg }}
             className="p-3 shadow-sm h-100"
           >
-            <h6 className="fw-bold d-flex align-items-center">
+            <h6 className=" d-flex align-items-center" style={{fontWeight:700, fontSize:"14px", color:"#232425"}}>
               {card.icon}
               {card.title}
             </h6>
@@ -21,8 +21,8 @@ export function ItemsSummaryOverviewTopCardsFirstRow({ cards = [] }) {
                   key={i}
                   className="d-flex justify-content-between small mb-1"
                 >
-                  <span className="text-muted">{row.label}</span>
-                  <span className="fw-semibold">{row.value}</span>
+                  <span className="" style={{fontWeight:500, fontSize:"12px",color:"#717182"}}>{row.label}</span>
+                  <span className="" style={{fontWeight:600, fontSize:"12px", color:"#232425"}}>{row.value}</span>
                 </div>
               ))}
             </div>
@@ -42,7 +42,7 @@ export function ItemsSummaryOverviewTopCardsSecondRow({ cards = [] }) {
             style={{ backgroundColor: card.bg }}
             className="p-3 shadow-sm h-100"
           >
-            <h6 className="fw-bold d-flex align-items-center">
+            <h6 className=" d-flex align-items-center" style={{fontWeight:700, fontSize:"14px", color:"#232425"}}>
               {card.icon}
               {card.title}
             </h6>
@@ -52,8 +52,8 @@ export function ItemsSummaryOverviewTopCardsSecondRow({ cards = [] }) {
                   key={i}
                   className="d-flex justify-content-between small mb-1"
                 >
-                  <span className="text-muted">{row.label}</span>
-                  <span className="fw-semibold">{row.value}</span>
+                  <span className=""  style={{fontWeight:500, fontSize:"12px",color:"#717182"}}>{row.label}</span>
+                  <span className="" style={{fontWeight:600, fontSize:"12px", color:"#232425"}}>{row.value}</span>
                 </div>
               ))}
             </div>

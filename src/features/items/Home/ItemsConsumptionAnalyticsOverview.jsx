@@ -18,7 +18,7 @@ const ItemsConsumptionAnalyticsOverview = () => {
       <ComponentHeader
         title="Consumption Analytics Overview"
         description="Comprehensive consumption metrics across different time periods for GOLD DROP OIL"
-        titleColor="#000"
+        titleColor="#232425"
         cardBgColor="none"
         isShowArrows={true}
         scrollRef={scrollRef}

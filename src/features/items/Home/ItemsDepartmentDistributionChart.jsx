@@ -54,7 +54,7 @@ export default function ItemsDepartmentDistributionChart() {
                   justifyContent: 'center'
                 }}
               >
-                <IconChartPie2 size={24} stroke={2} color="#fff" />
+                <IconChartPie2 size={20} stroke={2} color="#fff" />
               </div>
             </Col>
 
@@ -62,9 +62,9 @@ export default function ItemsDepartmentDistributionChart() {
             <Col className="d-flex align-items-center justify-content-between flex-wrap">
               <div className="me-3">
                 <h5 className="fw-bold mb-0">Department Distribution Chart</h5>
-                <p className="text-muted mb-0" style={{ fontSize: "0.9rem" }}>
+                {/* <p className="text-muted mb-0" style={{ fontSize: "0.9rem" }}>
                   Visual breakdown of departmental metrics
-                </p>
+                </p> */}
               </div>
               <div>
                 <Dropdown onSelect={(k) => setSelectedKey(k)}>

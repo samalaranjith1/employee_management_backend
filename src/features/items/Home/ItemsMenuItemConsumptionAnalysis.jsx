@@ -59,17 +59,17 @@ export default function ItemsMenuItemConsumptionAnalysis() {
               </Col>
 
               {/* ✅ Column 2: Text content */}
-              <Col>
+              <Col style={{paddingleft:"-50px"}}>
                 <div
-                  className="p-3"
+                 //sName="p-3"
                   style={{
                     borderRadius: "12px",
                   }}
                 >
-                  <h5 className="fw-bold mb-2">Menu Item Consumption Analysis</h5>
-                  <p className="text-muted small mb-0">
+                  <h5 className="mb-2" style={{fontWeight:700, fontSize:"18px", color:"#232425",}}>Menu Item Consumption Analysis</h5>
+                  {/* <p className="text-muted small mb-0">
                     Item consumption breakdown by menu items with quantity distribution
-                  </p>
+                  </p> */}
                 </div>
               </Col>
             </Row>

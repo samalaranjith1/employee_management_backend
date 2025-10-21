@@ -34,33 +34,32 @@ export default function PurchaseAnalyticsCards({ data = [] }) {
                 >
                   {card.icon}
                 </div>
-                <h5 className="mb-0 fw-semibold">{card.label}</h5>
+                <h5 className="mb-0 " style={{fontWeight:600, fontSize:"14px", color:"232425"}}>{card.label}</h5>
               </div>
-
               {/* Content */}
               <div>
                 <div className="mb-2">
-                  <small className="text-secondary d-block mb-1">
+                  <small className="d-block mb-1" style={{fontWeight:500, fontSize:"14px", color:"#4A5565"}}>
                     Purchase Quantity
                   </small>
-                  <h5 className="fw-bold" style={{ color: "#065f46" }}>
+                  <h5 className="" style={{ color: "#232425", fontWeight:600, fontSize:"16px" }}>
                     {card.quantity.toLocaleString()} GM
                   </h5>
                 </div>
                 <div className="mb-3">
-                  <small className="text-secondary d-block mb-1">
+                  <small className=" d-block mb-1" style={{fontWeight:500, fontSize:"14px", color:"#4A5565"}}>
                     Purchase Price
                   </small>
-                  <h5 className="fw-bold" style={{ color: "#065f46" }}>
+                  <h5 className="fw-bold" style={{ color: "#232425", fontWeight:600, fontSize:"16px" }}>
                     ₹{card.price.toLocaleString()}
                   </h5>
                 </div>
                 <hr />
                 <div className="d-flex justify-content-between align-items-center">
-                  <small className="text-secondary">Average Price</small>
+                  <small className="" style={{fontWeight:500, fontSize:"12px", color:"#4A5565"}}>Average Price</small>
                   <p
-                    className="fw-bold mb-0"
-                    style={{ color: card.textColor, fontSize: "1.1rem" }}
+                    className=" mb-0"
+                    style={{ color: card.textColor, fontSize: "14px", fontWeight:600 }}
                   >
                     ₹{card.avgPrice.toFixed(2)}/GM
                   </p>

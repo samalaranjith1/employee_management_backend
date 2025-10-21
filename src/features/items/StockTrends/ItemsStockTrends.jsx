@@ -96,13 +96,13 @@ const ItemsStockTrends = () => {
               <Col md={3}>
                 <Card
                   className="p-3 border-0 shadow-sm rounded-lg"
-                  style={{ backgroundColor: "#f0f4ff" }}
+                  style={{ backgroundColor: "#eef2ff" }}
                 >
-                  <h6 className="text-muted">Current Stock</h6>
-                  <h4 className="fw-bold text-primary">
+                  <h6 className="" style={{fontWeight:400, fontSize:"14px", color:"#717182"}}>Current Stock</h6>
+                  <h4 className="" style={{fontWeight:700,fontSize:"20px",color:"#1447E6"}}>
                     {cardsData?.currentStock?.toLocaleString()} {cardsData?.unit}
                   </h4>
-                  <h6 className="fw-bold text-primary">
+                  <h6 className="" style={{fontWeight:600, fontSize:"14px", color:"#155DFC"}}>
                     {cardsData.currentStockSub}
                   </h6>
                 </Card>
@@ -110,13 +110,13 @@ const ItemsStockTrends = () => {
               <Col md={3}>
                 <Card
                   className="p-3 border-0 shadow-sm rounded-lg"
-                  style={{ backgroundColor: "#e9f8ef" }}
+                  style={{ backgroundColor: "#EDFDF5" }}
                 >
-                  <h6 className="text-muted">Latest Price</h6>
-                  <h4 className="fw-bold text-success">
+                  <h6 className="" style={{fontWeight:400,fontSize:"14px", color:"#717182"}}>Latest Price</h6>
+                  <h4 className="" style={{fontWeight:700, fontSize:"20px", color:"#008236"}}>
                     ₹{cardsData?.currentPrice}
                   </h4>
-                  <h6 className="fw-bold text-success">
+                  <h6 className="" style={{fontWeight:600, fontSize:"14px", color:"#008236"}}>
                     {cardsData.currentPriceSub}
                   </h6>
                 </Card>
@@ -124,14 +124,14 @@ const ItemsStockTrends = () => {
               <Col md={3}>
                 <Card
                   className="p-3 border-0 shadow-sm rounded-lg"
-                  style={{ backgroundColor: "#fff7e6" }}
+                  style={{ backgroundColor: "#FFF9EC" }}
                 >
-                  <h6 className="text-muted">Total Purchase</h6>
-                  <h4 className="fw-bold text-warning">
+                  <h6 className="" style={{fontWeight:400, fontSize:"14px", color:"#717182"}}>Total Purchase</h6>
+                  <h4 className="" style={{fontWeight:700, fontSize:"20px", color:"#CA3500"}}>
                     {cardsData?.totalPurchase?.toLocaleString()}{" "}
                     {cardsData?.unit}
                   </h4>
-                  <h6 className="fw-bold text-warning">
+                  <h6 className="" style={{fontWeight:600, fontSize:"14px", color:"#CA3500"}}>
                     {cardsData.totalPurchaseSub}
                   </h6>
                 </Card>
@@ -139,14 +139,14 @@ const ItemsStockTrends = () => {
               <Col md={3}>
                 <Card
                   className="p-3 border-0 shadow-sm rounded-lg"
-                  style={{ backgroundColor: "#f8f0ff" }}
+                  style={{ backgroundColor: "#FCF2F8" }}
                 >
-                  <h6 className="text-muted">Total Consumption</h6>
-                  <h4 className="fw-bold text-purple">
+                  <h6 className="" style={{fontWeight:400, fontSize:"14px", color:"#717182"}}>Total Consumption</h6>
+                  <h4 className="" style={{fontWeight:700, fontSize:"20px", color:"#8200DB"}}>
                     {cardsData?.totalConsumption?.toLocaleString()}{" "}
                     {cardsData?.unit}
                   </h4>
-                  <h6 className="fw-bold text-purple">
+                  <h6 className="" style={{fontWeight:600, fontSize:"14px", color:"#8200DB"}}>
                     {cardsData.totalConsumptionSub}
                   </h6>
                 </Card>
@@ -157,10 +157,10 @@ const ItemsStockTrends = () => {
             <Row className="mb-3 align-items-center">
               <Col xs="auto">
                 <div>
-                  <h5 className="fw-bold mb-0">Stock Movement History</h5>
-                  <p className="text-muted mb-0">
+                  <h5 className="mb-0" style={{fontWeight:700, fontSize:"18px", color:"#232425"}}>Stock Movement History</h5>
+                  {/* <p className="text-muted mb-0">
                     Daily stock trends and purchase patterns
-                  </p>
+                  </p> */}
                 </div>
               </Col>
 
@@ -268,33 +268,76 @@ const ItemsStockTrends = () => {
                       position: "sticky",
                       top: 0,
                       zIndex: 2,
-                      backgroundColor: "#f8f9fa",
+                      backgroundColor: "#f4f7fc",
                       boxShadow: "0px 2px 4px rgba(0,0,0,0.05)",
                     }}
                   >
-                    <tr>
-                      <th onClick={() => handleSort("date")}>
+                    <tr style={{
+                      color:'#232425',
+                      backgroundColor:'#f4f7fc'
+                    }}>
+                      <th onClick={() => handleSort("date")} style={{
+                      color:'#232425',
+                      backgroundColor:'#f4f7fc',
+                      fontWeight:700,
+                      fontSize:"14px"
+                    }}>
                         Date{renderSortArrow("date")}
                       </th>
-                      <th onClick={() => handleSort("price")}>
+                      <th onClick={() => handleSort("price")} style={{
+                      color:'#232425',
+                      backgroundColor:'#f4f7fc',
+                      fontWeight:700,
+                      fontSize:"14px"
+                    }}>
                         Price{renderSortArrow("price")}
                       </th>
-                      <th onClick={() => handleSort("purchaseQty")}>
+                      <th onClick={() => handleSort("purchaseQty")} style={{
+                      color:'#232425',
+                      backgroundColor:'#f4f7fc',
+                      fontWeight:700,
+                      fontSize:"14px"
+                    }}>
                         Purchase Qty{renderSortArrow("purchaseQty")}
                       </th>
-                      <th onClick={() => handleSort("consumptionQty")}>
+                      <th onClick={() => handleSort("consumptionQty")} style={{
+                      color:'#232425',
+                      backgroundColor:'#f4f7fc',
+                      fontWeight:700,
+                      fontSize:"14px"
+                    }}>
                         Consumption Qty{renderSortArrow("consumptionQty")}
                       </th>
-                      <th onClick={() => handleSort("closingQty")}>
+                      <th onClick={() => handleSort("closingQty")} style={{
+                      color:'#232425',
+                      backgroundColor:'#f4f7fc',
+                      fontWeight:700,
+                      fontSize:"14px"
+                    }}>
                         Closing Qty{renderSortArrow("closingQty")}
                       </th>
-                      <th onClick={() => handleSort("closingDate")}>
+                      <th onClick={() => handleSort("closingDate")} style={{
+                      color:'#232425',
+                      backgroundColor:'#f4f7fc',
+                      fontWeight:700,
+                      fontSize:"14px"
+                    }}>
                         Closing Date{renderSortArrow("closingDate")}
                       </th>
-                      <th onClick={() => handleSort("leftoverStock")}>
+                      <th onClick={() => handleSort("leftoverStock")} style={{
+                      color:'#232425',
+                      backgroundColor:'#f4f7fc',
+                      fontWeight:700,
+                      fontSize:"14px"
+                    }}>
                         Leftover Stock{renderSortArrow("leftoverStock")}
                       </th>
-                      <th onClick={() => handleSort("leftoverStockValue")}>
+                      <th onClick={() => handleSort("leftoverStockValue")} style={{
+                      color:'#232425',
+                      backgroundColor:'#f4f7fc',
+                      fontWeight:700,
+                      fontSize:"14px"
+                    }}>
                         Leftover Stock Value{renderSortArrow("leftoverStockValue")}
                       </th>
                     </tr>
@@ -302,14 +345,14 @@ const ItemsStockTrends = () => {
                   <tbody>
                     {displayedData?.map((row, idx) => (
                       <tr key={idx}>
-                        <td>{format(new Date(row.date), "MMM dd, yyyy")}</td>
-                        <td>₹{row.price}</td>
+                        <td style={{fontWeight:600, fontSize:"14px", color:"#232425"}}>{format(new Date(row.date), "MMM dd, yyyy")}</td>
+                        <td style={{fontWeight:600, fontSize:"14px", color:"#232425"}}>₹{row.price}</td>
                         <td
                           className={
                             row.purchaseQty > 0
                               ? "text-success fw-bold"
                               : "text-muted"
-                          }
+                          }style={{fontWeight:600, fontSize:"14px", color:"#030213"}}
                         >
                           {row.purchaseQty.toLocaleString()} GM
                         </td>
@@ -319,6 +362,7 @@ const ItemsStockTrends = () => {
                               ? "text-danger fw-bold"
                               : "text-muted"
                           }
+                          style={{fontWeight:600, fontSize:"14px", color:"#F54900"}}
                         >
                           {row.consumptionQty.toLocaleString()} GM
                         </td>
@@ -328,15 +372,16 @@ const ItemsStockTrends = () => {
                               ? "bg-primary text-white rounded px-2"
                               : "text-muted"
                           }
+                          style={{fontWeight:600, fontSize:"14px", color:"#030213"}}
                         >
                           {row.closingQty.toLocaleString()} GM
                         </td>
                         {console.log(row.closingDate )}
                         <td>{row.closingDate !=='-' ? format(new Date(row.closingDate), "MMM dd, yyyy"):'- -'}</td>
-                        <td className="text-primary fw-bold">
+                        <td className="text-primary fw-bold" style={{fontWeight:600, fontSize:"14px", color:"#155DFC"}}>
                           {row.leftoverStock.toLocaleString()} GM
                         </td>
-                        <td className="text-success fw-bold">
+                        <td className="text-success fw-bold" style={{fontWeight:600, fontSynthesis:"14px", color:"#00A63E"}}>
                           ₹{row.leftoverStockValue}
                         </td>
                       </tr>

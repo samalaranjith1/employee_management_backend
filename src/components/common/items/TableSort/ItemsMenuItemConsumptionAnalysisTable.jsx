@@ -57,9 +57,10 @@ export default function ItemsMenuItemConsumptionAnalysisTable({
                   onClick={() => handleSort(col.key)}
                   style={{
                     cursor: "pointer",
-                    fontSize: "13px",
-                    backgroundColor: "#eee",
-                    color: "#000",
+                    fontSize: "14px",
+                    backgroundColor: "#f4f7fc",
+                    color: "#232425",
+                    fontWeight:600,
                     textAlign: index===0?'left':'center'
                   }}
                 >
@@ -74,10 +75,10 @@ export default function ItemsMenuItemConsumptionAnalysisTable({
             {sortedData.map((item, index) => (
               <tr key={item.id ?? `row-${index}`}>
                 {/* Column 1: Menu Item */}
-                <td>
+                <td style={{fontWeight:400, fontSize:"14px", color:"#232425"}}>
                   <div className="d-flex flex-column align-items-start">
-                    <span className="mt-1">{item.name}</span>
-                    <Badge bg="light" text="secondary" className="mt-1">
+                    <span className="mt-1" style={{fontWeight:600, fontSize:"12px", color:"#232425"}}>{item.name}</span>
+                    <Badge bg="light" text="secondary" className="mt-1" style={{fontWeight:400}}>
                       {item.itemsSold} items
                     </Badge>
                   </div>
@@ -109,10 +110,13 @@ export default function ItemsMenuItemConsumptionAnalysisTable({
                       flexDirection: "column",
                       justifyContent: "center",
                       alignItems: "center",
+                      fontWeight:600,
+                      fontSize:"14px",
+                      color:"#1447E6"
                     }}
                   >
-                    <span className="fw-bold text-primary">{item.recipeQty}</span>
-                    <div className="text-muted small">{item.recipePrice}</div>
+                    <span className=" text-primary">{item.recipeQty}</span>
+                    <div className="" style={{fontWeight:500, fontSize:"12px", color:"#717182"}}>{item.recipePrice}</div>
                   </div>
                 </td>
 
@@ -142,10 +146,13 @@ export default function ItemsMenuItemConsumptionAnalysisTable({
                       flexDirection: "column",
                       justifyContent: "center",
                       alignItems: "center",
+                      fontWeight:600,
+                      fontSize:"14px",
+                      color:"#008236"
                     }}
                   >
-                    <span className="fw-bold text-success">{item.totalConsumption}</span>
-                    <div className="text-muted small">{item.totalConsumptionPrice}</div>
+                    <span className=" text-success">{item.totalConsumption}</span>
+                    <div className="" style={{fontWeight:500, fontSize:"12px", color:"#717182"}}>{item.totalConsumptionPrice}</div>
                   </div>
                 </td>
               </tr>

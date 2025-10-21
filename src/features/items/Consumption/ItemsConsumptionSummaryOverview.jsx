@@ -55,12 +55,12 @@ export default function ItemsConsumptionSummaryOverview() {
     </div>
             </div>
             <div>
-              <h5 className="mb-0 fw-bold" style={{ color: "#1F1F1F" }}>
+              <h5 className="mb-0 " style={{ color: "#1F1F1F", fontWeight:700, fontSize:"18px" }}>
                 Summary Overview
               </h5>
-              <p className="mb-0 text-muted" style={{ fontSize: "0.85rem" }}>
+              {/* <p className="mb-0 text-muted" style={{ fontSize: "0.85rem" }}>
                 Real-time consumption metrics and performance indicators
-              </p>
+              </p> */}
             </div>
           </div>
 
@@ -90,11 +90,11 @@ export default function ItemsConsumptionSummaryOverview() {
                       <div
                         className="d-flex justify-content-center align-items-center me-3"
                         style={{
-                          width: "36px",
-                          height: "36px",
+                          width: "40px",
+                          height: "40px",
                           borderRadius: "8px",
-                          background: "#fff",
-                          boxShadow: "0 1px 4px rgb(0 0 0 / 0.1)",
+                          //background: "#fff",
+                          //boxShadow: "0 1px 4px rgb(0 0 0 / 0.1)",
                           color: "#000",
                         }}
                       >
@@ -102,7 +102,7 @@ export default function ItemsConsumptionSummaryOverview() {
                       </div>
                       <h6
                         className="mb-0 fw-semibold"
-                        style={{ color: "#222" }}
+                        style={{ color: "#222", fontWeight:600,fontSize:"14px" }}
                       >
                         {label}
                       </h6>
@@ -110,24 +110,24 @@ export default function ItemsConsumptionSummaryOverview() {
 
                     {/* Quantity */}
                     <div className="d-flex justify-content-between mb-3">
-                      <p className="text-muted mb-0">Quantity</p>
-                      <p className="fw-bold mb-0" style={{ color: "#111" }}>
+                      <p className=" mb-0" style={{fontWeight:600, fontSize:"14px", color:"#717182"}}>Quantity</p>
+                      <p className=" mb-0" style={{ color: "#111", fontWeight:700, fontSize:"14px" }}>
                         {quantity.toLocaleString()} {unit}
                       </p>
                     </div>
 
                     {/* Value */}
                     <div className="d-flex justify-content-between mb-3">
-                      <p className="text-muted mb-0">Value</p>
-                      <p className="fw-bold mb-0" style={{ color: "#111" }}>
+                      <p className=" mb-0" style={{fontWeight:600, fontSize:"14px", color:"#717182"}}>Value</p>
+                      <p className=" mb-0" style={{ color: "#111", fontWeight:700, fontSize:"14px"}}>
                         ₹{value.toLocaleString()}
                       </p>
                     </div>
 
                     {/* Departments */}
                     <div className="d-flex justify-content-between">
-                      <p className="text-muted mb-0">Departments</p>
-                      <p className="fw-bold mb-0" style={{ color: "#111" }}>
+                      <p className=" mb-0"  style={{fontWeight:600, fontSize:"14px", color:"#717182"}}>Departments</p>
+                      <p className=" mb-0" style={{ color: "#111", fontWeight:700, fontSize:"14px"}}>
                         {departments}
                       </p>
                     </div>

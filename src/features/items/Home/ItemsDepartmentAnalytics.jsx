@@ -55,10 +55,10 @@ export default function ItemsDepartmentAnalytics() {
 
             {/* ✅ Text Column */}
             <Col className="p-2" style={{ backgroundColor: "rgb(239,244,255)" }}>
-              <h5 className="fw-bold mb-1" style={{ fontSize: "16px", color: "#1A1A1A" }}>
+              <h5 className="mb-1" style={{ fontSize: "18px", color: "#1A1A1A", marginTop:"10px", fontWeight:700 }}>
                 Department Analytics
               </h5>
-              <p
+              {/* <p
                 className="text-muted mb-0"
                 style={{
                   fontSize: "13px",
@@ -66,7 +66,7 @@ export default function ItemsDepartmentAnalytics() {
                 }}
               >
                 Complete breakdown of departmental inventory and consumption data
-              </p>
+              </p> */}
             </Col>
           </Row>
 

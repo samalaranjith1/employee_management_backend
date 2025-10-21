@@ -39,7 +39,7 @@ export default function ItemsMenuItemConsumptionAnalysisGraph({ chartData }) {
       }}
     >
       {/* Title */}
-      <h6 className="fw-bold text-center mb-3">Consumption Distribution</h6>
+      <h6 className=" text-center mb-3" style={{fontWeight:800, fontSize:"16px", color:"#232425"}}>Consumption Distribution</h6>
 
       {/* Pie Chart */}
       <div
@@ -81,7 +81,8 @@ export default function ItemsMenuItemConsumptionAnalysisGraph({ chartData }) {
       >
         {validData.map((d, i) => (
           <div key={i} className="d-flex justify-content-between small mb-2">
-            <span>
+            <span style={{ fontWeight:500,
+                  fontSize:"14px", color:"#232425"}}>
               <span
                 style={{
                   display: "inline-block",
@@ -90,13 +91,14 @@ export default function ItemsMenuItemConsumptionAnalysisGraph({ chartData }) {
                   borderRadius: "50%",
                   backgroundColor: COLORS[i % COLORS.length],
                   marginRight: 6,
+                 
                 }}
               />
               {d.name}
             </span>
-            <span>
+            <span style={{fontWeight:500, fontSize:"12px", color:"#232425"}}>
               {d.value} gm
-              <div className="text-muted" style={{ fontSize: "0.75rem" }}>
+              <div className="text-muted" style={{ fontSize: "10px", fontWeight:400, color:"#717182" }}>
                 {total > 0 ? ((d.value / total) * 100).toFixed(1) : 0}%
               </div>
             </span>
@@ -114,7 +116,7 @@ export default function ItemsMenuItemConsumptionAnalysisGraph({ chartData }) {
           padding: "8px 12px",
           backgroundColor: "#f9fafb",
           fontWeight: 600,
-          textAlign: "center",
+          textAlign: "left",
           borderTop: "1px solid #ddd",
         }}
       >

@@ -34,15 +34,15 @@ export default function ItemsPurchaseAnalyticsOverview() {
                   padding: '8px',
                   display: 'inline-block'
                 }}>
-                  <IconPackage stroke={2} color="#fff" size={24} />
+                  <IconPackage stroke={2} color="#fff" size={20} />
                 </div>
             </Col>
             <Col>
-              <h5 className="fw-bold mb-0">Purchase Analytics Overview</h5>
-              <small className="text-muted">
+              <h5 className=" mb-0" style={{fontWeight:700, fontSize:"18px", color:"#232425"}}>Purchase Analytics Overview</h5>
+              {/* <small className="text-muted">
                 Comprehensive purchase metrics across different time periods for{" "}
                 <strong>GOLD DROP OIL</strong>
-              </small>
+              </small> */}
             </Col>
           </Row>
           {/* Cards */}

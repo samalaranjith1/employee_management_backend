@@ -40,14 +40,14 @@ export default function ItemsSummaryOverview() {
                   display: 'inline-block',
                 }}
               >
-                <IconChartHistogram stroke={2} color="#fff" size={24} />
+                <IconChartHistogram stroke={2} color="#fff" size={20} />
               </div>
             </Col>
 
             {/* Column 2: Title and Subtitle */}
-            <Col style={{marginLeft:'-16px'}}>
-              <h5 className="fw-bold mb-1">{formatted.header.title}</h5>
-              <p className="text-muted small mb-0">{formatted.header.subtitle}</p>
+            <Col style={{marginLeft:'-14px'}}>
+              <h5 className=" mb-1" style={{fontWeight:700, fontSize:"18px", color:"#232425"}}>{formatted.header.title}</h5>
+              {/* <p className="text-muted small mb-0">{formatted.header.subtitle}</p> */}
             </Col>
           </Row>
 

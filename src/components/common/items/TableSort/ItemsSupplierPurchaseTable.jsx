@@ -75,11 +75,11 @@ export default function ItemsSupplierPurchaseTable({ tableMeta, tableData }) {
                     key={col.key}
                     onClick={() => handleSort(col.key)}
                     style={{
-                      fontWeight: 600,
-                      fontSize: "0.85rem",
+                      fontWeight: 700,
+                      fontSize: "14px",
                       textTransform: "uppercase",
-                      color: "#000",
-                      background: "#eee",
+                      color: "#232425",
+                      background: "#f4f7fc",
                       position: "sticky",
                       top: 0,
                       zIndex: 2,
@@ -97,12 +97,12 @@ export default function ItemsSupplierPurchaseTable({ tableMeta, tableData }) {
               {sortedData.length > 0 ? (
                 sortedData.map((row, idx) => (
                   <tr key={idx}>
-                    <td className="py-3 px-3">{row.supplierName}</td>
-                    <td className="text-primary">{row.totalQuantity}</td>
-                    <td className="text-success">{row.totalPrice}</td>
-                    <td style={{ color: "#6D28D9" }}>{row.avgPrice}</td>
-                    <td>{row.startDate}</td>
-                    <td>{row.endDate}</td>
+                    <td className="py-3 px-3" style={{fontWeight:600, fontSize:"14px", color:"#232425"}}>{row.supplierName}</td>
+                    <td className="text-primary" style={{fontWeight:600, fontSize:"14px", color:"#155DFC"}}>{row.totalQuantity}</td>
+                    <td className="text-success" style={{fontWeight:600, fontSize:"14px", color:"#00A63E"}}>{row.totalPrice}</td>
+                    <td style={{ color: "#9810FA", fontWeight:600, fontSize:"14px" }}>{row.avgPrice}</td>
+                    <td style={{fontWeight:600, fontSize:"14px", color:"#717182"}}>{row.startDate}</td>
+                    <td style={{fontWeight:600, fontSize:"14px", color:"#717182"}}>{row.endDate}</td>
                   </tr>
                 ))
               ) : (

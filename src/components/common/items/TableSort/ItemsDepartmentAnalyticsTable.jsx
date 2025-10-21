@@ -75,10 +75,11 @@ export default function ItemsDepartmentAnalyticsTable({ tableData = [] }) {
                 onClick={() => col.key !== "actions" && handleSort(col.key)}
                 style={{
                   cursor: col.key !== "actions" ? "pointer" : "default",
-                  fontSize: "13px",
+                  fontSize: "14px",
                   padding: "12px 16px",
-                  backgroundColor: "#fff",
-                  fontWeight: 600,
+                  backgroundColor: "#f4f7fc",
+                  fontWeight: 700,
+                  color:"#232425"
                 }}
               >
                 {col.label} {col.key !== "actions" && renderArrow(col.key)}
@@ -98,7 +99,7 @@ export default function ItemsDepartmentAnalyticsTable({ tableData = [] }) {
                   // Department & Actions have no background
                   if (col.key === "department") {
                     return (
-                      <td key={col.key} className="fw-bold">
+                      <td key={col.key} className="" style={{fontWeight:600, fontSize:"14px", color:"#232425"}}>
                         {row.department}
                       </td>
                     );
@@ -108,7 +109,7 @@ export default function ItemsDepartmentAnalyticsTable({ tableData = [] }) {
                       <td key={col.key}>
                         <a
                           href="#"
-                          className="text-primary fw-semibold text-decoration-none"
+                          className="text-decoration-none" style={{fontWeight:600, fontSize:"14px", color:"#155DFC"}}
                         >
                           View Trend <FaArrowTrendUp />
                         </a>
@@ -117,17 +118,17 @@ export default function ItemsDepartmentAnalyticsTable({ tableData = [] }) {
                   }
 
                   return (
-                    <td key={col.key} className="position-relative fw-semibold">
+                    <td key={col.key} className="position-relative " style={{fontWeight:600, fontSize:"14px", color:"#232425"}}>
                       {isColored && (
                         <div className={`cell-bg ${col.bgClass}`}></div>
                       )}
                       <div className="position-relative" style={{ zIndex: 2 }}>
                         {cell.label || cell.qty || ""}
                         {cell.value && (
-                          <div className="text-muted small">{cell.value}</div>
+                          <div className="" style={{fontWeight:500, fontSize:"12px", color:"#717182"}}>{cell.value}</div>
                         )}
                         {cell.percentage && (
-                          <div className="text-muted small">{cell.percentage}</div>
+                          <div className="" style={{fontWeight:500, fontSize:"12px", color:"#717182"}}>{cell.percentage}</div>
                         )}
                       </div>
                     </td>

@@ -37,28 +37,28 @@ export default function ItemsSupplierPurchaseDetails() {
                   className="border-0 shadow-sm h-100"
                   style={{ backgroundColor: card.bg, borderRadius: "16px" }}
                 >
-                  <Card.Body className="d-flex align-items-center p-3">
+                  <Card.Body className="d-flex align-items-center p-3" style={{fontWeight:600}}>
                     <div className="me-3">{card.icon}</div>
                     <div>
                       <div
                         style={{
-                          fontSize: "0.9rem",
-                          fontWeight: "500",
-                          color: "#000",
+                          fontSize: "14px",
+                          fontWeight: 600,
+                          color: "#232425",
                         }}
                       >
                         {card.title}
                       </div>
                       <div
                         style={{
-                          fontSize: "1.5rem",
+                          fontSize: "24px",
                           fontWeight: "700",
                           color: card.textColor,
                         }}
                       >
                         {card.value}
                       </div>
-                      <div style={{ fontSize: "0.8rem", color: "#9CA3AF" }}>
+                      <div style={{ fontSize: "12px", color: "#717182", fontWeight:600 }}>
                         {card.subText}
                       </div>
                     </div>

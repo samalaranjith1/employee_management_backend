@@ -63,7 +63,7 @@ export default function ItemsDepartmentAnalyticsTable({
     <Container fluid className="p-0 mt-0">
       {/* Header with filters */}
       <div
-        className="d-flex justify-content-between align-items-center p-3 rounded-3 shadow-sm header-box flex-wrap"
+        className="d-flex justify-content-between align-items-center p-2 rounded-3 shadow-sm header-box flex-wrap"
         style={{
           background: "linear-gradient(90deg, #e6f8f1 0%, #f3faf8 100%)",
         }}
@@ -84,8 +84,8 @@ export default function ItemsDepartmentAnalyticsTable({
               alignItems: "center",
               justifyContent: "center",
               boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
-              minWidth: "48px",
-              minHeight: "48px",
+              minWidth: "40px",
+              minHeight: "40px",
             }}
           >
             <FaTable size={20} color="#fff" />
@@ -94,13 +94,14 @@ export default function ItemsDepartmentAnalyticsTable({
           {/* ✅ Text Column */}
           <div style={{ flex: 1 }}>
             <h5
-              className="fw-bold mb-1"
+              className=" mb-1"
               style={{
                 fontSize: "16px",
                 color: "#1A1A1A",
+                fontWeight:700
               }}
             >
-              Daily Analytics Table
+              Daily Analytics Table 
             </h5>
             {/* <p
               className="text-muted mb-0"
@@ -218,9 +219,9 @@ export default function ItemsDepartmentAnalyticsTable({
                   onClick={() => handleSort(col.key)}
                   style={{
                     cursor: "pointer",
-                    background: "#eee",
-                    fontWeight: 600,
-                    fontSize: "0.85rem",
+                    background: "#f4f7fc",
+                    fontWeight: 700,
+                    fontSize: "14px",
                     textTransform: "uppercase",
                     color: "#000",
                     position: "sticky",
@@ -245,10 +246,10 @@ export default function ItemsDepartmentAnalyticsTable({
 
                     if (col.key === "date") {
                       return (
-                        <td key={col.key} className="text-start fw-semibold">
+                        <td key={col.key} className="text-start " style={{fontWeight:600, fontSize:"14px", color:"#232425"}}>
                           {row.date}
                           {row.day && (
-                            <div className="text-muted small">{row.day}</div>
+                            <div className="" style={{fontWeight:500, fontSize:"12px", color:"#717182"}}>{row.day}</div>
                           )}
                         </td>
                       );
@@ -256,14 +257,14 @@ export default function ItemsDepartmentAnalyticsTable({
 
                     if (col.key === "burn") {
                       return (
-                        <td key={col.key} className="fw-semibold position-relative">
+                        <td key={col.key} className=" position-relative" style={{fontWeight:600, fontSize:"14px", color:"#232425"}}>
                           {isColored ? (
                             <div className={`cell-bg ${col.bgClass}`}></div>
                           ) : null}
                           <div className="position-relative" style={{ zIndex: 2 }}>
                             {cell?.qty || ""}
                             {cell?.percentage && (
-                              <div className="text-muted small">
+                              <div className="" style={{fontWeight:500, fontSize:"12px", color:"#717182"}}>
                                 {cell.percentage}
                               </div>
                             )}
@@ -273,14 +274,14 @@ export default function ItemsDepartmentAnalyticsTable({
                     }
 
                     return (
-                      <td key={col.key} className="fw-semibold position-relative">
+                      <td key={col.key} className="position-relative" style={{fontWeight:600, fontSize:"14px", color:"#232425"}}>
                         {isColored ? (
                           <div className={`cell-bg ${col.bgClass}`}></div>
                         ) : null}
                         <div className="position-relative" style={{ zIndex: 2 }}>
                           {cell?.qty || ""}
                           {cell?.price && (
-                            <div className="text-muted small">{cell.price}</div>
+                            <div className="" style={{fontWeight:500, fontSize:"12px",color:"#717182"}}>{cell.price}</div>
                           )}
                         </div>
                       </td>

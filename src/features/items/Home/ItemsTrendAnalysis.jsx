@@ -80,15 +80,15 @@ export default function ItemsTrendAnalysis() {
         <Col xs="auto">
           <div style={{
             background: 'linear-gradient(135deg, #924CFE 60%, #BC75FF 100%)', // bold purple
-            borderRadius: '16px',
-            padding: '12px',
+            borderRadius: '10px',
+            padding: '8px',
             display: 'inline-block'
           }}>
-            <IconTrendingUp stroke={2} color="#fff" size={24} />
+            <IconTrendingUp stroke={2} color="#fff" size={20} />
           </div>
         </Col>
         <Col>
-          <h4 className="fw-bold mb-0" style={{ color: "#111" }}>
+          <h4 className=" mb-0" style={{ color: "#111", fontWeight:700, fontsize:"18px" }}>
             Trend Analysis
           </h4>
           {/* <small style={{ color: "#6b7280" }}>

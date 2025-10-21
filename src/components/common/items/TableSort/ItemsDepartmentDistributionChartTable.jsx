@@ -61,11 +61,11 @@ export default function ItemsDepartmentDistributionChartTable({
                     key={col.key}
                     onClick={() => handleSort(col.key)}
                     style={{
-                      fontWeight: 600,
-                      fontSize: "0.85rem",
+                      fontWeight: 700,
+                      fontSize: "14px",
                       textTransform: "uppercase",
-                      color: "#555",
-                      background: "#F9FAFB",
+                      color: "#232425",
+                      background: "#f4f7fc",
                       cursor: "pointer",
                       padding: "12px 16px",
                       textAlign: col.key === "name" ? "left" : "center",
@@ -91,14 +91,17 @@ export default function ItemsDepartmentDistributionChartTable({
                           borderRadius: "3px",
                           backgroundColor: row.color,
                           marginRight: "6px",
+                          fontWeight:600,
+                          fontSize:"14px",
+                          color:"#232425"
                         }}
                       ></span>
                       {row.name}
                     </td>
-                    <td className="text-center">
+                    <td className="text-center" style={{fontWeight:600, fontSize:"14px", color:"#717182"}}>
                       {row.value.toLocaleString()}
                     </td>
-                    <td className="text-center">{row.percent}%</td>
+                    <td className="text-center" style={{fontWeight:600, fontSize:"14px", color:"717182"}}>{row.percent}%</td>
                   </tr>
                 ))
               ) : (
@@ -119,11 +122,11 @@ export default function ItemsDepartmentDistributionChartTable({
             </tbody>
 
             {total ? (
-              <tfoot style={{ backgroundColor: "#F9FAFB", fontWeight: "bold", position: "sticky", bottom: 0, zIndex: 2 }}>
+              <tfoot style={{ backgroundColor: "#f4f7fc", fontWeight:600, position: "sticky", bottom: 0, zIndex: 2 }}>
                 <tr>
                   <td>Total</td>
-                  <td className="text-center">{total.toLocaleString()}</td>
-                  <td className="text-center">100%</td>
+                  <td className="text-center" style={{fontWeight:600, fontSize:"14px", color:"#232425"}}>{total.toLocaleString()}</td>
+                  <td className="text-center" style={{fontWeight:600, fontSize:"14px", color:"#232425"}}>100%</td>
                 </tr>
               </tfoot>
             ) : null}

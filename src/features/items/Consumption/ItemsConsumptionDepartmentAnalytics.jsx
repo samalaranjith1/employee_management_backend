@@ -101,22 +101,23 @@ export default function ItemsConsumptionDepartmentAnalytics() {
                 <div style={{ display: "flex", flexDirection: "column" }}>
                   <div
                     style={{
-                      fontWeight: 600,
-                      fontSize: 16,
-                      color: "#23272E",
+                      fontWeight: 700,
+                      fontSize: "18px",
+                      color: "#232425",
                       marginBottom: 2,
+
                     }}
                   >
                     Department Analytics
                   </div>
-                  <div
+                  {/* <div
                     style={{
                       color: "#878A99",
                       fontSize: 14,
                     }}
                   >
                     Complete breakdown of departmental inventory and consumption data
-                  </div>
+                  </div> */}
                 </div>
               </Col>
             </Row>

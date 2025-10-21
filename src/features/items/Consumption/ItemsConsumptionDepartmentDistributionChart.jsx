@@ -103,7 +103,7 @@ export default function ItemsConsumptionDepartmentDistributionChart() {
                   >
                     Department Distribution Chart
                   </h5>
-                  <p
+                  {/* <p
                     style={{
                       margin: 0,
                       fontSize: "13px",
@@ -111,7 +111,7 @@ export default function ItemsConsumptionDepartmentDistributionChart() {
                     }}
                   >
                     Visual breakdown of departmental metrics
-                  </p>
+                  </p> */}
                 </div>
               </div>
 

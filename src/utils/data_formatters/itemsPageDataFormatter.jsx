@@ -626,7 +626,7 @@ export const purchaseSuppplierDetailsDataFormatter = (data) => {
     ],
     tableMeta: {
       title: "Supplier Purchase Details",
-      subtitle: "Real-time consumption metrics and performance indicators",
+      //subtitle: "Real-time consumption metrics and performance indicators",
       icon: <FaChartBar className="text-warning fs-5 me-2" />,
     },
     tableData: data?.list.map((item) => ({

@@ -48,8 +48,8 @@ export default function ItemsSummaryOverviewSubCards({ footer = [] }) {
 
                 {/* Text Column */}
                 <Col>
-                  <h6 className="fw-bold mb-1">{foot.label}</h6>
-                  <p className="mb-0 fw-semibold">{foot.value}</p>
+                  <h6 className=" mb-1" style={{fontWeight:600, fontSize:"14px", color:"#717182"}}>{foot.label}</h6>
+                  <p className="mb-0" style={{fontWeight:700, fontSize:"18px", color:"#232425"}}>{foot.value}</p>
                 </Col>
               </Row>
             </Card>

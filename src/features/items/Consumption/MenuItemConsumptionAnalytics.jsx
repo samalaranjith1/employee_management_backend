@@ -28,10 +28,10 @@ const MenuItemConsumptionAnalytics = () => {
       {/* Header */}
       <Row className="mb-4">
         <Col>
-          <h5 style={{ fontWeight: "600" }}>Menu Item Consumption Analysis</h5>
-          <p style={{ color: "#888", fontSize: "14px" }}>
+          <h5 style={{ fontWeight: "600", fontSize:"18px"}}>Menu Item Consumption Analysis</h5>
+          {/* <p style={{ color: "#888", fontSize: "14px" }}>
             Item consumption breakdown by menu items with quantity distribution
-          </p>
+          </p> */}
         </Col>
       </Row>
 

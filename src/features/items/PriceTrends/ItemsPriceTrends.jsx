@@ -93,11 +93,11 @@ const ItemsPriceTrends = () => {
               <Col md={3}>
                 <Card
                   className="p-3 border-0 shadow-sm rounded-lg"
-                  style={{ backgroundColor: "#eaf0ff" }}
+                  style={{ backgroundColor: "#EEF2FF" }}
                 >
-                  <h6 className="text-muted">Current Price</h6>
-                  <h4 className="fw-bold text-primary">₹{cardsData.currentPrice}</h4>
-                  <h6 className="fw-bold text-primary">{cardsData.curentPriceSub}</h6>
+                  <h6 className="" style={{fontWeight:400, fontSize:"14px", color:"#717182"}}>Current Price</h6>
+                  <h4 className="" style={{fontWeight:700, fontSize:"24px", color:"#1447E6"}}>₹{cardsData.currentPrice}</h4>
+                  <h6 className="" style={{fontWeight:600, fontSize:"14px", color:"#155DFC"}}>{cardsData.curentPriceSub}</h6>
                 </Card>
               </Col>
               <Col md={3}>
@@ -105,9 +105,9 @@ const ItemsPriceTrends = () => {
                   className="p-3 border-0 shadow-sm rounded-lg"
                   style={{ backgroundColor: "#fff5e6" }}
                 >
-                  <h6 className="text-muted">Highest Price</h6>
-                  <h4 className="fw-bold text-warning">₹{cardsData.highestPrice}</h4>
-                  <h6 className="fw-bold text-warning">{cardsData.highestPriceSub}</h6>
+                  <h6 className="" style={{fontWeight:400, fontSize:"14px", color:"#717182"}}>Highest Price</h6>
+                  <h4 className="" style={{fontWeight:700, fontSize:"24px", color:"#CA3500"}}>₹{cardsData.highestPrice}</h4>
+                  <h6 className="" style={{fontWeight:600, fontSize:"14px", color:"#F54900"}}>{cardsData.highestPriceSub}</h6>
                 </Card>
               </Col>
               <Col md={3}>
@@ -115,9 +115,9 @@ const ItemsPriceTrends = () => {
                   className="p-3 border-0 shadow-sm rounded-lg"
                   style={{ backgroundColor: "#fce8f3" }}
                 >
-                  <h6 className="text-muted">Lowest Price</h6>
-                  <h4 className="fw-bold text-danger">₹{cardsData.lowestPrice}</h4>
-                  <h6 className="fw-bold text-danger">{cardsData.lowestPriceSub}</h6>
+                  <h6 className="" style={{fontWeight:400, fontSize:"14px", color:"#717182"}}>Lowest Price</h6>
+                  <h4 className="" style={{fontWeight:700, fontSize:"24px", color:"#8200DB"}}>₹{cardsData.lowestPrice}</h4>
+                  <h6 className="" style={{fontWeight:600, fontSize:"14px", color:"#9810FA"}}>{cardsData.lowestPriceSub}</h6>
                 </Card>
               </Col>
               <Col md={3}>
@@ -125,11 +125,11 @@ const ItemsPriceTrends = () => {
                   className="p-3 border-0 shadow-sm rounded-lg"
                   style={{ backgroundColor: "#e9f8ef" }}
                 >
-                  <h6 className="text-muted">Total Change</h6>
-                  <h4 className="fw-bold text-success">
+                  <h6 className="" style={{fontWeight:400, fontSize:"14px", color:"#717182"}}>Total Change</h6>
+                  <h4 className="" style={{fontWeight:700, fontSize:"24px", color:"#008236"}}>
                     ₹ {cardsData?.percentageOfChange}
                   </h4>
-                  <h6 className="fw-bold text-success">
+                  <h6 className="" style={{fontWeight:600, fontSize:"14px", color:"#00A63E"}}>
                     {cardsData.percentageOfChangeSub}
                   </h6>
                 </Card>
@@ -139,8 +139,8 @@ const ItemsPriceTrends = () => {
             {/* Controls */}
             <Row className="mb-3 d-flex justify-content-between">
               <Col>
-                <h5 className="fw-bold">Price Change History</h5>
-                <p className="text-muted">Monthly price trends and variations</p>
+                <h5 className="" style={{fontWeight:700, fontSize:"18px", color:"#232425"}}>Price Change History</h5>
+                {/* <p className="text-muted">Monthly price trends and variations</p> */}
               </Col>
               <Col
                 className="d-flex justify-content-end align-items-center"
@@ -247,31 +247,31 @@ const ItemsPriceTrends = () => {
                     }}
                   >
                     <tr>
-                      <th onClick={() => handleSort("startDate")}>
+                      <th onClick={() => handleSort("startDate")} style={{fontWeight:600, fontSize:"14px", color:"#232425", backgroundColor:"#f4f7fc"}}>
                         Start Date{renderSortArrow("startDate")}
                       </th>
-                      <th onClick={() => handleSort("endDate")}>
+                      <th onClick={() => handleSort("endDate")}  style={{fontWeight:600, fontSize:"14px", color:"#232425", backgroundColor:"#f4f7fc"}}>
                         End Date{renderSortArrow("endDate")}
                       </th>
-                      <th onClick={() => handleSort("price")}>
+                      <th onClick={() => handleSort("price")}  style={{fontWeight:600, fontSize:"14px", color:"#232425", backgroundColor:"#f4f7fc"}}>
                         Price (₹/1000GM){renderSortArrow("price")}
                       </th>
-                      <th onClick={() => handleSort("priceDiff")}>
+                      <th onClick={() => handleSort("priceDiff")}  style={{fontWeight:600, fontSize:"14px", color:"#232425", backgroundColor:"#f4f7fc"}}>
                         Price Difference{renderSortArrow("priceDiff")}
                       </th>
-                      <th onClick={() => handleSort("changePercent")}>
+                      <th onClick={() => handleSort("changePercent")}  style={{fontWeight:600, fontSize:"14px", color:"#232425", backgroundColor:"#f4f7fc"}}>
                         Change %{renderSortArrow("changePercent")}
                       </th>
-                      <th>Trend</th>
+                      <th  style={{fontWeight:600, fontSize:"14px", color:"#232425", backgroundColor:"#f4f7fc"}}>Trend</th>
                     </tr>
                   </thead>
                   <tbody>
                     {displayedData?.length > 0 ? (
                       displayedData.map((row, idx) => (
                         <tr key={idx}>
-                          <td>{formatDate(row.startDate)}</td>
-                          <td>{formatDate(row.endDate)}</td>
-                          <td>₹{row.price}</td>
+                          <td  style={{fontWeight:500, fontSize:"14px", color:"#232425"}}>{formatDate(row.startDate)}</td>
+                          <td  style={{fontWeight:500, fontSize:"14px", color:"#232425"}}>{formatDate(row.endDate)}</td>
+                          <td  style={{fontWeight:600, fontSize:"14px", color:"#232425"}}>₹{row.price}</td>
                           <td
                             className={
                               row.priceDiff > 0
@@ -279,13 +279,13 @@ const ItemsPriceTrends = () => {
                                 : row.priceDiff < 0
                                   ? "text-danger"
                                   : "text-muted"
-                            }
+                            }  style={{fontWeight:600, fontSize:"14px", color:"#232425"}}
                           >
                             {row.priceDiff > 0 ? <span><FaArrowTrendUp size={14}/> + ₹</span> :  row.priceDiff == 0 ? '--': <span><FaArrowTrendDown size={14}/> ₹</span>}
                             {row.priceDiff}
                           </td>
-                          <td>{row.changePercent}%</td>
-                          <td className="d-flex align-items-center gap-2">
+                          <td  style={{fontWeight:600, fontSize:"14px", color:"#232425"}}>{row.changePercent}%</td>
+                          <td className="d-flex align-items-center gap-2" >
                             {row.priceDiff > 0 ? <span><FaArrowTrendUp size={14} color="green"/></span> : row.priceDiff == 0 ? '--':<span><FaArrowTrendDown size={14} color="red"/></span>}
                            {row.trendText}
                           </td>
