@@ -3,9 +3,11 @@
 import React from "react";
 import { Card, Table, ButtonGroup, ToggleButton } from "react-bootstrap";
 import { useTableSort } from "@/components/hooks/useTableSort";
-import { IconTable } from "@tabler/icons-react";
+import { IconArrowsMaximize, IconTable } from "@tabler/icons-react";
+import { useProductsContext } from "@/contexts/ProductsContext";
 
 const ProductTrendAnalysisTable = ({ tableData, filter, setFilter }) => {
+  const {isMobile} = useProductsContext()
   // 🔹 Prepare data for sorting
   const dataForSort = tableData.map((row, idx) => ({
     ...row,
@@ -44,21 +46,21 @@ const ProductTrendAnalysisTable = ({ tableData, filter, setFilter }) => {
               className="d-flex align-items-center justify-content-center"
               style={{
                 background: "linear-gradient(135deg, #11C270 60%, #0BA360 100%)",
-                borderRadius: "16px",
-                width: "48px",
-                height: "48px",
+                borderRadius: "12px",
+                width: "40px",
+                height: "40px",
                 flexShrink: 0,
               }}
             >
-              <IconTable size={24} stroke={2.5} color="#fff" />
+              <IconTable size={20} stroke={2.5} color="#fff" />
             </div>
 
             {/* Right Column — Title + Subtitle */}
             <div>
-              <h6 className="fw-bold mb-1">Daily Sales Analytics</h6>
-              <small className="text-muted">
+              <div className="mb-1" style={{fontWeight:700, fontSize:"18px", color:"#232425"}}>Daily Sales Analytics</div>
+              {/* <small className="text-muted">
                 Complete breakdown of daily sales performance and revenue data
-              </small>
+              </small> */}
             </div>
           </div>
 
@@ -100,6 +102,9 @@ const ProductTrendAnalysisTable = ({ tableData, filter, setFilter }) => {
                 </ToggleButton>
               ))}
             </ButtonGroup>
+            {!isMobile && <span style={{marginLeft:'10px'}}>
+              <IconArrowsMaximize size={20} color="#232425"/>
+              </span>}
           </div>
         </div>
 
@@ -126,12 +131,12 @@ const ProductTrendAnalysisTable = ({ tableData, filter, setFilter }) => {
                     key={col.key}
                     onClick={() => handleSort(col.key)}
                     style={{
-                      fontSize: "13px",
+                      fontSize: "14px",
                       color: "#000",
-                      fontWeight:'bold',
+                      fontWeight:'700',
                       cursor: "pointer",
                       padding: "12px 16px",
-                      backgroundColor: "rgb(248,248,248)", // ensures rows don’t bleed through
+                      backgroundColor: "#f4f7fc", // ensures rows don’t bleed through
                     }}
                   >
                     {col.label}
@@ -143,30 +148,30 @@ const ProductTrendAnalysisTable = ({ tableData, filter, setFilter }) => {
             <tbody>
               {sortedData.map((row, idx) => (
                 <tr key={idx}>
-                  <td className="fw-bold">{row.date}</td>
-                  <td style={{ color: row.totalSales.color }}>
+                  <td className="" style={{fontWeight:700, fontSize:"14px", color:"#232425"}}>{row.date}</td>
+                  <td style={{ color:"#1447E6", fontWeight:600, fontSize:"14px" }}>
                     {/* {row.totalSales.icon}  */}
-                    {row.totalSales.value}
+                    {row.totalSales.value?.slice(0,1)} {Number(row.totalSales.value?.substring(1)).toLocaleString() }
                   </td>
-                  <td style={{ color: row.netSales.color }}>
+                  <td style={{ color:"#008236", fontWeight:600, fontSize:"14px"}}>
                     {/* {row.netSales.icon} */}
-                     {row.netSales.value}
+                     {row.netSales.value?.slice(0,1)} {Number(row.netSales.value?.substring(1)).toLocaleString()}
                   </td>
-                  <td style={{ color: row.discount.color }}>
+                  <td style={{ color:"#CA3500", fontWeight:600, fontSize:"14px"}}>
                     {/* {row.discount.icon} */}
-                     {row.discount.value}
+                     {row.discount.value?.slice(0,1)} {Number(row.discount.value?.substring(1)).toLocaleString()}
                   </td>
-                  <td style={{ color: row.tax.color, }}>
+                  <td style={{ color:"#8200DB", fontWeight:600, fontSize:"14px" }}>
                     {/* {row.tax.icon} */}
-                     {row.tax.value}
+                     {row.tax.valu?.slice(0,1)} {Number(row.tax.value?.substring(1)).toLocaleString()}
                   </td>
-                  <td style={{ color: row.itemsSold.color ,fontWeight:'bold'}}>
+                  <td style={{ color:"#432DD7", fontWeight:600, fontSize:"14px"}}>
                     {/* {row.itemsSold.icon}  */}
-                    {row.itemsSold.value}
+                    {row.itemsSold.value?.slice(0,1)} {Number(row.itemsSold.value?.substring(1)).toLocaleString()}
                   </td>
-                  <td style={{fontWeight:'bold'}}>
+                  <td style={{color:"#364153", fontWeight:600, fontSize:"14px"}}>
                     {/* {row.orders.icon}  */}
-                    {row.orders.value}
+                    {row.orders.value?.slice(0,1)} {Number(row.orders.value?.substring(1)).toLocaleString()}
                   </td>
                 </tr>
               ))}

@@ -74,12 +74,14 @@ export default function ProductsIngreidentAnalysisGraph({
     >
       {/* ✅ Title */}
       <h6
-        className="fw-semibold mb-3"
+        className=" mb-3"
         style={{
           color: "#1A1A1A",
           fontSize: "14px",
-          alignSelf: "flex-start",
+          alignSelf: "center",
           flexShrink: 0,
+          fontWeight: 600,
+          marginTop:'10px',
         }}
       >
         Total Cost Distribution
@@ -94,11 +96,10 @@ export default function ProductsIngreidentAnalysisGraph({
               cx="50%"
               cy="50%"
               innerRadius={70}
-              outerRadius={100}
-              paddingAngle={3}
+              outerRadius={120}
               dataKey="value"
               labelLine={false}
-              // label={renderCustomizedLabel}
+            // label={renderCustomizedLabel}
             >
               {processedData.map((entry, index) => (
                 <Cell
@@ -127,6 +128,7 @@ export default function ProductsIngreidentAnalysisGraph({
           overflowY: "auto",
           flexGrow: 1,
           paddingRight: "6px",
+          height: '150px'
         }}
       >
         {processedData.map((item, index) => (
@@ -151,7 +153,7 @@ export default function ProductsIngreidentAnalysisGraph({
               />
               <span
                 style={{
-                  fontSize: "13px",
+                  fontSize: "14px",
                   color: "#1A1A1A",
                   fontWeight: 500,
                 }}
@@ -163,9 +165,9 @@ export default function ProductsIngreidentAnalysisGraph({
             <div className="d-flex flex-column align-items-end">
               <span
                 style={{
-                  fontSize: "13px",
+                  fontSize: "14px",
                   color: "#1A1A1A",
-                  fontWeight: 600,
+                  fontWeight: 500,
                 }}
               >
                 ₹{item.value.toLocaleString("en-IN")}
@@ -184,17 +186,21 @@ export default function ProductsIngreidentAnalysisGraph({
         ))}
 
         {/* ✅ Total cost footer */}
-        <div
-          className="d-flex justify-content-between align-items-center mt-2 p-2 rounded"
-          style={{
-            backgroundColor: "#FAFAFA",
-            fontWeight: 600,
-            borderTop: "1px solid #EAEAEA",
-          }}
-        >
-          <span>Total Cost</span>
-          <span>₹{totalCost.toFixed(2)}</span>
-        </div>
+
+      </div>
+      <div
+        className="d-flex justify-content-between align-items-center mt-2 p-2 rounded"
+        style={{
+          width:'100%',
+          backgroundColor: "#F4F7FC",
+          fontWeight: 600,
+          fontSize: "14px",
+          color: "#232425",
+          borderTop: "1px solid #EAEAEA",
+        }}
+      >
+        <span style={{ textAlign: "left" }}>Total Cost</span>
+        <span style={{ textAlign: "right" }}>₹{totalCost.toFixed(2)}</span>
       </div>
     </div>
   );

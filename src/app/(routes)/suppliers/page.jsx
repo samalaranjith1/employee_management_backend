@@ -90,7 +90,7 @@ function SuppliersPage() {
   const filters = ["Today", "Yesterday", "This Week", "This Month", "Custom"];
 
   return (
-    <div style={{ background: "#f9fafc", minHeight: "100vh" }} className="mt-5">
+    <div style={{ background: "#f9fafc", minHeight: "100vh", width: '99.5%' }} className="mt-1">
       {supplersHeaderData?.title ? (
         <ItemsSupplierProductsHeader
           title={supplersHeaderData?.title}

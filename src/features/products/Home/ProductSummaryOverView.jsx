@@ -6,13 +6,36 @@ import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer
 import { productSummaryOverViewDataFormatter } from "@/utils/data_formatters/productsPageDataFormatter";
 import { useProductSummary } from "@/services/product-service";
 import { useProductsContext } from "@/contexts/ProductsContext";
-import { IconChartHistogram } from "@tabler/icons-react";
+import { IconArrowsMaximize, IconChartHistogram } from "@tabler/icons-react";
 
 export default function ProductSummaryOverView() {
-  const { startDate, endDate } = useProductsContext();
+  const { startDate, endDate, isMobile } = useProductsContext();
 
   return (
     <Container fluid className="p-3">
+      <Row className="mb-3">
+        <Col sm={11}>
+          <div className="d-flex align-items-center">
+            <div style={{
+              background: '#E7483B', // orange gradient for Figma match
+              borderRadius: '12px',
+              padding: '8px',
+              display: 'inline-block'
+            }}>
+              <IconChartHistogram stroke={2} color="#fff" size={24} />
+            </div>
+            <div style={{ marginLeft: '10px' }}>
+              <div className="" style={{ fontWeight: 700, fontSize: "18px", color: "#232425" }}>Summary Overview</div>
+              {/* <small className="text-muted">
+                      Real-time consumption metrics and performance indicators
+                    </small> */}
+            </div>
+          </div>
+        </Col>
+        {!isMobile && <Col style={{ marginLeft: '30px' }}>
+          <IconArrowsMaximize size={20} color="#232425" />
+        </Col>}
+      </Row>
       <ServiceRenderer
         queryHook={useProductSummary}
         queryKey={[
@@ -34,26 +57,7 @@ export default function ProductSummaryOverView() {
         {(formatted) => (
           <>
             {/* Header */}
-            <Row className="mb-3">
-              <Col>
-                <div className="d-flex align-items-center">
-                  <div style={{
-                    background: '#E7483B', // orange gradient for Figma match
-                    borderRadius: '12px',
-                    padding: '8px',
-                    display: 'inline-block'
-                  }}>
-                    <IconChartHistogram stroke={2} color="#fff" size={24} />
-                  </div>
-                  <div style={{ marginLeft: '10px' }}>
-                    <div className="" style={{fontWeight:700, fontSize:"18px", color:"#232425"}}>Summary Overview</div>
-                    {/* <small className="text-muted">
-                      Real-time consumption metrics and performance indicators
-                    </small> */}
-                  </div>
-                </div>
-              </Col>
-            </Row>
+
 
             {/* Top Summary Cards */}
             <Row className="mb-4">
@@ -64,23 +68,23 @@ export default function ProductSummaryOverView() {
                       backgroundColor: formatted[key].bg,
                       borderRadius: "12px",
                       border: "none",
-                      fontWeight:500,
-                      fontSize:"14px",
+                      fontWeight: 500,
+                      fontSize: "14px",
                     }}
                     className="shadow-sm"
                   >
                     <Card.Body>
                       <div className="d-flex align-items-center mb-3">
                         {formatted[key].icon}
-                        <h6 className="fw-bold mb-0"style={{fontWeight:600,fontSize:"14px,",color:"#232425"}}>{formatted[key].title}</h6>
+                        <h6 className="fw-bold mb-0" style={{ fontWeight: 600, fontSize: "14px,", color: "#232425" }}>{formatted[key].title}</h6>
                       </div>
                       {(formatted[key].items || []).map((item, i) => (
                         <Row key={i} className="mb-2">
                           <Col xs={7}>
-                            <small className="" style={{color:"#717182"}}>{item.label}</small>
+                            <small className="" style={{ color: "#717182" }}>{item.label}</small>
                           </Col>
                           <Col xs={5} className="text-end fw-semibold">
-                            <div className="text-start" style={{textAlign:'left',marginLeft:'60px',fontWeight:600, fontSize:"14px",color:"#232425" }}>{item.value}</div>
+                            <div className="text-start" style={{ textAlign: 'left', marginLeft: '60px', fontWeight: 600, fontSize: "14px", color: "#232425" }}>{item.value}</div>
                           </Col>
                         </Row>
                       ))}
@@ -128,11 +132,11 @@ export default function ProductSummaryOverView() {
 
                       {/* Text Column */}
                       <Col>
-                        <h6 className=" mb-1" style={{fontWeight:500, fontSize:"14px", color:"#232425"}}>{f.label}</h6>
-                        <p className="mb-0 " style={{fontWeight:700, fontSize:"18px", color:"#232425"}}>{f.value}</p>
+                        <h6 className=" mb-1" style={{ fontWeight: 500, fontSize: "14px", color: "#232425" }}>{f.label}</h6>
+                        <p className="mb-0 " style={{ fontWeight: 700, fontSize: "18px", color: "#232425" }}>{f.value}</p>
                       </Col>
                     </Row>
-                 </Card>
+                  </Card>
                 </Col>
               ))}
             </Row>

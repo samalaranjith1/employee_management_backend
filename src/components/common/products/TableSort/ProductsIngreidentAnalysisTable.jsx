@@ -43,7 +43,7 @@ export default function ProductsIngreidentAnalysisTable({ tableData }) {
               <th
                 key={col.key}
                 onClick={() => handleSort(col.key)}
-                style={{ cursor: "pointer", whiteSpace: "nowrap", backgroundColor: "rgb(248,248,248" }}
+                style={{ cursor: "pointer", whiteSpace: "nowrap", backgroundColor: "#f4f7fc",fontWeight:700, fontSize:"14px",color:"#232425" }}
               >
                 {col.label}
                 {renderSortArrow(col.key)}
@@ -58,8 +58,8 @@ export default function ProductsIngreidentAnalysisTable({ tableData }) {
                 <div className="d-flex align-items-center gap-2">
                   {/* {row.icon} */}
                   <div>
-                    <div className="fw-semibold">{row.name}</div>
-                    <small className="text-muted">{row.storeItem}</small>
+                    <div className=""style={{fontWeight:600, fontSize:"14px", color:"#232425"}}>{row.name}</div>
+                    <small className="" style={{fontWeight:500, fontSize:"12px", color:"#717182"}}>{row.storeItem}</small>
                   </div>
                 </div>
               </td>
@@ -67,8 +67,8 @@ export default function ProductsIngreidentAnalysisTable({ tableData }) {
                 <div className="d-flex align-items-center gap-2">
                   {/* {row.icon} */}
                   <div>
-                    <div className="fw-semibold">{row.recipe?.split(".")[0]}</div>
-                    <small className="text-muted">{row.recipe?.split(".")[1]}</small>
+                    <div className="" style={{fontweight:600, fontSize:"14px",color:"#1447E6"}}>{row.recipe?.split(".")[0]}</div>
+                    <small className="" style={{fontweight:500, fontSize:"12px",color:"#717182"}}>{row.recipe?.split(".")[1]}</small>
                   </div>
                 </div>
               </td>
@@ -76,8 +76,8 @@ export default function ProductsIngreidentAnalysisTable({ tableData }) {
                 <div className="d-flex align-items-center gap-2">
                   {/* {row.icon} */}
                   <div>
-                    <div className="fw-semibold">{row.total?.split(".")[0]}</div>
-                    <small className="text-muted">{row.total?.split(".")[1]}</small>
+                    <div className="" style={{fontweight:600, fontSize:"14px", color:"#008236"}}>{row.total?.split(".")[0]}</div>
+                    <small className="" style={{fontweight:500, fontSize:"12px", color:"#717182"}}>{row.total?.split(".")[1]}</small>
                   </div>
                 </div>
               </td>

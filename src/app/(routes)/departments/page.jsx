@@ -108,10 +108,7 @@ useEffect(() => {
   ];
 
   return (
-    <div
-      style={{ background: "#f9fafc", minHeight: "100vh" }}
-      className="mt-5 pt-2"
-    >
+    <div style={{ background: "#f9fafc", minHeight: "100vh",width:'99.5%' }} className="mt-1">
       <DepartmentHeader
         departmentId={2}
         onManageClick={() => setShowCanvas(true)}

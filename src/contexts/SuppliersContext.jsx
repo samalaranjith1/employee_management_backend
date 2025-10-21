@@ -10,7 +10,15 @@ export function SuppliersContextProvider({ children }) {
   const searchParams = useSearchParams();
 
   const [queryKey, setQueryKey] = useState(null);
+  const [isMobile, setIsMobile] = useState(false);
 
+  // detect mobile
+  useEffect(() => {
+    const checkScreen = () => setIsMobile(window.innerWidth < 768);
+    checkScreen();
+    window.addEventListener("resize", checkScreen);
+    return () => window.removeEventListener("resize", checkScreen);
+  }, []);
   useEffect(() => {
     if (!searchParams) return;
     const firstKey = searchParams.keys().next().value;
@@ -100,6 +108,7 @@ export function SuppliersContextProvider({ children }) {
     suppliers,
     setSuppliers,
     toggleSidebar,
+    isMobile, setIsMobile
   };
 
   return (

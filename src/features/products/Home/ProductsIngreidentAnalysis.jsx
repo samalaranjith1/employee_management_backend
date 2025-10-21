@@ -10,73 +10,79 @@ import { useProductIngredientsUsage } from "@/services/product-service";
 
 import ProductsIngreidentAnalysisTable from "@/components/common/products/TableSort/ProductsIngreidentAnalysisTable";
 import ProductsIngreidentAnalysisGraph from "@/components/common/products/GraphWrapper/ProductsIngreidentAnalysisGraph";
-import { IconPackage } from "@tabler/icons-react";
+import { IconArrowsMaximize, IconPackage } from "@tabler/icons-react";
 export default function ProductsIngreidentAnalysis() {
-  const { startDate, endDate } = useProductsContext();
+  const { startDate, endDate, isMobile } = useProductsContext();
   const myScrollRef = useRef(null);
 
   return (
-    <ServiceRenderer
-      queryHook={useProductIngredientsUsage}
-      queryKey={["productIngredients", { startdt: startDate, enddt: endDate }]}
-      queryFn={() =>
-        useProductIngredientsUsage({ startdt: startDate, enddt: endDate }).queryFn
-      }
-      queryArgs={[100, { startdt: startDate, enddt: endDate }]}
-      formatter={productsIngredientAnalyticsDataFormatter}
-    >
-      {(formattedData) => {
-        const { tableData, chartData, totalCost } = formattedData;
+    <div>
+      <div className="d-flex align-items-center gap-2 mb-3 flex-wrap" style={{ backgroundColor: "#fff5e5ff", padding: '10px' }}>
+        {/* Left Column — Icon */}
+        <div
+          className="d-flex align-items-center justify-content-center"
+          style={{
+            background: "#f16d01", // vivid green gradient
+            borderRadius: "12px",
+            width: "40px",
+            height: "40px",
+            flexShrink: 0,
+          }}
+        >
+          <IconPackage stroke={2} color="#fff" size={20} />
+        </div>
 
-        return (
-          <Container fluid
-            className="p-2 shadow-sm"
-            style={{ borderRadius: "12px", background: "#fff" ,marginBottom:'40px'}}
-
-          >
-            <div className="d-flex align-items-center gap-2 mb-3 flex-wrap" style={{backgroundColor:"#fff5e5ff",padding:'10px'}}>
-              {/* Left Column — Icon */}
-              <div
-                className="d-flex align-items-center justify-content-center"
-                style={{
-                  background: "#f16d01", // vivid green gradient
-                  borderRadius: "16px",
-                  width: "40px",
-                  height: "40px",
-                  flexShrink: 0,
-                }}
-              >
-                <IconPackage stroke={2} color="#fff" size={24} />
-              </div>
-
-              {/* Right Column — Text */}
-              <div>
-                <h5 className="fw-semibold mb-1">Product Ingredient Analysis</h5>
-                <p className="text-muted mb-0">
+        {/* Right Column — Text */}
+        <div>
+          <div className=" mb-1" style={{ fontWeight: 700, fontSize: "18px", color: "#232425" }}>Product Ingredient Analysis
+            {/* {!isMobile && <span style={{ marginLeft: '65vw' }}>
+              <IconArrowsMaximize size={20} color="#232425" />
+            </span>} */}
+          </div>
+          {/* <p className="text-muted mb-0">
                   Raw material breakdown showing recipe quantities and total cost distribution
-                </p>
-              </div>
-            </div>
+                </p> */}
+        </div>
+      </div>
+      <ServiceRenderer
+        queryHook={useProductIngredientsUsage}
+        queryKey={["productIngredients", { startdt: startDate, enddt: endDate }]}
+        queryFn={() =>
+          useProductIngredientsUsage({ startdt: startDate, enddt: endDate }).queryFn
+        }
+        queryArgs={[100, { startdt: startDate, enddt: endDate }]}
+        formatter={productsIngredientAnalyticsDataFormatter}
+      >
+        {(formattedData) => {
+          const { tableData, chartData, totalCost } = formattedData;
+
+          return (
+            <Container fluid
+              className="p-2 shadow-sm"
+              style={{ borderRadius: "12px", background: "#fff", marginBottom: '40px' }}
+
+            >
 
 
-            <Row>
-              {/* Table Section */}
-              <Col md={7}>
-                <ProductsIngreidentAnalysisTable tableData={tableData} />
-              </Col>
+              <Row>
+                {/* Table Section */}
+                <Col md={7}>
+                  <ProductsIngreidentAnalysisTable tableData={tableData} />
+                </Col>
 
-              {/* Chart Section */}
-              <Col md={5}>
-                <ProductsIngreidentAnalysisGraph
-                  chartData={chartData}
-                  totalCost={totalCost}
-                />
-              </Col>
-            </Row>
-          </Container>
-        );
-      }}
-    </ServiceRenderer>
+                {/* Chart Section */}
+                <Col md={5}>
+                  <ProductsIngreidentAnalysisGraph
+                    chartData={chartData}
+                    totalCost={totalCost}
+                  />
+                </Col>
+              </Row>
+            </Container>
+          );
+        }}
+      </ServiceRenderer>
+    </div>
   );
 }
 
