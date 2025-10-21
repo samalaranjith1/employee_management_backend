@@ -382,7 +382,7 @@ const ItemsStockTrends = () => {
                           {row.leftoverStock.toLocaleString()} GM
                         </td>
                         <td className="text-success fw-bold" style={{fontWeight:600, fontSynthesis:"14px", color:"#00A63E"}}>
-                          ₹{row.leftoverStockValue}
+                          ₹{row.leftoverStockValue?.toLocaleString()}
                         </td>
                       </tr>
                     ))}

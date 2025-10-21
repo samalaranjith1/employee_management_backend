@@ -3,6 +3,8 @@
 import React from "react";
 import { Card, ButtonGroup, ToggleButton, Table } from "react-bootstrap";
 import { useTableSort } from "@/components/hooks/useTableSort";
+import { IconArrowsMaximize } from "@tabler/icons-react";
+import { useSuppliersContext } from "@/contexts/SuppliersContext";
 
 const SupplierFinancialAnalysisTable = ({
   table = [],
@@ -10,6 +12,7 @@ const SupplierFinancialAnalysisTable = ({
   filter,
   setFilter,
 }) => {
+  const {isMobile} = useSuppliersContext()
   // 🔹 Prepare data for numeric sorting
   const dataForSort = table.map((row, idx) => {
     const purchase =
@@ -66,8 +69,12 @@ const SupplierFinancialAnalysisTable = ({
               {cards[1]?.icon}
             </div>
             <div>
-              <h6 className="mb-0 fw-semibold">{cards[1]?.title}</h6>
-              <small style={{ color: "#6C757D" }}>{cards[1]?.subtitle}</small>
+              <h6 style={{
+                fontWeight:'600',
+                fontSize:'18px',
+                color:'#232425'
+              }}>{cards[1]?.title}</h6>
+              {/* <small style={{ color: "#6C757D" }}>{cards[1]?.subtitle}</small> */}
             </div>
           </div>
 
@@ -105,6 +112,7 @@ const SupplierFinancialAnalysisTable = ({
                 </ToggleButton>
               ))}
             </ButtonGroup>
+            <span style={{marginLeft:'10px'}}><IconArrowsMaximize size={20} color="#232425" /></span>
           </div>
 
           {/* Mobile Buttons */}
@@ -163,10 +171,11 @@ const SupplierFinancialAnalysisTable = ({
                     style={{
                       position: "sticky",
                       top: 0,
-                      background: "#fff",
+                      background: "#f4f7fc",
                       zIndex: 3,
-                      fontSize: "13px",
-                      color: "#6C757D",
+                      fontSize: "14px",
+                      color: "#232425",
+                      fontWeight:'600',
                       cursor: "pointer",
                       padding: "12px 16px",
                     }}
@@ -181,20 +190,24 @@ const SupplierFinancialAnalysisTable = ({
               {sortedData.map((row, idx) => (
                 <tr key={idx}>
                   <td style={{ padding: "14px 16px" }}>
-                    <div className="fw-semibold">{row.date}</div>
-                    <small style={{ color: "#6C757D" }}>{row.day}</small>
+                    <div style={{
+                      fontSize:'14px',
+                      color:'#232425',
+                      fontWeight:'600'
+                    }}>{row.date}</div>
+                    <small style={{ color: "#717182",fontWeight:'500',fontSize:'12px' }}>{row.day}</small>
                   </td>
                   <td
                     className="fw-semibold"
-                    style={{ color: "#E60023", padding: "14px 16px" }}
+                    style={{ color: "#c10007", padding: "14px 16px" ,fontSize:'14px',fontWeight:'600'}}
                   >
-                    ₹{row.purchaseAmount}
+                    ₹{row.purchaseAmount?.toLocaleString()}
                   </td>
                   <td
                     className="fw-semibold"
-                    style={{ color: "#28A745", padding: "14px 16px" }}
+                    style={{ color: "#008236", padding: "14px 16px" ,fontSize:'14px',fontWeight:'600'}}
                   >
-                    ₹{row.paymentAmount}
+                    ₹{row.paymentAmount?.toLocaleString()}
                   </td>
                 </tr>
               ))}

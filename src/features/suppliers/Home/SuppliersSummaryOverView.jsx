@@ -14,7 +14,7 @@ const SuppliersSummaryOverView = () => {
   const scrollRef = useRef(null);
 
   return (
-    <div className="p-3">
+    <div className="p-3 pb-0">
       <ComponentHeader
         title={"Summary Overview"}
         description={"Real-time consumption metrics and performance indicators"}

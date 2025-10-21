@@ -47,22 +47,22 @@ export default function RootLayout({ children }) {
           padding: "0 16px",  // optional inner padding
         }}>
           <GlobalDashboardProvider>
-       <>
-  <div style={{
-    position: "fixed",
-    top: 0,
-    width: '100%',
-    height: '64px',
-    zIndex: 1000,
-    backgroundColor: '#fff', // if header has transparent bg
-  }}>
-    <Header />
-  </div>
+            <>
+              <div style={{
+                position: "fixed",
+                top: 0,
+                width: '100%',
+                height: '64px',
+                zIndex: 1000,
+                backgroundColor: '#fff', // if header has transparent bg
+              }}>
+                <Header />
+              </div>
 
-  <main style={{ paddingTop: '64px' }}>
-    {children}
-  </main>
-</>
+              <main style={{ paddingTop: '64px' }}>
+                {children}
+              </main>
+            </>
 
           </GlobalDashboardProvider>
         </div>

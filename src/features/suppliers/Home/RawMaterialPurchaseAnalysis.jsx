@@ -8,82 +8,79 @@ import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer
 import { useItemsPurchaseList } from "@/services/item-service";
 import RawMaterialPurchaseAnalysisTable from "@/components/common/suppliers/TableSort/Home/RawMaterialPurchaseAnalysisTable";
 import RawMaterialPurchaseAnalysisGraph from "@/components/common/suppliers/GraphWrapper/Home/RawMaterialPurchaseAnalysisGraph";
+import { IconPackage } from "@tabler/icons-react";
 
 const RawMaterialPurchaseAnalysis = () => {
   const { startDate, endDate } = useSuppliersContext();
 
   return (
-    <ServiceRenderer
-      queryHook={useItemsPurchaseList}
-      queryKey={["itemsPurchaseList", { startdt: startDate, enddt: endDate }]}
-      queryFn={() =>
-        useItemsPurchaseList({
-          startdt: startDate,
-          enddt: endDate,
-        }).queryFn
-      }
-      queryArgs={[{ startdt: startDate, enddt: endDate, outlet: 1, userId: 7 }]}
-      formatter={rawMaterialPurchaseAnalysisDataFormatter}
-      shimmerCount={1}
-    >
-      {(formattedData) => {
-        const { items, totalPurchaseValue, cardMeta } = formattedData;
+    <div>
+      <Card.Header
+        className="d-flex align-items-center"
+      // style={{ backgroundColor: cardMeta.headerBg }}
+      >
+        <div
+          className="d-flex align-items-center justify-content-center me-3"
+          style={{
+            backgroundColor: '#FF6B00',
+            width: 40,
+            height: 40,
+            borderRadius: '10px'
+          }}
+        >
+          <IconPackage color="white" />
+        </div>
+        <div>
+          <h6 style={{ color: "#232425", fontSize: '18px', fontWeight: 700 }}>
+            Raw Material Purchase Analysis
+          </h6>
+          {/* <small style={{ color: "#6B7280" }}>{cardMeta.subtitle}</small> */}
+        </div>
+      </Card.Header>
+      <ServiceRenderer
+        queryHook={useItemsPurchaseList}
+        queryKey={["itemsPurchaseList", { startdt: startDate, enddt: endDate }]}
+        queryFn={() =>
+          useItemsPurchaseList({
+            startdt: startDate,
+            enddt: endDate,
+          }).queryFn
+        }
+        queryArgs={[{ startdt: startDate, enddt: endDate, outlet: 1, userId: 7 }]}
+        formatter={rawMaterialPurchaseAnalysisDataFormatter}
+        shimmerCount={1}
+      >
+        {(formattedData) => {
+          const { items, totalPurchaseValue, cardMeta } = formattedData;
 
-        const pieData = items.map((i) => ({
-          name: i.name,
-          value: i.value,
-        }));
+          const pieData = items.map((i) => ({
+            name: i.name,
+            value: i.value,
+          }));
 
-        return (
-          <Card className="border-0 shadow-sm">
-            {/* Header */}
-            <Card.Header
-              className="d-flex align-items-center"
-              style={{ backgroundColor: cardMeta.headerBg }}
-            >
-              <div
-                className="rounded-circle d-flex align-items-center justify-content-center me-3"
-                style={{
-                  backgroundColor: cardMeta.iconBg,
-                  width: 36,
-                  height: 36,
-                }}
-              >
-                {cardMeta.icon}
-              </div>
-              <div>
-                <h6 className="mb-0 fw-bold" style={{ color: "#1A1A1A" }}>
-                  {cardMeta.title}
-                </h6>
-                <small style={{ color: "#6B7280" }}>{cardMeta.subtitle}</small>
-              </div>
-            </Card.Header>
+          return (
+            <Card className="border-0 shadow-sm">
+              {/* Header */}
 
-            <Card.Body>
-              <Row>
-                {/* Table */}
-                <Col md={7}>
-                  <RawMaterialPurchaseAnalysisTable items={items} />
-                </Col>
 
-                {/* Pie Chart */}
-                <Col md={5}>
-                  <RawMaterialPurchaseAnalysisGraph pieData={pieData} />
-                </Col>
-              </Row>
+              <Card.Body>
+                <Row>
+                  {/* Table */}
+                  <Col md={7}>
+                    <RawMaterialPurchaseAnalysisTable items={items} />
+                  </Col>
 
-              {/* Footer total */}
-              <div className="d-flex justify-content-between border-top pt-3 mt-3 fw-bold">
-                <span style={{ color: "#1A1A1A" }}>Total Purchase Value</span>
-                <span style={{ color: "#1A1A1A" }}>
-                  ₹{totalPurchaseValue.toLocaleString("en-IN")}
-                </span>
-              </div>
-            </Card.Body>
-          </Card>
-        );
-      }}
-    </ServiceRenderer>
+                  {/* Pie Chart */}
+                  <Col md={5}>
+                    <RawMaterialPurchaseAnalysisGraph pieData={pieData} totalPurchaseValue={totalPurchaseValue} />
+                  </Col>
+                </Row>
+              </Card.Body>
+            </Card>
+          );
+        }}
+      </ServiceRenderer>
+    </div>
   );
 };
 

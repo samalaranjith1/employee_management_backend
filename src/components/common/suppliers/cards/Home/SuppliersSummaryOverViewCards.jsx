@@ -20,7 +20,7 @@ export default function SuppliersSummaryOverViewCards({ summaryCards }) {
           key={card.id}
           className="shadow-sm border-0 mb-3 card-item"
           style={{
-            minWidth: isMobile ? "88vw" : "30vw",
+            minWidth: isMobile ? "86vw" : "32%",
             flexShrink: 0,
             borderRadius: "12px",
             backgroundColor: card.bgColor,
@@ -42,7 +42,7 @@ export default function SuppliersSummaryOverViewCards({ summaryCards }) {
               </div>
               <span
                 className="ms-2 fw-semibold"
-                style={{ color: "#212529", fontSize: "14px" }}
+                style={{ color: "#232425", fontSize: "14px" ,fontWeight:'600'}}
               >
                 {card.title}
               </span>
@@ -51,14 +51,14 @@ export default function SuppliersSummaryOverViewCards({ summaryCards }) {
             {/* Card Fields */}
             {card.fields.map((field, idx) => (
               <div key={idx} className="d-flex justify-content-between mb-2">
-                <span style={{ fontSize: "13px", color: "#6C757D" }}>
+                <span style={{ fontSize: "12px", color: "#717182",fontWeight:'500' }}>
                   {field.label}
                 </span>
                 <span
                   className={field.bold ? "fw-bold" : ""}
-                  style={{ fontSize: "14px", color: "#212529" }}
+                  style={{ fontSize: "14px", color: "#000000",fontWeight:'600' }}
                 >
-                  {field.value}
+                  {field.value.slice(0,1)} {Number(field.value.slice(1))?.toLocaleString()}
                 </span>
               </div>
             ))}

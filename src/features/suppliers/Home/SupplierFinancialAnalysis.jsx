@@ -13,9 +13,11 @@ import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer
 import { subDays, subWeeks, subMonths, format } from "date-fns";
 import SupplierFinancialAnalysisGraph from "@/components/common/suppliers/GraphWrapper/Home/SupplierFinancialAnalysisGraph";
 import SupplierFinancialAnalysisTable from "@/components/common/suppliers/TableSort/Home/SupplierFinancialAnalysisTable";
+import { ButtonGroup, ToggleButton } from "react-bootstrap";
+import { IconArrowsMaximize, IconTrendingUp } from "@tabler/icons-react";
 
 export default function SupplierFinancialAnalysis() {
-  const { startDate, endDate } = useSuppliersContext();
+  const { startDate, endDate ,isMobile} = useSuppliersContext();
   const [filter, setFilter] = useState("daily");
   const [startDateCS, setStartDateCS] = useState("");
   const [endDateCS, setEndDateCS] = useState("");
@@ -66,7 +68,104 @@ export default function SupplierFinancialAnalysis() {
   }, [filter]);
 
   return (
-    <div className="p-3">
+    <div className="pad-3-l pad-3 p-3 pt-0">
+      <div
+          className="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-3"
+          style={{
+            backgroundColor: "#f4f5ff",
+            padding: "10px 0px",
+          }}
+        >
+            <div className="d-flex align-items-center mb-2 mb-md-0">
+            <div
+              style={{
+                backgroundColor: "#4c49f1ff",
+                width: "32px",
+                height: "32px",
+                borderRadius: "8px",
+              }}
+              className="d-flex align-items-center justify-content-center me-2"
+            >
+              <IconTrendingUp color="white"/>
+            </div>
+            <div>
+              <h6 className="mb-0 fw-semibold">Supplier Financial Analysis</h6>
+              {/* <small style={{ color: "#6C757D" }}>{cards[0].subtitle}</small> */}
+            </div>
+          </div>
+          {/* Filters - Desktop */}
+          <div className="d-none d-md-block">
+            <ButtonGroup
+            style={{
+                backgroundColor: "#dee2e6",
+                borderRadius:"30px"
+              }}>
+              {["Daily", "Same Days", "Weekly", "Monthly"].map((label) => (
+                <ToggleButton
+                  key={label}
+                  id={`filter-${label}`}
+                  type="radio"
+                  variant="outline-secondary"
+                  checked={filter === label.toLowerCase()}
+                  value={label.toLowerCase()}
+                  onChange={(e) => setFilter(e.currentTarget.value)}
+                  style={{
+                    fontSize: "13px",
+                    borderRadius: "20px",
+                    padding: "2px 12px",
+                    backgroundColor: filter === label.toLowerCase() ? "#ffffff" : "transparent",
+                    color: filter === label.toLowerCase() ? "#FF5B22" : "#6C757D",
+                    border: filter === label.toLowerCase()
+                      ? "1px solid #dee2e6"
+                      : "1px solid #dee2e6",
+                  }}
+                >
+                  {label}
+                </ToggleButton>
+              ))}
+            </ButtonGroup>
+            <IconArrowsMaximize size={20} color="#232425"/>
+          </div>
+        </div>
+
+        {/* Filters - Mobile */}
+        <div className="d-flex d-md-none justify-content-center mb-3">
+          <ButtonGroup
+            style={{
+              backgroundColor: "#dee2e6",
+              borderRadius:'20px'
+            }}
+          >
+            {["Daily", "Same Days", "Weekly", "Monthly"].map((label) => (
+              <ToggleButton
+                key={label}
+                id={`mobile-filter-${label}`}
+                type="radio"
+                variant="outline-secondary"
+                checked={filter === label.toLowerCase()}
+                value={label.toLowerCase()}
+                onChange={(e) => setFilter(e.currentTarget.value)}
+                style={{
+                  fontSize: "13px",
+                  borderRadius: "20px",
+                  padding: "2px 12px",
+                  backgroundColor:
+                    filter === label.toLowerCase() ? "#fff" : "transparent",
+                  color: filter === label.toLowerCase()
+                    ? "#FF5B22"
+                    : "#6C757D",
+                  border:
+                    filter === label.toLowerCase()
+                      ? "1px solid #dee2e6"
+                      : "1px solid #dee2e6",
+                }}
+              >
+                {label}
+              </ToggleButton>
+            ))}
+          </ButtonGroup>
+          
+        </div>
       <ServiceRenderer
         queryHook={SelectedHook}
         queryKey={["supplierFinancialAnalysis", filter, startDate, endDate]}

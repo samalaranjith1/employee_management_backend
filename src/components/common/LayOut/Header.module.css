@@ -4,7 +4,8 @@
   box-shadow: 0 2px 4px rgb(0 0 0 / 0.1);
   padding: 0.5rem 1rem;
   position: fixed;
-  width: 100vw;
+  width:96%;
+  margin: 0 auto;
   max-width:1240;
   top: 0;
   z-index: 1030;

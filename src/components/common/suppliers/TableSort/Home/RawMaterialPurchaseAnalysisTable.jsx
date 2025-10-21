@@ -49,10 +49,12 @@ const RawMaterialPurchaseAnalysisTable = ({ items = [] }) => {
                 style={{
                   position: "sticky",
                   top: 0,
-                  background: "#fff",
+                  background: "#f4f7fc",
                   zIndex: 3,
                   fontSize: "13px",
-                  color: "#6C757D",
+                  color: "#232425",
+                  fontWeight:'600',
+                  fontSize:'14px',
                   cursor: "pointer",
                   padding: "12px 16px",
                 }}
@@ -67,17 +69,17 @@ const RawMaterialPurchaseAnalysisTable = ({ items = [] }) => {
           {sortedData.map((item) => (
             <tr key={item.key} style={{ fontSize: "14px" }}>
               <td style={{ padding: "14px 16px" }}>
-                <div className="fw-semibold" style={{ color: "#1A1A1A" }}>
+                <div className="fw-semibold" style={{ color: "#232425" ,fontSize:'14px',fontWeight:'600',}}>
                   {item.name}
                 </div>
-                <div style={{ color: "#6B7280", fontSize: "12px" }}>
+                <div style={{ color: "#717182", fontSize: "12px" ,fontWeight:'500'}}>
                   {item.type}. {item.unitInfo}
                 </div>
               </td>
-              <td style={{ color: "#1A1A1A", padding: "14px 16px" }}>
+              <td style={{ color: "#232425" ,fontSize:'14px',fontWeight:'600',}}>
                 {item.quantity}
               </td>
-              <td style={{ color: "#1A1A1A", padding: "14px 16px" }}>
+              <td style={{ color: "#232425" ,fontSize:'14px',fontWeight:'600', }}>
                 ₹{item.value.toLocaleString("en-IN")}
               </td>
             </tr>

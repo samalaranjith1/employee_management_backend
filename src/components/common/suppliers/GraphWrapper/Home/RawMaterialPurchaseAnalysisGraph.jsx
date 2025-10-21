@@ -20,7 +20,7 @@ const COLORS = [
   "#7CB342",
 ];
 
-const RawMaterialPurchaseAnalysisGraph = ({ pieData = [] }) => {
+const RawMaterialPurchaseAnalysisGraph = ({ pieData = [], totalPurchaseValue }) => {
   // ✅ Calculate total and percentages safely
   const processedData = useMemo(() => {
     const total = pieData.reduce((acc, item) => acc + (item.value || 0), 0);
@@ -130,6 +130,7 @@ const RawMaterialPurchaseAnalysisGraph = ({ pieData = [] }) => {
           overflowY: "auto", // ✅ Scroll enabled
           flexGrow: 1, // take remaining height
           paddingRight: "6px",
+          height: '80%'
         }}
       >
         {processedData.map((item, index) => (
@@ -154,8 +155,8 @@ const RawMaterialPurchaseAnalysisGraph = ({ pieData = [] }) => {
               />
               <span
                 style={{
-                  fontSize: "13px",
-                  color: "#1A1A1A",
+                  fontSize: "14px",
+                  color: "#232425",
                   fontWeight: 500,
                 }}
               >
@@ -166,8 +167,8 @@ const RawMaterialPurchaseAnalysisGraph = ({ pieData = [] }) => {
             <div className="d-flex flex-column align-items-end">
               <span
                 style={{
-                  fontSize: "13px",
-                  color: "#1A1A1A",
+                  fontSize: "14px",
+                  color: "#232425",
                   fontWeight: 600,
                 }}
               >
@@ -176,7 +177,7 @@ const RawMaterialPurchaseAnalysisGraph = ({ pieData = [] }) => {
               <span
                 style={{
                   fontSize: "12px",
-                  color: "#757575",
+                  color: "#717182",
                   fontWeight: 400,
                 }}
               >
@@ -186,6 +187,13 @@ const RawMaterialPurchaseAnalysisGraph = ({ pieData = [] }) => {
           </div>
         ))}
       </div>
+      <div className="d-flex justify-content-between border-top pt-3 mt-3 fw-bold">
+        <span style={{ color: "#1A1A1A" ,marginLeft:'-50%',paddingRight:"+50%"}}>Total Purchase Value</span>
+        <span style={{ color: "#1A1A1A"}}>
+          ₹{totalPurchaseValue.toLocaleString("en-IN")}
+        </span>
+      </div>
+
     </div>
   );
 };
