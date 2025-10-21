@@ -76,7 +76,7 @@ const SupplierFinancialAnalysisTable = ({
             <ButtonGroup
               style={{
                 backgroundColor: "rgb(230,230,230)",
-                padding: "4px",
+                borderRadius:'20px',
               }}>
               {["Daily", "Same Days", "Weekly", "Monthly"].map((label) => (
                 <ToggleButton
@@ -97,7 +97,7 @@ const SupplierFinancialAnalysisTable = ({
                       filter === label.toLowerCase() ? "#FF5B22" : "#6C757D",
                     border:
                       filter === label.toLowerCase()
-                        ? "1px solid #FF5B22"
+                        ? "1px solid #dee2e6"
                         : "1px solid #dee2e6",
                   }}
                 >
@@ -112,7 +112,7 @@ const SupplierFinancialAnalysisTable = ({
             <ButtonGroup className="w-100"
               style={{
                 backgroundColor: "rgb(230,230,230)",
-                padding: "4px",
+                borderRadius:'20px'
               }}>
               {["Daily", "Same Days", "Weekly", "Monthly"].map((label) => (
                 <ToggleButton
@@ -133,7 +133,7 @@ const SupplierFinancialAnalysisTable = ({
                       filter === label.toLowerCase() ? "#FF5B22" : "#6C757D",
                     border:
                       filter === label.toLowerCase()
-                        ? "1px solid #FF5B22"
+                        ? "1px solid #dee2e6"
                         : "1px solid #dee2e6",
                   }}
                   className="flex-fill"

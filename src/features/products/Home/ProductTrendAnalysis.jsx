@@ -20,7 +20,7 @@ import { IconArrowsMaximize, IconTrendingUp } from "@tabler/icons-react";
 import { ButtonGroup, ToggleButton } from "react-bootstrap";
 
 export default function ProductTrendAnalysis() {
-  const { startDate, endDate ,isMobile} = useProductsContext();
+  const { startDate, endDate, isMobile } = useProductsContext();
   const [filter, setFilter] = useState("daily");
   const [startDateCS, setStartDateCS] = useState("");
   const [endDateCS, setEndDateCS] = useState("");
@@ -50,7 +50,7 @@ export default function ProductTrendAnalysis() {
 
     switch (view) {
       case "daily":
-        startDatetemp = subDays(today,7);
+        startDatetemp = subDays(today, 7);
         break;
       case "weekly":
         startDatetemp = subWeeks(today, 5);
@@ -75,73 +75,112 @@ export default function ProductTrendAnalysis() {
 
   return (
     <div className="p-0">
-       <div className="d-flex justify-content-between align-items-center mb-3 flex-wrap" style={{ backgroundColor: "#f1f6ff", padding: '10px' }}>
-          <div className="d-flex justify-content-between align-items-center mb-3 flex-wrap">
-            {/* Left Column: Icon Centered */}
-            <div
-              className="d-flex align-items-center justify-content-center me-3"
-              style={{
-                background: "linear-gradient(135deg, #924CFE 60%, #BC75FF 100%)",
-                borderRadius: "12px",
-                width: "40px",
-                height: "40px",
-              }}
-            >
-              <IconTrendingUp stroke={2} color="#fff" size={20} />
-            </div>
+      <div className="d-flex justify-content-between align-items-center mb-3 flex-wrap" style={{ backgroundColor: "#f1f6ff", padding: '10px' }}>
+        <div className="d-flex justify-content-between align-items-center mb-3 flex-wrap">
+          {/* Left Column: Icon Centered */}
+          <div
+            className="d-flex align-items-center justify-content-center me-3"
+            style={{
+              background: "linear-gradient(135deg, #924CFE 60%, #BC75FF 100%)",
+              borderRadius: "12px",
+              width: "40px",
+              height: "40px",
+            }}
+          >
+            <IconTrendingUp stroke={2} color="#fff" size={20} />
+          </div>
 
-            {/* Right Column: Title + Subtitle */}
-            <div className="flex-grow-1">
-              <div className=" mb-1" style={{fontWeight:700, fontSize:"18px", color:"#232425"}}>Trend Analysis</div>
-              {/* <small className="text-muted">
+          {/* Right Column: Title + Subtitle */}
+          <div className="flex-grow-1">
+            <div className=" mb-1" style={{ fontWeight: 700, fontSize: "18px", color: "#232425" }}>Trend Analysis</div>
+            {/* <small className="text-muted">
                 Daily tracking: Sales, Making Cost & Items Sold
               </small> */}
-            </div>
-
           </div>
 
-          <div>
-            <ButtonGroup
-              style={{
-                backgroundColor: "#e5e1ef",
-                borderRadius: "30px"
-              }}>
-              {["Daily", "Same Days", "Weekly", "Monthly"].map((label) => (
-                <ToggleButton
-                  key={label}
-                  id={`graph-filter-${label}`}
-                  type="radio"
-                  variant="outline-secondary"
-                  checked={filter === label.toLowerCase().replace(" ", "")}
-                  value={label.toLowerCase().replace(" ", "")}
-                  onChange={(e) => setFilter(e.currentTarget.value)}
-                  className="rounded-pill px-3"
-                  style={{
-                    fontSize: "13px",
-                    backgroundColor:
-                      filter === label.toLowerCase().replace(" ", "")
-                        ? "#fff"
-                        : "transparent",
-                    color:
-                      filter === label.toLowerCase().replace(" ", "")
-                        ? "#ff6000"
-                        : "#908780",
-                    border:
-                      filter === label.toLowerCase().replace(" ", "")
-                        ? "1px solid #dee2e6"
-                        : "1px solid #dee2e6",
-                  }}
-                >
-                  {label}
-                </ToggleButton>
-              ))}
-            </ButtonGroup>
-            {!isMobile && <span style={{marginLeft:'10px'}}>
-              <IconArrowsMaximize size={20} color="#232425"/>
-              </span>}
-          </div>
-          
         </div>
+
+        <div>
+          {!isMobile && <ButtonGroup
+            style={{
+              backgroundColor: "#e5e1ef",
+              borderRadius: "30px"
+            }}>
+            {["Daily", "Same Days", "Weekly", "Monthly"].map((label) => (
+              <ToggleButton
+                key={label}
+                id={`graph-filter-${label}`}
+                type="radio"
+                variant="outline-secondary"
+                checked={filter === label.toLowerCase().replace(" ", "")}
+                value={label.toLowerCase().replace(" ", "")}
+                onChange={(e) => setFilter(e.currentTarget.value)}
+                className="rounded-pill px-3"
+                style={{
+                  fontSize: "13px",
+                  backgroundColor:
+                    filter === label.toLowerCase().replace(" ", "")
+                      ? "#fff"
+                      : "transparent",
+                  color:
+                    filter === label.toLowerCase().replace(" ", "")
+                      ? "#ff6000"
+                      : "#908780",
+                  border:
+                    filter === label.toLowerCase().replace(" ", "")
+                      ? "1px solid #dee2e6"
+                      : "1px solid #dee2e6",
+                }}
+              >
+                {label}
+              </ToggleButton>
+            ))}
+          </ButtonGroup>}
+          {<span style={{ marginLeft: '10px' }}>
+            <IconArrowsMaximize size={20} color="#232425" />
+          </span>}
+        </div>
+
+      </div>
+      {isMobile &&
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <ButtonGroup
+            style={{
+              backgroundColor: "#e5e1ef",
+              borderRadius: "30px"
+            }}>
+            {["Daily", "Same Days", "Weekly", "Monthly"].map((label) => (
+              <ToggleButton
+                key={label}
+                id={`graph-filter-${label}`}
+                type="radio"
+                variant="outline-secondary"
+                checked={filter === label.toLowerCase().replace(" ", "")}
+                value={label.toLowerCase().replace(" ", "")}
+                onChange={(e) => setFilter(e.currentTarget.value)}
+                className="rounded-pill px-3"
+                style={{
+                  fontSize: "13px",
+                  backgroundColor:
+                    filter === label.toLowerCase().replace(" ", "")
+                      ? "#fff"
+                      : "transparent",
+                  color:
+                    filter === label.toLowerCase().replace(" ", "")
+                      ? "#ff6000"
+                      : "#908780",
+                  border:
+                    filter === label.toLowerCase().replace(" ", "")
+                      ? "1px solid #dee2e6"
+                      : "1px solid #dee2e6",
+                }}
+              >
+                {label}
+              </ToggleButton>
+            ))}
+          </ButtonGroup>
+
+        </div>}
       <ServiceRenderer
         queryHook={SelectedHook}
         queryKey={["productTrendAnalysis", filter, startDateCS, endDateCS]}

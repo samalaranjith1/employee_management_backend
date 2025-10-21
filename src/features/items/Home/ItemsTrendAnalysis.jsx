@@ -14,12 +14,15 @@ import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer
 import { subDays, subWeeks, subMonths, format } from "date-fns";
 import ItemsTrendAnalysisGraph from "@/components/common/items/GraphWrapper/ItemsTrendAnalysisGraph";
 import ItemsTrendAnalysisTable from "@/components/common/items/TableSort/ItemsTrendAnalysisTable";
+import { ButtonGroup, Col, Row, ToggleButton } from "react-bootstrap";
+import { IconArrowsMaximize, IconTrendingUp } from "@tabler/icons-react";
 
 export default function ItemsTrendAnalysis() {
-  const { startDate, endDate } = useItemsContext();
+  const { startDate, endDate, isMobile } = useItemsContext();
   const [filter, setFilter] = useState("daily");
   const [startDateCS, setStartDateCS] = useState("");
   const [endDateCS, setEndDateCS] = useState("");
+  const tabs = ["Daily", "Same Days", "Weekly", "Monthly"];
 
   // 🔹 Choose hook dynamically
   const getHook = (view) => {
@@ -68,10 +71,133 @@ export default function ItemsTrendAnalysis() {
 
   return (
     <div className="p-1 mt-0">
+      <Row
+        className="align-items-center mb-3 p-2"
+        style={{
+          backgroundColor: "rgb(243,246,255)",
+        }}
+      >
+        <Col xs="auto">
+          <div style={{
+            background: 'linear-gradient(135deg, #924CFE 60%, #BC75FF 100%)', // bold purple
+            borderRadius: '16px',
+            padding: '12px',
+            display: 'inline-block'
+          }}>
+            <IconTrendingUp stroke={2} color="#fff" size={24} />
+          </div>
+        </Col>
+        <Col>
+          <h4 className="fw-bold mb-0" style={{ color: "#111" }}>
+            Trend Analysis
+          </h4>
+          {/* <small style={{ color: "#6b7280" }}>
+              Sales, consumption, and inventory trends over time
+            </small> */}
+        </Col>
+        {!isMobile && <Col xs="auto">
+          <ButtonGroup
+            style={{
+              backgroundColor: "#e4e4e7",
+              borderRadius: 20,
+              userSelect: "none",
+            }}
+          >
+            {tabs.map((label) => {
+              const value = label.toLowerCase().replace(/\s+/g, "");
+              const isChecked = filter === value;
+
+              return (
+                <ToggleButton
+                  key={value}
+                  id={`toggle-${value}`}
+                  type="radio"
+                  name="trend-filter" // <-- Important: same name for all radios
+                  variant="light"
+                  value={value}
+                  checked={isChecked}
+                  onChange={(e) => setFilter(e.currentTarget.value)}
+                  className="rounded-pill"
+                  style={{
+                    fontSize: 13,
+                    backgroundColor: isChecked ? "#ffffff" : "transparent",
+                    color: isChecked ? "#FF5B22" : "#6C757D",
+                    border: isChecked
+                      ? "1px solid #dee2e6"
+                      : "1px solid #dee2e6",
+                    cursor: "pointer",
+                    userSelect: "none",
+                  }}
+                >
+                  {label}
+                </ToggleButton>
+              );
+            })}
+          </ButtonGroup>
+        </Col>}
+        <Col xs="auto">
+          <button
+            style={{
+              background: "none",
+              border: "none",
+              cursor: "pointer",
+              color: "#999",
+              fontSize: 18,
+              padding: 0,
+            }}
+            title="Expand"
+          >
+            <IconArrowsMaximize />
+          </button>
+        </Col>
+         {isMobile &&
+        <div style={{ display: "flex", justifyContent: "center"}}>
+          <ButtonGroup
+            style={{
+              backgroundColor: "#e4e4e7",
+              borderRadius: 20,
+              userSelect: "none",
+            }}
+          >
+            {tabs.map((label) => {
+              const value = label.toLowerCase().replace(/\s+/g, "");
+              const isChecked = filter === value;
+
+              return (
+                <ToggleButton
+                  key={value}
+                  id={`toggle-${value}`}
+                  type="radio"
+                  name="trend-filter" // <-- Important: same name for all radios
+                  variant="light"
+                  value={value}
+                  checked={isChecked}
+                  onChange={(e) => setFilter(e.currentTarget.value)}
+                  className="rounded-pill"
+                  style={{
+                    fontSize: 13,
+                    backgroundColor: isChecked ? "#ffffff" : "transparent",
+                    color: isChecked ? "#FF5B22" : "#6C757D",
+                    border: isChecked
+                      ? "1px solid #dee2e6"
+                      : "1px solid #dee2e6",
+                    cursor: "pointer",
+                    userSelect: "none",
+                  }}
+                >
+                  {label}
+                </ToggleButton>
+              );
+            })}
+          </ButtonGroup>
+        </div>}
+      </Row>
+     
+
       <ServiceRenderer
         queryHook={SelectedHook}
-        queryKey={["itemsTrendAnalysis", filter, startDateCS, endDateCS]}
-        queryArgs={[75, { startdt: startDateCS, enddt: endDateCS, outlet: 1 }]}
+        queryKey={["itemsTrendAnalysis", filter, startDate, endDate]}
+        queryArgs={[75, { startdt: startDate, enddt: endDate, outlet: 1 }]}
         formatter={trendAnalysisDataFormatter}
         shimmerCount={2}
       >

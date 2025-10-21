@@ -69,8 +69,8 @@ export default function SupplierFinancialAnalysis() {
     <div className="p-3">
       <ServiceRenderer
         queryHook={SelectedHook}
-        queryKey={["supplierFinancialAnalysis", filter, startDateCS, endDateCS]}
-        queryArgs={[3, { startdt: startDateCS, enddt: endDateCS }]}
+        queryKey={["supplierFinancialAnalysis", filter, startDate, endDate]}
+        queryArgs={[3, { startdt: startDate, enddt: endDate }]}
         formatter={supplierFinancialAnalysisDataFormatter}
         shimmerCount={2}
       >

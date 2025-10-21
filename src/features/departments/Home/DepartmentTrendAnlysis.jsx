@@ -18,7 +18,7 @@ import { IconArrowsMaximize, IconTrendingUp } from "@tabler/icons-react";
 import { useDepartmentContext } from "@/contexts/DepartmentContext";
 
 export default function DepartmentTrendAnalysis() {
-  const { startDate, endDate,isMobile } = useDepartmentContext();
+  const { startDate, endDate, isMobile } = useDepartmentContext();
   const [filter, setFilter] = useState("daily");
   const [startDateCS, setStartDateCS] = useState("");
   const [endDateCS, setEndDateCS] = useState("");
@@ -82,7 +82,7 @@ export default function DepartmentTrendAnalysis() {
                 borderRadius: "12px",
                 padding: "8px",
                 display: "inline-block",
-                marginRight:'10px'
+                marginRight: '10px'
               }}
             >
               <IconTrendingUp stroke={2} color="#fff" size={20} />
@@ -90,9 +90,9 @@ export default function DepartmentTrendAnalysis() {
 
             <div className="d-flex flex-column">
               <span className="ps-1" style={{
-                color:'#232425',
-                fontWeight:'600',
-                fontSize:'18px'
+                color: '#232425',
+                fontWeight: '600',
+                fontSize: '18px'
               }}>Trend Analysis</span>
               {/* <small className="text-muted" style={{ fontWeight: "normal" }}>
                 Sales, consumption, and inventory trends over time
@@ -101,6 +101,45 @@ export default function DepartmentTrendAnalysis() {
           </h5>
         </Col>
         <Col xs="auto">
+          {!isMobile && <ButtonGroup
+            className="rounded-pill"
+            style={{ backgroundColor: "#E6E6E6" }}
+          >
+            {tabs.map((label) => {
+              const value = label.toLowerCase().replace(" ", "");
+              const selected = filter === value;
+              return (
+                <ToggleButton
+                  key={label}
+                  id={`dept-graph-${label}`}
+                  type="radio"
+                  variant="none"
+                  checked={selected}
+                  value={value}
+                  onChange={(e) => setFilter(e.currentTarget.value)}
+                  className="rounded-pill"
+                  style={{
+                    fontSize: "13px",
+                    padding: "6px 16px",
+                    backgroundColor: selected ? "#FF6600" : "transparent",
+                    color: selected ? "white" : "#888",
+                    backgroundColor: selected ? "white" : "transparent",
+                    color: selected ? "#FF6600" : "#888",
+                    border: "none",
+                    cursor: "pointer",
+                    userSelect: "none",
+                  }}
+                >
+                  {label}
+                </ToggleButton>
+              );
+            })}
+          </ButtonGroup>}
+          {<span className="ml-5"><IconArrowsMaximize size={20} color='#232425' /></span>}
+        </Col>
+      </Row>
+      {isMobile &&
+        <div style={{ display: "flex", justifyContent: "center" }}>
           <ButtonGroup
             className="rounded-pill"
             style={{ backgroundColor: "#E6E6E6" }}
@@ -123,7 +162,7 @@ export default function DepartmentTrendAnalysis() {
                     padding: "6px 16px",
                     backgroundColor: selected ? "#FF6600" : "transparent",
                     color: selected ? "white" : "#888",
-                     backgroundColor: selected ? "white" : "transparent",
+                    backgroundColor: selected ? "white" : "transparent",
                     color: selected ? "#FF6600" : "#888",
                     border: "none",
                     cursor: "pointer",
@@ -135,9 +174,7 @@ export default function DepartmentTrendAnalysis() {
               );
             })}
           </ButtonGroup>
-        {!isMobile &&<span className="ml-5"><IconArrowsMaximize size={20} color='#232425'/></span>}
-        </Col>
-      </Row>
+        </div>}
 
       <ServiceRenderer
         queryHook={SelectedHook}

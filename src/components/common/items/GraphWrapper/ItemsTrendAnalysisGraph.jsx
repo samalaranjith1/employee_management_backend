@@ -57,7 +57,7 @@ export default function ItemsTrendAnalysisGraph({
       className="mb-3"
     >
       <Card.Body>
-        <Row
+        {/* <Row
           className="align-items-center mb-3 p-2"
           style={{
             backgroundColor: "rgb(243,246,255)",
@@ -137,7 +137,7 @@ export default function ItemsTrendAnalysisGraph({
               &#x26F6;
             </button>
           </Col>
-        </Row>
+        </Row> */}
 
         <ResponsiveContainer width="100%" height={300}>
           <LineChart data={chartData}>

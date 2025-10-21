@@ -7,7 +7,7 @@ import { IconArrowsMaximize, IconTable } from "@tabler/icons-react";
 import { useProductsContext } from "@/contexts/ProductsContext";
 
 const ProductTrendAnalysisTable = ({ tableData, filter, setFilter }) => {
-  const {isMobile} = useProductsContext()
+  const { isMobile } = useProductsContext()
   // 🔹 Prepare data for sorting
   const dataForSort = tableData.map((row, idx) => ({
     ...row,
@@ -57,7 +57,7 @@ const ProductTrendAnalysisTable = ({ tableData, filter, setFilter }) => {
 
             {/* Right Column — Title + Subtitle */}
             <div>
-              <div className="mb-1" style={{fontWeight:700, fontSize:"18px", color:"#232425"}}>Daily Sales Analytics</div>
+              <div className="mb-1" style={{ fontWeight: 700, fontSize: "18px", color: "#232425" }}>Daily Sales Analytics</div>
               {/* <small className="text-muted">
                 Complete breakdown of daily sales performance and revenue data
               </small> */}
@@ -66,10 +66,9 @@ const ProductTrendAnalysisTable = ({ tableData, filter, setFilter }) => {
 
           {/* Filters */}
           <div>
-            <ButtonGroup
+            {!isMobile && <ButtonGroup
               style={{
                 backgroundColor: "rgb(230,230,230)",
-                padding: "4px",
                 borderRadius: "30px"
               }}>
               {["Daily", "Same Days", "Weekly", "Monthly"].map((label) => (
@@ -96,18 +95,75 @@ const ProductTrendAnalysisTable = ({ tableData, filter, setFilter }) => {
                       filter === label.toLowerCase()?.replace(" ", "")
                         ? "1px solid #FF5B22"
                         : "1px solid #dee2e6",
+                                          backgroundColor:
+                    filter === label.toLowerCase().replace(" ", "")
+                      ? "#fff"
+                      : "transparent",
+                  color:
+                    filter === label.toLowerCase().replace(" ", "")
+                      ? "#ff6000"
+                      : "#908780",
+                  border:
+                    filter === label.toLowerCase().replace(" ", "")
+                      ? "1px solid #dee2e6"
+                      : "1px solid #dee2e6",
                   }}
                 >
                   {label}
                 </ToggleButton>
               ))}
-            </ButtonGroup>
-            {!isMobile && <span style={{marginLeft:'10px'}}>
-              <IconArrowsMaximize size={20} color="#232425"/>
-              </span>}
+            </ButtonGroup>}
+            {<span style={{ marginLeft: '10px' }}>
+              <IconArrowsMaximize size={20} color="#232425" />
+            </span>}
           </div>
         </div>
-
+        {isMobile &&
+          <div style={{ display: "flex", justifyContent: "center" }}><ButtonGroup
+            style={{
+              backgroundColor: "rgb(230,230,230)",
+              borderRadius: "30px"
+            }}>
+            {["Daily", "Same Days", "Weekly", "Monthly"].map((label) => (
+              <ToggleButton
+                key={label}
+                id={`table-filter-${label}`}
+                type="radio"
+                variant="outline-secondary"
+                checked={filter === label.toLowerCase()?.replace(" ", "")}
+                value={label.toLowerCase()?.replace(" ", "")}
+                onChange={(e) => setFilter(e.currentTarget.value)}
+                className="rounded-pill px-3"
+                style={{
+                  fontSize: "13px",
+                  backgroundColor:
+                    filter === label.toLowerCase()?.replace(" ", "")
+                      ? "#fff"
+                      : "transparent",
+                  color:
+                    filter === label.toLowerCase()?.replace(" ", "")
+                      ? "#FF5B22"
+                      : "#6C757D",
+                  border:
+                    filter === label.toLowerCase()?.replace(" ", "")
+                      ? "1px solid #FF5B22"
+                      : "1px solid #dee2e6",
+                        color:
+                    filter === label.toLowerCase().replace(" ", "")
+                      ? "#ff6000"
+                      : "#908780",
+                  border:
+                    filter === label.toLowerCase().replace(" ", "")
+                      ? "1px solid #dee2e6"
+                      : "1px solid #dee2e6",
+                }}
+              >
+                {label}
+              </ToggleButton>
+            ))}
+          </ButtonGroup>
+          
+          </div>}
         {/* Sticky + Scrollable Table */}
         <div style={{ maxHeight: "65vh", overflowY: "auto" }}>
           <Table
@@ -122,7 +178,7 @@ const ProductTrendAnalysisTable = ({ tableData, filter, setFilter }) => {
                 top: 0,
                 background: "#f6f5f7",
                 zIndex: 3,
-                fontWeight:'bold'
+                fontWeight: 'bold'
               }}
             >
               <tr>
@@ -133,7 +189,7 @@ const ProductTrendAnalysisTable = ({ tableData, filter, setFilter }) => {
                     style={{
                       fontSize: "14px",
                       color: "#000",
-                      fontWeight:'700',
+                      fontWeight: '700',
                       cursor: "pointer",
                       padding: "12px 16px",
                       backgroundColor: "#f4f7fc", // ensures rows don’t bleed through
@@ -148,30 +204,30 @@ const ProductTrendAnalysisTable = ({ tableData, filter, setFilter }) => {
             <tbody>
               {sortedData.map((row, idx) => (
                 <tr key={idx}>
-                  <td className="" style={{fontWeight:700, fontSize:"14px", color:"#232425"}}>{row.date}</td>
-                  <td style={{ color:"#1447E6", fontWeight:600, fontSize:"14px" }}>
+                  <td className="" style={{ fontWeight: 700, fontSize: "14px", color: "#232425" }}>{row.date}</td>
+                  <td style={{ color: "#1447E6", fontWeight: 600, fontSize: "14px" }}>
                     {/* {row.totalSales.icon}  */}
-                    {row.totalSales.value?.slice(0,1)} {Number(row.totalSales.value?.substring(1)).toLocaleString() }
+                    {row.totalSales.value?.slice(0, 1)} {Number(row.totalSales.value?.substring(1)).toLocaleString()}
                   </td>
-                  <td style={{ color:"#008236", fontWeight:600, fontSize:"14px"}}>
+                  <td style={{ color: "#008236", fontWeight: 600, fontSize: "14px" }}>
                     {/* {row.netSales.icon} */}
-                     {row.netSales.value?.slice(0,1)} {Number(row.netSales.value?.substring(1)).toLocaleString()}
+                    {row.netSales.value?.slice(0, 1)} {Number(row.netSales.value?.substring(1)).toLocaleString()}
                   </td>
-                  <td style={{ color:"#CA3500", fontWeight:600, fontSize:"14px"}}>
+                  <td style={{ color: "#CA3500", fontWeight: 600, fontSize: "14px" }}>
                     {/* {row.discount.icon} */}
-                     {row.discount.value?.slice(0,1)} {Number(row.discount.value?.substring(1)).toLocaleString()}
+                    {row.discount.value?.slice(0, 1)} {Number(row.discount.value?.substring(1)).toLocaleString()}
                   </td>
-                  <td style={{ color:"#8200DB", fontWeight:600, fontSize:"14px" }}>
+                  <td style={{ color: "#8200DB", fontWeight: 600, fontSize: "14px" }}>
                     {/* {row.tax.icon} */}
-                     {row.tax.valu?.slice(0,1)} {Number(row.tax.value?.substring(1)).toLocaleString()}
+                    {row.tax.valu?.slice(0, 1)} {Number(row.tax.value?.substring(1)).toLocaleString()}
                   </td>
-                  <td style={{ color:"#432DD7", fontWeight:600, fontSize:"14px"}}>
+                  <td style={{ color: "#432DD7", fontWeight: 600, fontSize: "14px" }}>
                     {/* {row.itemsSold.icon}  */}
-                    {row.itemsSold.value?.slice(0,1)} {Number(row.itemsSold.value?.substring(1)).toLocaleString()}
+                    {row.itemsSold.value?.slice(0, 1)} {Number(row.itemsSold.value?.substring(1)).toLocaleString()}
                   </td>
-                  <td style={{color:"#364153", fontWeight:600, fontSize:"14px"}}>
+                  <td style={{ color: "#364153", fontWeight: 600, fontSize: "14px" }}>
                     {/* {row.orders.icon}  */}
-                    {row.orders.value?.slice(0,1)} {Number(row.orders.value?.substring(1)).toLocaleString()}
+                    {row.orders.value?.slice(0, 1)} {Number(row.orders.value?.substring(1)).toLocaleString()}
                   </td>
                 </tr>
               ))}

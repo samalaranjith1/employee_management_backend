@@ -83,7 +83,6 @@ const SupplierFinancialAnalysisGraph = ({
             <ButtonGroup
             style={{
                 backgroundColor: "rgb(230,230,230)",
-                padding: "4px",
                 borderRadius:"30px"
               }}>
               {["Daily", "Same Days", "Weekly", "Monthly"].map((label) => (
@@ -99,14 +98,11 @@ const SupplierFinancialAnalysisGraph = ({
                     fontSize: "13px",
                     borderRadius: "20px",
                     padding: "2px 12px",
-                    backgroundColor:
-                      filter === label.toLowerCase() ? "#fff" : "transparent",
-                    color:
-                      filter === label.toLowerCase() ? "#FF5B22" : "#6C757D",
-                    border:
-                      filter === label.toLowerCase()
-                        ? "1px solid #FF5B22"
-                        : "1px solid #dee2e6",
+                    backgroundColor: filter === label.toLowerCase() ? "#ffffff" : "transparent",
+                    color: filter === label.toLowerCase() ? "#FF5B22" : "#6C757D",
+                    border: filter === label.toLowerCase()
+                      ? "1px solid #dee2e6"
+                      : "1px solid #dee2e6",
                   }}
                 >
                   {label}
@@ -121,7 +117,7 @@ const SupplierFinancialAnalysisGraph = ({
           <ButtonGroup
             style={{
               backgroundColor: "rgb(240,240,240)",
-              padding: "4px",
+              borderRadius:'20px'
             }}
           >
             {["Daily", "Same Days", "Weekly", "Monthly"].map((label) => (
@@ -144,7 +140,7 @@ const SupplierFinancialAnalysisGraph = ({
                     : "#6C757D",
                   border:
                     filter === label.toLowerCase()
-                      ? "1px solid #FF5B22"
+                      ? "1px solid #dee2e6"
                       : "1px solid #dee2e6",
                 }}
               >

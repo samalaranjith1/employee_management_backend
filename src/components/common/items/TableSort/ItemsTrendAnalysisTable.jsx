@@ -1,5 +1,6 @@
 "use client";
 
+import { useItemsContext } from "@/contexts/ItemsContext";
 import React, { useState, useMemo } from "react";
 import { Table, Container, ButtonGroup, ToggleButton } from "react-bootstrap";
 import { FaTable } from "react-icons/fa";
@@ -20,6 +21,7 @@ export default function ItemsDepartmentAnalyticsTable({
   filter,
   setFilter,
 }) {
+  const { isMobile } = useItemsContext()
   const [sortKey, setSortKey] = useState(null);
   const [direction, setDirection] = useState("asc");
 
@@ -100,7 +102,7 @@ export default function ItemsDepartmentAnalyticsTable({
             >
               Daily Analytics Table
             </h5>
-            <p
+            {/* <p
               className="text-muted mb-0"
               style={{
                 fontSize: "13px",
@@ -108,16 +110,15 @@ export default function ItemsDepartmentAnalyticsTable({
               }}
             >
               Complete breakdown of daily inventory and consumption data
-            </p>
+            </p> */}
           </div>
         </div>
 
         <div>
-          <ButtonGroup
+          {!isMobile && <ButtonGroup
             style={{
               backgroundColor: "#eee",
               borderRadius: 20,
-              padding: 4,
               userSelect: "none",
             }}
           >
@@ -142,16 +143,57 @@ export default function ItemsDepartmentAnalyticsTable({
                       : "#6C757D",
                   border:
                     filter === label.toLowerCase().replace(" ", "")
-                      ? "1px solid #FF5B22"
-                      : "1px solid #dee2e6",
+                      ? "1px solid #fff"
+                      : "1px solid transparent",
                 }}
               >
                 {label}
               </ToggleButton>
             ))}
-          </ButtonGroup>
+          </ButtonGroup>}
+
         </div>
+        
       </div>
+      {isMobile &&
+          <div style={{ display: "flex", justifyContent: "center" , marginTop:'-10px', backgroundColor:'#ecfbf7ff'}}>
+            <ButtonGroup
+              style={{
+                backgroundColor: "#eee",
+                borderRadius: 20,
+                userSelect: "none",
+              }}
+            >
+              {["Daily", "Same Days", "Weekly", "Monthly"].map((label) => (
+                <ToggleButton
+                  key={label}
+                  id={`filter-${label}`}
+                  type="radio"
+                  value={label.toLowerCase().replace(" ", "")}
+                  checked={filter === label.toLowerCase().replace(" ", "")}
+                  onChange={(e) => setFilter(e.currentTarget.value)}
+                  className="rounded-pill px-3"
+                  style={{
+                    fontSize: "13px",
+                    backgroundColor:
+                      filter === label.toLowerCase().replace(" ", "")
+                        ? "#fff"
+                        : "transparent",
+                    color:
+                      filter === label.toLowerCase().replace(" ", "")
+                        ? "#FF5B22"
+                        : "#6C757D",
+                    border:
+                      filter === label.toLowerCase().replace(" ", "")
+                        ? "1px solid #dee2e6"
+                        : "1px solid #dee2e6",
+                  }}
+                >
+                  {label}
+                </ToggleButton>
+              ))}
+            </ButtonGroup>
+          </div>}
 
       {/* Table wrapper with scroll */}
       <div

@@ -25,12 +25,11 @@ export default function ItemsPurchaseTrendAnalysisGraph({
   return (
     <Card className="shadow-sm border-0 mb-4 rounded-4">
       <Card.Body>
-        <div
+        {/* <div
           className="mb-3 p-3"
           style={{ backgroundColor: "rgb(243,246,255)" }}
         >
           <Row className="align-items-center">
-            {/* Icon (Col 1) */}
             <Col xs="auto">
               <div
                 style={{
@@ -44,7 +43,6 @@ export default function ItemsPurchaseTrendAnalysisGraph({
               </div>
             </Col>
 
-            {/* Title + Subtitle (Col 2) */}
             <Col className="flex-grow-1">
               <h5 className="fw-bold mb-0">Purchase Trend Analysis</h5>
               <small className="text-muted">
@@ -52,7 +50,6 @@ export default function ItemsPurchaseTrendAnalysisGraph({
               </small>
             </Col>
 
-            {/* Button Group (Col 3) */}
             <Col xs="auto">
               <ButtonGroup
                 className="rounded-pill"
@@ -92,8 +89,7 @@ export default function ItemsPurchaseTrendAnalysisGraph({
               </ButtonGroup>
             </Col>
           </Row>
-        </div>
-
+        </div> */}
 
         <div style={{ width: "100%", height: 280 }}>
           <ResponsiveContainer>

@@ -13,12 +13,15 @@ import { purchaseTrendAnalysisDataFormatter } from "@/utils/data_formatters/item
 import { subDays, subWeeks, subMonths, format } from "date-fns";
 import ItemsPurchaseTrendAnalysisGraph from "@/components/common/items/GraphWrapper/ItemsPurchaseTrendAnalysisGraph";
 import ItemsPurchaseTrendAnalysisTable from "@/components/common/items/TableSort/ItemsPurchaseTrendAnalysisTable";
+import { ButtonGroup, Col, Row, ToggleButton } from "react-bootstrap";
+import { IconTrendingUp } from "@tabler/icons-react";
 
 export default function ItemsPurchaseTrendAnalysis() {
-  const { startDate, endDate } = useItemsContext();
+  const { startDate, endDate, isMobile } = useItemsContext();
   const [filter, setFilter] = useState("daily");
   const [startDateCS, setStartDateCS] = useState("");
   const [endDateCS, setEndDateCS] = useState("");
+  const tabs = ["Daily", "Same Days", "Weekly", "Monthly"];
 
   // 🔹 Select hook dynamically
   const useDataFetchMethod = (view) => {
@@ -70,12 +73,120 @@ export default function ItemsPurchaseTrendAnalysis() {
 
   return (
     <div className="trend-analysis">
+      <div
+        className="mb-3 p-3"
+        style={{ backgroundColor: "rgb(243,246,255)" }}
+      >
+        <Row className="align-items-center">
+          {/* Icon (Col 1) */}
+          <Col xs="auto">
+            <div
+              style={{
+                background: "linear-gradient(135deg, #924CFE 60%, #BC75FF 100%)",
+                borderRadius: "12px",
+                padding: "8px",
+                display: "inline-block",
+              }}
+            >
+              <IconTrendingUp stroke={2} color="#fff" size={24} />
+            </div>
+          </Col>
+
+          {/* Title + Subtitle (Col 2) */}
+          <Col className="flex-grow-1">
+            <h5 className="fw-bold mb-0">Purchase Trend Analysis</h5>
+            {/* <small className="text-muted">
+                Purchase amounts and average pricing trends over time
+              </small> */}
+          </Col>
+
+          {/* Button Group (Col 3) */}
+          {!isMobile && <Col xs="auto">
+            <ButtonGroup
+              className="rounded-pill"
+              style={{
+                backgroundColor: "#eee",
+                borderRadius: '10px'
+              }}
+            >
+              {tabs.map((label) => {
+                const value = label.toLowerCase().replace(" ", "");
+                const selected = filter === value;
+                return (
+                  <ToggleButton
+                    key={label}
+                    id={`dept-graph-${label}`}
+                    type="radio"
+                    variant="none"
+                    checked={selected}
+                    value={value}
+                    onChange={(e) => setFilter(e.currentTarget.value)}
+                    className="rounded-pill"
+                    style={{
+                      fontSize: "13px",
+                      padding: "6px 16px",
+                      backgroundColor: selected ? "white" : "transparent",
+                      color: selected ? "#FF6600" : "#888",
+                      border: "none",
+                      cursor: "pointer",
+                      userSelect: "none",
+                    }}
+                  >
+                    {label}
+                  </ToggleButton>
+                );
+              })}
+            </ButtonGroup>
+          </Col>}
+        </Row>
+        {isMobile &&
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <Col xs="auto">
+              <ButtonGroup
+                className="rounded-pill"
+                style={{
+                  backgroundColor: "#eee",
+                  borderRadius: '10px'
+                }}
+              >
+                {tabs.map((label) => {
+                  const value = label.toLowerCase().replace(" ", "");
+                  const selected = filter === value;
+                  return (
+                    <ToggleButton
+                      key={label}
+                      id={`dept-graph-${label}`}
+                      type="radio"
+                      variant="none"
+                      checked={selected}
+                      value={value}
+                      onChange={(e) => setFilter(e.currentTarget.value)}
+                      className="rounded-pill"
+                      style={{
+                        fontSize: "13px",
+                        padding: "6px 16px",
+                        backgroundColor: selected ? "white" : "transparent",
+                        color: selected ? "#FF6600" : "#888",
+                        border: "none",
+                        cursor: "pointer",
+                        userSelect: "none",
+                      }}
+                    >
+                      {label}
+                    </ToggleButton>
+                  );
+                })}
+              </ButtonGroup>
+            </Col>
+          </div>}
+
+      </div>
       <ServiceRenderer
         queryHook={SelectedHook}
-        queryKey={["itemTrendAnalysis", filter, startDateCS, endDateCS]}
+        queryKey={["itemTrendAnalysis", filter, startDate, endDate]}
         queryArgs={[
           75,
-          { startdt: startDateCS, enddt: endDateCS, userId: 7, outlet: 1 },
+          { startdt: startDate, enddt: endDate, userId: 7, outlet: 1 },
         ]}
         formatter={(data) =>
           purchaseTrendAnalysisDataFormatter(data?.list || [])

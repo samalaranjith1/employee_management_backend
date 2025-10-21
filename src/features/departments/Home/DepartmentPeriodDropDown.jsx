@@ -17,7 +17,7 @@ import { IconArrowsMaximize, IconCalendar } from "@tabler/icons-react";
 import { useDepartmentContext } from "@/contexts/DepartmentContext";
 
 export default function DepartmentPeriodDropDown() {
-  const {startDate,endDate,isMobile} =useDepartmentContext()
+  const { startDate, endDate, isMobile } = useDepartmentContext()
   const [filter, setFilter] = useState("daily");
 
   const useDataFetchMethod = (view) => {
@@ -56,10 +56,10 @@ export default function DepartmentPeriodDropDown() {
         {/* Text Column */}
         <Col>
           <h5 className="fw-bold mb-0" style={{
-            color:'#232425',
-            fontSize:"18px",
-            fontWeight:'600',
-            marginLeft:'-10px'
+            color: '#232425',
+            fontSize: "18px",
+            fontWeight: '600',
+            marginLeft: '-10px'
           }}>Period Data Breakdown</h5>
         </Col>
         <Col xs="auto">
@@ -91,6 +91,45 @@ export default function DepartmentPeriodDropDown() {
               );
             })}
           </ButtonGroup> */}
+          {!isMobile && <ButtonGroup
+            className="rounded-pill"
+            style={{ backgroundColor: "#E6E6E6" }}
+          >
+            {tabs.map((label) => {
+              const value = label.toLowerCase().replace(" ", "");
+              const selected = filter === value;
+              return (
+                <ToggleButton
+                  key={label}
+                  id={`dept-${label}`}
+                  type="radio"
+                  variant="none"
+                  checked={selected}
+                  value={value}
+                  onChange={(e) => setFilter(e.currentTarget.value)}
+                  className="rounded-pill"
+                  style={{
+                    fontSize: "13px",
+                    padding: "6px 16px",
+                    backgroundColor: selected ? "#FF6600" : "transparent",
+                    color: selected ? "white" : "#888",
+                    backgroundColor: selected ? "white" : "transparent",
+                    color: selected ? "#FF6600" : "#888",
+                    border: "none",
+                    cursor: "pointer",
+                    userSelect: "none",
+                  }}
+                >
+                  {label}
+                </ToggleButton>
+              );
+            })}
+          </ButtonGroup>}
+          {<span style={{ color: "#232425" }}><IconArrowsMaximize /></span>}
+        </Col>
+      </Row>
+      {isMobile &&
+        <div style={{ display: "flex", justifyContent: "center" }}>
           <ButtonGroup
             className="rounded-pill"
             style={{ backgroundColor: "#E6E6E6" }}
@@ -113,7 +152,7 @@ export default function DepartmentPeriodDropDown() {
                     padding: "6px 16px",
                     backgroundColor: selected ? "#FF6600" : "transparent",
                     color: selected ? "white" : "#888",
-                     backgroundColor: selected ? "white" : "transparent",
+                    backgroundColor: selected ? "white" : "transparent",
                     color: selected ? "#FF6600" : "#888",
                     border: "none",
                     cursor: "pointer",
@@ -124,16 +163,13 @@ export default function DepartmentPeriodDropDown() {
                 </ToggleButton>
               );
             })}
-          </ButtonGroup>
-          {!isMobile && <span style={{color:"#232425"}}><IconArrowsMaximize /></span>}
-        </Col>
-      </Row>
+          </ButtonGroup></div>}
 
       {/* 🔹 ServiceRenderer */}
       <ServiceRenderer
         queryHook={SelectedHook}
         queryKey={["departmentPeriodDropDown", filter]}
-        queryArgs={[2, { userId: 7, outlet: 1 ,startdt:startDate,enddt:endDate}]}
+        queryArgs={[2, { userId: 7, outlet: 1, startdt: startDate, enddt: endDate }]}
         formatter={departmentPeriodDropDownDataFormatter}
         shimmerCount={2}
       >

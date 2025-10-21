@@ -87,10 +87,10 @@ export default function ItemsConsumptionTrendAnalysis() {
   return (
     <ServiceRenderer
       queryHook={SelectedHook}
-      queryKey={["itemSummaryDynamic", filter, startDateCS, endDateCS]}
-      queryArgs={[75, { startdt: startDateCS, enddt: endDateCS, outlet: 1 }]}
+      queryKey={["itemSummaryDynamic", filter, startDate, endDate]}
+      queryArgs={[75, { startdt: startDate, enddt: endDate, outlet: 1 }]}
       queryFn={() =>
-        SelectedHook({ startdt: startDateCS, enddt: endDateCS }).queryFn
+        SelectedHook({ startdt: startDate, enddt: endDate }).queryFn
       }
       formatter={consumptionTrendAnalysisDataFormatter}
       shimmerCount={3}
