@@ -25,6 +25,7 @@ import Profile from "./Profile";
 import styles from "./Header.module.css";
 import { handleNavigation } from "@/utils";
 import { useRouter } from "next/navigation";
+import { IconBell, IconChefHat, IconChefHatFilled, IconMapPin, IconMenu2 } from "@tabler/icons-react";
 
 // 🔹 Reusable debounce hook
 function useDebounce(value, delay = 500) {
@@ -165,9 +166,9 @@ export default function Header() {
   );
 
   return (
-    <div className={styles.headerFix}>
+    <div className={styles.headerFix} style={{ maxWidth: '900px', width: '100%' }}>
       <Navbar expand="lg" className={`${styles.navbar} px-3 shadow-sm headerFix`}>
-        
+
         <Container fluid className="align-items-center justify-content-between">
           {/* Left Section */}
           <div className="d-flex align-items-center gap-3">
@@ -176,12 +177,29 @@ export default function Header() {
               className={`${styles.buttonIcon} p-0`}
               onClick={() => setShowNavPanel(true)}
             >
-              <FaBars />
+              <div style={{
+                padding: '8px',
+                borderRadius: '50%',
+                border: '0.1px solid #eee',
+
+              }}>
+                <IconMenu2 size={24} strokeWidth={2} />
+              </div>
             </Button>
 
             <Navbar.Brand href="/" className={styles.brand}>
-              <FaStore size={24} className="d-none d-lg-flex" />
-              <span>Costonomy</span>
+              <div style={{
+                backgroundColor: '#FF5D00',
+                padding: '4px',
+                borderRadius: '12px', // optional, for rounded background
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }} className="d-none d-lg-flex">
+                <IconChefHatFilled size={20} color="white" />
+              </div>
+
+              <span style={{ color: '#FF6000', fontSize: '16px', fontWeight: '700', fontFamily: 'Montserrat' }}>Costonomy</span>
             </Navbar.Brand>
           </div>
 
@@ -197,16 +215,15 @@ export default function Header() {
                   onClick={() => handleNavClick(item.path)}
                   onMouseEnter={() => setHoveredTab(item.path)}
                   onMouseLeave={() => setHoveredTab(null)}
-                  className={`${styles.navLink} ${
-                    activeTab === item.path ? styles.navLinkActive : ""
-                  }`}
+                  className={`${styles.navLink} ${activeTab === item.path ? styles.navLinkActive : ""
+                    }`}
                   style={{
                     color:
                       activeTab === item.path
                         ? "#fff"
                         : hoveredTab === item.path
-                        ? "#ff7a30"
-                        : "#999",
+                          ? "#ff7a30"
+                          : "#999",
                   }}
                 >
                   {item.label}
@@ -218,23 +235,30 @@ export default function Header() {
           {/* Right Section */}
           <div className={styles.rightSection} style={{ position: "relative" }}>
             {!isMobile ? (
-              <div style={{ position: "relative", width: "250px" }}>
-                <Form className="d-none d-lg-flex">
-                  <FormControl
-                    type="search"
-                    placeholder="Search..."
-                    className={styles.formControlSearch}
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    onFocus={() => setShowResults(true)}
-                    onBlur={() =>
-                      setTimeout(() => setShowResults(false), 200)
-                    }
-                  />
-                </Form>
+              // <div style={{ position: "relative", width: "250px" }}>
+              //   <Form className="d-none d-lg-flex">
+              //     <FormControl
+              //       type="search"
+              //       placeholder="Search..."
+              //       className={styles.formControlSearch}
+              //       value={searchQuery}
+              //       onChange={(e) => setSearchQuery(e.target.value)}
+              //       onFocus={() => setShowResults(true)}
+              //       onBlur={() =>
+              //         setTimeout(() => setShowResults(false), 200)
+              //       }
+              //     />
+              //   </Form>
 
-                {showResults && renderSearchResults()}
-              </div>
+              //   {showResults && renderSearchResults()}
+              // </div>
+              <Button
+                variant="link"
+                className={`${styles.buttonIcon} p-0 `}
+                onClick={toggleMobileSearch}
+              >
+                <FaSearch size={18} />
+              </Button>
             ) : (
               <>
                 <Button
@@ -253,8 +277,16 @@ export default function Header() {
               className={`${styles.dropdownWrapper} d-none d-lg-flex`}
             >
               <Dropdown.Toggle className={styles.dropdownToggle}>
-                <FaMapMarkerAlt className={styles.navbarIcon} />
-                <span className={styles.outletDot} />
+                <div style={{
+                  backgroundColor: '#FFF4ED',
+                  padding: '8px',
+                  border: '1px solid #eee',
+                  borderRadius: '50%',
+                  color: '#ff6000'
+                }}>
+                  <IconMapPin size={20} stroke={2} color="#ff6000" />
+                </div>
+                {/* <span className={styles.outletDot} /> */}
                 <span className="fw-medium">Mumbai Central</span>
               </Dropdown.Toggle>
               <Dropdown.Menu>
@@ -283,29 +315,38 @@ export default function Header() {
               variant="link"
               className={`${styles.buttonIcon} me-2 p-0 d-none d-lg-flex`}
             >
-              <FaBell size={20} />
+              <div style={{
+                  backgroundColor: '#fff',
+                  padding: '8px',
+                  border: '1px solid #eee',
+                  borderRadius: '50%',
+                }}>
+                {/* <span className={styles.outletDot} /> */}
+                  <IconBell size={24} stroke={2} />
+                </div>
             </Button>
 
-            <Button
+            {/* <Button
               variant="link"
               className={`${styles.buttonIcon} p-0`}
               onClick={() => setShowProfilePanel(true)}
             >
               <FaUserCircle size={24} />
-            </Button>
+            </Button> */}
           </div>
         </Container>
       </Navbar>
 
       {/* Mobile Search Overlay Below Navbar */}
-      {isMobile && showMobileSearch && (
+      <div style={{ position: 'relative', width: '100%' }}>
+        {showMobileSearch && (
         <div
           className={styles.mobileSearchBar}
           style={{
             position: "absolute",
             top: "56px", // just below navbar
-            left: 0,
-            right: 0,
+            // left: 0,
+            // right: 0,
             background: "#fff",
             zIndex: 1100,
             padding: "8px 16px",
@@ -320,7 +361,7 @@ export default function Header() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               onFocus={() => setShowResults(true)}
-              onBlur={()=> setShowMobileSearch(false)}
+              onBlur={() => setShowMobileSearch(false)}
             />
             <Button
               variant="outline-secondary"
@@ -332,6 +373,7 @@ export default function Header() {
           {showResults && renderSearchResults()}
         </div>
       )}
+      </div>
 
       {/* Panels */}
       <Offcanvas

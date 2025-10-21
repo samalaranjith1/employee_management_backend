@@ -62,15 +62,15 @@ export default function Page() {
 
   return (
     <div>
-      <div className="mt-4 pt-5"></div>
+      {/* <div className="mt-4 pt-5"></div> */}
       {/* ✅ Duration filter stays outside tabs */}
       <div className="d-md-none d-sm-flex">
         <DurationFilters useAppContext={useAppContext}/>
       </div>
-      {/* ✅ Top Navigation Tabs */}
+  
       <SecondNavBar tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} useAppContext={useAppContext} />
-
-      {/* ✅ Tab Content */}
+ 
+      {/* ✅ Tab Content */ }
       <div className="mt-2">
         {activeTab === "Dashboard" && (
       <div className="d-none d-md-inline">
@@ -200,7 +200,7 @@ export default function Page() {
         )}
       </div>
       <MobileBottomNav />
-    </div>
+    </div >
   );
 }
 

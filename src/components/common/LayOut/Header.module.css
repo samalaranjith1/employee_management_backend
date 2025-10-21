@@ -5,6 +5,7 @@
   padding: 0.5rem 1rem;
   position: fixed;
   width: 100vw;
+  max-width:1240;
   top: 0;
   z-index: 1030;
   overflow-x: hidden;
@@ -37,7 +38,7 @@
   height: 36px;
   justify-content: center;
   white-space: nowrap;
-  font-size: 0.9rem;
+  font-size: 18px;
   max-width: 12rem;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -68,7 +69,7 @@
   justify-content: center;
   align-items: center;
   flex-grow: 1;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 }
 
 .dropdownWrapper {
@@ -77,9 +78,9 @@
 }
 
 .dropdownToggle {
-  border: 1px solid rgb(255, 92, 0) !important;
+  border: 1px solid #FFE2D1 !important;
   background-color: #fff !important;
-  color: rgb(255, 92, 0) !important;
+  color: #1E1E1E !important;
   font-weight: 600 !important;
   display: flex !important;
   align-items: center !important;
@@ -145,12 +146,14 @@
 
 .mobileSearchBar {
   position: absolute;
-  top: 100%;
-  left: 0;
-  width: 100%;
+  top: 100%; 
+  right: 0;                /* Align to right edge */
+  width: 100%;             /* Take full width of parent */
+  max-width: 600px;        /* But never exceed 600px */
   background-color: #fff;
   padding: 0.5rem;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  z-index: 100;            /* Ensure it's on top */
 }
 
 /* Dropdown menu overlay fix */
@@ -175,7 +178,7 @@
 @media (max-width: 1200px) {
   .navLink,
   .dropdownToggle {
-    font-size: 0.85rem;
+    font-size: 16px;
     padding: 0.25rem 0.75rem !important;
     max-width: 15rem;
     min-width: 10rem;
@@ -201,14 +204,14 @@
 @media (max-width: 768px) {
   .navLinksContainer {
     gap: 1rem;
-    flex-wrap: wrap;
+    flex-wrap: no-wrap;
   }
   .formControlSearch {
     max-width: 120px;
   }
   .navLink {
     padding: 0.2rem 0.5rem;
-    font-size: 0.8rem;
+    font-size: 18;
     max-width: 10rem;
   }
   .dropdownToggle {

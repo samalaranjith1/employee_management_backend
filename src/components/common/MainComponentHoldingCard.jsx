@@ -46,7 +46,7 @@ export default function MainComponentHoldingCard({ children }) {
 
   return (
     <Card
-      className="m-2 shadow-lg"
+      className="m-2 ms-0 shadow-lg"
       // style={{ border: "2px solid rgba(253,133,65,0.5)" }}
     >
       {children}

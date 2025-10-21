@@ -2,6 +2,7 @@ import { Nunito_Sans } from "next/font/google";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Header from "@/components/common/LayOut/Header";
 import { GlobalDashboardProvider } from "@/contexts";
+import Head from "next/head";
 
 // ✅ Load Nunito Sans font
 const nunitoSans = Nunito_Sans({
@@ -46,8 +47,23 @@ export default function RootLayout({ children }) {
           padding: "0 16px",  // optional inner padding
         }}>
           <GlobalDashboardProvider>
-            <Header />
-            {children}
+       <>
+  <div style={{
+    position: "fixed",
+    top: 0,
+    width: '100%',
+    height: '64px',
+    zIndex: 1000,
+    backgroundColor: '#fff', // if header has transparent bg
+  }}>
+    <Header />
+  </div>
+
+  <main style={{ paddingTop: '64px' }}>
+    {children}
+  </main>
+</>
+
           </GlobalDashboardProvider>
         </div>
       </body>

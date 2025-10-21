@@ -15,7 +15,7 @@ const SecondNavBar = ({ tabs,activeTab, setActiveTab,useAppContext }) => {
         WebkitOverflowScrolling: "touch",
         scrollbarWidth: "none",
         scrollBehavior: "smooth",
-        width: "100%",
+        width: "99.2%",
         whiteSpace: "nowrap",
         msOverflowStyle: "none",
         boxShadow: "2px 2px 6px gray",
