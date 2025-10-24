@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { useOrgFilters } from "@/components/hooks/useOrgFilters";
-import { usePathname, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { formatDate } from "@/utils";
 import { useSessionStorageAnalytics } from "@/components/hooks/useSessionStorageAnalytics";
 import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer";
@@ -9,14 +9,16 @@ import AnalyticsPage from "@/components/common/smallPages/AnalyticsPage";
 import { useItemsConsumptionClosingHistory } from "@/services/item-service";
 import { consumptionClosingFormatter } from "@/utils/data_formatters/smallPagesDataFormatter";
 import { useDashboardContext } from "@/contexts/DashboardContext";
+import { IconCircleArrowLeft } from "@tabler/icons-react";
 
 export default function ConsumptionClosingAnalysis() {
   const { isDeptLoading, isItemsLoading, departmentOptions, itemOptions } =
     useOrgFilters();
+  const router = useRouter();
   const searchParams = useSearchParams();
-const { startDate: startDateCT, endDate: endDateCT } = useDashboardContext()
-const pathname = usePathname();
-const isDashboard = pathname === "/" || pathname === "/dashboard";
+  const { startDate: startDateCT, endDate: endDateCT, isMobile } = useDashboardContext()
+  const pathname = usePathname();
+  const isDashboard = pathname === "/" || pathname === "/dashboard";
   const randomKey = Array.from(searchParams.keys())[0] || "ConsumptionClosing";
 
   const {
@@ -77,20 +79,20 @@ const isDashboard = pathname === "/" || pathname === "/dashboard";
       borderBottomLeftRadius: "30px",
       borderBottomRightRadius: "30px",
       padding: "25px 0 60px 0",
-      marginTop: 60,
+      //marginTop: 60,
       marginBottom: 42,
     },
     headerTitle: {
       color: "#fff",
-      fontSize: 38,
-      fontWeight: 800,
+      fontSize: 32,
+      fontWeight: 700,
       letterSpacing: "-1px",
       marginLeft: 12,
       marginBottom: 7,
     },
     headerSubtitle: {
-      fontSize: 18,
-      color: "rgba(255,255,255,0.84)",
+      color: "#EDEDEDBA",
+      fontSize: 15,
       fontWeight: 400,
       marginLeft: 12,
     },
@@ -194,15 +196,21 @@ const isDashboard = pathname === "/" || pathname === "/dashboard";
 
   return (
     <div style={{ background: "#f2f3fb", minHeight: "100vh" }}>
-      {!isDashboard ?  
-      <div style={styles.headerBar}>
-        <h1 style={styles.headerTitle}>Consumption Closing Analysis</h1>
-        <p style={styles.headerSubtitle}>
-          End-of-day review and analysis of restaurant consumption data for
-          operational closure
-        </p>
-      </div> : <div className="mt-5 p-5"></div>}
-      
+      {!isDashboard ?
+        <div style={styles.headerBar}>
+          <h1 style={styles.headerTitle}>
+            {
+              isMobile && <IconCircleArrowLeft
+                size={40}
+                style={{ cursor: "pointer" }}
+                onClick={() => router.back()} // ⬅️ Go to previous page
+              />} Consumption Closing Analysis</h1>
+          <p style={styles.headerSubtitle}>
+            End-of-day review and analysis of restaurant consumption data for
+            operational closure
+          </p>
+        </div> : <div className="mt-5 p-5"></div>}
+
 
       <div style={styles.analyticsBox}>
         <ServiceRenderer

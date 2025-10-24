@@ -171,7 +171,7 @@ export default function Header() {
 
         <Container fluid className="align-items-center justify-content-between">
           {/* Left Section */}
-          <div className="d-flex align-items-center gap-3">
+          <div className="d-flex align-items-center gap-3" style={{ marginLeft: isMobile ? '-20px' : '-10px' }}>
             <Button
               variant="link"
               className={`${styles.buttonIcon} p-0`}
@@ -199,18 +199,18 @@ export default function Header() {
                 <IconChefHatFilled size={20} color="white" />
               </div>
 
-              <span style={{ color: '#FF6000', fontSize: '16px', fontWeight: '700', fontFamily: 'Montserrat' }}>Costonomy</span>
+              <span style={{ color: '#FF6000', fontSize: '16px', fontWeight: '700', fontFamily: 'Montserrat',marginLeft:isMobile?'-15px':'' }}>Costonomy</span>
             </Navbar.Brand>
           </div>
 
           {/* Center Nav */}
           <Col
             md={4}
-            className="d-none d-md-flex justify-content-center align-items-center"
+            // className="d-none d-md-flex justify-content-center align-items-center flex-nowrap"
           >
-            <Nav className={styles.navLinksContainer}>
+            <ul  className="d-none d-md-flex justify-content-center align-items-center flex-nowrap" style={{marginBottom:'+2px'}}>
               {navItems.map((item) => (
-                <Nav.Link
+                <li
                   key={item.path}
                   onClick={() => handleNavClick(item.path)}
                   onMouseEnter={() => setHoveredTab(item.path)}
@@ -227,9 +227,9 @@ export default function Header() {
                   }}
                 >
                   {item.label}
-                </Nav.Link>
+                </li>
               ))}
-            </Nav>
+            </ul>
           </Col>
 
           {/* Right Section */}
@@ -279,7 +279,7 @@ export default function Header() {
               <Dropdown.Toggle className={styles.dropdownToggle}>
                 <div style={{
                   backgroundColor: '#FFF4ED',
-                  padding: '8px',
+                  padding: '2px 8px',
                   border: '1px solid #eee',
                   borderRadius: '50%',
                   color: '#ff6000'
@@ -316,14 +316,14 @@ export default function Header() {
               className={`${styles.buttonIcon} me-2 p-0 d-none d-lg-flex`}
             >
               <div style={{
-                  backgroundColor: '#fff',
-                  padding: '8px',
-                  border: '1px solid #eee',
-                  borderRadius: '50%',
-                }}>
+                backgroundColor: '#fff',
+                padding: '8px',
+                border: '1px solid #eee',
+                borderRadius: '50%',
+              }}>
                 {/* <span className={styles.outletDot} /> */}
-                  <IconBell size={24} stroke={2} />
-                </div>
+                <IconBell size={24} stroke={2} />
+              </div>
             </Button>
 
             {/* <Button
@@ -340,39 +340,39 @@ export default function Header() {
       {/* Mobile Search Overlay Below Navbar */}
       <div style={{ position: 'relative', width: '100%' }}>
         {showMobileSearch && (
-        <div
-          className={styles.mobileSearchBar}
-          style={{
-            position: "absolute",
-            top: "56px", // just below navbar
-            // left: 0,
-            // right: 0,
-            background: "#fff",
-            zIndex: 1100,
-            padding: "8px 16px",
-            boxShadow: "0 2px 6px rgba(0,0,0,0.2)",
-          }}
-        >
-          <Form className="d-flex mb-2">
-            <FormControl
-              type="search"
-              placeholder="Search..."
-              autoFocus
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              onFocus={() => setShowResults(true)}
-              onBlur={() => setShowMobileSearch(false)}
-            />
-            <Button
-              variant="outline-secondary"
-              onClick={() => setShowMobileSearch(false)}
-            >
-              Close
-            </Button>
-          </Form>
-          {showResults && renderSearchResults()}
-        </div>
-      )}
+          <div
+            className={styles.mobileSearchBar}
+            style={{
+              position: "absolute",
+              top: "56px", // just below navbar
+              // left: 0,
+              // right: 0,
+              background: "#fff",
+              zIndex: 1100,
+              padding: "8px 16px",
+              boxShadow: "0 2px 6px rgba(0,0,0,0.2)",
+            }}
+          >
+            <Form className="d-flex mb-2">
+              <FormControl
+                type="search"
+                placeholder="Search..."
+                autoFocus
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                onFocus={() => setShowResults(true)}
+                onBlur={() => setShowMobileSearch(false)}
+              />
+              <Button
+                variant="outline-secondary"
+                onClick={() => setShowMobileSearch(false)}
+              >
+                Close
+              </Button>
+            </Form>
+            {showResults && renderSearchResults()}
+          </div>
+        )}
       </div>
 
       {/* Panels */}

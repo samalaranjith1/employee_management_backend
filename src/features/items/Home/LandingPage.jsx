@@ -6,6 +6,7 @@ import ItemsDepartmentAnalytics from './ItemsDepartmentAnalytics';
 import ItemsDepartmentDistributionChart from './ItemsDepartmentDistributionChart';
 import ItemsConsumptionAnalyticsOverview from './ItemsConsumptionAnalyticsOverview';
 import ItemsMenuItemConsumptionAnalysis from './ItemsMenuItemConsumptionAnalysis';
+import MainComponentHoldingCard from '@/components/common/MainComponentHoldingCard';
 
 function LandingPage() {
   return (
@@ -14,8 +15,8 @@ function LandingPage() {
         display: "flex",
         flexDirection: "column",
         gap: "10px",
-        backgroundColor: "#eeeeee",
-        padding: "10px", // optional padding so content doesn't stick to edges
+        backgroundColor: "#fafafa",
+        // padding: "10px", // optional padding so content doesn't stick to edges
         borderRadius: "8px", // optional rounded look
       }}
     >

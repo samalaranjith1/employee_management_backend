@@ -205,7 +205,7 @@
 @media (max-width: 768px) {
   .navLinksContainer {
     gap: 1rem;
-    flex-wrap: no-wrap;
+    flex-wrap: nowrap;
   }
   .formControlSearch {
     max-width: 120px;

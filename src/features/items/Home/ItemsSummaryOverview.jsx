@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { Col, Container, Row } from "react-bootstrap";
+import { Card, Col, Container, Row } from "react-bootstrap";
 import { summeryOverviewDataFormatter } from "@/utils/data_formatters/itemsPageDataFormatter";
 import { useItemSummary } from "@/services/item-service";
 import { useItemsContext } from "@/contexts/ItemsContext";
@@ -16,54 +16,53 @@ export default function ItemsSummaryOverview() {
   const { startDate, endDate } = useItemsContext();
 
   return (
-    <ServiceRenderer
-      queryHook={useItemSummary}
-      queryKey={["itemSummary", { startdt: startDate, enddt: endDate }]}
-      queryFn={() =>
-        useItemSummary({ startdt: startDate, enddt: endDate }).queryFn
-      }
-      queryArgs={[74, { startdt: startDate, enddt: endDate, outlet: 1, userId: 7 }]}
-      formatter={summeryOverviewDataFormatter}
-      shimmerCount={1}
-    >
-      {(formatted) => (
-        <Container fluid className="p-2 card bg-light">
-          {/* Header */}
-          <Row className="align-items-center mb-4">
-            {/* Column 1: Icon */}
-            <Col xs="auto">
-              <div
-                style={{
-                  background: 'linear-gradient(135deg, #F86F2D 60%, #F63E1D 100%)',
-                  borderRadius: '12px',
-                  padding: '8px',
-                  display: 'inline-block',
-                }}
-              >
-                <IconChartHistogram stroke={2} color="#fff" size={20} />
-              </div>
-            </Col>
+    <Card className="p-3 border-0 shadow-sm">
+      <Row className="align-items-center mb-4">
+        {/* Column 1: Icon */}
+        <Col xs="auto">
+          <div
+            style={{
+              background: 'linear-gradient(135deg, #F86F2D 60%, #F63E1D 100%)',
+              borderRadius: '12px',
+              padding: '8px',
+              display: 'inline-block',
+            }}
+          >
+            <IconChartHistogram stroke={2} color="#fff" size={20} />
+          </div>
+        </Col>
 
-            {/* Column 2: Title and Subtitle */}
-            <Col style={{marginLeft:'-14px'}}>
-              <h5 className=" mb-1" style={{fontWeight:700, fontSize:"18px", color:"#232425"}}>{formatted.header.title}</h5>
-              {/* <p className="text-muted small mb-0">{formatted.header.subtitle}</p> */}
-            </Col>
-          </Row>
-
-          {/* Top Cards */}
-          <ItemsSummaryOverviewTopCardsFirstRow
-            cards={formatted.cards.slice(0, 3)}
-          />
-          <ItemsSummaryOverviewTopCardsSecondRow
-            cards={formatted.cards.slice(3)}
-          />
-
-          {/* Footer */}
-          <ItemsSummaryOverviewSubCards footer={formatted.footer} />
-        </Container>
-      )}
-    </ServiceRenderer>
+        {/* Column 2: Title and Subtitle */}
+        <Col style={{ marginLeft: '-14px' }}>
+          <h5 className=" mb-1" style={{ fontWeight: 700, fontSize: "18px", color: "#232425" }}>Summary Overview</h5>
+          {/* <p className="text-muted small mb-0">{formatted.header.subtitle}</p> */}
+        </Col>
+      </Row>
+      <ServiceRenderer
+        queryHook={useItemSummary}
+        queryKey={["itemSummary", { startdt: startDate, enddt: endDate }]}
+        queryFn={() =>
+          useItemSummary({ startdt: startDate, enddt: endDate }).queryFn
+        }
+        queryArgs={[74, { startdt: startDate, enddt: endDate, outlet: 1, userId: 7 }]}
+        formatter={summeryOverviewDataFormatter}
+        shimmerCount={1}
+      >
+        {(formatted) => (
+          <Container fluid className="p-2 p-0-t card border-0">
+            {/* Top Cards */}
+            <ItemsSummaryOverviewTopCardsFirstRow
+              cards={formatted.cards.slice(0, 3)}
+            />
+            <ItemsSummaryOverviewTopCardsSecondRow
+              cards={formatted.cards.slice(3)}
+            />
+            {/* Footer */}
+            <ItemsSummaryOverviewSubCards footer={formatted.footer} />
+          </Container>
+        )}
+      </ServiceRenderer>
+    </Card>
   );
 } // "use client";
 

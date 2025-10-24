@@ -14,7 +14,7 @@ export default function ItemsConsumptionAnalyticsOverviewCards({ item }) {
         padding: "20px",
         transition: "all 0.2s ease-in-out",
         height: "100%",
-        minWidth: "250px",
+        minWidth: "300px",
         flexShrink: 0,
         background: item.cardBg,
         border: "0",

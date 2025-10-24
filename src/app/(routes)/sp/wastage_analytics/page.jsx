@@ -2,7 +2,7 @@
 import React from "react";
 import { FaTrashAlt } from "react-icons/fa";
 import { useOrgFilters } from "@/components/hooks/useOrgFilters";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useSessionStorageAnalytics } from "@/components/hooks/useSessionStorageAnalytics";
 import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer";
 import WastageAnalysisTopCards from "@/components/common/dashboard/card/WastageAnalysisTopCards";
@@ -13,14 +13,16 @@ import { formatDate } from "@/utils";
 import { Tabs, Tab } from "react-bootstrap";
 import { usePathname } from "next/navigation";
 import { useDashboardContext } from "@/contexts/DashboardContext";
+import { IconCircleArrowLeft } from "@tabler/icons-react";
 
 export default function WastageAnalytics() {
   const { isDeptLoading, isItemsLoading, departmentOptions, itemOptions } =
     useOrgFilters();
 
   const searchParams = useSearchParams();
-  const { startDate: startDateCT, endDate: endDateCT } = useDashboardContext()
+  const { startDate: startDateCT, endDate: endDateCT ,isMobile} = useDashboardContext()
   const pathname = usePathname();
+  const router = useRouter();
   const isDashboard = pathname === "/" || pathname === "/dashboard";
   const randomKey = Array.from(searchParams.keys())[0] || "WastageAnalytics";
 
@@ -85,20 +87,20 @@ export default function WastageAnalytics() {
       borderBottomLeftRadius: "30px",
       borderBottomRightRadius: "30px",
       padding: "25px 0 60px 0",
-      marginTop: 60,
+      //marginTop: 60,
       marginBottom: 42,
     },
     headerTitle: {
       color: "#fff",
-      fontSize: 38,
-      fontWeight: 800,
+      fontSize: 32,
+      fontWeight: 700,
       letterSpacing: "-1px",
       marginLeft: 12,
       marginBottom: 7,
     },
     headerSubtitle: {
-      fontSize: 18,
-      color: "rgba(255,255,255,0.84)",
+      color: "#EDEDEDBA",
+      fontSize: 15,
       fontWeight: 400,
       marginLeft: 12,
     },
@@ -175,7 +177,12 @@ export default function WastageAnalytics() {
     <div style={{ background: "#f2f3fb", minHeight: "100vh" }}>
       {!isDashboard ? <div style={styles.headerBar}>
         <h1 style={styles.headerTitle}>
-          <FaTrashAlt size={34} style={{ marginRight: 10 }} />
+          {
+            isMobile && <IconCircleArrowLeft
+              size={40}
+              style={{ cursor: "pointer" }}
+              onClick={() => router.back()} // ⬅️ Go to previous page
+            />}
           Wastage Analysis
         </h1>
         <p style={styles.headerSubtitle}>

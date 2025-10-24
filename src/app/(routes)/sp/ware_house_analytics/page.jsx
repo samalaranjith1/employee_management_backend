@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { useOrgFilters } from "@/components/hooks/useOrgFilters";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { formatDate } from "@/utils";
 import { useSessionStorageAnalytics } from "@/components/hooks/useSessionStorageAnalytics";
 import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer";
@@ -10,13 +10,15 @@ import { useItemsBelowMOQList } from "@/services/item-service";
 import { stockItemDataFormatter } from "@/utils/data_formatters/smallPagesDataFormatter";
 import { usePathname } from "next/navigation";
 import { useDashboardContext } from "@/contexts/DashboardContext";
+import { IconCircleArrowLeft } from "@tabler/icons-react";
 
 export default function WarehouseStockAnalytics() {
   const { isCategoriesLoading, isItemsLoading, categoryOptions, itemOptions } =
     useOrgFilters();
   const searchParams = useSearchParams();
-  const { startDate: startDateCT, endDate: endDateCT } = useDashboardContext()
+  const { startDate: startDateCT, endDate: endDateCT,isMobile } = useDashboardContext()
   const pathname = usePathname();
+  const router = useRouter();
   const isDashboard = pathname === "/" || pathname === "/dashboard";
   const randomKey = Array.from(searchParams.keys())[0] || "WarehouseStock";
 
@@ -74,24 +76,24 @@ export default function WarehouseStockAnalytics() {
 
   const styles = {
     headerBar: {
-      background: "linear-gradient(90deg, #0a2740, #2a5c9a)",
+      background: "linear-gradient(90deg, #121C33, #1D3377)",
       borderBottomLeftRadius: "30px",
       borderBottomRightRadius: "30px",
       padding: "25px 0 60px 0",
-      marginTop: 60,
+      //marginTop: 60,
       marginBottom: 42,
     },
     headerTitle: {
       color: "#fff",
-      fontSize: 38,
-      fontWeight: 800,
+      fontSize: 32,
+      fontWeight: 700,
       letterSpacing: "-1px",
       marginLeft: 12,
       marginBottom: 7,
     },
     headerSubtitle: {
-      fontSize: 18,
-      color: "rgba(255,255,255,0.84)",
+      color: "#EDEDEDBA",
+      fontSize: 15,
       fontWeight: 400,
       marginLeft: 12,
     },
@@ -196,7 +198,13 @@ export default function WarehouseStockAnalytics() {
   return (
     <div style={{ background: "#f2f3fb", minHeight: "100vh" }}>
       {!isDashboard ? <div style={styles.headerBar}>
-        <h1 style={styles.headerTitle}>Warehouse Stock Analytics</h1>
+        <h1 style={styles.headerTitle}>
+          {
+            isMobile && <IconCircleArrowLeft
+              size={40}
+              style={{ cursor: "pointer" }}
+              onClick={() => router.back()} // ⬅️ Go to previous page
+            />}Warehouse Stock Analytics</h1>
         <p style={styles.headerSubtitle}>
           Monitor inventory levels, track stock runway and manage warehouse operations with real-time analytics
         </p>

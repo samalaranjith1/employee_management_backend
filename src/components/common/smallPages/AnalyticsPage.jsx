@@ -4,7 +4,7 @@ import { Card, Col, Container, Row, Table } from "react-bootstrap";
 import { usePathname } from "next/navigation";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { applyDateRange, formatDate } from "@/utils";
+import { applyDateRange, formatDate, getAnalyticsMeta } from "@/utils";
 import { useTableControls } from "@/components/hooks/useTableControls";
 import { useTableSort } from "@/components/hooks/useTableSort";
 import { TableControls } from "@/components/common/TableControls";
@@ -36,8 +36,8 @@ export default function AnalyticsPage({
   exportBtn,
   filterBtn,
   search,
-  startDate:startDateC,
-  endDate:endDateC,
+  startDate: startDateC,
+  endDate: endDateC,
   onStartDateChange,
   onEndDateChange,
 }) {
@@ -160,9 +160,10 @@ export default function AnalyticsPage({
                     <Col key={idx} md={colSize}>
                       <label
                         style={{
-                          fontWeight: 700,
+                          fontWeight: 600,
                           fontSize: 16,
                           marginBottom: 6,
+                          color: '#232425'
                         }}
                       >
                         {filter.label}
@@ -276,10 +277,10 @@ export default function AnalyticsPage({
               >
                 <Card.Body style={{ padding: "18px 22px" }}>
                   <div style={{ display: "flex", alignItems: "center" }}>
-                    <div style={iconCircle(card.iconBg)}>{card.icon}</div>
+                    {card.icon && <div style={iconCircle(card.iconBg)}>{card.icon}</div>}
                     <div>
-                      <div style={cardTitle}>{card.title}</div>
-                      <div style={cardValue}>{card.value}</div>
+                      <div style={{ color: '#6d6d6d', fontWeight: '600', fontSize: '14px' }}>{card.title}</div>
+                      <div style={{ color: '#232425', fontWeight: '800', fontSize: '24px' }}>{card.value}</div>
                     </div>
                   </div>
                 </Card.Body>
@@ -512,7 +513,7 @@ export default function AnalyticsPage({
                     <th
                       key={col.key}
                       onClick={() => handleSort(col.key)}
-                      style={{ ...tableHeader, cursor: "pointer" }}
+                      style={{ ...tableHeader, cursor: "pointer",fontSize:14,fontWeight:600 ,color:'#232425'}}
                     >
                       {col.label}
                       {sortKey === col.key
@@ -531,7 +532,7 @@ export default function AnalyticsPage({
                       {table.columns.map((col) => (
                         <td
                           key={col.key}
-                          style={{ fontSize: 16, fontWeight: 600 }}
+                          style={{ fontSize: 14, fontWeight: 600 ,color:'#464F60'}}
                         >
                           {row[col.key]}
                         </td>
@@ -540,16 +541,27 @@ export default function AnalyticsPage({
                   ))
                 ) : (
                   <tr>
-                    <td
-                      colSpan={table.columns.length}
-                      style={{
-                        textAlign: "center",
-                        padding: "20px",
-                        color: "#888",
-                        fontStyle: "italic",
-                      }}
-                    >
-                      No data available
+                    <td colSpan={table.columns.length} style={{ padding: "40px 0", textAlign: "center", background: "#fff" }}>
+                      {/* Centered illustration */}
+                      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
+                        {/* SVG Icon/Illustration (replace with your preferred SVG asset) */}
+                        <svg width="96" height="96" viewBox="0 0 96 96" fill="none">
+                          <rect x="23" y="28" width="48" height="40" rx="4" fill="#F5F6FA" />
+                          <rect x="31" y="36" width="32" height="4" rx="2" fill="#ECECF1" />
+                          <rect x="31" y="44" width="24" height="4" rx="2" fill="#ECECF1" />
+                          <circle cx="60" cy="59" r="10" fill="#ECECF1" />
+                          <rect x="73" y="67" width="8" height="4" rx="2" fill="#FF7F7F" transform="rotate(-30 73 67)" />
+                          <circle cx="64.5" cy="54.5" r="9.5" stroke="#DDDFF4" />
+                        </svg>
+                        {/* Main message */}
+                        <div style={{ marginTop: "18px", color: "#232425", fontWeight: 600, fontSize: "18px", lineHeight: 1.2 }}>
+                          {getAnalyticsMeta(pathname).title || "No records found"}
+                        </div>
+                        {/* Subtext */}
+                        <div style={{ marginTop: "8px", color: "#989898", fontWeight: 400, fontSize: "12px", lineHeight: 1.3 }}>
+                          {getAnalyticsMeta(pathname).description || "No records found"}
+                        </div>
+                      </div>
                     </td>
                   </tr>
                 )}

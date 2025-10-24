@@ -28,7 +28,7 @@ export default function ItemsSupplierPurchaseDetails() {
       shimmerCount={2}
     >
       {({ topCards, tableMeta, tableData }) => (
-        <div className="p-3">
+        <div className="p-3" style={{backgroundColor:'#ffffff'}}>
           {/* Top Cards */}
           <Row className="g-3 mb-4">
             {topCards.map((card, idx) => (

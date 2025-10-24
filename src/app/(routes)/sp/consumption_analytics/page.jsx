@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { useOrgFilters } from "@/components/hooks/useOrgFilters";
-import { usePathname, useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams, useRouter } from "next/navigation";
 import { formatDate } from "@/utils";
 import { useSessionStorageAnalytics } from "@/components/hooks/useSessionStorageAnalytics";
 import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer";
@@ -9,10 +9,13 @@ import AnalyticsPage from "@/components/common/smallPages/AnalyticsPage";
 import { useItemsConsumptionHistory } from "@/services/item-service";
 import { consumptionHistoryFormatter } from "@/utils/data_formatters/smallPagesDataFormatter";
 import { useDashboardContext } from "@/contexts/DashboardContext";
+import { IconCircleArrowLeft } from "@tabler/icons-react";
 
 export default function ConsumptionHistoryAnalysis() {
   const { isDeptLoading, isItemsLoading, departmentOptions, itemOptions } =
     useOrgFilters();
+  const { isMobile } = useDashboardContext();
+  const router = useRouter();
   const searchParams = useSearchParams();
   const { startDate: startDateCT, endDate: endDateCT } = useDashboardContext()
   const randomKey = Array.from(searchParams.keys())[0] || "ConsumptionHistory";
@@ -73,24 +76,24 @@ export default function ConsumptionHistoryAnalysis() {
 
   const styles = {
     headerBar: {
-      background: "linear-gradient(90deg, #11514b, #0f313a)",
+      background: "linear-gradient(90deg, #133448, #015858)",
       borderBottomLeftRadius: "30px",
       borderBottomRightRadius: "30px",
       padding: "25px 0 60px 0",
-      marginTop: 60,
+      // marginTop: 60,
       marginBottom: 42,
     },
     headerTitle: {
       color: "#fff",
-      fontSize: 38,
-      fontWeight: 800,
+      fontSize: 32,
+      fontWeight: 700,
       letterSpacing: "-1px",
       marginLeft: 12,
       marginBottom: 7,
     },
     headerSubtitle: {
-      fontSize: 18,
-      color: "rgba(255,255,255,0.84)",
+      color: "#EDEDEDBA",
+      fontSize: 15,
       fontWeight: 400,
       marginLeft: 12,
     },
@@ -194,8 +197,13 @@ export default function ConsumptionHistoryAnalysis() {
 
   return (
     <div style={{ background: "#f2f3fb", minHeight: "100vh" }}>
-      {!isDashboard ? <div style={styles.headerBar}>
-        <h1 style={styles.headerTitle}>Consumption Analytics</h1>
+      {!isDashboard ? <div style={styles.headerBar}><h1 style={styles.headerTitle}>
+        {
+          isMobile && <IconCircleArrowLeft
+            size={40}
+            style={{ cursor: "pointer" }}
+            onClick={() => router.back()} // ⬅️ Go to previous page
+          />} Consumption Analytics</h1>
         <p style={styles.headerSubtitle}>
           Real time insights into your restaurant consumption patterns and operational efficiency
         </p>

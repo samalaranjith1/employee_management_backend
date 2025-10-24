@@ -41,7 +41,7 @@ export const salesAnalyticsFormatter = (apiData) => {
           <IconChartLine stroke={2} color="#fff" size={28} />
         </div>
       ),
-      bgColor: "#F0F7FF",
+      bgColor: "#fff",
       iconBg: "#165DFF",
     },
     {
@@ -49,7 +49,7 @@ export const salesAnalyticsFormatter = (apiData) => {
       title: "Discount",
       value: `₹${apiData.discount ?? 0}`,
       icon: <FaTag color="#fff" size={24} />,
-      bgColor: "#F8F0FF",
+      bgColor: "#fff",
       iconBg: "#8000FF",
     },
     {
@@ -68,7 +68,7 @@ export const salesAnalyticsFormatter = (apiData) => {
           <IconCurrencyRupee stroke={2} color="#fff" size={28} />
         </div>
       ),
-      bgColor: "#F0FFF8",
+      bgColor: "#fff",
       iconBg: "#16C784",
     },
   ];
@@ -138,7 +138,7 @@ export const consumptionHistoryFormatter = (apiData) => {
       ),
       title: "Total Consumption",
       value: `₹${apiData.totalPrice?.toLocaleString() ?? 0}`,
-      bgColor: "#F2FBF5",
+      bgColor: "#fff",
       iconBg: "#21A365",
     },
     {
@@ -158,7 +158,7 @@ export const consumptionHistoryFormatter = (apiData) => {
 
       title: "Total Items",
       value: apiData.totalItems ?? 0,
-      bgColor: "#F5F8FF",
+      bgColor: "#fff",
       iconBg: "#2471EB",
     },
     // {
@@ -239,7 +239,7 @@ export const consumptionClosingFormatter = (apiData) => {
           <IconCurrencyRupee stroke={2} color="#fff" size={28} />
         </div>
       ),
-      bgColor: "#F2FBF5",
+      bgColor: "#fff",
       iconBg: "#21A365",
     },
     {
@@ -258,7 +258,7 @@ export const consumptionClosingFormatter = (apiData) => {
           <IconPackage stroke={2} color="#fff" size={28} />
         </div>
       ),
-      bgColor: "#F5F8FF",
+      bgColor: "#fff",
       iconBg: "#2471EB",
     },
   ];
@@ -321,7 +321,7 @@ export const purchaseHistoryFormatter = (apiData) => {
           <IconCurrencyRupee stroke={2} color="#fff" size={28} />
         </div>
       ),
-      bgColor: "#F0FFF5",
+      bgColor: "#fff",
       iconBg: "#16A34A",
     },
     {
@@ -341,7 +341,7 @@ export const purchaseHistoryFormatter = (apiData) => {
           <IconPackage stroke={2} color="#fff" size={28} />
         </div>
       ),
-      bgColor: "#FFF5F0",
+      bgColor: "#fff",
       iconBg: "#FF5722",
     },
   ];
@@ -405,10 +405,33 @@ export const itemPriceChangeFormatter = (apiData) => {
         </div>
       ),
       title: "Items with Price Change",
-      value: `${apiData.list.length ?? 0} out of ${
-        apiData.totalItemCount ?? 0
-      } (+₹${apiData.netAmount ?? 0} Monthly)`,
-      bgColor: "#FFF5F0",
+      value: (
+        <div>
+          <div
+            style={{
+              fontSize: "24px",
+              fontWeight: 700,
+              lineHeight: 1.2,
+              marginTop: "2px",
+            }}
+          >
+            {apiData.list.length ?? 0} out of {apiData.totalItemCount ?? 0}
+          </div>
+
+          <div
+            style={{
+              color: "#2566e5",
+              fontSize: "12px",
+              fontWeight: 400,
+              marginTop: "2px",
+            }}
+          >
+            ₹{apiData.netAmount ?? 0}{" "}
+            <span style={{ fontSize: "12px" }}>Monthly</span>
+          </div>
+        </div>
+      ),
+      bgColor: "#fff",
       iconBg: "#2471EB",
     },
     {
@@ -426,10 +449,34 @@ export const itemPriceChangeFormatter = (apiData) => {
         </div>
       ),
       title: "Items with Price Increase",
-      value: `${apiData.priceUpItemCount ?? 0}  (₹${
-        apiData.priceUpAmount ?? 0
-      } Monthly)`,
-      bgColor: "#F5F8FF",
+      value: (
+        <div>
+          <div
+            style={{
+              fontSize: "24px",
+              fontWeight: 700,
+              lineHeight: 1.2,
+              marginTop: "2px",
+            }}
+          >
+            {apiData.priceUpItemCount ?? 0}
+          </div>
+
+          <div
+            style={{
+              color: "#2566e5",
+              fontSize: "12px",
+              fontWeight: 400,
+              marginTop: "2px",
+            }}
+          >
+            ₹{apiData.priceUpAmount ?? 0}{" "}
+            <span style={{ fontSize: "12px" }}>Monthly</span>
+          </div>
+        </div>
+      )
+      ,
+      bgColor: "#fff",
       iconBg: "#FF7800",
     },
     {
@@ -448,11 +495,34 @@ export const itemPriceChangeFormatter = (apiData) => {
       ),
       title: "Items with Price Decrease",
       value: apiData.priceDownItemCount ?? 0,
-      value: `${apiData.priceDownItemCount ?? 0} (₹${
-        apiData.priceDownItemAmount ?? 0
-      } Monthly)`,
+      value: (
+        <div>
+          <div
+            style={{
+              fontSize: "24px",
+              fontWeight: 700,
+              lineHeight: 1.2,
+              marginTop: "2px",
+            }}
+          >
+            {apiData.priceDownItemCount ?? 0}
+          </div>
 
-      bgColor: "#F2FBF5",
+          <div
+            style={{
+              color: "#2566e5",
+              fontSize: "12px",
+              fontWeight: 400,
+              marginTop: "2px",
+            }}
+          >
+            ₹{apiData.priceDownItemAmount ?? 0}{" "}
+            <span style={{ fontSize: "12px" }}>Monthly</span>
+          </div>
+        </div>
+      )
+      ,
+      bgColor: "#fff",
       iconBg: "#21A365",
     },
   ];
@@ -520,161 +590,279 @@ export const receipesDataFormatter = (apiData) => {
     {
       id: "highMargin",
       title: (
-        <>
-          <div style={{ color: "#00A650", fontWeight: 700, fontSize: 15 }}>
-            High Margin
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "start" }}>
+          <div>
+            <div
+              style={{
+                color: "#00A650",
+                fontWeight: 600,
+                fontSize: "14px",
+                lineHeight: "18px",
+                marginBottom: "2px",
+              }}
+            >
+              High Margin
+            </div>
+            <div
+              style={{
+                color: "#1A1A1A",
+                fontWeight: 700,
+                fontSize: "20px",
+                lineHeight: "24px",
+              }}
+            >
+              Profitable Products
+            </div>
           </div>
-          Profitable Products
-        </>
+
+          <div
+            style={{
+              background: "#02BA71",
+              borderRadius: "12px",
+              padding: "10px",
+              boxShadow: "0px 2px 6px rgba(0, 0, 0, 0.1)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              marginLeft: "+60px",
+            }}
+          >
+            <IconTrendingUp stroke={2} color="#fff" size={24} />
+          </div>
+        </div>
       ),
       value: (
-        <div>
-          <div style={{ fontWeight: 600 }}>
+        <div
+          style={{
+            marginTop: "16px",
+            borderTop: "1px solid rgba(0, 0, 0, 0.1)",
+            paddingTop: "12px",
+            fontSize: "14px",
+            color: "#1A1A1A",
+          }}
+        >
+          <div style={{ fontWeight: 600, marginBottom: "6px" }}>
             Products{" "}
             <span style={{ fontWeight: 400, float: "right" }}>
               {apiData.profitableProducts?.products ?? 0}
             </span>
           </div>
-          <div style={{ fontWeight: 600 }}>
+
+          <div style={{ fontWeight: 600, marginBottom: "6px" }}>
             Total Sales{" "}
             <span style={{ fontWeight: 400, float: "right" }}>
               ₹{apiData.profitableProducts?.sales ?? 0}
             </span>
           </div>
+
           <div style={{ fontWeight: 600, color: "#00A650" }}>
             Shares{" "}
-            <span
-              style={{
-                fontWeight: 400,
-                float: "right",
-                color: "#00A650",
-              }}
-            >
+            <span style={{ fontWeight: 600, float: "right", color: "#00A650" }}>
               {apiData.profitableProducts?.share ?? 0}%
             </span>
           </div>
         </div>
       ),
-      icon: (
-        <div
-          style={{
-            background: "#02ba71",
-            borderRadius: "16px",
-            padding: "12px",
-            display: "inline-block",
-          }}
-        >
-          <IconTrendingUp stroke={2} color="#fff" size={28} />
-        </div>
-      ),
-      bgColor: "#e9fef4",
-      iconBg: "#00A650",
+      // icon: (
+      //   <div
+      //     style={{
+      //       background: "#02ba71",
+      //       borderRadius: "16px",
+      //       padding: "12px",
+      //       display: "inline-block",
+      //     }}
+      //   >
+      //     <IconTrendingUp stroke={2} color="#fff" size={28} />
+      //   </div>
+      // ),
+      bgColor: "linear-gradient(135deg, #EAFEF4, #E6FFF2)",
+      // iconBg: "#00A650",
     },
     {
-      id: "medioumMargin",
+      id: "mediumMargin",
       title: (
-        <>
-          <div style={{ color: "#00A650", fontWeight: 700, fontSize: 15 }}>
-            Medium Margin
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "start" }}>
+          <div>
+            <div
+              style={{
+                color: "#DF9C0E",
+                fontWeight: 600,
+                fontSize: "14px",
+                lineHeight: "18px",
+                marginBottom: "2px",
+              }}
+            >
+              Medium Margin
+            </div>
+            <div
+              style={{
+                color: "#1A1A1A",
+                fontWeight: 700,
+                fontSize: "20px",
+                lineHeight: "24px",
+              }}
+            >
+              Moderate Products
+            </div>
           </div>
-          Moderate Products
-        </>
+
+          <div
+            style={{
+              background: "#DF9C0E",
+              borderRadius: "12px",
+              padding: "10px",
+              boxShadow: "0px 2px 6px rgba(0, 0, 0, 0.1)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              marginLeft: "+60px",
+            }}
+          >
+            <IconTrendingUp stroke={2} color="#fff" size={24} />
+          </div>
+        </div>
       ),
+
       value: (
-        <div>
-          <div style={{ fontWeight: 600 }}>
+        <div
+          style={{
+            marginTop: "16px",
+            borderTop: "1px solid rgba(0, 0, 0, 0.1)",
+            paddingTop: "12px",
+            fontSize: "14px",
+            color: "#1A1A1A",
+          }}
+        >
+          <div style={{ fontWeight: 600, marginBottom: "6px" }}>
             Products{" "}
             <span style={{ fontWeight: 400, float: "right" }}>
               {apiData.moderateProducts?.products ?? 0}
             </span>
           </div>
-          <div style={{ fontWeight: 600 }}>
+
+          <div style={{ fontWeight: 600, marginBottom: "6px" }}>
             Total Sales{" "}
             <span style={{ fontWeight: 400, float: "right" }}>
               ₹{apiData.moderateProducts?.sales ?? 0}
             </span>
           </div>
-          <div style={{ fontWeight: 600, color: "#00A650" }}>
+
+          <div style={{ fontWeight: 600, color: "#DF9C0E" }}>
             Shares{" "}
-            <span
-              style={{
-                fontWeight: 400,
-                float: "right",
-                color: "#00A650",
-              }}
-            >
+            <span style={{ fontWeight: 600, float: "right", color: "#DF9C0E" }}>
               {apiData.moderateProducts?.share ?? 0}%
             </span>
           </div>
         </div>
       ),
-      icon: (
-        <div
-          style={{
-            background: "#df9c0e",
-            borderRadius: "16px",
-            padding: "12px",
-            display: "inline-block",
-          }}
-        >
-          <IconTrendingUp stroke={2} color="#fff" size={28} />
-        </div>
-      ),
-      bgColor: "#fffcea",
-      iconBg: "#00A650",
+      // icon: (
+      //   <div
+      //     style={{
+      //       background: "#df9c0e",
+      //       borderRadius: "16px",
+      //       padding: "12px",
+      //       display: "inline-block",
+      //     }}
+      //   >
+      //     <IconTrendingUp stroke={2} color="#fff" size={28} />
+      //   </div>
+      // ),
+      bgColor: "linear-gradient(135deg, #FFFBEA, #FEFCE9)",
+      // iconBg: "#00A650",
     },
     {
       id: "lowMargin",
+
       title: (
-        <>
-          <div style={{ color: "#00A650", fontWeight: 700, fontSize: 15 }}>
-            Low Margin
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "start" }}>
+          <div>
+            <div
+              style={{
+                color: "#EE2840", // red accent
+                fontWeight: 600,
+                fontSize: "14px",
+                lineHeight: "18px",
+                marginBottom: "2px",
+              }}
+            >
+              Low Margin
+            </div>
+            <div
+              style={{
+                color: "#1A1A1A",
+                fontWeight: 700,
+                fontSize: "20px",
+                lineHeight: "24px",
+              }}
+            >
+              Low Making Products
+            </div>
           </div>
-          Low making Products
-        </>
+
+          <div
+            style={{
+              background: "#EE2840",
+              borderRadius: "12px",
+              padding: "12px 12px",
+              boxShadow: "0px 2px 6px rgba(0, 0, 0, 0.1)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              marginLeft: "+60px",
+            }}
+          >
+            <IconTrendingDown stroke={2} color="#fff" size={20} />
+          </div>
+        </div>
       ),
+
       value: (
-        <div>
-          <div style={{ fontWeight: 600 }}>
+        <div
+          style={{
+            marginTop: "16px",
+            borderTop: "1px solid rgba(0, 0, 0, 0.1)",
+            paddingTop: "12px",
+            fontSize: "14px",
+            color: "#1A1A1A",
+          }}
+        >
+          <div style={{ fontWeight: 600, marginBottom: "6px" }}>
             Products{" "}
             <span style={{ fontWeight: 400, float: "right" }}>
               {apiData.lossMakingProducts?.products ?? 0}
             </span>
           </div>
-          <div style={{ fontWeight: 600 }}>
+
+          <div style={{ fontWeight: 600, marginBottom: "6px" }}>
             Total Sales{" "}
             <span style={{ fontWeight: 400, float: "right" }}>
               ₹{apiData.lossMakingProducts?.sales ?? 0}
             </span>
           </div>
-          <div style={{ fontWeight: 600, color: "#00A650" }}>
+
+          <div style={{ fontWeight: 600, color: "#EE2840" }}>
             Shares{" "}
-            <span
-              style={{
-                fontWeight: 400,
-                float: "right",
-                color: "#00A650",
-              }}
-            >
+            <span style={{ fontWeight: 600, float: "right", color: "#EE2840" }}>
               {apiData.lossMakingProducts?.share ?? 0}%
             </span>
           </div>
         </div>
       ),
-      icon: (
-        <div
-          style={{
-            background: "#ee2840",
-            borderRadius: "16px",
-            padding: "12px",
-            display: "inline-block",
-          }}
-        >
-          <IconTrendingDown stroke={2} color="#fff" size={28} />
-        </div>
-      ),
-      bgColor: "#fff3f2",
-      iconBg: "#00A650",
+
+      // icon: (
+      //   <div
+      //     style={{
+      //       background: "#ee2840",
+      //       borderRadius: "16px",
+      //       padding: "12px",
+      //       display: "inline-block",
+      //     }}
+      //   >
+      //     <IconTrendingDown stroke={2} color="#fff" size={28} />
+      //   </div>
+      // ),
+      bgColor: "linear-gradient(135deg, #FEF2F2, #FEF2F3)",
+      // iconBg: "#00A650",
     },
     // Additional cards can be added similarly if needed
   ];

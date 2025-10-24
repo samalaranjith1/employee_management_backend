@@ -30,7 +30,7 @@ export default function ItemsDepartmentAnalytics() {
       shimmerCount={1}
     >
       {(formattedData) => (
-        <Container fluid className="p-3 bg-light rounded shadow-sm">
+        <Container fluid className="p-3 pt-0 bg-light rounded shadow-sm">
           {/* Header */}
 
           <Row className="mb-3" style={{ fontFamily: "Inter, sans-serif" }}>
@@ -40,16 +40,16 @@ export default function ItemsDepartmentAnalytics() {
                 style={{
                   background: "#464df9",
                   borderRadius: "12px",
-                  padding: "12px",
+                  padding: "8px",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
                   boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
-                  minWidth: "48px",
-                  minHeight: "48px",
+                  minWidth: "40px",
+                  minHeight: "40px",
                 }}
               >
-                <FaTable size={24} color="#fff" />
+                <FaTable size={20} color="#fff" />
               </div>
             </Col>
 

@@ -15,91 +15,89 @@ export default function ItemsDepartmentDistributionChart() {
   const [selectedKey, setSelectedKey] = useState("consumptionValue");
 
   return (
-    <ServiceRenderer
-      queryHook={useDepartmentsUsageList}
-      queryKey={[
-        "departmentsUsageListChart",
-        { startdt: startDate, enddt: endDate },
-      ]}
-      queryFn={() =>
-        useDepartmentsUsageList({
-          startdt: startDate,
-          enddt: endDate,
-        }).queryFn
-      }
-      queryArgs={[{ startdt: startDate, enddt: endDate, outlet: 1, userId: 7 }]}
-      formatter={(data) =>
-        departmentDistributionChartDataFormatter(data, selectedKey)
-      }
-      shimmerCount={1}
-    >
-      {({ formatted, total }) => (
-        <Card className="p-2 pt-0 shadow-sm" style={{ borderRadius: "16px" }}>
-          {/* Header */}
-          <Row
-            className="mb-3 p-3 align-items-center"
+    <Card className="p-3 pt-0 border-0 shadow-sm">
+      <Row
+        className="mb-3 p-3 align-items-center"
+        style={{
+          backgroundColor: "rgb(251,244,252)",
+        }}
+      >
+        {/* ✅ Column 1: Icon */}
+        <Col xs="auto" className="d-flex align-items-center">
+          <div
             style={{
-              backgroundColor: "rgb(251,244,252)",
+              background: '#b621fe',
+              borderRadius: '12px',
+              padding: '8px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
             }}
           >
-            {/* ✅ Column 1: Icon */}
-            <Col xs="auto" className="d-flex align-items-center">
-              <div
-                style={{
-                  background: '#b621fe',
-                  borderRadius: '12px',
-                  padding: '8px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center'
-                }}
-              >
-                <IconChartPie2 size={20} stroke={2} color="#fff" />
-              </div>
-            </Col>
+            <IconChartPie2 size={20} stroke={2} color="#fff" />
+          </div>
+        </Col>
 
-            {/* ✅ Column 2: Text + Dropdown */}
-            <Col className="d-flex align-items-center justify-content-between flex-wrap">
-              <div className="me-3">
-                <h5 className="fw-bold mb-0">Department Distribution Chart</h5>
-                {/* <p className="text-muted mb-0" style={{ fontSize: "0.9rem" }}>
+        {/* ✅ Column 2: Text + Dropdown */}
+        <Col className="d-flex align-items-center justify-content-between flex-wrap">
+          <div className="me-3">
+            <h5 className="fw-bold mb-0">Department Distribution Chart</h5>
+            {/* <p className="text-muted mb-0" style={{ fontSize: "0.9rem" }}>
                   Visual breakdown of departmental metrics
                 </p> */}
-              </div>
-              <div>
-                <Dropdown onSelect={(k) => setSelectedKey(k)}>
-                  <Dropdown.Toggle
-                    variant="light"
-                    className="border rounded-pill px-3"
-                  >
-                    {selectedKey === "consumptionValue"
-                      ? "Consumption Quantity (GM)"
-                      : "Net Sales"}
-                  </Dropdown.Toggle>
-                  <Dropdown.Menu>
-                    <Dropdown.Item eventKey="consumptionValue">
-                      Consumption Quantity (GM)
-                    </Dropdown.Item>
-                    <Dropdown.Item eventKey="netSales">Net Sales</Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
-              </div>
-            </Col>
-          </Row>
-
-
-          {/* Graph + Table */}
-          <Row>
-            <ItemsDepartmentDistributionChartGraph formatted={formatted} />
-            <ItemsDepartmentDistributionChartTable
-              formatted={formatted}
-              total={total}
-              selectedKey={selectedKey}
-            />
-          </Row>
-        </Card>
-      )}
-    </ServiceRenderer>
+          </div>
+          <div>
+            <Dropdown onSelect={(k) => setSelectedKey(k)}>
+              <Dropdown.Toggle
+                variant="light"
+                className="border rounded-pill px-3"
+              >
+                {selectedKey === "consumptionValue"
+                  ? "Consumption Quantity (GM)"
+                  : "Net Sales"}
+              </Dropdown.Toggle>
+              <Dropdown.Menu>
+                <Dropdown.Item eventKey="consumptionValue">
+                  Consumption Quantity (GM)
+                </Dropdown.Item>
+                <Dropdown.Item eventKey="netSales">Net Sales</Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+          </div>
+        </Col>
+      </Row>
+      <ServiceRenderer
+        queryHook={useDepartmentsUsageList}
+        queryKey={[
+          "departmentsUsageListChart",
+          { startdt: startDate, enddt: endDate },
+        ]}
+        queryFn={() =>
+          useDepartmentsUsageList({
+            startdt: startDate,
+            enddt: endDate,
+          }).queryFn
+        }
+        queryArgs={[{ startdt: startDate, enddt: endDate, outlet: 1, userId: 7 }]}
+        formatter={(data) =>
+          departmentDistributionChartDataFormatter(data, selectedKey)
+        }
+        shimmerCount={1}
+      >
+        {({ formatted, total }) => (
+          <Card className="p-2 pt-0 shadow-sm border-0" style={{ borderRadius: "16px" }}>
+            <Row>
+              <ItemsDepartmentDistributionChartGraph formatted={formatted} />
+              <ItemsDepartmentDistributionChartTable
+                formatted={formatted}
+                total={total}
+                selectedKey={selectedKey}
+              />
+            </Row>
+          </Card>
+        )}
+      </ServiceRenderer>
+    </Card >
   );
 }
 // "use client";

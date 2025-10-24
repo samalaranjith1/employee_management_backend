@@ -33,7 +33,7 @@ export default function ItemsMenuItemConsumptionAnalysisTable({
           maxHeight: "65vh",
           overflowY: "auto",
           borderRadius: "12px",
-          border: "1px solid #dee2e6",
+          // border: "1px solid #dee2e6",
         }}
       >
         <Table

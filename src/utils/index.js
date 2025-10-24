@@ -328,4 +328,69 @@ export function handleNavigation({ router, url, params = {} }) {
   }
 }
 
+// utils/getAnalyticsMeta.ts
+
+export function getAnalyticsMeta(url) {
+  let title = "Analytics Dashboard";
+  let description = "Explore detailed analytics and performance insights.";
+
+  switch (true) {
+    case url.includes("consumption_analytics"):
+      title = "No consumption records found";
+      description =
+        "Adjust your filters to discover restaurant consumption patterns";
+      break;
+
+    case url.includes("consumption_closing_analytics"):
+      title = "No consumption records found";
+      description =
+        "Adjust your filters to discover restaurant consumption patterns";
+      break;
+
+    case url.includes("item_price_change_analytics"):
+      title = "No price changes found";
+      description =
+        "Adjust your filters to discover restaurant sales patterns";
+      break;
+
+    case url.includes("purchase_analytics"):
+      title = "No purchase records found";
+      description =
+        "Adjust your filters to discover restaurant purchase patterns";
+      break;
+
+    case url.includes("reciepe_analytics"):
+      title = "No sales records found";
+      description =
+        "Adjust your filters to discover restaurant purchase patterns";
+      break;
+
+    case url.includes("sales_analytics"):
+      title = "No sales records found";
+      description =
+        "Adjust your filters to discover restaurant sales patterns";
+      break;
+
+    case url.includes("ware_house_analytics"):
+      title = "No stock records found";
+      description =
+        "Adjust your filters to discover restaurant stock patterns";
+      break;
+
+    case url.includes("wastage_analytics"):
+      title = "No wastage records found";
+      description =
+        "Adjust your filters to discover restaurant wastage patterns";
+      break;
+
+    default:
+      // fallback
+      title = "Analytics Dashboard";
+      description =
+        "Explore detailed analytics and performance insights across all domains.";
+      break;
+  }
+
+  return { title, description };
+}
 

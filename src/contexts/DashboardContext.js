@@ -8,22 +8,24 @@ const DashboardContext = createContext();
 export function DashboardContextProvider({ children }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   //dashboard filters startDate, endDate
-    const [startDate, setStartDate] = useState(formatDate(new Date()));
-    const [endDate, setEndDate] = useState(formatDate(new Date()));
-    const [dashboardFilter,setDashboardFilter]= useState({
-      startDate:startDate,
-      endDate:endDate
-    })
+  const [startDate, setStartDate] = useState(formatDate(new Date()));
+  const [endDate, setEndDate] = useState(formatDate(new Date()));
+  const [activeTab, setActiveTab] = useState("home");
 
-     const [isMobile, setIsMobile] = useState(false);
-    
-      // detect mobile
-      useEffect(() => {
-        const checkScreen = () => setIsMobile(window.innerWidth < 768);
-        checkScreen();
-        window.addEventListener("resize", checkScreen);
-        return () => window.removeEventListener("resize", checkScreen);
-      }, []);
+  const [dashboardFilter, setDashboardFilter] = useState({
+    startDate: startDate,
+    endDate: endDate
+  })
+
+  const [isMobile, setIsMobile] = useState(false);
+
+  // detect mobile
+  useEffect(() => {
+    const checkScreen = () => setIsMobile(window.innerWidth < 768);
+    checkScreen();
+    window.addEventListener("resize", checkScreen);
+    return () => window.removeEventListener("resize", checkScreen);
+  }, []);
   const toggleSidebar = () => setIsSidebarOpen((prev) => !prev);
   const contextValues = {
     isSidebarOpen,
@@ -34,7 +36,8 @@ export function DashboardContextProvider({ children }) {
     setEndDate,
     toggleSidebar,
     dashboardFilter,
-    isMobile, setIsMobile
+    isMobile, setIsMobile,
+    activeTab, setActiveTab
   };
 
   return (

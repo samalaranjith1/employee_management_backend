@@ -14,76 +14,78 @@ export default function ItemsMenuItemConsumptionAnalysis() {
   const { startDate, endDate } = useItemsContext();
 
   return (
-    <ServiceRenderer
-      queryHook={useItemProductsList}
-      queryKey={["itemProductsList", { startdt: startDate, enddt: endDate }]}
-      queryFn={() =>
-        useItemProductsList({
-          startdt: startDate,
-          enddt: endDate,
-        }).queryFn
-      }
-      queryArgs={[74, { startdt: startDate, enddt: endDate, outlet: 1, userId: 7 }]}
-      formatter={menuItemConsumptionAnalysisDataFormatter}
-      shimmerCount={1}
-    >
-      {(formattedData) => {
-        const chartData = formattedData.map((d) => ({
-          name: d.name,
-          value: parseInt(d.totalConsumption),
-        }));
-
-        return (
-          <Card
-            className="p-0 shadow-sm"
-            style={{ borderRadius: "12px", background: "#fff" }}
+    <Card className="p-3 pt-0 border-0 shadow-sm">
+      <Row className="align-items-center mb-3" style={{
+        backgroundColor: "#FFF9EC",
+        // margin: "10px"
+      }}>
+        {/* ✅ Column 1: Icon */}
+        <Col xs="auto">
+          <div
+            style={{
+              background: '#FA9600', // Figma-style strong orange
+              borderRadius: '12px',
+              padding: '12px',
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
           >
-            <Row className="align-items-center mb-3" style={{
-              backgroundColor: "#FFF9EC",
-              margin:"10px"
-            }}>
-              {/* ✅ Column 1: Icon */}
-              <Col xs="auto">
-                <div
-                  style={{
-                    background: '#FA9600', // Figma-style strong orange
-                    borderRadius: '12px',
-                    padding: '12px',
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}
-                >
-                  <IconPackage stroke={2} color="#fff" size={24} />
-                </div>
-              </Col>
+            <IconPackage stroke={2} color="#fff" size={24} />
+          </div>
+        </Col>
 
-              {/* ✅ Column 2: Text content */}
-              <Col style={{paddingleft:"-50px"}}>
-                <div
-                 //sName="p-3"
-                  style={{
-                    borderRadius: "12px",
-                  }}
-                >
-                  <h5 className="mb-2" style={{fontWeight:700, fontSize:"18px", color:"#232425",}}>Menu Item Consumption Analysis</h5>
-                  {/* <p className="text-muted small mb-0">
+        {/* ✅ Column 2: Text content */}
+        <Col style={{ paddingleft: "-50px" }}>
+          <div
+            //sName="p-3"
+            style={{
+              borderRadius: "12px",
+            }}
+          >
+            <h5 className="mb-2" style={{ fontWeight: 700, fontSize: "18px", color: "#232425", }}>Menu Item Consumption Analysis</h5>
+            {/* <p className="text-muted small mb-0">
                     Item consumption breakdown by menu items with quantity distribution
                   </p> */}
-                </div>
-              </Col>
-            </Row>
+          </div>
+        </Col>
+      </Row>
+      <ServiceRenderer
+        queryHook={useItemProductsList}
+        queryKey={["itemProductsList", { startdt: startDate, enddt: endDate }]}
+        queryFn={() =>
+          useItemProductsList({
+            startdt: startDate,
+            enddt: endDate,
+          }).queryFn
+        }
+        queryArgs={[74, { startdt: startDate, enddt: endDate, outlet: 1, userId: 7 }]}
+        formatter={menuItemConsumptionAnalysisDataFormatter}
+        shimmerCount={1}
+      >
+        {(formattedData) => {
+          const chartData = formattedData.map((d) => ({
+            name: d.name,
+            value: parseInt(d.totalConsumption),
+          }));
 
-            <Row className="p-2">
-              <ItemsMenuItemConsumptionAnalysisTable
-                formattedData={formattedData}
-              />
-              <ItemsMenuItemConsumptionAnalysisGraph chartData={chartData} />
-            </Row>
-          </Card>
-        );
-      }}
-    </ServiceRenderer>
+          return (
+            <Card
+              className="p-0 shadow-sm border-0"
+              style={{ borderRadius: "12px", background: "#fff" }}
+            >
+
+              <Row className="p-2">
+                <ItemsMenuItemConsumptionAnalysisTable
+                  formattedData={formattedData}
+                />
+                <ItemsMenuItemConsumptionAnalysisGraph chartData={chartData} />
+              </Row>
+            </Card>
+          );
+        }}
+      </ServiceRenderer>
+    </Card>
   );
 }
 // "use client";

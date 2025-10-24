@@ -13,7 +13,7 @@ import { purchaseTrendAnalysisDataFormatter } from "@/utils/data_formatters/item
 import { subDays, subWeeks, subMonths, format } from "date-fns";
 import ItemsPurchaseTrendAnalysisGraph from "@/components/common/items/GraphWrapper/ItemsPurchaseTrendAnalysisGraph";
 import ItemsPurchaseTrendAnalysisTable from "@/components/common/items/TableSort/ItemsPurchaseTrendAnalysisTable";
-import { ButtonGroup, Col, Row, ToggleButton } from "react-bootstrap";
+import { ButtonGroup, Card, Col, Row, ToggleButton } from "react-bootstrap";
 import { IconTrendingUp } from "@tabler/icons-react";
 
 export default function ItemsPurchaseTrendAnalysis() {
@@ -72,9 +72,9 @@ export default function ItemsPurchaseTrendAnalysis() {
   }, [filter]);
 
   return (
-    <div className="trend-analysis">
+    <Card className="p-3 pt-0 border-0 shadow-sm">
       <div
-        className="mb-3 p-3"
+        className="mb-3 p-3 pl-0 pr-0"
         style={{ backgroundColor: "rgb(243,246,255)" }}
       >
         <Row className="align-items-center">
@@ -237,7 +237,7 @@ export default function ItemsPurchaseTrendAnalysis() {
           </>
         )}
       </ServiceRenderer>
-    </div>
+    </Card>
   );
 }
 

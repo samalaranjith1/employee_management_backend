@@ -132,7 +132,7 @@ export default function DepartmentConsumptionChart() {
             <Card style={styles.card}>
               {/* Header */}
 
-              <Row style={{ height: "65vh" }}>
+              <Row style={{ maxHeight: "65vh" }}>
                 {/* Pie Chart */}
                 <Col
                   md={6}
@@ -174,7 +174,7 @@ export default function DepartmentConsumptionChart() {
 
 
                 {/* Legend / Details */}
-                <Col md={6} sm={12} style={{ height: "65vh" }}>
+                <Col md={6} sm={12} style={{ maxHeight: "65vh" }}>
                   <div style={styles.scrollBox}>
                     {chartData.map((item, idx) => (
                       <div key={idx} style={styles.legendItem}>

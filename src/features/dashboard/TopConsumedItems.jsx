@@ -172,7 +172,7 @@ export default function TopConsumedItems() {
 
           return (
             <Card style={styles.card}>
-              <Row style={{ height: "65vh" }}>
+              <Row style={{ maxHeight: "65vh" }}>
                 {/* Pie Chart */}
                 <Col
                   md={6}
@@ -215,8 +215,8 @@ export default function TopConsumedItems() {
 
 
                 {/* Right: Legend + Values */}
-                <Col md={6} sm={12} style={{ height: "60vh" }}>
-                  <div style={styles.scrollBox}>
+                <Col md={6} sm={12} style={{ maxHeight: "65vh" }}>
+                  <div style={{...styles.scrollBox,maxHeight: "63vh"}}>
                     {dataWithPercent.map((item, idx) => (
                       <Row
                         key={idx}
@@ -268,7 +268,7 @@ export default function TopConsumedItems() {
                       </Row>
                     ))}
                   </div>
-                  <div style={styles.total}>
+                  <div style={{...styles.total,marginTop:"5px"}}>
                     <span className="c_small_text_extra_bold">Total Consumption:</span>
                     <span
                       style={{ paddingRight: "3vw" }}

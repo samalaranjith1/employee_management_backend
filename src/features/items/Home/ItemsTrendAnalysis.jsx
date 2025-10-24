@@ -14,7 +14,7 @@ import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer
 import { subDays, subWeeks, subMonths, format } from "date-fns";
 import ItemsTrendAnalysisGraph from "@/components/common/items/GraphWrapper/ItemsTrendAnalysisGraph";
 import ItemsTrendAnalysisTable from "@/components/common/items/TableSort/ItemsTrendAnalysisTable";
-import { ButtonGroup, Col, Row, ToggleButton } from "react-bootstrap";
+import { ButtonGroup, Card, Col, Row, ToggleButton } from "react-bootstrap";
 import { IconArrowsMaximize, IconTrendingUp } from "@tabler/icons-react";
 
 export default function ItemsTrendAnalysis() {
@@ -70,9 +70,9 @@ export default function ItemsTrendAnalysis() {
   }, [filter]);
 
   return (
-    <div className="p-1 mt-0">
+    <Card className="p-3 pt-0 border-0 shadow-sm">
       <Row
-        className="align-items-center mb-3 p-2"
+        className="align-items-center mb-3 p-2 mt-0"
         style={{
           backgroundColor: "rgb(243,246,255)",
         }}
@@ -192,8 +192,6 @@ export default function ItemsTrendAnalysis() {
           </ButtonGroup>
         </div>}
       </Row>
-     
-
       <ServiceRenderer
         queryHook={SelectedHook}
         queryKey={["itemsTrendAnalysis", filter, startDate, endDate]}
@@ -216,7 +214,7 @@ export default function ItemsTrendAnalysis() {
           </>
         )}
       </ServiceRenderer>
-    </div>
+    </Card>
   );
 }
 // "use client";
