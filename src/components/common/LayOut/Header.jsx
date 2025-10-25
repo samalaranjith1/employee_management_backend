@@ -26,6 +26,8 @@ import styles from "./Header.module.css";
 import { handleNavigation } from "@/utils";
 import { useRouter } from "next/navigation";
 import { IconBell, IconChefHat, IconChefHatFilled, IconMapPin, IconMenu2 } from "@tabler/icons-react";
+import MobileDurationFilters from "@/features/dashboard/MobileDurationFilter";
+import { useDashboardContext } from "@/contexts/DashboardContext";
 
 // 🔹 Reusable debounce hook
 function useDebounce(value, delay = 500) {
@@ -40,6 +42,7 @@ function useDebounce(value, delay = 500) {
 }
 
 export default function Header() {
+  const useAppContext = useDashboardContext()
   const router = useRouter();
   const [showMobileSearch, setShowMobileSearch] = useState(false);
   const [showNavPanel, setShowNavPanel] = useState(false);
@@ -270,6 +273,7 @@ export default function Header() {
                 </Button>
               </>
             )}
+            {/* {isMobile && <MobileDurationFilters useAppContext={useAppContext} />} */}
 
             {/* Outlet Dropdowns */}
             <Dropdown

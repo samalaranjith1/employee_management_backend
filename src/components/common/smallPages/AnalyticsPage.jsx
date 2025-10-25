@@ -11,6 +11,7 @@ import { TableControls } from "@/components/common/TableControls";
 import DOMPurify from "dompurify";
 import DurationFilters from "@/features/dashboard/DurationFilters";
 import SecondNavBar from "@/app/(routes)/dashboard/@Navbar/page";
+import MiniPagesDurationFilters from "@/features/dashboard/MiniPagesDurationFilters";
 
 export default function AnalyticsPage({
   title,
@@ -196,7 +197,15 @@ export default function AnalyticsPage({
                   );
                 })}
               </Row>
-              <DurationFilters
+              {/* <DurationFilters
+                useAppContext={{
+                  startDate: startDateC,
+                  endDate: endDateC,
+                  setStartDate: onStartDateChange,
+                  setEndDate: onEndDateChange,
+                }}
+              /> */}
+              <MiniPagesDurationFilters
                 useAppContext={{
                   startDate: startDateC,
                   endDate: endDateC,
@@ -513,7 +522,7 @@ export default function AnalyticsPage({
                     <th
                       key={col.key}
                       onClick={() => handleSort(col.key)}
-                      style={{ ...tableHeader, cursor: "pointer",fontSize:14,fontWeight:600 ,color:'#232425'}}
+                      style={{ ...tableHeader, cursor: "pointer", fontSize: 14, fontWeight: 600, color: '#232425' }}
                     >
                       {col.label}
                       {sortKey === col.key
@@ -532,7 +541,7 @@ export default function AnalyticsPage({
                       {table.columns.map((col) => (
                         <td
                           key={col.key}
-                          style={{ fontSize: 14, fontWeight: 600 ,color:'#464F60'}}
+                          style={{ fontSize: 14, fontWeight: 600, color: '#464F60' }}
                         >
                           {row[col.key]}
                         </td>

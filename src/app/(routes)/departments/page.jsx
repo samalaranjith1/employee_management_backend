@@ -113,9 +113,9 @@ useEffect(() => {
         departmentId={2}
         onManageClick={() => setShowCanvas(true)}
       />
-      <div className="p-2 d-md-none">
+      {/* <div className="p-2 d-md-none">
         <DurationFilters useAppContext={useAppContext} />
-      </div>
+      </div> */}
       <Container fluid className="mt-4">
         {/* <DepartmentCards cards={rawData.cards} /> */}
         {/* <DepartmentFilters

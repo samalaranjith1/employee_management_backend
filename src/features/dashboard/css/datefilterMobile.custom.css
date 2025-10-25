@@ -1,0 +1,214 @@
+.date-filter-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.date-dropdown-btn {
+  border: 1px solid #dcdcdc;
+  border-radius: 6px;
+  background: #fff;
+  color: #333;
+  font-size: 14px;
+  padding: 8px 16px;
+  min-width: 140px;
+  text-align: left;
+}
+
+/* Modal Backdrop */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(18, 18, 18, 0.33);
+  z-index: 50000;
+  cursor: pointer;
+}
+
+/* Modal (bottom sheet style) */
+.date-modal-root {
+  position: fixed;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  width: 100vw;
+  max-width: 420px;
+  min-height: 410px;
+  background: #fff;
+  border-top-left-radius: 34px;
+  border-top-right-radius: 34px;
+  box-shadow: 0 2px 24px rgba(31,34,38, 0.13);
+  z-index: 50001;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  animation: modal-sheet-in 0.25s cubic-bezier(.4,1,.4,1);
+}
+@keyframes modal-sheet-in {
+  from { transform: translate(-50%, 100px); opacity: 0; }
+  to { transform: translate(-50%, 0); opacity: 1; }
+}
+
+.date-modal-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 18px 0 6px;
+}
+.date-modal-title {
+  font-weight: 600;
+  font-size: 16px;
+}
+.date-modal-close {
+  position: absolute;
+  right: 20px;
+  top: 40%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  font-size: 26px;
+  color: #888;
+  cursor: pointer;
+  line-height: 1;
+}
+.date-modal-options {
+  margin-top: 0;
+  padding: 0 26px;
+  margin-bottom: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.date-radio-label {
+  display: flex;
+  align-items: center;
+  font-size: 15px;
+  gap: 10px;
+  padding: 11px 0 11px 0;
+  cursor: pointer;
+  position: relative;
+  font-weight: 400;
+  border-radius: 7px;
+  background: none;
+  border: none;
+  transition: background 0.15s;
+}
+.date-radio-label input {
+  display: none;
+}
+.custom-radio, .custom-radio.custom {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid #ffa346;
+  display: inline-block;
+  background: #fff;
+  position: relative;
+  margin-right: 5px;
+}
+.date-radio-label input:checked + .custom-radio, 
+.date-radio-label input:checked + .custom-radio.custom {
+  background: #ffa346;
+  border-color: #ffa346;
+}
+.date-radio-label input:checked + .custom-radio:after,
+.date-radio-label input:checked + .custom-radio.custom:after {
+  content: "";
+  display: block;
+  width: 10px; height: 10px;
+  margin: 3px auto;
+  background: white;
+  border-radius: 50%;
+}
+.date-radio-text {
+  flex: 1;
+  color: #222;
+  font-weight: 500;
+}
+.date-radio-side {
+  color: #9d9d9d;
+  font-size: 12px;
+  margin-left: auto;
+}
+.custom-trigger .custom-radio.custom {
+  border-color: #ffa346;
+}
+.custom-trigger .date-radio-text {
+  color: #ff8b24;
+  font-weight: 600;
+}
+.date-modal-pickerbox {
+  margin: 15px auto 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.modal-datepicker {
+  background: none;
+  border-radius: 17px;
+  box-shadow: none;
+  border: none;
+  font-family: inherit;
+  font-size: 15px;
+}
+.modal-datepicker .react-datepicker__month-container {
+  background: #f7f7f8;
+  border-radius: 16px;
+  padding: 14px;
+}
+.modal-datepicker .react-datepicker__header {
+  background: #f7f7f8;
+  border-bottom: none;
+}
+.modal-datepicker .react-datepicker__day,
+.modal-datepicker .react-datepicker__day--weekend {
+  border-radius: 8px;
+  font-size: 16px;
+  color: #444;
+  margin: 2px;
+}
+.modal-datepicker .react-datepicker__day--selected,
+.modal-datepicker .react-datepicker__day--in-range,
+.modal-datepicker .react-datepicker__day--range-start,
+.modal-datepicker .react-datepicker__day--range-end {
+  background: #ff8b24;
+  color: #fff;
+  border-radius: 8px;
+}
+.modal-datepicker .react-datepicker__day--keyboard-selected {
+  background: #ffe5c8;
+  color: #ff8b24;
+}
+.modal-datepicker .react-datepicker__current-month,
+.modal-datepicker .react-datepicker__month-year {
+  font-weight: 600;
+  margin-bottom: 6px;
+  font-size: 16px;
+  color: #444;
+}
+.modal-datepicker .react-datepicker__navigation-icon {
+  filter: invert(50%) sepia(100%) saturate(500%) hue-rotate(-25deg);
+}
+.date-modal-footer {
+  padding: 0 11px 11px 11px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+}
+.date-modal-save {
+  background: #ff8b24;
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 18px;
+  width: 100%;
+  padding: 14px 0;
+  margin: 0 auto;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(251,149,60,0.07);
+  transition: background 0.13s;
+}
+.date-modal-save:active,
+.date-modal-save:hover {
+  background: #ffa346;
+}

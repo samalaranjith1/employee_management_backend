@@ -43,6 +43,7 @@ import ConsumptionClosingAnalysis from "../sp/consumption_closing_analytics/page
 import WastageAnalytics from "../sp/wastage_analytics/page";
 import SecondNavBar from "./@Navbar/page";
 import { useDashboardContext } from "@/contexts/DashboardContext";
+import MobileDurationFilters from "@/features/dashboard/MobileDurationFilter";
 
 export default function Page() {
   const [activeTab, setActiveTab] = useState("Dashboard");
@@ -65,7 +66,8 @@ export default function Page() {
       {/* <div className="mt-4 pt-5"></div> */}
       {/* ✅ Duration filter stays outside tabs */}
       <div className="d-md-none d-sm-flex">
-        <DurationFilters useAppContext={useAppContext}/>
+        {/* <DurationFilters useAppContext={useAppContext}/> */}
+        {/* <MobileDurationFilters useAppContext={useAppContext} /> */}
       </div>
   
       <SecondNavBar tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} useAppContext={useAppContext} />

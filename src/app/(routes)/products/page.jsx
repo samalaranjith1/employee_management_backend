@@ -127,9 +127,9 @@ function ProductsPage() {
           Loading...
         </div>
       )}
-      <div className="p-2 d-md-none">
+      {/* <div className="p-2 d-md-none">
         <DurationFilters useAppContext={useAppContext} />
-      </div>
+      </div> */}
       <SecondNavBar
         tabs={navTabs}
         activeTab={activeTab}
