@@ -10,6 +10,7 @@ import DepartmentSales from "./Sales/DepartmentSales";
 import DepartmentSalesForcecast from "./SalesForecast/DepartmentSalesForcecast";
 import ActionableInsights from "../dashboard/ActionableInsights";
 import ItemConsumptionEfficiency from "./Home/ItemConsumptionEfficiency";
+import MainComponentHoldingCard from "@/components/common/MainComponentHoldingCard";
 
 function DepartmentContent({ activeKey, dateFilter }) {
   const { startDate, endDate } = useDepartmentContext();
@@ -17,9 +18,9 @@ function DepartmentContent({ activeKey, dateFilter }) {
   return (
     <div
       style={{
-        background: "#fff",
+        // background: "#fdfdfd",
         borderRadius: "12px",
-        marginTop: "1rem",
+        marginTop: "0.08rem",
         boxShadow: "0 2px 6px rgba(0,0,0,0.06)",
         display: "flex",
         flexDirection: "column",
@@ -38,18 +39,40 @@ function DepartmentContent({ activeKey, dateFilter }) {
       >
         {activeKey.toLowerCase() === "home" && <DepartmentHome />}
         {activeKey.toLowerCase() === "actionable insights" && (
-          <ActionableInsights />
+          <MainComponentHoldingCard>
+            <ActionableInsights />
+          </MainComponentHoldingCard>
         )}
-        {activeKey.toLowerCase() === "products" && <DepartmentProducts />}
-        {activeKey.toLowerCase() === "sales" && <DepartmentSales />}
+        {activeKey.toLowerCase() === "products" &&
+          <MainComponentHoldingCard>
+            <DepartmentProducts />
+          </MainComponentHoldingCard>
+        }
+        {activeKey.toLowerCase() === "sales" && 
+        <MainComponentHoldingCard>
+            <DepartmentSales />
+          </MainComponentHoldingCard>
+          }
         {/* {activeKey.toLowerCase() === "consumption" && <DepartmentConsumption />} */}
-        {activeKey.toLowerCase() === "consumption" && <ItemConsumptionEfficiency />}
-        {activeKey.toLowerCase() === "closing" && <DepartmentClosing />}
+        {activeKey.toLowerCase() === "consumption" && 
+        <MainComponentHoldingCard>
+            <ItemConsumptionEfficiency />
+          </MainComponentHoldingCard>
+          }
+        {activeKey.toLowerCase() === "closing" && 
+        <MainComponentHoldingCard>
+            <DepartmentClosing />
+          </MainComponentHoldingCard>
+          }
         {activeKey.toLowerCase() === "sales-forecast" && (
-          <DepartmentSalesForcecast />
+          <MainComponentHoldingCard>
+            <DepartmentSalesForcecast />
+          </MainComponentHoldingCard>
         )}
         {activeKey.toLowerCase() === "consumption-forecast" && (
-          <DepartmentConsumptionForeCast />
+          <MainComponentHoldingCard>
+            <DepartmentConsumptionForeCast />
+          </MainComponentHoldingCard>
         )}
       </div>
     </div>
@@ -94,7 +117,7 @@ export default DepartmentContent;
 //         {activeKey.toLowerCase() === "products" && <DepartmentProducts />}
 //         {activeKey.toLowerCase() === "sales" && <DepartmentSales />}
 //         {/* {activeKey.toLowerCase() === "consumption" && <DepartmentConsumption />} */}
-//         {activeKey.toLowerCase() === "consumption" && <ItemConsumptionEfficiency />}        
+//         {activeKey.toLowerCase() === "consumption" && <ItemConsumptionEfficiency />}
 //         {activeKey.toLowerCase() === "closing" && <DepartmentClosing />}
 //         {activeKey.toLowerCase() === "sales-forecast" && (
 //           <DepartmentSalesForcecast />

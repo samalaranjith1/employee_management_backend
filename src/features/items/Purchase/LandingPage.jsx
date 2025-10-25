@@ -5,7 +5,7 @@ import ItemsPurchaseAnalyticsOverView from './ItemsPurchaseAnalyticsOverView'
 
 function LandingPage() {
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '10px',backgroundColor:'#fafafa'}}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '10px',backgroundColor:'#eee'}}>
       <ItemsSupplierPurchaseDetails />
       <ItemsPurchaseTrendAnalysis />
       <ItemsPurchaseAnalyticsOverView />

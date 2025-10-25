@@ -43,7 +43,7 @@ export default function ItemConsumptionEfficiencyCards({ cards = [] }) {
                 style={{
                   width: 48,
                   height: 48,
-                  backgroundColor: card.bgSolid,
+                  // backgroundColor: card.bgSolid,
                   color: "#fff",
                   fontSize: "1.35rem",
                   borderRadius: "12px",

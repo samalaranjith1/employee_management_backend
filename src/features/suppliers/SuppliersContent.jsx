@@ -1,3 +1,4 @@
+import MainComponentHoldingCard from "@/components/common/MainComponentHoldingCard";
 import SuppliersHomePage from "./Home/LandingPage";
 import ItemsTab from "./Items/LandingPage";
 
@@ -18,7 +19,12 @@ function SuppliersContent({ activeTab, dateFilter }) {
       {/* Scrollable content */}
       <div style={{ flexGrow: 1, overflowY: "auto" }}>
         {activeTab === "Home" && <SuppliersHomePage />}
-        {activeTab === "Items" && <ItemsTab />}
+        {activeTab === "Items" && 
+         <div style={{marginTop:'-0.5rem'}}>
+      <MainComponentHoldingCard>
+        <ItemsTab />
+      </MainComponentHoldingCard>
+      </div>}
       </div>
     </div>
   );

@@ -11,11 +11,11 @@ import ComponentHeader from "@/components/common/ComponentHeader";
 import { IconTarget } from "@tabler/icons-react";
 
 export default function ItemConsumptionEfficiency() {
-  const { startDate, endDate } = useDepartmentContext();
+  const { startDate, endDate ,activeKey} = useDepartmentContext();
 
   return (
     <div className="p-3">
-      <ComponentHeader
+      {activeKey !=="Consumption" &&<ComponentHeader
         title="Item Consumption Efficiency"
         description="Monitor wastage patterns and consumption inefficiencies across menu items"
         titleColor="#232425"
@@ -23,15 +23,15 @@ export default function ItemConsumptionEfficiency() {
         isShowArrows={true}
         isExpandable={true}
         titleIcon={<div style={{
-      background: '#ff5b09',
-      borderRadius: '12px',
-      padding: '8px',
-      display: 'inline-block'
-    }}>
-      <IconTarget stroke={2} color="#fff" size={24} />
-    </div>} // Insert Tabler/target icon here to match the first image
+          background: '#ff5b09',
+          borderRadius: '12px',
+          padding: '8px',
+          display: 'inline-block'
+        }}>
+          <IconTarget stroke={2} color="#fff" size={24} />
+        </div>} // Insert Tabler/target icon here to match the first image
         text=""
-      />
+      />}
       <ServiceRenderer
         queryHook={useItemsUsageListDepartments}
         queryKey={[

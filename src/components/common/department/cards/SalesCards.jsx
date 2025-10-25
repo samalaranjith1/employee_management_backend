@@ -1,21 +1,25 @@
 "use client";
 import { useEffect, useState } from "react";
 import CommonCard from "../../dashboard/card/CommonCard";
+import { useDepartmentContext } from "@/contexts/DepartmentContext";
 
 export default function SalesCards({ label, value, icon }) {
-  const [isMobile, setIsMobile] = useState(false);
+  const { isMobile } = useDepartmentContext();
+  // const [isMobile, setIsMobile] = useState(false);
 
-  useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth < 768);
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  // useEffect(() => {
+  //   const handleResize = () => setIsMobile(window.innerWidth < 768);
+  //   handleResize();
+  //   window.addEventListener("resize", handleResize);
+  //   return () => window.removeEventListener("resize", handleResize);
+  // }, []);
 
   return (
     <CommonCard
       style={{
-        minWidth: isMobile ? "88vw" : "20vw",
+        // minWidth: isMobile ? "88vw" : "20vw",
+        minWidth: isMobile ? "80vw" : '23%',
+        width: isMobile ? "80vw" : '23%',
         flexShrink: 0,
         borderRadius: "12px",
         boxShadow: "0 4px 12px rgba(0,0,0,0.1)",

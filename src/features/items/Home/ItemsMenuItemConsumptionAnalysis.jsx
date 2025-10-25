@@ -15,7 +15,7 @@ export default function ItemsMenuItemConsumptionAnalysis() {
 
   return (
     <Card className="p-3 pt-0 border-0 shadow-sm">
-      <Row className="align-items-center mb-3" style={{
+      <Row className="align-items-center mb-3 p-2" style={{
         backgroundColor: "#FFF9EC",
         // margin: "10px"
       }}>

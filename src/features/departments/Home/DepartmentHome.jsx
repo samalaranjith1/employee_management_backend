@@ -16,28 +16,55 @@ import DepartmentConsumptionSummary from './DepartmentConsumptionSummary';
 import DepartmentTrendAnalysis from './DepartmentTrendAnlysis';
 import DepartmentPeriodDropDown from './DepartmentPeriodDropDown';
 import ItemConsumptionEfficiency1 from "./ItemConsumptionEfficiency";
+import MainComponentHoldingCard from '@/components/common/MainComponentHoldingCard';
 
 function DepartmentHome() {
   return <div>
-    <DepartmentConsumptionSummary />
+    <MainComponentHoldingCard>
+      <DepartmentConsumptionSummary />
+    </MainComponentHoldingCard>
     {/* <ConsumptionSummarry /> */}
-    <DepartmentHealth />
-    <DepartmentTrendAnalysis />
-    <DepartmentPeriodDropDown/>
-    <HourlyForecast />
-    <ItemConsumptionEfficiency1 />
+    <MainComponentHoldingCard>
+      <DepartmentHealth />
+    </MainComponentHoldingCard>
+    <MainComponentHoldingCard>
+      <DepartmentTrendAnalysis />
+    </MainComponentHoldingCard>
+    <MainComponentHoldingCard>
+      <DepartmentPeriodDropDown />
+    </MainComponentHoldingCard>
+    <MainComponentHoldingCard>
+      <HourlyForecast />
+    </MainComponentHoldingCard>
+    <MainComponentHoldingCard>
+      <ItemConsumptionEfficiency1 />
+    </MainComponentHoldingCard>
+
     {/* <TrendAnalysis /> */}
     {/* <PeriodDataBreakdown /> */}
     {/* <ItemConsumptionEfficiency /> */}
-    <TopConsumedItems />
-    <WastageAnalysis />
-    <CostReductionRecommendations />
-    <RecipesDashboard />
-    <MenuOptimizationRecommendations />
-    <TopSellingProducts />
-    <ProductPerformanceDetails />
+    <MainComponentHoldingCard>
+      <TopConsumedItems />
+    </MainComponentHoldingCard>
+    <MainComponentHoldingCard>
+      <WastageAnalysis />
+    </MainComponentHoldingCard>
+    <MainComponentHoldingCard>
+      <CostReductionRecommendations />
+    </MainComponentHoldingCard>
+    <MainComponentHoldingCard>
+      <RecipesDashboard />
+    </MainComponentHoldingCard>
+    <MainComponentHoldingCard>
+      <MenuOptimizationRecommendations />
+    </MainComponentHoldingCard>
+    <MainComponentHoldingCard>
+      <TopSellingProducts />
+    </MainComponentHoldingCard>
+    <MainComponentHoldingCard>
+      <ProductPerformanceDetails />
+    </MainComponentHoldingCard>
   </div>;
-
 }
 
 export default DepartmentHome;

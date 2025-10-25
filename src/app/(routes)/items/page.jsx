@@ -96,7 +96,7 @@ function ItemsPage() {
   ];
 
   return (
-    <div style={{ background: "#f9fafc", minHeight: "100vh",width:'99.5%' }} className="mt-1">
+    <div style={{ background: "#f9fafc", minHeight: "100vh" }} className="mt-1">
       {itemsHeaderData?.title ? (
         <ItemsSupplierProductsHeader
           title={itemsHeaderData?.title}
@@ -127,13 +127,15 @@ function ItemsPage() {
       {/* <div className="p-2 d-md-none">
         <DurationFilters useAppContext={useAppContext} />
       </div> */}
+      <div className="mt-2">
       <SecondNavBar
         tabs={navTabs}
         activeTab={activeTab}
         setActiveTab={setActiveTab}
         useAppContext={useAppContext}
       />
-      <Container fluid className="mt-4">
+      </div>
+      <Container fluid className="mt-2">
         <ItemsContent activeTab={activeTab} durationFilter={durationFilter} />
       </Container>
     </div>

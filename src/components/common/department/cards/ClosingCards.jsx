@@ -2,12 +2,15 @@
 
 import React from "react";
 import CommonCard from "../../dashboard/card/CommonCard";
+import { useDepartmentContext } from "@/contexts/DepartmentContext";
 
 export default function ClosingCards({ title, value, icon, color }) {
+  const {isMobile} = useDepartmentContext();
   return (
     <CommonCard
       style={{
-        minWidth: "46vw",
+        minWidth: isMobile? "80vw":'49%',
+        width: isMobile? "80vw":'49%',
         flexShrink: 0,
         borderRadius: "12px",
         boxShadow: "0 4px 12px rgba(0,0,0,0.1)",

@@ -12,12 +12,11 @@ import DepartmentClosingCanvas from "@/features/departments/DepartmentClosingCan
 import { useDepartmentContext } from "@/contexts/DepartmentContext";
 import { useDashboardContext } from "@/contexts/DashboardContext";
 import SecondNavBar from "../dashboard/@Navbar/page";
-import DurationFilter from "@/features/dashboard/DurationFilters";
-import DurationFilters from "@/features/dashboard/DurationFilters";
 
 function DepartmentPage() {
+  const {activeKey, setActiveKey} = useDepartmentContext()
   const [showCanvas, setShowCanvas] = useState(false);
-  const [activeKey, setActiveKey] = useState("home");
+  // const [activeKey, setActiveKey] = useState("Home");
   const [durationFilter, setDurationFilter] = useState("today");
 
   const { startDate, endDate, setStartDate, setEndDate } =
@@ -116,7 +115,7 @@ useEffect(() => {
       {/* <div className="p-2 d-md-none">
         <DurationFilters useAppContext={useAppContext} />
       </div> */}
-      <Container fluid className="mt-4">
+      <Container fluid className="mt-2">
         {/* <DepartmentCards cards={rawData.cards} /> */}
         {/* <DepartmentFilters
           durationFilter={durationFilter}

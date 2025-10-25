@@ -19,6 +19,7 @@ export function DepartmentContextProvider({ children }) {
 
   const defaultStart = formatDate(new Date());
   const defaultEnd = formatDate(new Date());
+  const [activeKey, setActiveKey] = useState("Home");
 
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
@@ -110,7 +111,8 @@ export function DepartmentContextProvider({ children }) {
     departments,
     setDepartments,
     toggleSidebar,
-    isMobile, setIsMobile
+    isMobile, setIsMobile,
+    activeKey, setActiveKey
   };
 
   return (

@@ -130,14 +130,16 @@ function ProductsPage() {
       {/* <div className="p-2 d-md-none">
         <DurationFilters useAppContext={useAppContext} />
       </div> */}
+      <div className="mt-2">
       <SecondNavBar
         tabs={navTabs}
         activeTab={activeTab}
         setActiveTab={setActiveTab}
         useAppContext={useAppContext}
       />
+      </div>
 
-      <Container fluid className="mt-4">
+      <Container fluid className="mt-2">
         <ProdcutsContent
           activeTab={activeTab}
           durationFilter={durationFilter}

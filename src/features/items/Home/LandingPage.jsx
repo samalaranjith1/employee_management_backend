@@ -15,7 +15,7 @@ function LandingPage() {
         display: "flex",
         flexDirection: "column",
         gap: "10px",
-        backgroundColor: "#fafafa",
+        backgroundColor: "#eee",
         // padding: "10px", // optional padding so content doesn't stick to edges
         borderRadius: "8px", // optional rounded look
       }}

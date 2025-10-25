@@ -121,13 +121,15 @@ function SuppliersPage() {
       {/* <div className="p-2 d-md-none">
         <DurationFilters useAppContext={useAppContext} />
       </div> */}
+      <div className="mt-2">
       <SecondNavBar
         tabs={navTabs}
         activeTab={activeTab}
         setActiveTab={setActiveTab}
         useAppContext={useAppContext}
       />
-      <Container fluid className="mt-4">
+      </div>
+      <Container fluid className="mt-2">
         <SuppliersContent
           activeTab={activeTab}
           durationFilter={durationFilter}

@@ -8,19 +8,34 @@ import ItemsDepartmentDistributionChart from "../Home/ItemsDepartmentDistributio
 import ItemsMenuItemConsumptionAnalysis from "../Home/ItemsMenuItemConsumptionAnalysis";
 import ItemsTrendAnalysis from "../Home/ItemsTrendAnalysis";
 import ItemsDepartmentAnalytics from "../Home/ItemsDepartmentAnalytics";
+import MainComponentHoldingCard from "@/components/common/MainComponentHoldingCard";
 
 function LandingPage() {
   return (
-    <div>
-      <ItemsConsumptionSummaryOverview />
-      <ItemsTrendAnalysis />
-      <ItemsDepartmentAnalytics />
+    <div style={{ backgroundColor: '#eee' }}>
+      <MainComponentHoldingCard>
+        <ItemsConsumptionSummaryOverview />
+      </MainComponentHoldingCard>
+      <MainComponentHoldingCard>
+
+        <ItemsTrendAnalysis />
+      </MainComponentHoldingCard>
+      <MainComponentHoldingCard>
+
+        <ItemsDepartmentAnalytics />
+      </MainComponentHoldingCard>
 
 
       {/* <ItemsConsumptionTrendAnalysis /> */}
       {/* <ItemsConsumptionDepartmentAnalytics /> */}
-      <ItemsDepartmentDistributionChart />
-      <ItemsMenuItemConsumptionAnalysis />
+      <MainComponentHoldingCard>
+
+        <ItemsDepartmentDistributionChart />
+      </MainComponentHoldingCard>
+      <MainComponentHoldingCard>
+
+        <ItemsMenuItemConsumptionAnalysis />
+      </MainComponentHoldingCard>
       {/* <ItemsConsumptionDepartmentDistributionChart /> */}
       {/* api is not available for below component */}
       {/* <MenuItemConsumptionAnalytics /> */}
