@@ -54,10 +54,10 @@ export default function RootLayout({ children }) {
                 width: '100%',
                 height: '64px',
                 zIndex: 1000,
-                backgroundColor: '#fff',
-                maxWidth: "1280px !important", // limit the width
+                // backgroundColor: '#fff',
+                maxWidth: "1240px !important", // limit the width
                 margin: "0 auto",   // center horizontally
-                width: "100%",      // make it responsive for smaller screens
+                width: "96%",      // make it responsive for smaller screens
                 // padding: "0 16px", // if header has transparent bg
               }}>
                 <Header />

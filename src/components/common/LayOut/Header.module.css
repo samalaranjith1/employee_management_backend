@@ -6,7 +6,7 @@
   position: fixed;
   width:96%;
   margin: 0 auto;
-  max-width:1240;
+  max-width:1240px;
   top: 0;
   z-index: 1030;
   overflow-x: hidden;
