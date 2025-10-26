@@ -108,7 +108,7 @@ function OutOfStockTable({ data, getBadgeStyle }) {
                       fontWeight: '400',
                       color: "#687182",
                       display: "flex",
-                      gap: "0.5rem",
+                      gap: "0.2rem",
                       flexWrap: "wrap",
                     }}
                   >

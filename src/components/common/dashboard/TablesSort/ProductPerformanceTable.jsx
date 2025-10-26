@@ -61,7 +61,7 @@ export default function ProductPerformanceTable({ data }) {
     sortKey === key ? (direction === "asc" ? " ↑" : " ↓") : "";
 
   return (
-    <BaseSurface
+    <div
       containerStyle={{
         borderRadius: 12,
         boxShadow: "0 0 10px rgb(0 0 0 / 0.05)",
@@ -69,7 +69,7 @@ export default function ProductPerformanceTable({ data }) {
       bodyStyle={{ padding: 0 }}
     >
       {/* 🔹 Controls (Search + Filter + Export) */}
-        <TableControls
+        {/* <TableControls
           searchTerm={searchTerm}
           setSearchTerm={setSearchTerm}
           filters={filters}
@@ -79,7 +79,7 @@ export default function ProductPerformanceTable({ data }) {
           searchable={true}
           filterable={true}
           exportable={false}
-        />
+        /> */}
 
       <div style={{ maxHeight: "65vh", overflowY: "auto", overflowX: "auto" }}>
         <Table
@@ -140,11 +140,11 @@ export default function ProductPerformanceTable({ data }) {
                         backgroundColor: idx % 2 === 0 ? "#fff8f0" : "white",
                       }}
                     >
-                      <td
+                      {/* <td
                         className="d-flex align-items-center gap-2"
                         style={{ fontWeight: 600 }}
-                      >
-                        <div
+                      > */}
+                        {/* <div
                           style={{
                             width: 8,
                             height: 28,
@@ -157,7 +157,9 @@ export default function ProductPerformanceTable({ data }) {
                           }}
                         />
                         {percentile}
-                      </td>
+                      </td> */}
+                      <td style={{ fontWeight: "700",fontSize:'14px',color:barColors[barColor] }}> {percentile}</td>
+
                       <td style={{ fontWeight: "700",fontSize:'14px',color:'#464f60' }}>{products}</td>
                       <td style={{ fontWeight: "700",fontSize:'14px',color:'#464f60' }}>{sales}</td>
                       <td style={{ fontWeight: "700",fontSize:'14px',color:'#464f60' }}>{salesPercent}</td>
@@ -170,7 +172,7 @@ export default function ProductPerformanceTable({ data }) {
                             color: classColor.color,
                             fontWeight: 700,
                             fontSize:"14px",
-                            padding: "4px 10px",
+                            padding: "0px 10px",
                             borderRadius: "10px",
                             display: "inline-block",
                           }}
@@ -200,7 +202,7 @@ export default function ProductPerformanceTable({ data }) {
           </tbody>
         </Table>
       </div>
-    </BaseSurface>
+    </div>
   );
 }
 // "use client";

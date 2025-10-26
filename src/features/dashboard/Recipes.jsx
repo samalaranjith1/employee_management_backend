@@ -107,7 +107,7 @@ const RecipesDashboard = () => {
                   style={{ backgroundColor: "#fff" }}
                 >
                   {/* Column 1: Icon */}
-                  <div className="me-2">
+                  {/* <div className="me-2">
                     <div style={{
                       background: '#ea266c', // pink-red gradient
                       borderRadius: '12px',
@@ -116,7 +116,7 @@ const RecipesDashboard = () => {
                     }}>
                       <IconAlertTriangle stroke={2} color="#fff" size={20} />
                     </div>
-                  </div>
+                  </div> */}
 
                   {/* Column 2: Title + description */}
                   <div className="flex-grow-1">
@@ -132,9 +132,9 @@ const RecipesDashboard = () => {
                   </div>
 
                   {/* Column 3: Expand icon */}
-                  <div>
+                  {/* <div>
                     <IconArrowsMaximize size={18} style={{ cursor: "pointer" }} />
-                  </div>
+                  </div> */}
                 </div>
 
                 <RecipesTable
@@ -150,7 +150,7 @@ const RecipesDashboard = () => {
                   style={{ backgroundColor: "#fff" }}
                 >
                   {/* Column 1: Left Icon */}
-                  <div className="me-2">
+                  {/* <div className="me-2">
                     <div style={{
                       background: '#0ba27a', // green gradient for Figma style
                       borderRadius: '12px',
@@ -159,7 +159,7 @@ const RecipesDashboard = () => {
                     }}>
                       <IconBasketDollar stroke={2} color="#fff" size={20} />
                     </div>
-                  </div>
+                  </div> */}
 
                   {/* Column 2: Title + Description */}
                   <div className="flex-grow-1">
@@ -175,9 +175,9 @@ const RecipesDashboard = () => {
                   </div>
 
                   {/* Column 3: Expand Icon */}
-                  <div>
+                  {/* <div>
                     <IconArrowsMaximize size={18} style={{ cursor: "pointer" }} />
-                  </div>
+                  </div> */}
                 </div>
 
                 <RecipesTable

@@ -5,6 +5,8 @@ import { FaArrowUp, FaExclamationTriangle } from "react-icons/fa";
 import CommonCard from "./CommonCard";
 import { IconPackage, IconTrendingDown, IconTrendingUp } from "@tabler/icons-react";
 import "@/app/globals.css";
+import { useRouter } from "next/navigation";
+import { handleNavigation } from "@/utils";
 
 export default function ActionableCard({
   data,
@@ -14,6 +16,7 @@ export default function ActionableCard({
   scrollRef,
   priorityBorderColor
 }) {
+  const router = useRouter();
   // Map text color per priority for label
   const priorityTextColor = {
     high: priorityColors.high,
@@ -37,22 +40,30 @@ export default function ActionableCard({
         borderRadius: "16px",
         boxShadow: "none",
         // padding: "24px 20px",
+
       }}
+      onClick={() =>
+        handleNavigation({
+          router,
+          url: data.url,
+          // params: { startDate: startDate, endDate: endDate ,departments:'2'},
+        })
+      }
     >
       <Row className="align-items-center mb-2" style={{ gap: "0.5rem" }}>
-  
+
         <Col
           className="flex align-items-center gap-1 c_small_text_bold"
           style={{
             color: priorityTextColor[data.priority],
           }}
         >
-          <FaExclamationTriangle  className="m-1"/>
+          <FaExclamationTriangle className="m-1" />
           {data.priority?.charAt(0).toUpperCase() +
             data.priority?.slice(1)}{" "}
           Priority
         </Col>
-              <Col xs="auto">
+        <Col xs="auto">
           <div
             style={{
               backgroundColor: borderTopColor,
@@ -124,7 +135,7 @@ export default function ActionableCard({
           color: "#555555", // Mid gray for body text
           maxWidth: "100%",
           wordBreak: "break-word",
-          fontFamily: "'Nunito Sans', sans-serif",
+          // fontFamily: "'Nunito Sans', sans-serif",
           lineHeight: "1.4",
         }}
       />
@@ -150,7 +161,7 @@ export default function ActionableCard({
 //       bgColor={bgColor[data.priority]}
 //       textColor={textColor}
 //       border={`2px solid gray`}
-//       style={{ borderTop: `8px solid ${priorityColors[data.priority]}` }}
+//       style={{ borderTop: `8px solid ${ priorityColors[data.priority]}` }}
 //     >
 //       <Row className="align-items-center mb-2">
 //         <Col xs="auto">

@@ -36,7 +36,7 @@ export default function WastageAnalysis() {
   }, []);
 
   return (
-    <Card style={{ background: "#fff" }} className="p-3 rounded-4 shadow-sm">
+    <div style={{ background: "#fff" }} className="p-3 rounded-4 shadow-sm">
       <ComponentHeader
         title="Wastage Analysis"
         description="Track and minimize food waste across all categories"
@@ -109,7 +109,7 @@ export default function WastageAnalysis() {
           </>
         )}
       </ServiceRenderer>
-    </Card>
+    </div>
   );
 }
 // "use client";

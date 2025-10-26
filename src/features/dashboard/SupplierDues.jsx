@@ -57,7 +57,7 @@ const SupplierDues = () => {
       backgroundColor: "#fee2e2",
       padding: "1.5rem",
       borderRadius: "12px",
-      margin: "1rem 1.5rem",
+      margin: "0 auto",
       display: "flex",
       justifyContent: "space-between",
       alignItems: "center",
@@ -96,7 +96,7 @@ const SupplierDues = () => {
       color: "#687182",
       fontSize: "12px",
       fontWeight: "400",
-      padding: "0.25rem 0.5rem",
+      // padding: "0.25rem 0.5rem",
     },
     redAmount: {
       color: "#dc2620",
@@ -186,7 +186,7 @@ const SupplierDues = () => {
                 </div>
               </div>
 
-              <div
+              {/* <div
                 style={{
                   background: '#f83062',
                   borderRadius: '12px',
@@ -195,7 +195,7 @@ const SupplierDues = () => {
                 }}
               >
                 <IconCurrencyRupee stroke={2} color="#fff" size={24} />
-              </div>
+              </div> */}
             </div>
 
 

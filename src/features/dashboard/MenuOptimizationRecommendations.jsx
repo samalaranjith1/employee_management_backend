@@ -34,9 +34,9 @@ export default function MenuOptimizationRecommendations() {
   };
 
   return (
-    <Card
+    <div
       className="p-3"
-      style={{ background: "#eef3ff", borderRadius: "20px" }}
+      style={{ background: "#eef3ff" }}
     >
       {/* ✅ Header */}
       <ComponentHeader
@@ -106,7 +106,7 @@ export default function MenuOptimizationRecommendations() {
           display: none;
         }
       `}</style>
-    </Card>
+    </div>
   );
 }
 

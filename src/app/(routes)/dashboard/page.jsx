@@ -44,6 +44,7 @@ import WastageAnalytics from "../sp/wastage_analytics/page";
 import SecondNavBar from "./@Navbar/page";
 import { useDashboardContext } from "@/contexts/DashboardContext";
 import MobileDurationFilters from "@/features/dashboard/MobileDurationFilter";
+import DashboardTab from "./@DashboardTab/page";
 
 export default function Page() {
   const [activeTab, setActiveTab] = useState("Dashboard");
@@ -75,89 +76,90 @@ export default function Page() {
       {/* ✅ Tab Content */ }
       <div className="mt-2">
         {activeTab === "Dashboard" && (
-      <div className="d-none d-md-inline">
-          <MainComponentHoldingCard>
-              <ConsumptionSummarry />
-            </MainComponentHoldingCard>
-            <MainComponentHoldingCard>
-              <ActionableInsights />
-            </MainComponentHoldingCard>
-            <MainComponentHoldingCard>
-              <MonthSummary />
-            </MainComponentHoldingCard>
-            <MainComponentHoldingCard>
-              <TrendAnalysis />
-            </MainComponentHoldingCard>
-            <MainComponentHoldingCard>
-              <PeriodDataBreakdown />
-            </MainComponentHoldingCard>
-            <MainComponentHoldingCard>
-              <HourlyForecast />
-            </MainComponentHoldingCard> 
-            <MainComponentHoldingCard>
-              <DepartmentConsumption />
-            </MainComponentHoldingCard>
-            <MainComponentHoldingCard>
-              <DepartmentPerformanceAnalysis />
-            </MainComponentHoldingCard>
-            <MainComponentHoldingCard>
-              <DepartmentConsumptionChart />
-            </MainComponentHoldingCard>
-            <MainComponentHoldingCard>
-              <ItemConsumptionEffieciency />
-            </MainComponentHoldingCard> 
-            <MainComponentHoldingCard>
-              <TopConsumedItems />
-            </MainComponentHoldingCard>
-            <MainComponentHoldingCard>
-              <ItemConsumptionDistribution />
-            </MainComponentHoldingCard>
-            <MainComponentHoldingCard>
-              <WastageAnalysis />
-            </MainComponentHoldingCard>
-            <MainComponentHoldingCard>
-              <CostReductionRecommendations />
-            </MainComponentHoldingCard>
-            <MainComponentHoldingCard>
-              <PriceChanges />
-            </MainComponentHoldingCard>
-            <MainComponentHoldingCard>
-              <PriceManagementRecommendations />
-            </MainComponentHoldingCard>
-            <MainComponentHoldingCard>
-              <OutOfStock />
-            </MainComponentHoldingCard>
-            <MainComponentHoldingCard>
-              <ImmediateActionsRequired />
-            </MainComponentHoldingCard>
-            <MainComponentHoldingCard>
-              <Recipes />
-            </MainComponentHoldingCard>
-            <MainComponentHoldingCard>
-              <MenuOptimizationRecommendations />
-            </MainComponentHoldingCard>
-            <MainComponentHoldingCard>
-              <TopSellingProducts />
-            </MainComponentHoldingCard>
-            <MainComponentHoldingCard>
-              <ProductPerformanceDetails />
-            </MainComponentHoldingCard>
-            <MainComponentHoldingCard>
-              <ProductPerformanceByPercentile />
-            </MainComponentHoldingCard>
-            {/* <MainComponentHoldingCard>
-              <RevenueContributionFromProducts />
-            </MainComponentHoldingCard> */}
-            <MainComponentHoldingCard>
-              <SuppliersManagement />
-            </MainComponentHoldingCard>
-            <MainComponentHoldingCard>
-              <SupplierDuesThisMonth />
-            </MainComponentHoldingCard>
-            <MainComponentHoldingCard>
-              <SupplierDues />
-            </MainComponentHoldingCard>
-          </div>
+          <DashboardTab />
+      // <div className="d-none d-md-inline">
+      //     <MainComponentHoldingCard>
+      //         <ConsumptionSummarry />
+      //       </MainComponentHoldingCard>
+      //       <MainComponentHoldingCard>
+      //         <ActionableInsights />
+      //       </MainComponentHoldingCard>
+      //       <MainComponentHoldingCard>
+      //         <MonthSummary />
+      //       </MainComponentHoldingCard>
+      //       <MainComponentHoldingCard>
+      //         <TrendAnalysis />
+      //       </MainComponentHoldingCard>
+      //       <MainComponentHoldingCard>
+      //         <PeriodDataBreakdown />
+      //       </MainComponentHoldingCard>
+      //       <MainComponentHoldingCard>
+      //         <HourlyForecast />
+      //       </MainComponentHoldingCard> 
+      //       <MainComponentHoldingCard>
+      //         <DepartmentConsumption />
+      //       </MainComponentHoldingCard>
+      //       <MainComponentHoldingCard>
+      //         <DepartmentPerformanceAnalysis />
+      //       </MainComponentHoldingCard>
+      //       <MainComponentHoldingCard>
+      //         <DepartmentConsumptionChart />
+      //       </MainComponentHoldingCard>
+      //       <MainComponentHoldingCard>
+      //         <ItemConsumptionEffieciency />
+      //       </MainComponentHoldingCard> 
+      //       <MainComponentHoldingCard>
+      //         <TopConsumedItems />
+      //       </MainComponentHoldingCard>
+      //       <MainComponentHoldingCard>
+      //         <ItemConsumptionDistribution />
+      //       </MainComponentHoldingCard>
+      //       <MainComponentHoldingCard>
+      //         <WastageAnalysis />
+      //       </MainComponentHoldingCard>
+      //       <MainComponentHoldingCard>
+      //         <CostReductionRecommendations />
+      //       </MainComponentHoldingCard>
+      //       <MainComponentHoldingCard>
+      //         <PriceChanges />
+      //       </MainComponentHoldingCard>
+      //       <MainComponentHoldingCard>
+      //         <PriceManagementRecommendations />
+      //       </MainComponentHoldingCard>
+      //       <MainComponentHoldingCard>
+      //         <OutOfStock />
+      //       </MainComponentHoldingCard>
+      //       <MainComponentHoldingCard>
+      //         <ImmediateActionsRequired />
+      //       </MainComponentHoldingCard>
+      //       <MainComponentHoldingCard>
+      //         <Recipes />
+      //       </MainComponentHoldingCard>
+      //       <MainComponentHoldingCard>
+      //         <MenuOptimizationRecommendations />
+      //       </MainComponentHoldingCard>
+      //       <MainComponentHoldingCard>
+      //         <TopSellingProducts />
+      //       </MainComponentHoldingCard>
+      //       <MainComponentHoldingCard>
+      //         <ProductPerformanceDetails />
+      //       </MainComponentHoldingCard>
+      //       <MainComponentHoldingCard>
+      //         <ProductPerformanceByPercentile />
+      //       </MainComponentHoldingCard>
+      //       {/* <MainComponentHoldingCard>
+      //         <RevenueContributionFromProducts />
+      //       </MainComponentHoldingCard> */}
+      //       <MainComponentHoldingCard>
+      //         <SuppliersManagement />
+      //       </MainComponentHoldingCard>
+      //       <MainComponentHoldingCard>
+      //         <SupplierDuesThisMonth />
+      //       </MainComponentHoldingCard>
+      //       <MainComponentHoldingCard>
+      //         <SupplierDues />
+      //       </MainComponentHoldingCard>
+      //     </div>
         )}
         {/* Other tabs placeholders */}
         {activeTab === "Sales" && (

@@ -62,7 +62,7 @@ function ItemConsumptionEffieciencyTable({ tableData }) {
         filtersConfig={filtersConfig}
         handleExport={handleExport}
         searchable={true}
-        filterable={true}
+        filterable={false}
         exportable={false}
       />
 
@@ -109,7 +109,6 @@ function ItemConsumptionEffieciencyTable({ tableData }) {
                           })
                         }
                         className="c_table_cells_regular c_gray_2"
-
                       >
                         {row.item}
                       </span>

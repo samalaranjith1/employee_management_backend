@@ -51,9 +51,9 @@ function SupplierDuesTable({ styles, data = [] }) {
     sortKey === key ? (direction === "asc" ? " ↑" : " ↓") : "";
 
   return (
-    <BaseSurface>
+    <div>
       {/* Controls */}
-      <TableControls
+      {/* <TableControls
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
         filters={filters}
@@ -63,7 +63,7 @@ function SupplierDuesTable({ styles, data = [] }) {
         searchable={true}
         filterable={true}
         exportable={false}
-      />
+      /> */}
 
       {/* ✅ Scroll wrapper for horizontal + vertical scroll */}
       <div
@@ -135,11 +135,16 @@ function SupplierDuesTable({ styles, data = [] }) {
                   </div>
                 </td>
 
-                <td style={styles.redAmount}>
+                <td style={{...styles.redAmount,
+                    paddingTop:'+18px'
+                }}>
                   ₹{row.total.toLocaleString()}
                 </td>
 
-                <td style={styles.blackAmount}>
+                <td style={{...styles.blackAmount,
+                    paddingTop:'+18px'
+                }
+                }>
                   ₹{row.totalPurchase.toLocaleString()}
                 </td>
 
@@ -148,6 +153,7 @@ function SupplierDuesTable({ styles, data = [] }) {
                     color: "#464f60",
                     fontWeight: "700",
                     fontSize: "14px",
+                    paddingTop:'+18px'
                   }}
                 >
                   {row.totalPayments
@@ -160,6 +166,7 @@ function SupplierDuesTable({ styles, data = [] }) {
                     color: "#464f60",
                     fontWeight: "700",
                     fontSize: "14px",
+                    paddingTop:'+18px'
                   }}
                 >
                   {row.items}
@@ -169,7 +176,7 @@ function SupplierDuesTable({ styles, data = [] }) {
           </tbody>
         </Table>
       </div>
-    </BaseSurface>
+    </div>
   );
 }
 

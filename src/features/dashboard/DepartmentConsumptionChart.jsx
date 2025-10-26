@@ -180,7 +180,21 @@ export default function DepartmentConsumptionChart() {
                       <div key={idx} style={styles.legendItem}>
                         <div style={styles.legendLabel}>
                           <span style={styles.colorDot(item.color)}></span>
-                          <span className="c_small_text_semi_bold_600">{item.name}</span>
+                          <span className="c_small_text_semi_bold_600"
+                            style={{
+                              cursor: "pointer",
+                            }}
+                            onClick={() =>
+                              handleNavigation({
+                                router,
+                                url: "departments",
+                                params: {
+                                  startDate: startDate,
+                                  endDate: endDate,
+                                  departments: item?.departmentId,
+                                },
+                              })
+                            }>{item.name}</span>
                         </div>
                         <div
                           style={{
@@ -188,7 +202,7 @@ export default function DepartmentConsumptionChart() {
                             flexDirection: "column",
                             alignItems: "flex-start",
                             minWidth: "100px",
-                            fontFamily: "monospace",
+                            cursor: "pointer",
                           }}
                           onClick={() =>
                             handleNavigation({
@@ -202,7 +216,7 @@ export default function DepartmentConsumptionChart() {
                             })
                           }
                         >
-                          <div className="c_small_text_extra_bold">₹{item.value.toLocaleString()}</div>
+                          <div className="c_small_text_semi_bold">₹{item.value.toLocaleString()}</div>
                           <div className="c_normal_text_semi_regular c_gray_3">
                             {(item.percentage * 100).toFixed(1)}%
                           </div>
@@ -211,8 +225,8 @@ export default function DepartmentConsumptionChart() {
                     ))}
                   </div>
                   <div style={styles.total}>
-                    <span className="c_small_text_extra_bold">Total Purchases:</span>
-                    <span style={{ paddingRight: "3vw" }} className="c_small_text_extra_bold">
+                    <span className="c_small_text_extra_bold" style={{ fontSize: "18px" }}>Total Consumption</span>
+                    <span style={{ paddingRight: "1vw", fontSize: "18px" }} className="c_small_text_extra_bold" >
                       ₹{total?.toLocaleString()}
                     </span>
                   </div>

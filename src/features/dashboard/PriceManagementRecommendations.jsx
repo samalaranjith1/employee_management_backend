@@ -32,9 +32,9 @@ export default function PriceManagementRecommendations() {
   };
 
   return (
-    <Card
+    <div
       className="p-3"
-      style={{ background: "#f5efff", borderRadius: "20px" }}
+      style={{ background: "#f5efff" }}
     >
       {/* ✅ Header */}
       <ComponentHeader
@@ -108,7 +108,7 @@ export default function PriceManagementRecommendations() {
           display: none;
         }
       `}</style>
-    </Card>
+    </div>
   );
 }
 

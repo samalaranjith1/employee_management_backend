@@ -64,7 +64,6 @@ const RawMaterialPurchaseAnalysisGraph = ({ pieData = [], totalPurchaseValue }) 
     <div
       className="d-flex flex-column align-items-center w-100"
       style={{
-        fontFamily: "Inter, sans-serif",
         height: "65vh", // ✅ Full height for component
         overflow: "hidden", // prevent outer scroll
       }}

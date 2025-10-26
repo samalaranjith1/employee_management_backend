@@ -9,15 +9,23 @@ export default function TopSellingProductsCards({ card }) {
   const { isMobile } = useDashboardContext()
   return (
     <Col xs="auto">
-      <CommonCard
-        bgColor={card.bg}
+      <div
         style={{
-          borderRadius: 12,
-          padding: "18px",
-          height: "100%",
-          boxShadow: "0 8px 20px rgba(20,30,60,0.04)",
-          minHeight: "140px",
+          backgroundColor: card.bg,
+          borderRadius: '12px',
+          padding: '1rem',
+          marginRight: '10px',
+          boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+          flexShrink: 0,
         }}
+        bgColor={card.bg}
+      // style={{
+      //   borderRadius: 12,
+      //   padding: "18px",
+      //   height: "100%",
+      //   boxShadow: "0 8px 20px rgba(20,30,60,0.04)",
+      //   minHeight: "140px",
+      // }}
       >
         <div className="d-flex justify-content-between align-items-start">
           <div>
@@ -53,7 +61,7 @@ export default function TopSellingProductsCards({ card }) {
             {card.icon}
           </div>
         </div>
-      </CommonCard>
+      </div>
     </Col>
   );
 }

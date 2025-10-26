@@ -55,7 +55,7 @@ export default function ItemConsumptionDistributionTable({ data }) {
   };
 
   return (
-    <div style={{ borderRadius: "12px", maxHeight:"65vh" }}>
+    <div style={{ borderRadius: "12px",  }}>
       {/* 🔹 Controls (Search + Filter + Export) */}
       <TableControls
         searchTerm={searchTerm}
@@ -69,7 +69,7 @@ export default function ItemConsumptionDistributionTable({ data }) {
         exportable={false}
       />
 
-      <div style={{ overflowX: "auto", maxHeight: "60vh", overflowY: "auto" }}>
+      <div style={{ overflowX: "auto", maxHeight: "65vh", overflowY: "auto" }}>
         <Table
           borderless
           className="align-middle mb-0"

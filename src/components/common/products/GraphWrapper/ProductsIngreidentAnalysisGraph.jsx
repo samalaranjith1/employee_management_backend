@@ -67,7 +67,6 @@ export default function ProductsIngreidentAnalysisGraph({
     <div
       className="d-flex flex-column align-items-center w-100"
       style={{
-        fontFamily: "Inter, sans-serif",
         height: "65vh",
         overflow: "hidden",
       }}

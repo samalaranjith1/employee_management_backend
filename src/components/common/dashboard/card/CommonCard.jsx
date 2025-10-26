@@ -16,6 +16,7 @@ export default function CommonCard({
   scrollRef,
   maxHeight,
   style = {},
+  onClick = ()=>{},
 }) {
   const [isMobile, setIsMobile] = useState(false);
 
@@ -30,6 +31,7 @@ export default function CommonCard({
     <Card
       ref={scrollRef}
       className="card-item"
+      onClick={onClick}
       style={{
         backgroundColor: bgColor,
         color: textColor,

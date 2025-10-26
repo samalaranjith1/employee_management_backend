@@ -25,7 +25,7 @@ import Profile from "./Profile";
 import styles from "./Header.module.css";
 import { handleNavigation } from "@/utils";
 import { useRouter } from "next/navigation";
-import { IconBell, IconChefHat, IconChefHatFilled, IconMapPin, IconMenu2 } from "@tabler/icons-react";
+import { IconBell, IconChefHat, IconChefHatFilled, IconMapPin, IconMenu2, IconSearch } from "@tabler/icons-react";
 import MobileDurationFilters from "@/features/dashboard/MobileDurationFilter";
 import { useDashboardContext } from "@/contexts/DashboardContext";
 
@@ -202,7 +202,7 @@ export default function Header() {
                 <IconChefHatFilled size={20} color="white" />
               </div>
 
-              <span style={{ color: '#FF6000', fontSize: '16px', fontWeight: '700', fontFamily: 'Montserrat',marginLeft:isMobile?'-15px':'' }}>Costonomy</span>
+              <span style={{ color: '#FF6000', fontSize: '16px', fontWeight: '700',marginLeft:isMobile?'-15px':'' }}>Costonomy</span>
             </Navbar.Brand>
           </div>
 
@@ -260,7 +260,8 @@ export default function Header() {
                 className={`${styles.buttonIcon} p-0 `}
                 onClick={toggleMobileSearch}
               >
-                <FaSearch size={18} />
+                {/* <IconSearch size={16} stroke={0} /> */}
+                <FaSearch size={16} stroke="0" />
               </Button>
             ) : (
               <>
@@ -269,7 +270,9 @@ export default function Header() {
                   className={`${styles.buttonIcon} p-0 d-lg-none`}
                   onClick={toggleMobileSearch}
                 >
-                  <FaSearch size={18} />
+                {/* <IconSearch size={16} stroke={0} /> */}
+
+                  <FaSearch size={16} />
                 </Button>
               </>
             )}

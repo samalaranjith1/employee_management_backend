@@ -139,8 +139,8 @@ const myScrollRef = useRef(null);
                   </div>
                 ))}
                 <hr className="my-2" />
-                <div className="fw-bold mt-2">
-                  Total Purchases: {formatCurrency(totalPurchases)}
+                <div className="fw-bold mt-2" style={{fontSize: '24px'}}>
+                  Total Consumption {formatCurrency(totalPurchases)}
                 </div>
               </div>
             </Card.Body>

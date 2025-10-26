@@ -146,7 +146,7 @@ const SupplierDuesThisMonth = () => {
                   from {data.cardData[0].suppliers} suppliers
                 </div>
               </div>
-              <div
+              {/* <div
                 style={{
                   background: "#7358ff",
                   borderRadius: "12px",
@@ -155,7 +155,7 @@ const SupplierDuesThisMonth = () => {
                 }}
               >
                 <IconPackage stroke={2} color="#fff" size={24} />
-              </div>
+              </div> */}
             </div>
 
             {/* Graph + Table */}

@@ -123,14 +123,14 @@ export default function InventoryDashboard() {
                 }}>
                   <div className="d-flex align-items-center justify-content-between p-1">
                     {/* Column 1: Icon */}
-                    <div style={{
+                    {/* <div style={{
                       background: '#e6276e', // pink-red gradient
                       borderRadius: '12px',
                       padding: '8px',
                       display: 'inline-block'
                     }}>
                       <IconAlertTriangle stroke={2} color="#fff" size={20} />
-                    </div>
+                    </div> */}
 
                     {/* Column 2: Title + Description */}
                     <div className="ms-3 flex-grow-1">
@@ -144,9 +144,9 @@ export default function InventoryDashboard() {
                     </div>
 
                     {/* Column 3: Number */}
-                    <div className="text-end">
+                    {/* <div className="text-end">
                       <IconArrowsMaximize />
-                    </div>
+                    </div> */}
                   </div>
 
                   <OutOfStockTable
@@ -160,14 +160,14 @@ export default function InventoryDashboard() {
                 }}>
                   <div className="d-flex align-items-center justify-content-between p-1">
                     {/* Column 1: Icon */}
-                    <div style={{
+                    {/* <div style={{
                       background: '#833dd5', // pink-red gradient
                       borderRadius: '12px',
                       padding: '8px',
                       display: 'inline-block'
                     }}>
                       <IconAlertTriangle stroke={2} color="#fff" size={20} />
-                    </div>
+                    </div> */}
 
                     {/* Column 2: Title + Description */}
                     <div className="ms-3 flex-grow-1">
@@ -181,9 +181,9 @@ export default function InventoryDashboard() {
                     </div>
 
                     {/* Column 3: Number */}
-                    <div className="text-end">
+                    {/* <div className="text-end">
                       <IconArrowsMaximize />
-                    </div>
+                    </div> */}
                   </div>
                   <OutOfStockTable
                     data={formattedData?.baseItems || []}

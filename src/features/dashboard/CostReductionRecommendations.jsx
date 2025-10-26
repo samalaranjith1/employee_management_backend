@@ -34,9 +34,9 @@ export default function CostReductionRecommendations() {
   };
 
   return (
-    <Card
+    <div
       className="p-3"
-      style={{ background: "rgba(156, 39, 176, 0.05)", borderRadius: "20px" }}
+      style={{ background: "rgba(156, 39, 176, 0.05)"}}
     >
       {/* ✅ Header */}
       <ComponentHeader
@@ -108,7 +108,7 @@ export default function CostReductionRecommendations() {
           display: none;
         }
       `}</style>
-    </Card>
+    </div>
   );
 }
 // "use client";

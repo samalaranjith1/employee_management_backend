@@ -66,9 +66,9 @@ function KitchenPurchaseByDepartmentTable({ data = [], badgeStyle }) {
       : hex;
 
   return (
-    <BaseSurface maxHeight="65vh">
+    <div maxHeight="65vh">
       {/* 🔹 Table Controls */}
-        <TableControls
+        {/* <TableControls
           searchTerm={searchTerm}
           setSearchTerm={setSearchTerm}
           filters={filters}
@@ -78,7 +78,7 @@ function KitchenPurchaseByDepartmentTable({ data = [], badgeStyle }) {
           searchable={true}
           filterable={true}
           exportable={false}
-        />
+        /> */}
 
       {/* 🔹 Scrollable Table Container */}
       <div style={{ maxHeight: "60vh", overflowY: "auto", overflowX: "auto" }}>
@@ -116,7 +116,21 @@ function KitchenPurchaseByDepartmentTable({ data = [], badgeStyle }) {
                       case "name":
                         return (
                           <td key={col.key}>
-                            <div className="c_table_cells_regular">{dept.name}</div>
+                            <div className="c_table_cells_regular"
+                            style={{
+                              cursor:'pointer'
+                            }}
+                             onClick={() =>
+                              handleNavigation({
+                                router,
+                                url: "departments",
+                                params: {
+                                  startDate,
+                                  endDate,
+                                  departments: dept.departmentId,
+                                },
+                              })
+                            }>{dept.name}</div>
                           </td>
                         );
                       case "consumptionPct":
@@ -208,7 +222,7 @@ function KitchenPurchaseByDepartmentTable({ data = [], badgeStyle }) {
           </tbody>
         </Table>
       </div>
-    </BaseSurface>
+    </div>
   );
 }
 

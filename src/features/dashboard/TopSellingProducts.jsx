@@ -83,7 +83,15 @@ const TopSellingProducts = () => {
                 }}
               >
                 {topCards?.map((card, idx) => (
-                  <TopSellingProductsCards card={card} key={idx} idx={idx} />
+                  <div
+                    style={{
+                      minWidth: isMobile ? '95%' : '25%',
+                      width: isMobile ? '95%' : '25%',
+                      // backgroundColor: card.bg,
+                      // color:card.textColor,
+                    }}> 
+                    <TopSellingProductsCards card={card} key={idx} idx={idx} /></div>
+
                 ))}
               </Row>
 
@@ -105,15 +113,15 @@ const TopSellingProducts = () => {
                         marginBottom: 12,
                       }}
                     >
-                        <div style={{
-                          background: '#3a65f3', // blue gradient for Figma match
-                          borderRadius: '12px',
-                          padding: '8px',
-                          display: 'inline-block'
-                        }}>
-                          <IconChartColumn stroke={2} color="#fff" size={20} />
-                        </div>
-                      <h5 style={{ margin: 0, fontWeight: 600,marginLeft:'5px' ,color:'#232425'}}>
+                      <div style={{
+                        background: '#3a65f3', // blue gradient for Figma match
+                        borderRadius: '12px',
+                        padding: '8px',
+                        display: 'inline-block'
+                      }}>
+                        <IconChartColumn stroke={2} color="#fff" size={20} />
+                      </div>
+                      <h5 style={{ margin: 0, fontWeight: 600, marginLeft: '5px', color: '#232425' }}>
                         Sales vs Margin Trends
                       </h5>
                     </div>

@@ -138,14 +138,14 @@ const SupplierManagement = () => {
                     from {formattedData?.cardData[0]?.suppliers} suppliers
                   </div>
                 </div>
-                <div style={{
+                {/* <div style={{
                   background: '#3b5eef', // blue gradient matching Figma style
                   borderRadius: '16px',
                   padding: '14px',
                   display: 'inline-block'
                 }}>
                   <IconShoppingCart stroke={2} color="#fff" size={28} />
-                </div>
+                </div> */}
               </div>
 
               <Row>

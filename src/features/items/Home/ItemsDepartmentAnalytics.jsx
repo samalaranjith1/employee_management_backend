@@ -33,7 +33,7 @@ export default function ItemsDepartmentAnalytics() {
         <Container fluid className="p-3 pt-0 bg-light rounded shadow-sm">
           {/* Header */}
 
-          <Row className="mb-3" style={{ fontFamily: "Inter, sans-serif" }}>
+          <Row className="mb-3" >
             {/* ✅ Icon Column */}
             <Col xs="auto" className="d-flex align-items-center justify-content-center p-2">
               <div

@@ -102,8 +102,8 @@ function HourlyForecastFilterCard({
           <Card.Body>
             <div className="d-flex d-flex-row">
               <div>
-                <h6 className="c_small_text_semi_bold c_gray_3">Daily Forecast</h6>
-                <h4 className="c_heading_5 c_black_3 fw-800">
+                <h6 style={{color:'#464f60',fontSize:'14px',fontWeight:'600'}}>Daily Forecast</h6>
+                <h4 style={{color:'#000',fontSize:'16px',fontWeight:'800'}}>
                   {currentData.dailyForecast}
                 </h4>
               </div>
@@ -121,8 +121,8 @@ function HourlyForecastFilterCard({
           <Card.Body>
             <div className="d-flex d-flex-row">
               <div>
-                <h6 className="c_small_text_semi_bold c_gray_3">Actual So Far</h6>
-                <h4 className="c_heading_5 c_black_3 fw-800">{currentData.actualSoFar}</h4>
+                <h6 style={{color:'#464f60',fontSize:'14px',fontWeight:'600'}}>Actual So Far</h6>
+                <h4 style={{color:'#000',fontSize:'16px',fontWeight:'800'}}>{currentData.actualSoFar}</h4>
               </div>
               <div style={{ marginLeft: "auto" }}>
                 {currentData.actualSoFarIcon}
@@ -138,8 +138,8 @@ function HourlyForecastFilterCard({
           <Card.Body>
             <div className="d-flex d-flex-row">
               <div>
-                <h6 className="c_small_text_semi_bold c_gray_3">Remaining Target</h6>
-                <h4 className="c_heading_5 c_black_3 fw-800">
+                <h6 style={{color:'#464f60',fontSize:'14px',fontWeight:'600'}}>Remaining Target</h6>
+                <h4 style={{color:'#000',fontSize:'16px',fontWeight:'800'}}>
                   {currentData.remainingTarget}
                 </h4>
               </div>

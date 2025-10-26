@@ -160,14 +160,14 @@ export default function PriceChanges() {
                 </div>
                 {/* Floating Rupee Icon */}
                 <div style={styles.rupeeIconWrapper}>
-                  <div style={{
+                  {/* <div style={{
                     background: '#3a53e9', // blue gradient similar to Figma
                     borderRadius: '16px',
                     padding: '12px',
                     display: 'inline-block'
                   }}>
                     <IconCurrencyRupee stroke={2} color="#fff" size={28} />
-                  </div>
+                  </div> */}
                 </div>
               </Card.Body>
             </Card>

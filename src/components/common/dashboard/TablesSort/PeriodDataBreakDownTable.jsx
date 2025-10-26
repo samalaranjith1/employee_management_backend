@@ -93,14 +93,14 @@ export default function PeriodDataBreakDownTable({ data = {}, filters = {} }) {
                   onClick={() => handleSort(col.key)}
                   style={{
                     background: "#f4f7fc",
-                    fontSize: "0.85rem",
-                    textTransform: "uppercase",
-                    color: "#555",
+                    fontSize: "14px",
+                    // textTransform: "uppercase",
+                    color: "#232425",
                     position: "sticky",
                     top: 0,
                     zIndex: 2,
                     cursor: "pointer",
-                    padding: "12px 16px",
+                    // padding: "12px 16px",
                     minWidth: col.key === "date" ? "150px" : "120px",
                     borderBottom: "1px solid #eee",
                     textAlign: "left",
@@ -137,7 +137,7 @@ export default function PeriodDataBreakDownTable({ data = {}, filters = {} }) {
 
                 return (
                   <tr key={idx} style={{ borderBottom: "1px solid #eee", textAlign: "left" }} >
-                    <td style={{ padding: "14px 16px" }}>
+                    <td >
                       <div className="fw-semibold" style={{ fontSize: 14, textAlign: "left" }}>
                         {formattedDate}{" "}
                         {isToday && (

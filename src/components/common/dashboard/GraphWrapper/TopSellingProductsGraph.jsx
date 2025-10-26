@@ -28,6 +28,7 @@ function TopSellingProductsGraph({ chartData }) {
             dataKey="sales"
             barSize={36}
             fill="#5d9d4a"
+            name='Sales'
             radius={[6, 6, 0, 0]}
           />
           <Line
@@ -36,6 +37,7 @@ function TopSellingProductsGraph({ chartData }) {
             dataKey="margin"
             stroke="#f59e0c"
             strokeWidth={3}
+            name='Margin%'
             dot={{
               r: 5,
               fill: "#fff",

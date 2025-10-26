@@ -32,9 +32,9 @@ export default function ImmediateActionsRequired() {
   };
 
   return (
-    <Card
+    <div
       className="p-3"
-      style={{ background: "#eafef4", borderRadius: "20px" }}
+      style={{ background: "#eafef4",}}
     >
       {/* ✅ Header */}
       <ComponentHeader
@@ -108,7 +108,7 @@ export default function ImmediateActionsRequired() {
           display: none;
         }
       `}</style>
-    </Card>
+    </div>
   );
 }
 

@@ -123,6 +123,8 @@ export default function PeriodDataBreakdown() {
               padding: "6px 16px",
               backgroundColor: selected ? "#FF6600" : "transparent",
               color: selected ? "white" : "#888",
+                backgroundColor: selected ? "white" : "transparent",
+              color: selected ? "#FF6600" : "#888",
               border: "none",
               cursor: "pointer",
               userSelect: "none",
@@ -278,7 +280,7 @@ export default function PeriodDataBreakdown() {
 
 
             {/* Table */}
-            <div style={{ maxHeight: "60vh", overflow: "auto" }}>
+            <div style={{ maxHeight: "65vh", overflow: "auto" }}>
               <PeriodDataBreakDownTable
                 data={{ table }}
                 filters={{ startDate: startDateCS, endDate: endDateCS }}

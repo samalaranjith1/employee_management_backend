@@ -54,7 +54,7 @@ export default function ProductDetailsTable({ rowsData, styles }) {
   return (
     <div style={styles?.tableContainer}>
       {/* 🔹 Table Controls */}
-      <TableControls
+      {/* <TableControls
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
         filters={filters}
@@ -64,7 +64,7 @@ export default function ProductDetailsTable({ rowsData, styles }) {
         searchable={true}
         filterable={true}
         exportable={false}
-      />
+      /> */}
 
       {/* 🔹 Table Scroll Container */}
       <div style={styles?.tableScrollContainer}>

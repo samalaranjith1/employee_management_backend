@@ -218,7 +218,8 @@ function ComponentHeader({
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              marginLeft: 'auto'
+              marginLeft: 'auto',
+              cursor: "pointer",
             }}
             onClick={handleExpandClick}
 

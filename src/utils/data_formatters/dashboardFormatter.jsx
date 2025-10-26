@@ -441,7 +441,7 @@ export function trendAnalysisFormatter(data, view) {
       Consumption: item?.consumptionValue ?? 0,
       Opening: item.consumptionOpeningValue ?? 0,
       Closing: item.consumptionClosingValue ?? 0,
-      consumptionPercentage: item.consumptionPercentage ?? 0,
+      ConsumptionPercentage: item.consumptionPercentage ?? 0,
 
       tableLabel,
       tableLabelDesc,
@@ -525,30 +525,30 @@ export function periodDataBreakdownFormatter(raw, view) {
   // 🔹 Cards (from current summary)
   const cards = [
     {
-      title: "Cost Ratio",
-      value: `${(current.consumptionPercentage || 0).toFixed(1)}%`,
+      title: "Avg. Consumption Percentage",
+      value: `${(raw.consumptionPercentage || 0).toFixed(1)}%`,
       change: "-2.1%", // placeholder until API provides delta
       color: current.consumptionPercentage > 60 ? "danger" : "success",
       bg: "white"
     },
     {
-      title: `Average ${view.toUpperCase()} Sales`,
-      value: formatCurrency(current.netSales),
+      title: `Avg. ${view} Sales`,
+      value: formatCurrency(raw.netSales),
       change: "+8.3%",
       color: "success",
       bg: "white"
 
     },
     {
-      title: `Avg. ${view.toUpperCase()} Consumption`,
-      value: formatCurrency(current.consumptionValue),
+      title: `Avg. ${view} Consumption`,
+      value: formatCurrency(raw.consumptionValue),
       change: "+5.7%",
       color: "success",
       bg: "white"
     },
     {
-      title: `Average ${view.toUpperCase()} Waste`,
-      value: formatCurrency(current.wasteAmount),
+      title: `Avg. ${view} Waste`,
+      value: formatCurrency(raw.wasteAmount),
       change: "-12.4%",
       color: "danger",
     },
@@ -595,6 +595,7 @@ export function departmentConsumptionFormatter(data) {
   if (!data?.list || !Array.isArray(data.list)) return [];
 
   return data.list.map((item) => ({
+    departmentId: item.department?.id ?? null,
     name: item.department?.name ?? "Unknown",
     consumptionPct: item.consumptionPercentage ?? "0%",
     netConsumptionPct: item.netConsumptionPercentage ?? "0%",
@@ -630,7 +631,7 @@ export function departmentPerformanceFormatter(apiData) {
       bgColor: "#f0fff0"
     },
     {
-      title: "Total Consumption",
+      title: "Net Consumption",
       value: `₹${Number(apiData.netConsumptionValue).toLocaleString()}`,
       icon: <div style={{
         background: '#216cf2', // vibrant orange-red
@@ -646,7 +647,7 @@ export function departmentPerformanceFormatter(apiData) {
 
     },
     {
-      title: "Overall Cost %",
+      title: "Consumption%",
       value: `${apiData.consumptionPercentage}%`,
       icon: <div style={{
         background: '#ef4f08', // vibrant orange-red
@@ -661,7 +662,7 @@ export function departmentPerformanceFormatter(apiData) {
       bgColor: "#fff7f2"
     },
     {
-      title: "Total Cost %",
+      title: "Budget",
       value: `${apiData.targetConsumptionPercentage}%`,
       icon: <div style={{
         background: '#9534e3', // bold purple
@@ -680,8 +681,8 @@ export function departmentPerformanceFormatter(apiData) {
 
   const graph = apiData.list.map((item) => ({
     title: item?.department?.name || "Unknown",
-    sales: Number(item?.netSales?.toLocaleString() || 0),
     consumption: Number(item?.consumptionValue?.toLocaleString() || 0),
+    sales: Number(item?.netSales?.toLocaleString() || 0),
     cost: Number(item?.consumptionPercentage || 0),
     status: item?.status || "N/A",
   }));
@@ -1372,7 +1373,7 @@ export function recipesDataFormatter(data) {
       textColor: "#ba4d00",
     },
     {
-      title: data.lossMakingProducts?.name ?? "Loss Making Products",
+      title: data.lossMakingProducts?.name ?? "Loss Products",
       products: data.lossMakingProducts?.products ?? 0,
       sales: data.lossMakingProducts?.sales ?? 0,
       share: data.lossMakingProducts?.share ?? "0%",

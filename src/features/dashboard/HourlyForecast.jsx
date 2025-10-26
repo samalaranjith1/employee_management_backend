@@ -123,8 +123,9 @@ export default function HourlyForecast() {
   useEffect(() => {
     const flatList = productData?.list ? productData.list.flat() : [];
     if (flatList.length > 0) {
-      setProducts(flatList);
-      setSelectedProduct((prev) => prev || flatList[0]);
+      setProducts(prev=>([{name: "All Products"},...flatList]))
+      // setSelectedProduct((prev) => prev || flatList[0]);
+      setSelectedProduct({name: "All Products"});
     }
   }, [productData]);
 

@@ -70,7 +70,7 @@ function DepartmentPerformanceGraph({ data }) {
               dataKey="cost"
               stroke="#f59e0c"
               strokeWidth={2}
-              name="Cost %"
+              name="Consumption%"
               dot={{ r: 5 }}
             />
           </BarChart>

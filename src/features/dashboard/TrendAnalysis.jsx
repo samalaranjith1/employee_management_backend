@@ -48,7 +48,7 @@ export default function TrendAnalysis() {
     switch (view) {
       case "Daily":
         return useOutletDailySummary;
-      case "SameDay":
+      case "Same Days":
         return useOutletSameDaySummary;
       case "Weekly":
         return useOutletWeeklySummary;
@@ -125,7 +125,7 @@ export default function TrendAnalysis() {
                   borderRadius: "20px",
                 }}
               >
-                {["Daily", "SameDay", "Weekly", "Monthly"].map((label) => {
+                {["Daily", "Same Days", "Weekly", "Monthly"].map((label) => {
                   const value = label.toLowerCase().replace(" ", "");
                   // const view = filter === value;
                   return (
@@ -452,7 +452,7 @@ export default function TrendAnalysis() {
                         />
                         <Tooltip
                           formatter={(value, name) =>
-                            name === "consumptionPercentage" ? `${value}%` : `₹${value.toLocaleString()}`
+                            name === "Consumption Percentage" ? `${value}%` : `₹${value.toLocaleString()}`
                           }
                         />
 
@@ -542,7 +542,7 @@ export default function TrendAnalysis() {
                             url: "sp/consumption_closing_analytics",
                           },
                           {
-                            key: "consumptionPercentage",
+                            key: "ConsumptionPercentage",
                             color: "#ef4444",
                             url: "sp/consumption_analytics",
                             yAxisId: "right",

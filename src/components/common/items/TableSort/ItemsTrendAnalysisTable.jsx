@@ -70,9 +70,6 @@ export default function ItemsDepartmentAnalyticsTable({
       >
         <div
           className="d-flex align-items-center gap-2 mb-3"
-          style={{
-            fontFamily: "Inter, sans-serif",
-          }}
         >
           {/* ✅ Icon Column */}
           <div

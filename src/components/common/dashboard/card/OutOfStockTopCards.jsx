@@ -1,8 +1,10 @@
 "use client";
 import React from "react";
 import CommonCard from "./CommonCard";
+import { useDashboardContext } from "@/contexts/DashboardContext";
 
 export default function OutOfStockTopCards({ cardsData = [], cardBase, scrollRef }) {
+  const {isMobile} = useDashboardContext()
   return (
     <div
       ref={scrollRef}
@@ -14,26 +16,36 @@ export default function OutOfStockTopCards({ cardsData = [], cardBase, scrollRef
       }}
     >
       {cardsData.map((card, idx) => (
-        <CommonCard
+        <div
+        style={{ minWidth: isMobile ?'95%':'32%',
+          backgroundColor:card.bgColor,
+          color:card.textColor,
+          borderRadius: '12px',
+          padding: '1rem',
+          boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+          flexShrink: 0,
+         }}
+          widthDesktop="30%"
+          minWidth="30%"
           key={idx}
           bgColor={card.bgColor}
           textColor={card.textColor}
-          style={cardBase}
+          // style={cardBase}
           maxHeight="130px"
         >
           <div className="d-flex justify-content-between align-items-center" style={{ width: "100%" }}>
             {/* Left column */}
             <div>
-              <h6 style={{ fontWeight: "600",fontSize:'14px',color:'#6d6d6d' }}>{card.title}</h6>
-              <h2 style={{ fontWeight: "800" ,fontSize:'24px',color:"#232425"}}>{card.count}</h2>
-              <p style={{color:card.textColor,fontSize:'12px',fontWeight:'500'}}>{card.sub}</p>
+              <h6 style={{ fontWeight: "600", fontSize: '14px', color: '#6d6d6d' }}>{card.title}</h6>
+              <h2 style={{ fontWeight: "800", fontSize: '24px', color: "#232425" }}>{card.count}</h2>
+              <p style={{ color: card.textColor, fontSize: '12px', fontWeight: '500' }}>{card.sub}</p>
             </div>
             {/* Right column (icon) */}
             <div>
               {card.icon}
             </div>
           </div>
-        </CommonCard>
+        </div>
       ))}
     </div>
   );

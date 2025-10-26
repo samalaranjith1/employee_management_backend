@@ -245,6 +245,7 @@ export default function TopConsumedItems() {
                         <Col
                           xs="auto"
                           className="text-end"
+                          style={{marginLeft:'-18%',textAlign:'center'}}
                           onClick={() =>
                             handleNavigation({
                               router,
@@ -260,7 +261,7 @@ export default function TopConsumedItems() {
                           <div style={{ fontWeight: 600 }}>
                             ₹{Math.round(item.value).toLocaleString()}
                           </div>
-                          <div style={{ fontSize: "12px", color: "#718096" }}>
+                          <div style={{ fontSize: "12px", color: "#718096",marginLeft:'-18%',textAlign:'center' }}>
                             {item.percent ? `${item.percent}%` : ""}
                           </div>
 
@@ -269,9 +270,9 @@ export default function TopConsumedItems() {
                     ))}
                   </div>
                   <div style={{...styles.total,marginTop:"5px"}}>
-                    <span className="c_small_text_extra_bold">Total Consumption:</span>
+                    <span className="c_small_text_extra_bold" style={{fontSize:"18px"}}>Total Consumption</span>
                     <span
-                      style={{ paddingRight: "3vw" }}
+                      style={{ paddingRight: "1vw",fontSize:"18px" }}
                       className="c_small_text_extra_bold"
                     >
                       ₹{totalValue.toLocaleString()}
