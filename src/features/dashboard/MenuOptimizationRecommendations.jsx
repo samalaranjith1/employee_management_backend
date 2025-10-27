@@ -47,14 +47,14 @@ export default function MenuOptimizationRecommendations() {
         isShowArrows={true}
         scrollRef={myScrollRef}
         isExpandable={true}
-        titleIcon={ <div style={{
-      background: '#435ee9', // blue gradient for Figma look
-      borderRadius: '16=2px',
-      padding: '8px',
-      display: 'inline-block'
-    }}>
-      <IconTilde stroke={2} color="#fff" size={24} />
-    </div>}
+        titleIcon={<div style={{
+          background: '#435ee9', // blue gradient for Figma look
+          borderRadius: '16px',
+          padding: '8px',
+          display: 'inline-block'
+        }}>
+          <IconTilde stroke={2} color="#fff" size={24} />
+        </div>}
       />
 
       {/* ✅ ServiceRenderer */}

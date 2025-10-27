@@ -12,7 +12,7 @@ const SupplierFinancialAnalysisTable = ({
   filter,
   setFilter,
 }) => {
-  const {isMobile} = useSuppliersContext()
+  const { isMobile } = useSuppliersContext()
   // 🔹 Prepare data for numeric sorting
   const dataForSort = table.map((row, idx) => {
     const purchase =
@@ -40,9 +40,9 @@ const SupplierFinancialAnalysisTable = ({
     sortKey === key ? (direction === "asc" ? " ↑" : " ↓") : "";
 
   const columns = [
-    { key: "date", label: "DATE" },
-    { key: "purchaseAmountNum", label: "PURCHASE AMOUNT" },
-    { key: "paymentAmountNum", label: "PAYMENT AMOUNT" },
+    { key: "date", label: "Date" },
+    { key: "purchaseAmountNum", label: "Purchse Amount" },
+    { key: "paymentAmountNum", label: "Payment Amount" },
   ];
 
   return (
@@ -70,9 +70,9 @@ const SupplierFinancialAnalysisTable = ({
             </div>
             <div>
               <h6 style={{
-                fontWeight:'600',
-                fontSize:'18px',
-                color:'#232425'
+                fontWeight: '600',
+                fontSize: '18px',
+                color: '#232425'
               }}>{cards[1]?.title}</h6>
               {/* <small style={{ color: "#6C757D" }}>{cards[1]?.subtitle}</small> */}
             </div>
@@ -83,7 +83,7 @@ const SupplierFinancialAnalysisTable = ({
             <ButtonGroup
               style={{
                 backgroundColor: "rgb(230,230,230)",
-                borderRadius:'20px',
+                borderRadius: '20px',
               }}>
               {["Daily", "Same Days", "Weekly", "Monthly"].map((label) => (
                 <ToggleButton
@@ -112,7 +112,7 @@ const SupplierFinancialAnalysisTable = ({
                 </ToggleButton>
               ))}
             </ButtonGroup>
-            <span style={{marginLeft:'10px'}}><IconArrowsMaximize size={20} color="#232425" /></span>
+            <span style={{ marginLeft: '10px' }}><IconArrowsMaximize size={20} color="#232425" /></span>
           </div>
 
           {/* Mobile Buttons */}
@@ -120,7 +120,7 @@ const SupplierFinancialAnalysisTable = ({
             <ButtonGroup className="w-100"
               style={{
                 backgroundColor: "rgb(230,230,230)",
-                borderRadius:'20px'
+                borderRadius: '20px'
               }}>
               {["Daily", "Same Days", "Weekly", "Monthly"].map((label) => (
                 <ToggleButton
@@ -161,7 +161,7 @@ const SupplierFinancialAnalysisTable = ({
             overflowX: "auto",
           }}
         >
-          <Table borderless style={{ marginBottom: 0, minWidth: "600px" }}>
+          <Table  style={{ marginBottom: 0, minWidth: "600px" }}>
             <thead>
               <tr>
                 {columns.map((col) => (
@@ -171,13 +171,13 @@ const SupplierFinancialAnalysisTable = ({
                     style={{
                       position: "sticky",
                       top: 0,
-                      background: "#f4f7fc",
                       zIndex: 3,
-                      fontSize: "14px",
-                      color: "#232425",
-                      fontWeight:'600',
                       cursor: "pointer",
-                      padding: "12px 16px",
+                      fontSize: '14px',
+                      fontWeight: '600',
+                      color: "#232425",
+                      textAlign: "left",
+                      background: '#f4f7fc'
                     }}
                   >
                     {col.label}
@@ -191,21 +191,35 @@ const SupplierFinancialAnalysisTable = ({
                 <tr key={idx}>
                   <td style={{ padding: "14px 16px" }}>
                     <div style={{
-                      fontSize:'14px',
-                      color:'#232425',
-                      fontWeight:'600'
+                      fontSize: '14px',
+                      fontWeight: '600',
+                      color: "#232425",
+                      textAlign: "left",
                     }}>{row.date}</div>
-                    <small style={{ color: "#717182",fontWeight:'500',fontSize:'12px' }}>{row.day}</small>
+                    <small style={{
+                      fontSize: '12px',
+                      fontWeight: '500',
+                      textAlign: "left",
+                    }} className="text-muted">{row.day}</small>
                   </td>
                   <td
-                    className="fw-semibold"
-                    style={{ color: "#c10007", padding: "14px 16px" ,fontSize:'14px',fontWeight:'600'}}
+                    style={{
+                      color: "#c10007", fontSize: '14px',
+                      fontWeight: '500',
+                      textAlign: "left",
+                      paddingTop: '3%',
+                    }}
                   >
                     ₹{row.purchaseAmount?.toLocaleString()}
                   </td>
                   <td
                     className="fw-semibold"
-                    style={{ color: "#008236", padding: "14px 16px" ,fontSize:'14px',fontWeight:'600'}}
+                    style={{
+                      color: "#008236", fontSize: '14px',
+                      fontWeight: '500',
+                      textAlign: "left",
+                      paddingTop: '3%',
+                    }}
                   >
                     ₹{row.paymentAmount?.toLocaleString()}
                   </td>

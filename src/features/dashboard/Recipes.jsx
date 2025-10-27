@@ -99,11 +99,11 @@ const RecipesDashboard = () => {
                 />
               ))}
             </div>
-            <Row className="mt-4">
+            <Row className="mt-2">
               {/* Loss Making Products Section */}
-              <Col md={6} className="mb-4">
+              <Col md={6} style={{ border: '1px solid #dddddd', borderRadius: '15px' }}>
                 <div
-                  className="card-header border-0 pb-2 p-1 d-flex align-items-center p-2"
+                  className="card-header border-0 pb-2 d-flex align-items-center"
                   style={{ backgroundColor: "#fff" }}
                 >
                   {/* Column 1: Icon */}
@@ -144,7 +144,7 @@ const RecipesDashboard = () => {
               </Col>
 
               {/* Profitable Products Section */}
-              <Col md={6} className="mb-4">
+              <Col md={6} style={{ border: '1px solid #dddddd', borderRadius: '15px' }}>
                 <div
                   className="card-header border-0 pb-2 p-1 d-flex align-items-center p-2"
                   style={{ backgroundColor: "#fff" }}

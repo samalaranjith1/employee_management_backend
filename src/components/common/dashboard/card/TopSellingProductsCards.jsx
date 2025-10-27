@@ -15,7 +15,7 @@ export default function TopSellingProductsCards({ card }) {
           borderRadius: '12px',
           padding: '1rem',
           marginRight: '10px',
-          boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+          boxShadow: '0 4px 12px rgba(0,0,0,0)',
           flexShrink: 0,
         }}
         bgColor={card.bg}

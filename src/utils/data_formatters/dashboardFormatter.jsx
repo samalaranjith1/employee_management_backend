@@ -935,7 +935,7 @@ export const consumptionDistributionDataFormatter = (apiData) => {
         ? `₹${apiData.consumptionValue.toLocaleString()}`
         : "₹0",
       color: "#E8F0FF",
-      textColor:'#1859da',
+      textColor: '#1859da',
       icon: <div style={{
         background: '#2370f6', // vibrant orange-red
         borderRadius: '12px',
@@ -953,7 +953,7 @@ export const consumptionDistributionDataFormatter = (apiData) => {
         ? `₹${apiData.high.value.toLocaleString()}`
         : "₹0",
       color: "#E8F8F0",
-      textColor:"#15774f",
+      textColor: "#15774f",
       icon: <div style={{
         background: '#239f65', // matching green gradient from Figma
         borderRadius: '12px',
@@ -972,7 +972,7 @@ export const consumptionDistributionDataFormatter = (apiData) => {
         ? `₹${apiData.medium.value.toLocaleString()}`
         : "₹0",
       color: "#FFF8E1",
-      textColor:"#e88603",
+      textColor: "#e88603",
       icon: <div style={{
         background: '#eb9d03', // vibrant orange gradient
         borderRadius: '12px',
@@ -991,7 +991,7 @@ export const consumptionDistributionDataFormatter = (apiData) => {
         ? `₹${apiData.low.value.toLocaleString()}`
         : "₹0",
       color: "#FFEAEA",
-      textColor:'#bf1e38',
+      textColor: '#bf1e38',
       icon: <div style={{
         background: '#f15107', // vibrant orange gradient
         borderRadius: '12px',
@@ -1402,7 +1402,9 @@ export function recipesDataFormatter(data) {
     data.lossMakingProducts?.list?.map((item) => ({
       product: item.product?.name ?? "N/A",
       productId: item.product?.id,
-      subtitle: `${item.product?.categoryName ?? ""} • ₹${item.product?.price ?? 0
+      // subtitle: `${item.product?.categoryName ?? ""} • ₹${item.product?.price ?? 0
+      //   }`,      
+      subtitle: `₹${item.product?.price ?? 0
         }`,
       items: item.sales?.itemsSold ?? 0,
       stock: item.stock ?? "", // fallback
@@ -1421,7 +1423,9 @@ export function recipesDataFormatter(data) {
     data.profitableProducts?.list?.map((item) => ({
       product: item.product?.name ?? "N/A",
       productId: item.product?.id,
-      subtitle: `${item.product?.categoryName ?? ""} • ₹${item.product?.price ?? 0
+      // subtitle: `${item.product?.categoryName ?? ""} • ₹${item.product?.price ?? 0
+      //   }`,
+      subtitle: `₹${item.product?.price ?? 0
         }`,
       items: item.sales?.itemsSold ?? 0,
       stock: item.stock ?? "", // fallback
@@ -1523,7 +1527,7 @@ export function topSellingProductsDataFormatter(data) {
   const chartData = (data.list || []).map((item) => ({
     name: item.product?.name || "Unknown",
     sales: item.sales?.netSales
-  ? (item.sales.netSales) : 0,
+      ? (item.sales.netSales) : 0,
     margin: item.marginPercentage || 0,
   }));
 
@@ -1587,7 +1591,7 @@ export function productPerformanceDetailsDataFormmatter(data) {
     product: item.product?.name ?? "N/A",
     productId: item.product?.id,
     details: `${item.product?.departmentName ?? item.product?.categoryName ?? "N/A"
-      }. ₹${item.product?.price ?? 0}`,
+      } • ₹${item.product?.price ?? 0}`,
     items: item.sales?.itemsSold ?? 0,
     netSales: formatCurrency(item.sales?.netSales),
     discount: formatCurrency(item.sales?.discount),

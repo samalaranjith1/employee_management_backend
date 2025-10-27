@@ -61,14 +61,13 @@ export default function ItemsDepartmentDistributionChartTable({
                     key={col.key}
                     onClick={() => handleSort(col.key)}
                     style={{
-                      fontWeight: 700,
-                      fontSize: "14px",
-                      textTransform: "uppercase",
-                      color: "#232425",
-                      background: "#f4f7fc",
                       cursor: "pointer",
-                      padding: "12px 16px",
-                      textAlign: col.key === "name" ? "left" : "center",
+                      fontSize: '14px',
+                      fontWeight: '600',
+                      color: "#232425",
+                      textAlign: "left",
+                      background: '#f4f7fc',
+                      // textAlign: col.key === "name" ? "left" : "center",
                     }}
                   >
                     {col.label}
@@ -91,17 +90,26 @@ export default function ItemsDepartmentDistributionChartTable({
                           borderRadius: "3px",
                           backgroundColor: row.color,
                           marginRight: "6px",
-                          fontWeight:600,
-                          fontSize:"14px",
-                          color:"#232425"
+                          fontSize: '14px',
+                          fontWeight: '600',
+                          color: "#232425",
+                          textAlign: "left",
                         }}
                       ></span>
                       {row.name}
                     </td>
-                    <td className="text-center" style={{fontWeight:600, fontSize:"14px", color:"#717182"}}>
+                    <td   style={{
+                      fontSize: '14px',
+                      fontWeight: '500',
+                      textAlign: "left",
+                    }}>
                       {row.value.toLocaleString()}
                     </td>
-                    <td className="text-center" style={{fontWeight:600, fontSize:"14px", color:"717182"}}>{row.percent}%</td>
+                    <td  sName="text-center" style={{
+                      fontSize: '14px',
+                      fontWeight: '500',
+                      textAlign: "left",
+                    }}>{row.percent}%</td>
                   </tr>
                 ))
               ) : (
@@ -122,11 +130,11 @@ export default function ItemsDepartmentDistributionChartTable({
             </tbody>
 
             {total ? (
-              <tfoot style={{ backgroundColor: "#f4f7fc", fontWeight:600, position: "sticky", bottom: 0, zIndex: 2 }}>
+              <tfoot style={{ backgroundColor: "#f4f7fc", fontWeight: 600, position: "sticky", bottom: 0, zIndex: 2 ,textAlign: "left"}}>
                 <tr>
                   <td>Total</td>
-                  <td className="text-center" style={{fontWeight:600, fontSize:"14px", color:"#232425"}}>{total.toLocaleString()}</td>
-                  <td className="text-center" style={{fontWeight:600, fontSize:"14px", color:"#232425"}}>100%</td>
+                  <td   style={{ fontWeight: 600, fontSize: "14px", color: "#232425" ,textAlign: "left"}}>{total.toLocaleString()}</td>
+                  <td style={{ fontWeight: 600, fontSize: "14px", color: "#232425",textAlign: "left" }}>100%</td>
                 </tr>
               </tfoot>
             ) : null}

@@ -39,7 +39,7 @@ const RawMaterialPurchaseAnalysisTable = ({ items = [] }) => {
         overflowX: "auto",
       }}
     >
-      <Table borderless style={{ marginBottom: 0, minWidth: "600px" }}>
+      <Table  style={{ marginBottom: 0, minWidth: "600px" }}>
         <thead>
           <tr>
             {columns.map((col) => (
@@ -49,14 +49,13 @@ const RawMaterialPurchaseAnalysisTable = ({ items = [] }) => {
                 style={{
                   position: "sticky",
                   top: 0,
-                  background: "#f4f7fc",
                   zIndex: 3,
-                  fontSize: "13px",
-                  color: "#232425",
-                  fontWeight:'600',
-                  fontSize:'14px',
                   cursor: "pointer",
-                  padding: "12px 16px",
+                  fontSize: '14px',
+                  fontWeight: '600',
+                  color: "#232425",
+                  textAlign: "left",
+                  background: '#f4f7fc'
                 }}
               >
                 {col.label}
@@ -68,18 +67,35 @@ const RawMaterialPurchaseAnalysisTable = ({ items = [] }) => {
         <tbody>
           {sortedData.map((item) => (
             <tr key={item.key} style={{ fontSize: "14px" }}>
-              <td style={{ padding: "14px 16px" }}>
-                <div className="fw-semibold" style={{ color: "#232425" ,fontSize:'14px',fontWeight:'600',}}>
+              <td>
+                <div style={{
+                  fontSize: '14px',
+                  fontWeight: '600',
+                  color: "#232425",
+                  textAlign: "left",
+                }}>
                   {item.name}
                 </div>
-                <div style={{ color: "#717182", fontSize: "12px" ,fontWeight:'500'}}>
-                  {item.type}. {item.unitInfo}
+                <div clasName='text-muted' style={{
+                  fontSize: '12px',
+                  fontWeight: '500',
+                  textAlign: "left",
+                }}>
+                  {item.type} • {item.unitInfo}
                 </div>
               </td>
-              <td style={{ color: "#232425" ,fontSize:'14px',fontWeight:'600',}}>
+              <td style={{
+                fontSize: '14px',
+                fontWeight: '500',
+                textAlign: "left",
+              }}>
                 {item.quantity}
               </td>
-              <td style={{ color: "#232425" ,fontSize:'14px',fontWeight:'600', }}>
+              <td style={{
+                fontSize: '14px',
+                fontWeight: '500',
+                textAlign: "left",
+              }}>
                 ₹{item.value.toLocaleString("en-IN")}
               </td>
             </tr>

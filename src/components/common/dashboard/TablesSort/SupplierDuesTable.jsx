@@ -74,6 +74,7 @@ function SupplierDuesTable({ styles, data = [] }) {
           maxHeight: "65vh", // vertical scroll within height
           WebkitOverflowScrolling: "touch",
           position: "relative",
+          marginTop: '5px'
         }}
       >
         <Table
@@ -94,11 +95,15 @@ function SupplierDuesTable({ styles, data = [] }) {
                     ...styles.tableHeader,
                     position: "sticky",
                     top: 0,
-                    background: "#f4f7fc",
                     zIndex: 5,
                     cursor: "pointer",
                     whiteSpace: "nowrap",
                     boxShadow: "0 2px 3px rgba(0, 0, 0, 0.05)",
+                    fontSize: '14px',
+                    fontWeight: '600',
+                    color: "#232425",
+                    textAlign: "left",
+                    backgroundColor: '#f4f7fc'
                   }}
                   onClick={() => handleSort(col.key)}
                 >
@@ -114,7 +119,13 @@ function SupplierDuesTable({ styles, data = [] }) {
               <tr key={idx}>
                 <td>
                   <div
-                    style={styles.supplierName}
+                    style={{
+                      ...styles.supplierName,
+                      fontSize: '14px',
+                      fontWeight: '600',
+                      color: "#232425",
+                      textAlign: "left",
+                    }}
                     onClick={() =>
                       handleNavigation({
                         router,
@@ -130,19 +141,38 @@ function SupplierDuesTable({ styles, data = [] }) {
                     {row.supplier}
                   </div>
                   <div className="d-flex align-items-center gap-1">
-                    <div style={styles.badge}>{row.category}</div>
-                    <span style={styles.locationText}>{row.location}</span>
+                    <div style={{
+                      ...styles.badge, fontSize: '12px',
+                      fontWeight: '500',
+                      color: "#212529BF",
+                      textAlign: "left",
+                    }} className="text-muted">{row.category}</div>
+                    <span style={{
+                      ...styles.locationText,
+                      fontSize: '12px',
+                      fontWeight: '500',
+                      color: "#212529BF",
+                      textAlign: "left",
+                    }} className="text-muted">• {row.location}</span>
                   </div>
                 </td>
 
-                <td style={{...styles.redAmount,
-                    paddingTop:'+18px'
+                <td style={{
+                  ...styles.redAmount,
+                  paddingTop: '+18px',
+                  fontSize: '14px',
+                  fontWeight: '500',
+                  textAlign: "left",
                 }}>
                   ₹{row.total.toLocaleString()}
                 </td>
 
-                <td style={{...styles.blackAmount,
-                    paddingTop:'+18px'
+                <td style={{
+                  ...styles.blackAmount,
+                  paddingTop: '+18px',
+                  fontSize: '14px',
+                  fontWeight: '500',
+                  textAlign: "left",
                 }
                 }>
                   ₹{row.totalPurchase.toLocaleString()}
@@ -150,10 +180,10 @@ function SupplierDuesTable({ styles, data = [] }) {
 
                 <td
                   style={{
-                    color: "#464f60",
-                    fontWeight: "700",
-                    fontSize: "14px",
-                    paddingTop:'+18px'
+                    paddingTop: '+18px',
+                    fontSize: '14px',
+                    fontWeight: '500',
+                    textAlign: "left",
                   }}
                 >
                   {row.totalPayments
@@ -163,10 +193,10 @@ function SupplierDuesTable({ styles, data = [] }) {
 
                 <td
                   style={{
-                    color: "#464f60",
-                    fontWeight: "700",
-                    fontSize: "14px",
-                    paddingTop:'+18px'
+                    fontSize: '14px',
+                    fontWeight: '500',
+                    textAlign: "left",
+                    paddingTop: '+18px'
                   }}
                 >
                   {row.items}

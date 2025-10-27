@@ -36,8 +36,11 @@ export default function SupplierDetailsTableMonth({ supplierData }) {
                     background: "#f4f7fc",
                     zIndex: 2,
                     cursor: "pointer",
-                    fontWeight: 600,
-                    fontSize: '14px'
+                    fontSize: '14px',
+                    fontWeight: '600',
+                    color: "#232425",
+                    textAlign: "left",
+                    backgroundColor: '#f4f7fc'
                   }}
                   onClick={() => sort.handleSort(col.key)}
                 >
@@ -52,32 +55,39 @@ export default function SupplierDetailsTableMonth({ supplierData }) {
               <tr key={idx}>
                 <td>
                   <div style={{
-                    color: "#171c26",
-                    fontWeight: "600",
-                    fontSize: "14px"
+                    fontSize: '14px',
+                    fontWeight: '600',
+                    color: "#232425",
+                    textAlign: "left",
                   }}>{row.supplier}</div>
                   <div className="d-flex gap-1">
                     <div style={{
-                      color: "#687182",
-                      fontWeight: "400",
-                      fontSize: "12px"
-                    }}>
+                      fontSize: '12px',
+                      fontWeight: '500',
+                      textAlign: "left",
+                    }} className="text-muted">
                       {row.category}
                     </div>
                     <span style={{
-                      color: "#687182",
-                      fontWeight: "400",
-                      fontSize: "12px"
-                    }}>
-                      {row.location}
+                      fontSize: '12px',
+                      fontWeight: '500',
+                      textAlign: "left",
+                    }} className="text-muted">
+                     • {row.location}
                     </span>
                   </div>
                 </td>
-                <td style={{ fontWeight: "700", fontSize: '14px', color: "#464f60" }}>
+                <td style={{
+                  fontSize: '14px',
+                  fontWeight: '500',
+                  textAlign: "left",
+                }}>
                   {row.purchase.toLocaleString()}
                 </td>
                 <td style={{
-                  fontWeight: "700", fontSize: '14px', color: "#464f60"
+                  fontSize: '14px',
+                  fontWeight: '500',
+                  textAlign: "left",
                 }}>{row.items}</td>
               </tr>
             ))}

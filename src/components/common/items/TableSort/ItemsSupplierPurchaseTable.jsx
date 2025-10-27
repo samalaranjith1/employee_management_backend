@@ -43,7 +43,7 @@ export default function ItemsSupplierPurchaseTable({ tableMeta, tableData }) {
         }}>
           <IconChartHistogram stroke={2} color="#fff" size={20} />
         </div>
-        <div style={{marginLeft:"5px"}}>
+        <div style={{ marginLeft: "5px" }}>
           <h6 className="mb-0 fw-bold">{tableMeta.title}</h6>
           <small className="text-muted">{tableMeta.subtitle}</small>
         </div>
@@ -75,16 +75,15 @@ export default function ItemsSupplierPurchaseTable({ tableMeta, tableData }) {
                     key={col.key}
                     onClick={() => handleSort(col.key)}
                     style={{
-                      fontWeight: 700,
-                      fontSize: "14px",
-                      textTransform: "uppercase",
+                      fontSize: '14px',
+                      fontWeight: '600',
                       color: "#232425",
-                      background: "#f4f7fc",
+                      textAlign: "left",
+                      background: '#f4f7fc',
                       position: "sticky",
                       top: 0,
                       zIndex: 2,
                       cursor: "pointer",
-                      padding: "12px 16px",
                     }}
                   >
                     {col.label}
@@ -97,12 +96,37 @@ export default function ItemsSupplierPurchaseTable({ tableMeta, tableData }) {
               {sortedData.length > 0 ? (
                 sortedData.map((row, idx) => (
                   <tr key={idx}>
-                    <td className="py-3 px-3" style={{fontWeight:600, fontSize:"14px", color:"#232425"}}>{row.supplierName}</td>
-                    <td className="text-primary" style={{fontWeight:600, fontSize:"14px", color:"#155DFC"}}>{row.totalQuantity}</td>
-                    <td className="text-success" style={{fontWeight:600, fontSize:"14px", color:"#00A63E"}}>{row.totalPrice}</td>
-                    <td style={{ color: "#9810FA", fontWeight:600, fontSize:"14px" }}>{row.avgPrice}</td>
-                    <td style={{fontWeight:600, fontSize:"14px", color:"#717182"}}>{row.startDate}</td>
-                    <td style={{fontWeight:600, fontSize:"14px", color:"#717182"}}>{row.endDate}</td>
+                    <td style={{
+                      fontSize: '14px',
+                      fontWeight: '600',
+                      color: "#232425",
+                      textAlign: "left",
+                    }}>{row.supplierName}</td>
+                    <td className="text-primary" style={{
+                      fontSize: '14px',
+                      fontWeight: '500',
+                      textAlign: "left", color: "#155DFC"
+                    }}>{row.totalQuantity}</td>
+                    <td className="text-success" style={{
+                      fontSize: '14px',
+                      fontWeight: '500',
+                      textAlign: "left", color: "#00A63E"
+                    }}>{row.totalPrice}</td>
+                    <td style={{
+                      color: "#9810FA", fontSize: '14px',
+                      fontWeight: '500',
+                      textAlign: "left",
+                    }}>{row.avgPrice}</td>
+                    <td style={{
+                      fontSize: '14px',
+                      fontWeight: '500',
+                      textAlign: "left",
+                    }}>{row.startDate}</td>
+                    <td style={{
+                      fontSize: '14px',
+                      fontWeight: '500',
+                      textAlign: "left",
+                    }}>{row.endDate}</td>
                   </tr>
                 ))
               ) : (

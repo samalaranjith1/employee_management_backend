@@ -157,7 +157,7 @@ function HourlyForecastFilterCard({
           <Card.Body>
             <div className="d-flex justify-content-between align-items-center mb-3">
               <Card.Title className="h6 c_medium_text_semi_bold mb-0">
-                {selectedMetric} Forecast by Hour
+                {selectedMetric} Forecast
               </Card.Title>
             </div>
             <div

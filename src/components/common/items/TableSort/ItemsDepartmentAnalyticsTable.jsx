@@ -75,11 +75,10 @@ export default function ItemsDepartmentAnalyticsTable({ tableData = [] }) {
                 onClick={() => col.key !== "actions" && handleSort(col.key)}
                 style={{
                   cursor: col.key !== "actions" ? "pointer" : "default",
-                  fontSize: "14px",
-                  padding: "12px 16px",
-                  backgroundColor: "#f4f7fc",
-                  fontWeight: 700,
-                  color:"#232425"
+                  fontSize: '14px',
+                  fontWeight: '600',
+                  color: "#232425",
+                  background: '#f4f7fc'
                 }}
               >
                 {col.label} {col.key !== "actions" && renderArrow(col.key)}
@@ -99,7 +98,11 @@ export default function ItemsDepartmentAnalyticsTable({ tableData = [] }) {
                   // Department & Actions have no background
                   if (col.key === "department") {
                     return (
-                      <td key={col.key} className="" style={{fontWeight:600, fontSize:"14px", color:"#232425"}}>
+                      <td key={col.key} className="" style={{
+                        fontSize: '14px',
+                        fontWeight: '600',
+                        color: "#232425",
+                      }}>
                         {row.department}
                       </td>
                     );
@@ -109,7 +112,7 @@ export default function ItemsDepartmentAnalyticsTable({ tableData = [] }) {
                       <td key={col.key}>
                         <a
                           href="#"
-                          className="text-decoration-none" style={{fontWeight:600, fontSize:"14px", color:"#155DFC"}}
+                          className="text-decoration-none" style={{ fontWeight: 500, fontSize: "14px", color: "#155DFC" }}
                         >
                           View Trend <FaArrowTrendUp />
                         </a>
@@ -118,17 +121,17 @@ export default function ItemsDepartmentAnalyticsTable({ tableData = [] }) {
                   }
 
                   return (
-                    <td key={col.key} className="position-relative " style={{fontWeight:600, fontSize:"14px", color:"#232425"}}>
+                    <td key={col.key} className="position-relative " style={{ fontWeight: 500, fontSize: "14px", color: "#232425" }}>
                       {isColored && (
                         <div className={`cell-bg ${col.bgClass}`}></div>
                       )}
                       <div className="position-relative" style={{ zIndex: 2 }}>
                         {cell.label || cell.qty || ""}
                         {cell.value && (
-                          <div className="" style={{fontWeight:500, fontSize:"12px", color:"#717182"}}>{cell.value}</div>
+                          <div className="" style={{ fontWeight: 400, fontSize: "12px", color: "#717182" }}>{cell.value}</div>
                         )}
                         {cell.percentage && (
-                          <div className="" style={{fontWeight:500, fontSize:"12px", color:"#717182"}}>{cell.percentage}</div>
+                          <div className="" style={{ fontWeight: 400, fontSize: "12px", color: "#717182" }}>{cell.percentage}</div>
                         )}
                       </div>
                     </td>

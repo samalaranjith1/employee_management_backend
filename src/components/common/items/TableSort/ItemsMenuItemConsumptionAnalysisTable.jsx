@@ -75,7 +75,7 @@ export default function ItemsMenuItemConsumptionAnalysisTable({
             {sortedData.map((item, index) => (
               <tr key={item.id ?? `row-${index}`}>
                 {/* Column 1: Menu Item */}
-                <td style={{fontWeight:400, fontSize:"14px", color:"#232425"}}>
+                <td style={{fontWeight:500, fontSize:"14px", color:"#232425"}}>
                   <div className="d-flex flex-column align-items-start">
                     <span className="mt-1" style={{fontWeight:600, fontSize:"12px", color:"#232425"}}>{item.name}</span>
                     <Badge bg="light" text="secondary" className="mt-1" style={{fontWeight:400}}>

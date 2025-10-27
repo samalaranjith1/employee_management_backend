@@ -147,7 +147,7 @@ export default function Header() {
             key={idx}
             action
             className="d-flex justify-content-between align-items-center"
-            onClick={() =>
+            onMouseDown={() => {
               handleNavigation({
                 router,
                 url: `/${result?.redirectUrl?.match(/[a-zA-Z]/g).join("")}s`,
@@ -159,9 +159,12 @@ export default function Header() {
                 },
               })
             }
-            style={{ cursor: "pointer" }}
+            }
+            style={{
+              cursor: "pointer",
+            }}
           >
-            <span>{result?.name || result?.title}</span>
+            <span onClick={() => alert('name clicked')}>{result?.name || result?.title}</span>
             <small className="text-primary">{result?.type || ""}</small>
           </ListGroup.Item>
         ))}
@@ -202,31 +205,43 @@ export default function Header() {
                 <IconChefHatFilled size={20} color="white" />
               </div>
 
-              <span style={{ color: '#FF6000', fontSize: '16px', fontWeight: '700',marginLeft:isMobile?'-15px':'' }}>Costonomy</span>
+              <span style={{ color: '#FF6000', fontSize: '16px', fontWeight: '700', marginLeft: isMobile ? '-15px' : '' }}>Costonomy</span>
             </Navbar.Brand>
           </div>
 
           {/* Center Nav */}
           <Col
             md={4}
-            // className="d-none d-md-flex justify-content-center align-items-center flex-nowrap"
+          // className="d-none d-md-flex justify-content-center align-items-center flex-nowrap"
           >
-            <ul  className="d-none d-md-flex justify-content-center align-items-center flex-nowrap" style={{marginBottom:'+2px'}}>
+            <ul className="d-none d-md-flex justify-content-center align-items-center flex-nowrap" style={{ marginBottom: '+2px' }}>
               {navItems.map((item) => (
                 <li
                   key={item.path}
                   onClick={() => handleNavClick(item.path)}
                   onMouseEnter={() => setHoveredTab(item.path)}
                   onMouseLeave={() => setHoveredTab(null)}
-                  className={`${styles.navLink} ${activeTab === item.path ? styles.navLinkActive : ""
-                    }`}
+                  // className={`${styles.navLink} ${activeTab === item.path ? styles.navLinkActive : ""
+                  //   }`}
+                  // style={{
+                  //   color:
+                  //     activeTab === item.path
+                  //       ? "#fff"
+                  //       : hoveredTab === item.path
+                  //         ? "#ff7a30"
+                  //         : "#999",
+                  // }}
                   style={{
-                    color:
+                    flex: "0 0 auto",
+                    padding: "10px 16px",
+                    borderBottom:
                       activeTab === item.path
-                        ? "#fff"
-                        : hoveredTab === item.path
-                          ? "#ff7a30"
-                          : "#999",
+                        ? "3px solid red"
+                        : "3px solid transparent",
+                    fontSize: activeTab === item.path ? "16px" : "16px",
+                    fontWeight: activeTab === item.path ? '700' : '500',
+                    boxSizing: "border-box",
+                    listStyleType: "none",
                   }}
                 >
                   {item.label}
@@ -270,7 +285,7 @@ export default function Header() {
                   className={`${styles.buttonIcon} p-0 d-lg-none`}
                   onClick={toggleMobileSearch}
                 >
-                {/* <IconSearch size={16} stroke={0} /> */}
+                  {/* <IconSearch size={16} stroke={0} /> */}
 
                   <FaSearch size={16} />
                 </Button>

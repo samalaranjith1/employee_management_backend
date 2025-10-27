@@ -111,7 +111,8 @@ export function useApiQuery({
     staleTime: 300000, // 5 minutes
     cacheTime: 600000, // 10 minutes
     // refetchOnWindowFocus: true, // Refetch on window focus
-    keepPreviousData: true, // ✅ Prevents UI flicker when params change
+    keepPreviousData: true,
+    // enabled: Boolean(params.startdt && params.enddt), // ✅ Prevents UI flicker when params change
     ...options,
   });
 }

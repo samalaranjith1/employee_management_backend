@@ -69,7 +69,7 @@ export default function ProductPerformanceTable({ data }) {
       bodyStyle={{ padding: 0 }}
     >
       {/* 🔹 Controls (Search + Filter + Export) */}
-        {/* <TableControls
+      {/* <TableControls
           searchTerm={searchTerm}
           setSearchTerm={setSearchTerm}
           filters={filters}
@@ -101,10 +101,12 @@ export default function ProductPerformanceTable({ data }) {
                   key={col.key}
                   onClick={() => handleSort(col.key)}
                   style={{
-                    cursor: "pointer", fontWeight: 600,
-                    backgroundColor: "#f4f7fc",
-                    color: '#464f60',
-                    fontSize: '14px'
+                    cursor: "pointer",
+                    fontSize: '14px',
+                    fontWeight: '600',
+                    color: "#232425",
+                    textAlign: "left",
+                    backgroundColor: '#f4f7fc'
                   }}
                 >
                   {col.label}
@@ -144,7 +146,7 @@ export default function ProductPerformanceTable({ data }) {
                         className="d-flex align-items-center gap-2"
                         style={{ fontWeight: 600 }}
                       > */}
-                        {/* <div
+                      {/* <div
                           style={{
                             width: 8,
                             height: 28,
@@ -158,20 +160,24 @@ export default function ProductPerformanceTable({ data }) {
                         />
                         {percentile}
                       </td> */}
-                      <td style={{ fontWeight: "700",fontSize:'14px',color:barColors[barColor] }}> {percentile}</td>
+                      <td style={{
+                        fontSize: '14px',
+                        fontWeight: '600',
+                        textAlign: "left", color: barColors[barColor]
+                      }}> {percentile}</td>
 
-                      <td style={{ fontWeight: "700",fontSize:'14px',color:'#464f60' }}>{products}</td>
-                      <td style={{ fontWeight: "700",fontSize:'14px',color:'#464f60' }}>{sales}</td>
-                      <td style={{ fontWeight: "700",fontSize:'14px',color:'#464f60' }}>{salesPercent}</td>
-                      <td style={{ fontWeight: "700",fontSize:'14px',color:'#464f60' }}>{margin}</td>
-                      <td style={{ fontWeight: "700",fontSize:'14px',color:'#464f60' }}>{marginPercent}</td>
+                      <td style={{ fontWeight: "500", fontSize: '14px' }}>{products}</td>
+                      <td style={{ fontWeight: "500", fontSize: '14px' }}>{sales}</td>
+                      <td style={{ fontWeight: "500", fontSize: '14px' }}>{salesPercent}</td>
+                      <td style={{ fontWeight: "500", fontSize: '14px' }}>{margin}</td>
+                      <td style={{ fontWeight: "500", fontSize: '14px' }}>{marginPercent}</td>
                       <td>
                         <span
                           style={{
                             backgroundColor: classColor.bg,
                             color: classColor.color,
-                            fontWeight: 700,
-                            fontSize:"14px",
+                            fontWeight: 500,
+                            fontSize: "14px",
                             padding: "0px 10px",
                             borderRadius: "10px",
                             display: "inline-block",

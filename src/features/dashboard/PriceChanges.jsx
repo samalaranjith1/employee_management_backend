@@ -80,8 +80,18 @@ export default function PriceChanges() {
     tableBody: {
       fontSize: "0.9rem",
     },
-    priceUp: { color: "#dc2626", fontWeight: "bold" },
-    priceDown: { color: "#16a34a", fontWeight: "bold" },
+    priceUp: {
+      color: "#dc2626", 
+      fontSize: '14px',
+      fontWeight: '600',
+      // textAlign: "left",
+    },
+    priceDown: {
+      color: "#16a34a",  
+      fontSize: '14px',
+      fontWeight: '600',
+      // textAlign: "left",
+    },
     footer: {
       backgroundColor: "#f0fdfa",
       fontWeight: "bold",

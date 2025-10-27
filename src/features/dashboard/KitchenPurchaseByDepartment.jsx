@@ -29,7 +29,7 @@ export default function DepartmentConsumption() {
       <ComponentHeader
         title={"Department Consumption"}
         description={"Track Department sales, consumption and performance"}
-        titleColor={"#000"}
+        titleColor={"#232425"}
         isShowArrows={false}
         scrollRef={myScrollRef}
         isExpandable={true}

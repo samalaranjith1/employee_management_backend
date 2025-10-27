@@ -24,7 +24,7 @@ function PriceChangesTable({ styles, recentChanges, futureHikes }) {
       }}
     >
       {/* Scrollable content */}
-      <div style={{ flex: 1, overflowY: "auto", padding: "8px" ,backgroundColor:'#eee'}}>
+      <div style={{ flex: 1, overflowY: "auto", padding: "8px", backgroundColor: '#eee' }}>
         {sortHook.sortedData.map((item, idx) => (
           <div
             key={idx}
@@ -45,23 +45,28 @@ function PriceChangesTable({ styles, recentChanges, futureHikes }) {
             }
           >
             {/* Left Column */}
-            <div>
-              <div style={{ fontSize: "14px", fontWeight:"700", color:"#232425" }}>
+            <div className="col-sm-9">
+              <div style={{
+                fontSize: '14px',
+                fontWeight: '600',
+                color: "#232425",
+                textAlign: "left",
+              }}>
                 {item.name}
               </div>
-              <div  style={{ fontSize: "12px", fontWeight:"400", color:"#687182" }}>
+              <div className="text-muted" style={{ fontSize: '12px' ,fontWeight: '400', }} >
                 {item.category}
               </div>
-              <div style={{ fontSize: "12px",fontWeight:"400", color:"#687182" }}>
+              <div className="text-muted" style={{ fontSize: '12px' ,fontWeight: '400', }} >
                 ₹{item.oldPrice} → ₹{item.newPrice}
               </div>
-              <div className={dateClass} style={{ fontSize: "12px", fontWeight:"400", color:"#687182" }}>
+              <div className={dateClass}  style={{ fontSize: '12px' ,fontWeight: '400', }} >
                 {dateLabel}: {item.date}
               </div>
             </div>
 
             {/* Right Column */}
-            <div className="text-end">
+            <div className="col-sm-3">
               <div style={item.up ? styles.priceUp : styles.priceDown}>
                 {Number(item.up)?.toLocaleString() ? "+" : ""}₹{Number(item.change)?.toLocaleString()}
               </div>
@@ -76,7 +81,7 @@ function PriceChangesTable({ styles, recentChanges, futureHikes }) {
       {/* Fixed Footer */}
       {footerText && (
         <div
-          className="d-flex justify-content-between align-items-center"
+          className="d-flex  align-items-center"
           style={{
             padding: "12px 16px",
             backgroundColor: "#f9fafb",
@@ -85,8 +90,8 @@ function PriceChangesTable({ styles, recentChanges, futureHikes }) {
             fontSize: "0.95rem",
           }}
         >
-          <span>{footerText}:</span>
-          <span className="text-danger">{footerAmount}</span>
+          <div className="col-sm-9">{footerText}:</div>
+          <div className="col-sm-3 text-danger">{footerAmount}</div>
         </div>
       )}
     </div>
@@ -95,80 +100,80 @@ function PriceChangesTable({ styles, recentChanges, futureHikes }) {
   return (
     // <Row className="gap-2 d-flex alingItems-center">
     <Row className="d-flex align-items-center">
-  {/* Recent Price Changes */}
-  <Col xs={12} md={6}>
-    <div style={{ padding: '2vw', backgroundColor: '#d2f4e0ff', borderRadius: '30px' }}>
-      <BaseSurface
-        title={
-          <span>
-            <div style={{
-              background: '#2e832e',
-              borderRadius: '4px',
-              padding: '2px',
-              display: 'inline-block'
-            }}>
-              <IconPackage stroke={2} color="#fff" size={16} />
-            </div>{" "}
-            Recent Price Hikes
-          </span>
-        }
-        containerStyle={styles?.sectionCard}
-        headerStyle={{
-          ...styles?.sectionHeaderRecent,
-          padding: "12px 16px",
-          background: "#ecfdf5",
-          borderBottom: "1px solid #e5e7eb",
-        }}
-        bodyStyle={{ padding: 0 }}
-      >
-        {renderCardList(
-          recentSort,
-          "Net Recent Impact",
-          "₹8,200",
-          "Effective",
-          "text-success"
-        )}
-      </BaseSurface>
-    </div>
-  </Col>
+      {/* Recent Price Changes */}
+      <Col xs={12} md={6}>
+        <div style={{ padding: '2vw', backgroundColor: '#d2f4e0ff', borderRadius: '30px' }}>
+          <BaseSurface
+            title={
+              <span>
+                <div style={{
+                  background: '#2e832e',
+                  borderRadius: '4px',
+                  padding: '2px',
+                  display: 'inline-block'
+                }}>
+                  <IconPackage stroke={2} color="#fff" size={16} />
+                </div>{" "}
+                Recent Price Hikes
+              </span>
+            }
+            containerStyle={styles?.sectionCard}
+            headerStyle={{
+              ...styles?.sectionHeaderRecent,
+              padding: "12px 16px",
+              background: "#ecfdf5",
+              borderBottom: "1px solid #e5e7eb",
+            }}
+            bodyStyle={{ padding: 0 }}
+          >
+            {renderCardList(
+              recentSort,
+              "Net Recent Impact",
+              "₹8,200",
+              "Effective",
+              "text-success"
+            )}
+          </BaseSurface>
+        </div>
+      </Col>
 
-  {/* Future Price Hikes */}
-  <Col xs={12} md={6}>
-    <div style={{ padding: '2vw', backgroundColor: '#f8f1c0ff', borderRadius: '30px' }}>
-      <BaseSurface
-        title={
-          <span>
-            <div style={{
-              background: '#eb7104',
-              borderRadius: '4px',
-              padding: '2px',
-              display: 'inline-block'
-            }}>
-              <IconTrendingUp stroke={2} color="#fff" size={16} />
-            </div>{" "}
-            Future Price Hikes
-          </span>
-        }
-        containerStyle={styles?.sectionCard}
-        headerStyle={{
-          ...styles?.sectionHeaderFuture,
-          padding: "12px 16px",
-          background: "#fffbeb",
-          borderBottom: "1px solid #e5e7eb",
-        }}
-        bodyStyle={{ padding: 0 }}
-      >
-        {renderCardList(
-          futureSort,
-          "Net Future Impact",
-          "₹6,280",
-          "Tentative",
-          "text-warning"
-        )}
-      </BaseSurface>
-    </div>
-  </Col>
-</Row>
+      {/* Future Price Hikes */}
+      <Col xs={12} md={6}>
+        <div style={{ padding: '2vw', backgroundColor: '#f8f1c0ff', borderRadius: '30px' }}>
+          <BaseSurface
+            title={
+              <span>
+                <div style={{
+                  background: '#eb7104',
+                  borderRadius: '4px',
+                  padding: '2px',
+                  display: 'inline-block'
+                }}>
+                  <IconTrendingUp stroke={2} color="#fff" size={16} />
+                </div>{" "}
+                Future Price Hikes
+              </span>
+            }
+            containerStyle={styles?.sectionCard}
+            headerStyle={{
+              ...styles?.sectionHeaderFuture,
+              padding: "12px 16px",
+              background: "#fffbeb",
+              borderBottom: "1px solid #e5e7eb",
+            }}
+            bodyStyle={{ padding: 0 }}
+          >
+            {renderCardList(
+              futureSort,
+              "Net Future Impact",
+              "₹6,280",
+              "Tentative",
+              "text-warning"
+            )}
+          </BaseSurface>
+        </div>
+      </Col>
+    </Row>
 
     // <Row className="d-flex  align-items-center gap-0">
 

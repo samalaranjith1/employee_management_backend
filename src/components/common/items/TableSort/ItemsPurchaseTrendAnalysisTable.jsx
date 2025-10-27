@@ -86,7 +86,7 @@ export default function ItemsPurchaseTrendAnalysisTable({
       }}
     >
       <Card.Body>
-        <div className="d-flex align-items-center mb-3" style={{backgroundColor:'white'}}>
+        <div className="d-flex align-items-center mb-3" style={{ backgroundColor: 'white' }}>
           {/* Gradient icon circle */}
           <div
             style={{
@@ -118,7 +118,7 @@ export default function ItemsPurchaseTrendAnalysisTable({
             </span>
           </div>
           <div>
-            <h5 className=" mb-0" style={{fontWeight:700, fontSize:"18px"}}>
+            <h5 className=" mb-0" style={{ fontWeight: 700, fontSize: "18px" }}>
               {filter.charAt(0).toUpperCase() + filter.slice(1)} Purchase Data
             </h5>
             {/* <small className="text-muted">
@@ -146,16 +146,15 @@ export default function ItemsPurchaseTrendAnalysisTable({
                     key={col.key}
                     onClick={() => handleSort(col.key)}
                     style={{
-                      background: "#f4f7fc",
-                      fontWeight: 700,
-                      fontSize: "14px",
-                      textTransform: "uppercase",
+                      fontSize: '14px',
+                      fontWeight: '600',
                       color: "#232425",
+                      textAlign: "left",
+                      background: '#f4f7fc',
                       position: "sticky",
                       top: 0,
                       zIndex: 2,
                       cursor: "pointer",
-                      padding: "14px 18px",
                     }}
                   >
                     {col.label}
@@ -169,22 +168,38 @@ export default function ItemsPurchaseTrendAnalysisTable({
               {finalRows.length > 0 ? (
                 finalRows.map((row, idx) => (
                   <tr key={idx}>
-                    <td className="" style={{fontWeight:600, fontSize:"14px", color:"#232425"}}>
-                      <span className="bg-secondary me-2"></span>
+                    <td className="" style={{
+                      fontSize: '14px',
+                      fontWeight: '600',
+                      color: "#232425",
+                      textAlign: "left",
+                    }}>
                       {/* {row?.date?.icon} */}
                       {row?.date?.label ?? row?.date ?? ""}
                     </td>
-                    <td className="text-primary" style={{fontWeight:600, fontSize:"14px", color:"#155DFC"}}>
+                    <td className="text-primary" style={{
+                      fontSize: '14px',
+                      fontWeight: '500',
+                      textAlign: "left", color: "#155DFC"
+                    }}>
                       <span className="dot bg-primary me-2"></span>
                       {/* {row?.quantity?.icon} */}
                       {row?.quantity?.label ?? row?.quantity ?? ""}
                     </td>
-                    <td className="text-success" style={{fontWeight:600, fontSize:"14px", color:"#00A63E"}}>
+                    <td className="text-success" style={{
+                      fontSize: '14px',
+                      fontWeight: '500',
+                      textAlign: "left", color: "#00A63E"
+                    }}>
                       <span className="dot bg-success me-2"></span>
                       {/* {row?.totalPrice?.icon} */}
                       {row?.totalPrice?.label ?? row?.totalPrice ?? ""}
                     </td>
-                    <td className="" style={{ color: "#9810FA", fontWeight:600, fontSize:"14px" }}>
+                    <td className="" style={{
+                      color: "#9810FA", fontSize: '14px',
+                      fontWeight: '500',
+                      textAlign: "left",
+                    }}>
                       <span
                         className="dot"
                         style={{ background: "#6D28D9" }}
@@ -213,7 +228,7 @@ export default function ItemsPurchaseTrendAnalysisTable({
             {/* Colored footer row */}
             {finalRows.length > 0 && (
               <tfoot>
-                <tr style={{ background: "#f4f7fc", fontWeight: 600, fontSize:"14px" }}>
+                <tr style={{ background: "#f4f7fc", fontWeight: 600, fontSize: "14px" }}>
                   <td>Total</td>
                   <td className="text-primary">{footer.quantity}</td>
                   <td className="text-success">{footer.totalPrice}</td>

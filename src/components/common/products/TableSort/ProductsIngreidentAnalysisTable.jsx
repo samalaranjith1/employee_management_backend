@@ -43,7 +43,14 @@ export default function ProductsIngreidentAnalysisTable({ tableData }) {
               <th
                 key={col.key}
                 onClick={() => handleSort(col.key)}
-                style={{ cursor: "pointer", whiteSpace: "nowrap", backgroundColor: "#f4f7fc",fontWeight:700, fontSize:"14px",color:"#232425" }}
+                style={{
+                  cursor: "pointer",
+                  fontSize: '14px',
+                  fontWeight: '600',
+                  color: "#232425",
+                  textAlign: "left",
+                  background: '#f4f7fc'
+                }}
               >
                 {col.label}
                 {renderSortArrow(col.key)}
@@ -58,26 +65,35 @@ export default function ProductsIngreidentAnalysisTable({ tableData }) {
                 <div className="d-flex align-items-center gap-2">
                   {/* {row.icon} */}
                   <div>
-                    <div className=""style={{fontWeight:600, fontSize:"14px", color:"#232425"}}>{row.name}</div>
-                    <small className="" style={{fontWeight:500, fontSize:"12px", color:"#717182"}}>{row.storeItem}</small>
+                    <div className="" style={{
+                      fontSize: '14px',
+                      fontWeight: '600',
+                      color: "#232425",
+                      textAlign: "left",
+                    }}>{row.name}</div>
+                    <small className="text-muted" style={{ fontWeight: 500, fontSize: "12px", }}>{row.storeItem}</small>
                   </div>
                 </div>
               </td>
-              <td className="text-primary fw-semibold">
+              <td className="text-primary">
                 <div className="d-flex align-items-center gap-2">
                   {/* {row.icon} */}
                   <div>
-                    <div className="" style={{fontweight:600, fontSize:"14px",color:"#1447E6"}}>{row.recipe?.split(".")[0]}</div>
-                    <small className="" style={{fontweight:500, fontSize:"12px",color:"#717182"}}>{row.recipe?.split(".")[1]}</small>
+                    <div className="" style={{
+                      fontSize: '14px',
+                      fontWeight: '500',
+                      textAlign: "left", color: "#1447E6"
+                    }}>{row.recipe?.split(".")[0]}</div>
+                    <small className="text-muted" style={{ fontweight: 500, fontSize: "12px",}}>{row.recipe?.split(".")[1]}</small>
                   </div>
                 </div>
               </td>
-              <td className="text-success fw-semibold">
+              <td className="text-success">
                 <div className="d-flex align-items-center gap-2">
                   {/* {row.icon} */}
                   <div>
-                    <div className="" style={{fontweight:600, fontSize:"14px", color:"#008236"}}>{row.total?.split(".")[0]}</div>
-                    <small className="" style={{fontweight:500, fontSize:"12px", color:"#717182"}}>{row.total?.split(".")[1]}</small>
+                    <div className="" style={{ fontweight: 600, fontSize: "14px", color: "#008236" }}>{row.total?.split(".")[0]}</div>
+                    <small className="text-muted" style={{ fontweight: 500, fontSize: "12px", }}>{row.total?.split(".")[1]}</small>
                   </div>
                 </div>
               </td>

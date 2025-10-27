@@ -171,7 +171,7 @@ export const rawMaterialPurchaseAnalysisDataFormatter = (apiData) => {
       key: idx,
       name: item.name || "-",
       type: item.itemType || "-",
-      unitInfo: `${item.unitQuantity}${item.unit || ""}. ₹${item.unitPrice || 0
+      unitInfo: `${item.unitQuantity}${item.unit || ""} • ₹${item.unitPrice || 0
         }`,
       quantity: qty,
       value: entry.totalPrice || 0,

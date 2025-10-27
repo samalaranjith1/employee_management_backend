@@ -10,9 +10,9 @@ import { useTableControls } from "@/components/hooks/useTableControls";
 export default function ClosingTable({ tableData = [] }) {
   // 🔹 Columns for table + Excel export
   const columns = [
-    { key: "item", header: "ITEM", minWidth: "250px" },
-    { key: "quantity", header: "QUANTITY", minWidth: "120px" },
-    { key: "totalPrice", header: "TOTAL PRICE", minWidth: "120px" },
+    { key: "item", header: "Item", minWidth: "250px" },
+    { key: "quantity", header: "Quantity", minWidth: "120px" },
+    { key: "totalPrice", header: "Total Price", minWidth: "120px" },
   ];
 
   // 🔹 Table sorting
@@ -76,15 +76,11 @@ export default function ClosingTable({ tableData = [] }) {
                   position: "sticky",
                   top: 0,
                   zIndex: 10,
-                  background: "#f4f7fc",
-                  fontWeight: 600,
-                  fontSize: "14px",
-                  textTransform: "uppercase",
-                  color: "#464f60",
-                  cursor: "pointer",
-                  padding: "12px 16px",
-                  minWidth: col.minWidth,
-                  borderBottom: "1px solid #eee",
+                  fontSize: '14px',
+                  fontWeight: '600',
+                  color: "#232425",
+                  textAlign: "left",
+                  background: '#f4f7fc'
                 }}
               >
                 {col.header}
@@ -121,16 +117,21 @@ export default function ClosingTable({ tableData = [] }) {
             {filteredData.length > 0 ? (
               filteredData.map((row, idx) => (
                 <tr key={idx} style={{ borderBottom: "1px solid #eee" }}>
-                  <td style={{ padding: "14px 16px", minWidth: "250px", fontWeight:600, fontSize:"14px", color:"#171c26" }}>
-                    <div className="fw-semibold">{row.item}</div>
-                    <div className="text-muted small" style={{fontWeight:400, fontSize:"12px", color:"#687182"}}>
+                  <td style={{ minWidth: "250px", fontWeight: 600, fontSize: "14px", color: "#171c26" }}>
+                    <div style={{
+                      fontSize: '14px',
+                      fontWeight: '600',
+                      color: "#232425",
+                      textAlign: "left",
+                    }}>{row.item}</div>
+                    <div className="text-muted" style={{ fontWeight: 500, fontSize: "12px" }}>
                       {row.category} • {row.quantity} • ₹{row.totalPrice}
                     </div>
                   </td>
-                  <td style={{ padding: "14px 16px", minWidth: "120px", fontWeight:500, fontSize:"14px", color:"#464f60" }}>
+                  <td style={{ minWidth: "120px", fontWeight: 500, fontSize: "14px", }}>
                     {row.quantity}
                   </td>
-                  <td style={{ padding: "14px 16px", minWidth: "120px", fontWeight:700, fontSize:"14px", color:"#464f60" }}>
+                  <td style={{ minWidth: "120px", fontWeight: 500, fontSize: "14px", }}>
                     ₹{row.totalPrice}
                   </td>
                 </tr>

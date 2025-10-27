@@ -61,7 +61,13 @@ export default function ProductsIngredientsTable({ list = [] }) {
               <th
                 key={col.key}
                 onClick={() => handleSort(col.key)}
-                style={{ cursor: "pointer", whiteSpace: "nowrap",backgroundColor:'#f4f7fc',fontWeight:700,fontSize:"14px",color:"#232425" }}
+                style={{
+                  cursor: "pointer", fontSize: '14px',
+                  fontWeight: '600',
+                  color: "#232425",
+                  textAlign: "left",
+                  background: '#f4f7fc'
+                }}
               >
                 {col.label}
                 {renderSortArrow(col.key)}
@@ -72,7 +78,7 @@ export default function ProductsIngredientsTable({ list = [] }) {
         <tbody>
           {sortedData.length > 0 ? (
             sortedData.map((row, idx) => (
-              <tr key={idx} style={{fontWeight:500, fontSize:"14px"}}>
+              <tr key={idx} style={{ fontWeight: 500, fontSize: "14px" }}>
                 {columns.map((col) => (
                   <td key={col.key}>{row[col.display]}</td>
                 ))}

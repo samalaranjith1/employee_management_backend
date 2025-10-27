@@ -15,10 +15,10 @@ const formatDate = (dateStr) => {
     day % 10 === 1 && day !== 11
       ? "st"
       : day % 10 === 2 && day !== 12
-      ? "nd"
-      : day % 10 === 3 && day !== 13
-      ? "rd"
-      : "th";
+        ? "nd"
+        : day % 10 === 3 && day !== 13
+          ? "rd"
+          : "th";
 
   const month = new Intl.DateTimeFormat("en-US", { month: "short" }).format(
     date
@@ -105,7 +105,14 @@ const ProductsSalesTable = ({ apiData }) => {
                 <th
                   key={col.key}
                   onClick={() => handleSort(col.key)}
-                  style={{ cursor: "pointer", whiteSpace: "nowrap" }}
+                  style={{
+                    cursor: "pointer", whiteSpace: "nowrap",
+                    fontSize: '14px',
+                    fontWeight: '600',
+                    color: "#232425",
+                    textAlign: "left",
+                    background: '#f4f7fc'
+                  }}
                 >
                   {col.label}
                   {renderSortArrow(col.key)}
@@ -116,15 +123,44 @@ const ProductsSalesTable = ({ apiData }) => {
           <tbody>
             {sortedData.map((row, idx) => (
               <tr key={idx}>
-                <td className="" style={{ whiteSpace: "pre-line", fontWeight:600,fontSize:"14px",color:"#232425" }}>
+                <td className="" style={{
+                  fontSize: '14px',
+                  fontWeight: '600',
+                  color: "#232425",
+                  textAlign: "left",
+                }}>
                   {row.date}
                 </td>
-                <td className="" style={{fontWeight:600,fontSize:"14px",color:"#232425"}}>₹{row.totalSales}</td>
-                <td className="" style={{fontWeight:600,fontSize:"14px",color:"#232425"}}>₹{row.netSales}</td>
-                <td className="" style={{fontWeight:600,fontSize:"14px",color:"#232425"}}>₹{row.discount}</td>
-                <td className="" style={{fontWeight:600,fontSize:"14px",color:"#232425"}}>₹{row.tax}</td>
-                <td className="" style={{fontWeight:600,fontSize:"14px",color:"#232425"}}>{row.itemsSold}</td>
-                <td className="" style={{fontWeight:600,fontSize:"14px",color:"#232425"}}>{row.orders}</td>
+                <td className="" style={{
+                  fontSize: '14px',
+                  fontWeight: '500',
+                  textAlign: "left",
+                }}>₹{row.totalSales}</td>
+                <td className="" style={{
+                  fontSize: '14px',
+                  fontWeight: '500',
+                  textAlign: "left",
+                }}>₹{row.netSales}</td>
+                <td className="" style={{
+                  fontSize: '14px',
+                  fontWeight: '500',
+                  textAlign: "left",
+                }}>₹{row.discount}</td>
+                <td className="" style={{
+                  fontSize: '14px',
+                  fontWeight: '500',
+                  textAlign: "left",
+                }}>₹{row.tax}</td>
+                <td className="" style={{
+                  fontSize: '14px',
+                  fontWeight: '500',
+                  textAlign: "left",
+                }}>{row.itemsSold}</td>
+                <td className="" style={{
+                  fontSize: '14px',
+                  fontWeight: '500',
+                  textAlign: "left",
+                }}>{row.orders}</td>
               </tr>
             ))}
           </tbody>

@@ -60,15 +60,15 @@ function KitchenPurchaseByDepartmentTable({ data = [], badgeStyle }) {
   const hexToRgba = (hex, alpha = 0.15) =>
     hex && hex.startsWith("#") && hex.length === 7
       ? `rgba(${parseInt(hex.slice(1, 3), 16)}, ${parseInt(
-          hex.slice(3, 5),
-          16
-        )}, ${parseInt(hex.slice(5, 7), 16)}, ${alpha})`
+        hex.slice(3, 5),
+        16
+      )}, ${parseInt(hex.slice(5, 7), 16)}, ${alpha})`
       : hex;
 
   return (
     <div maxHeight="65vh">
       {/* 🔹 Table Controls */}
-        {/* <TableControls
+      {/* <TableControls
           searchTerm={searchTerm}
           setSearchTerm={setSearchTerm}
           filters={filters}
@@ -98,6 +98,11 @@ function KitchenPurchaseByDepartmentTable({ data = [], badgeStyle }) {
                     top: 0,
                     zIndex: 2,
                     cursor: "pointer",
+                    fontSize: '14px',
+                    fontWeight: '600',
+                    color: "#232425",
+                    textAlign: "left",
+                    backgroundColor: '#f4f7fc'
                   }}
                   className="c_table_columns_semi_bold"
                 >
@@ -117,20 +122,24 @@ function KitchenPurchaseByDepartmentTable({ data = [], badgeStyle }) {
                         return (
                           <td key={col.key}>
                             <div className="c_table_cells_regular"
-                            style={{
-                              cursor:'pointer'
-                            }}
-                             onClick={() =>
-                              handleNavigation({
-                                router,
-                                url: "departments",
-                                params: {
-                                  startDate,
-                                  endDate,
-                                  departments: dept.departmentId,
-                                },
-                              })
-                            }>{dept.name}</div>
+                              style={{
+                                cursor: 'pointer',
+                                fontSize: '14px',
+                                fontWeight: '600',
+                                color: "#232425",
+                                textAlign: "left",
+                              }}
+                              onClick={() =>
+                                handleNavigation({
+                                  router,
+                                  url: "departments",
+                                  params: {
+                                    startDate,
+                                    endDate,
+                                    departments: dept.departmentId,
+                                  },
+                                })
+                              }>{dept.name}</div>
                           </td>
                         );
                       case "consumptionPct":
@@ -141,8 +150,11 @@ function KitchenPurchaseByDepartmentTable({ data = [], badgeStyle }) {
                                 ...badgeStyle,
                                 backgroundColor: `${hexToRgba(dept.bg, 0.05)}`,
                                 color: `${hexToRgba(dept.bg, 1)}`,
+                                fontSize: '14px',
+                                fontWeight: '500',
+                                textAlign: "left",
                               }}
-                              className="c_table_columns_semi_bold"
+                            // className="c_table_columns_semi_bold"
                             >
                               {dept[col.key]}%
                             </span>
@@ -150,7 +162,11 @@ function KitchenPurchaseByDepartmentTable({ data = [], badgeStyle }) {
                         );
                       case "netConsumptionPct":
                         return (
-                          <td key={col.key} className="c_table_cells_regular c_black_3">
+                          <td key={col.key} style={{
+                            fontSize: '14px',
+                            fontWeight: '500',
+                            textAlign: "left",
+                          }}>
                             <span>{dept[col.key]}%</span>
                           </td>
                         );
@@ -158,7 +174,12 @@ function KitchenPurchaseByDepartmentTable({ data = [], badgeStyle }) {
                         return (
                           <td
                             key={col.key}
-                            style={{ cursor: "pointer" }}
+                            style={{
+                              cursor: "pointer",
+                              fontSize: '14px',
+                              fontWeight: '500',
+                              textAlign: "left",
+                            }}
                             onClick={() =>
                               handleNavigation({
                                 router,
@@ -176,7 +197,11 @@ function KitchenPurchaseByDepartmentTable({ data = [], badgeStyle }) {
                         );
                       case "netConsumption":
                         return (
-                          <td key={col.key} className="c_table_columns_semi_bold c_black_3">
+                          <td key={col.key} style={{
+                            fontSize: '14px',
+                            fontWeight: '500',
+                            textAlign: "left",
+                          }}>
                             {dept.netConsumption}
                           </td>
                         );
@@ -184,7 +209,11 @@ function KitchenPurchaseByDepartmentTable({ data = [], badgeStyle }) {
                         return (
                           <td
                             key={col.key}
-                            style={{ cursor: "pointer" }}
+                            style={{ cursor: "pointer",
+                            fontSize: '14px',
+                            fontWeight: '500',
+                            textAlign: "left",
+                             }}
                             onClick={() =>
                               handleNavigation({
                                 router,

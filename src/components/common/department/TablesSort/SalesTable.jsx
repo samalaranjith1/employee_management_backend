@@ -13,13 +13,13 @@ function SalesTable({ products }) {
   // 🔹 Column config
   const columns = [
     // { key: "srNo", label: "#" },
-    { key: "name", label: "PRODUCT" },
-    { key: "items", label: "#ITEMS" },
-    { key: "netSales", label: "NET SALES" },
-    { key: "discount", label: "DISCOUNT" },
-    { key: "tax", label: "TAX" },
-    { key: "makingCost", label: "MAKING COST" },
-    { key: "margin", label: "MARGIN" },
+    { key: "name", label: "Products" },
+    { key: "items", label: "#Items" },
+    { key: "netSales", label: "Net Sales" },
+    { key: "discount", label: "Discount" },
+    { key: "tax", label: "Tax" },
+    { key: "makingCost", label: "Making Cost" },
+    { key: "margin", label: "Margin" },
   ];
 
   // 🔹 Filters (by product name)
@@ -86,17 +86,16 @@ function SalesTable({ products }) {
                   key={col.key}
                   onClick={() => handleSort(col.key)}
                   style={{
-                    backgroundColor: "#f4f7fc",
-                    fontWeight: 700,
-                    fontSize: "14px",
-                    textTransform: "uppercase",
-                    color: "#464f60",
                     position: "sticky",
                     top: 0,
                     zIndex: 2,
                     cursor: "pointer",
-                    padding: "12px 16px",
                     minWidth: col.key === "name" ? "250px" : "120px",
+                    fontSize: '14px',
+                    fontWeight: '600',
+                    color: "#232425",
+                    textAlign: "left",
+                    background: '#f4f7fc'
                   }}
                 >
                   {col.label}
@@ -115,39 +114,72 @@ function SalesTable({ products }) {
 
                   {/* Product */}
                   <td style={{ padding: "14px 16px", minWidth: "250px" }}>
-                    <div className="" style={{fontWeight:700, fontSize:"14px", color:"#171c26"}}>{item.name}</div>
-                    <div className="text-muted small"style={{fontWeight:400, fontsize:"12px", color:"#687182"}}>
+                    <div className="" style={{
+                      fontSize: '14px',
+                      fontWeight: '600',
+                      color: "#232425",
+                      textAlign: "left",
+                    }}>{item.name}</div>
+                    <div className="text-muted" style={{
+                      fontSize: '12px',
+                      fontWeight: '500',
+                      textAlign: "left",
+                    }}>
                       {item.department} • {item.price}
                     </div>
                   </td>
 
                   {/* Items */}
-                  <td style={{ padding: "14px 16px", fontWeight:600, fontsize:"14px", color:"#464f60" }}>{item.items.toLocaleString()}</td>
+                  <td style={{
+                    fontSize: '14px',
+                    fontWeight: '500',
+                    textAlign: "left",
+                  }}>{item.items.toLocaleString()}</td>
 
                   {/* Net Sales */}
                   <td
                     className=""
-                    style={{ color: "#288128", padding: "14px 16px", fontWeight:700, fontsize:"14px" }}
+                    style={{
+                      color: "#288128", fontSize: '14px',
+                      fontWeight: '500',
+                      textAlign: "left",
+                    }}
                   >
                     {item.netSales}
                   </td>
 
                   {/* Discount */}
-                  <td style={{ color: "#C32924", padding: "14px 16px", fontWeight:700, fontsize:"14px" }}>
+                  <td style={{
+                    color: "#C32924", fontSize: '14px',
+                    fontWeight: '500',
+                    textAlign: "left",
+                  }}>
                     {item.discount}
                   </td>
 
                   {/* Tax */}
-                  <td style={{ padding: "14px 16px", fontWeight:700, fontsize:"14px", color:"#464F60" }}>{item.tax}</td>
+                  <td style={{
+                    fontSize: '14px',
+                    fontWeight: '500',
+                    textAlign: "left",
+                  }}>{item.tax}</td>
 
                   {/* Making Cost */}
-                  <td style={{ color: "#C32924", padding: "14px 16px", fontsize:"14px", fontWeight:700 }}>
+                  <td style={{
+                    color: "#C32924", fontSize: '14px',
+                    fontWeight: '500',
+                    textAlign: "left",
+                  }}>
                     {item.makingCost}
                   </td>
 
                   {/* Margin */}
-                  <td style={{ padding: "14px 16px", fontweight:700, fontsize:"14px", color:"#288128" }}>
-                    <div className="fw-semibold text-success">
+                  <td style={{ color: "#288128" }}>
+                    <div className="text-success" style={{
+                      fontSize: '14px',
+                      fontWeight: '500',
+                      textAlign: "left",
+                    }}>
                       {item.margin}
                     </div>
                     <Badge
@@ -155,8 +187,8 @@ function SalesTable({ products }) {
                       style={{
                         borderRadius: "16px",
                         padding: "6px 14px",
-                        fontWeight: 600,
-                        fontSize: "0.8rem",
+                        fontWeight: 500,
+                        fontSize: "12px",
                       }}
                     >
                       {item.marginPercentage}

@@ -27,13 +27,13 @@ const ProductTrendAnalysisTable = ({ tableData, filter, setFilter }) => {
     sortKey === key ? (direction === "asc" ? " ↑" : " ↓") : "";
 
   const columns = [
-    { key: "date", label: "DATE" },
-    { key: "totalSalesNum", label: "TOTAL SALES" },
-    { key: "netSalesNum", label: "NET SALES" },
-    { key: "discountNum", label: "DISCOUNT" },
-    { key: "taxNum", label: "TAX" },
-    { key: "itemsSoldNum", label: "ITEMS SOLD" },
-    { key: "ordersNum", label: "ORDERS" },
+    { key: "date", label: "Date" },
+    { key: "totalSalesNum", label: "Total Sales" },
+    { key: "netSalesNum", label: "Net Sales" },
+    { key: "discountNum", label: "Discount" },
+    { key: "taxNum", label: "Tax" },
+    { key: "itemsSoldNum", label: "Items Sold" },
+    { key: "ordersNum", label: "Orders" },
   ];
 
   return (
@@ -95,18 +95,18 @@ const ProductTrendAnalysisTable = ({ tableData, filter, setFilter }) => {
                       filter === label.toLowerCase()?.replace(" ", "")
                         ? "1px solid #FF5B22"
                         : "1px solid #dee2e6",
-                                          backgroundColor:
-                    filter === label.toLowerCase().replace(" ", "")
-                      ? "#fff"
-                      : "transparent",
-                  color:
-                    filter === label.toLowerCase().replace(" ", "")
-                      ? "#ff6000"
-                      : "#908780",
-                  border:
-                    filter === label.toLowerCase().replace(" ", "")
-                      ? "1px solid #dee2e6"
-                      : "1px solid #dee2e6",
+                    backgroundColor:
+                      filter === label.toLowerCase().replace(" ", "")
+                        ? "#fff"
+                        : "transparent",
+                    color:
+                      filter === label.toLowerCase().replace(" ", "")
+                        ? "#ff6000"
+                        : "#908780",
+                    border:
+                      filter === label.toLowerCase().replace(" ", "")
+                        ? "1px solid #dee2e6"
+                        : "1px solid #dee2e6",
                   }}
                 >
                   {label}
@@ -148,7 +148,7 @@ const ProductTrendAnalysisTable = ({ tableData, filter, setFilter }) => {
                     filter === label.toLowerCase()?.replace(" ", "")
                       ? "1px solid #FF5B22"
                       : "1px solid #dee2e6",
-                        color:
+                  color:
                     filter === label.toLowerCase().replace(" ", "")
                       ? "#ff6000"
                       : "#908780",
@@ -162,12 +162,11 @@ const ProductTrendAnalysisTable = ({ tableData, filter, setFilter }) => {
               </ToggleButton>
             ))}
           </ButtonGroup>
-          
+
           </div>}
         {/* Sticky + Scrollable Table */}
         <div style={{ maxHeight: "65vh", overflowY: "auto" }}>
-          <Table
-            bordered
+          <Table 
             hover
             className="align-middle"
             style={{ minWidth: "900px" }}
@@ -187,12 +186,12 @@ const ProductTrendAnalysisTable = ({ tableData, filter, setFilter }) => {
                     key={col.key}
                     onClick={() => handleSort(col.key)}
                     style={{
-                      fontSize: "14px",
-                      color: "#000",
-                      fontWeight: '700',
-                      cursor: "pointer",
-                      padding: "12px 16px",
-                      backgroundColor: "#f4f7fc", // ensures rows don’t bleed through
+                      fontSize: '14px',
+                      fontWeight: '600',
+                      color: "#232425",
+                      textAlign: "left",
+                      background: '#f4f7fc',
+                      cursor: "pointer", // ensures rows don’t bleed through
                     }}
                   >
                     {col.label}
@@ -204,28 +203,53 @@ const ProductTrendAnalysisTable = ({ tableData, filter, setFilter }) => {
             <tbody>
               {sortedData.map((row, idx) => (
                 <tr key={idx}>
-                  <td className="" style={{ fontWeight: 700, fontSize: "14px", color: "#232425" }}>{row.date}</td>
+                  <td className="" style={{
+                    fontSize: '14px',
+                    fontWeight: '600',
+                    color: "#232425",
+                    textAlign: "left",
+                  }}>{row.date}</td>
                   <td style={{ color: "#1447E6", fontWeight: 600, fontSize: "14px" }}>
                     {/* {row.totalSales.icon}  */}
                     {row.totalSales.value?.slice(0, 1)} {Number(row.totalSales.value?.substring(1)).toLocaleString()}
                   </td>
-                  <td style={{ color: "#008236", fontWeight: 600, fontSize: "14px" }}>
+                  <td style={{
+                    color: "#008236", fontSize: '14px',
+                    fontWeight: '500',
+                    textAlign: "left",
+                  }}>
                     {/* {row.netSales.icon} */}
                     {row.netSales.value?.slice(0, 1)} {Number(row.netSales.value?.substring(1)).toLocaleString()}
                   </td>
-                  <td style={{ color: "#CA3500", fontWeight: 600, fontSize: "14px" }}>
+                  <td style={{
+                    color: "#CA3500", fontSize: '14px',
+                    fontWeight: '500',
+                    textAlign: "left",
+                  }}>
                     {/* {row.discount.icon} */}
                     {row.discount.value?.slice(0, 1)} {Number(row.discount.value?.substring(1)).toLocaleString()}
                   </td>
-                  <td style={{ color: "#8200DB", fontWeight: 600, fontSize: "14px" }}>
+                  <td style={{
+                    color: "#8200DB", fontSize: '14px',
+                    fontWeight: '500',
+                    textAlign: "left",
+                  }}>
                     {/* {row.tax.icon} */}
                     {row.tax.valu?.slice(0, 1)} {Number(row.tax.value?.substring(1)).toLocaleString()}
                   </td>
-                  <td style={{ color: "#432DD7", fontWeight: 600, fontSize: "14px" }}>
+                  <td style={{
+                    color: "#432DD7", fontSize: '14px',
+                    fontWeight: '500',
+                    textAlign: "left",
+                  }}>
                     {/* {row.itemsSold.icon}  */}
                     {row.itemsSold.value?.slice(0, 1)} {Number(row.itemsSold.value?.substring(1)).toLocaleString()}
                   </td>
-                  <td style={{ color: "#364153", fontWeight: 600, fontSize: "14px" }}>
+                  <td style={{
+                    color: "#364153", fontSize: '14px',
+                    fontWeight: '500',
+                    textAlign: "left",
+                  }}>
                     {/* {row.orders.icon}  */}
                     {row.orders.value?.slice(0, 1)} {Number(row.orders.value?.substring(1)).toLocaleString()}
                   </td>

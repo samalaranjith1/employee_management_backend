@@ -85,8 +85,9 @@ const TopSellingProducts = () => {
                 {topCards?.map((card, idx) => (
                   <div
                     style={{
-                      minWidth: isMobile ? '95%' : '25%',
+                      minWidth: isMobile ? '95%' : '250px',
                       width: isMobile ? '95%' : '25%',
+                      maxWidth: isMobile ? '95%' :'300px',
                       // backgroundColor: card.bg,
                       // color:card.textColor,
                     }}> 
@@ -127,7 +128,7 @@ const TopSellingProducts = () => {
                     </div>
                     <div
                       style={{
-                        width: isMobile ? "110vw" : "100%",
+                        // width: isMobile ? "110vw" : "100%",
                         marginLeft: isMobile ? "-40px" : "0px",
                         height: 340,
                       }}

@@ -34,18 +34,17 @@ function RecipesTable({ title, data, bgColor }) {
       title={title}
       style={{
         background: bgColor,
-        borderRadius: "12px",
-        padding: "0 1rem",
+        // padding: "0 1rem",
         maxHeight: "65vh",
         display: "flex",
         flexDirection: "column",
-        width: "110%",
-        marginLeft: "-20px",
+        // width: "110%",
+        // marginLeft: "20px",
       }}
-      // style={{
-      //   flexGrow: 1,
-      //   overflow: "auto", // prevent double scrollbars
-      // }}
+    // style={{
+    //   flexGrow: 1,
+    //   overflow: "auto", // prevent double scrollbars
+    // }}
     >
       {/* ✅ Scrollable wrapper */}
       <div
@@ -58,9 +57,10 @@ function RecipesTable({ title, data, bgColor }) {
         <div
           style={{
             width: "100%",
-            maxHeight: "400px", // fixed height needed for vertical scroll
+            maxHeight: "60vh", // fixed height needed for vertical scroll
             overflow: "auto", // vertical scroll
             border: "1px solid #ccc",
+            borderRadius: "15px",
           }}
         >
           {/* Sticky Header */}
@@ -69,7 +69,7 @@ function RecipesTable({ title, data, bgColor }) {
               display: "grid",
               gridTemplateColumns: "2fr 1fr 1fr 1fr 1fr",
               fontWeight: 600,
-              padding: "0.5rem 1rem",
+              // padding: "0.5rem 1rem",
               background: "#fff",
               position: "sticky",
               top: 0,
@@ -87,11 +87,13 @@ function RecipesTable({ title, data, bgColor }) {
                         ? "center"
                         : "right",
                   cursor: "pointer",
-                  backgroundColor:'#f5f5f5',
-                  padding:'8px 0px',
-                  fontSize:'14px',
-                  fontWeight:'600',
-                  color:"#464f60"
+                  backgroundColor: '#f5f5f5',
+                  padding: '8px 0px',
+                  fontSize: '14px',
+                  fontWeight: '600',
+                  color: "#232425",
+                  padding: '10px',
+                  // textAlign: "left",
                 }}
                 onClick={() => sort.handleSort(col.key)}
               >
@@ -115,23 +117,37 @@ function RecipesTable({ title, data, bgColor }) {
               }}
             >
               <div>
-                <div style={{ fontWeight: 500 ,color:'#171c26',fontSize:'14px'}}>{item.product}</div>
+                <div style={{ fontWeight: 600, color: '#171c26', fontSize: '14px' }}>{item.product}</div>
                 {item.subtitle && (
-                  <div style={{ fontSize: "12px",fontWeight:"400", color: "#687182" }}>
+                  <div style={{
+                    ontSize: '12px',
+                    fontWeight: '500',
+                    color: "#212529BF",
+                  }}>
                     {item.subtitle}
                   </div>
                 )}
               </div>
-              <div style={{ textAlign:'center',fontSize:'14px', fontWeight:'700',color:'#464f60'}}>
-                <div>{item.items}</div>
+              <div style={{ textAlign: 'center', fontSize: '14px', fontWeight: '700', color: '#464f60' }}>
+                <div style={{
+                  fontSize: '14px',
+                  fontWeight: '500',
+                }}>{item.items}</div>
                 {item.stock && (
-                  <div style={{ fontSize: "0.8rem", color: "#999" }}>
+                  <div style={{
+                    fontSize: '14px',
+                    fontWeight: '500',
+                    textAlign: "left",
+                  }}>
                     {item.stock}
                   </div>
                 )}
               </div>
               <div
-                style={{ textAlign: "right", cursor: "pointer",fontSize:'14px', fontWeight:'700',color:'#464f60' }}
+                style={{
+                  textAlign: "right", cursor: "pointer", fontSize: '14px',
+                  fontWeight: '500',
+                }}
                 onClick={() =>
                   handleNavigation({
                     router,
@@ -147,7 +163,10 @@ function RecipesTable({ title, data, bgColor }) {
                 {item.cost}
               </div>
               <div
-                style={{ textAlign: "right", cursor: "pointer" ,fontSize:'14px', fontWeight:'700',color:'#464f60'}}
+                style={{
+                  textAlign: "right", cursor: "pointer", fontSize: '14px',
+                  fontWeight: '500',
+                }}
                 onClick={() =>
                   handleNavigation({
                     router,
@@ -169,8 +188,8 @@ function RecipesTable({ title, data, bgColor }) {
                     color: item.costPctColor,
                     padding: "4px 8px",
                     borderRadius: "6px",
-                    fontSize: "0.85rem",
-                    fontWeight: 500,
+                    fontSize: '14px',
+                    fontWeight: '500',
                   }}
                 >
                   {item.costPct}

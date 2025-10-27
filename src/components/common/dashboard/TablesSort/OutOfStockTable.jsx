@@ -34,7 +34,7 @@ function OutOfStockTable({ data, getBadgeStyle }) {
           border: "1px solid #eee",
           borderRadius: "12px",
           overflow: "hidden",
-          marginTop:'-10px'
+          marginTop: '-10px'
         }}
       >
         <div
@@ -63,10 +63,10 @@ function OutOfStockTable({ data, getBadgeStyle }) {
                 key={col.key}
                 style={{
                   textAlign: col.align || "left",
-                  backgroundColor: '#f5f5f5',
-                  color: '#464f60',
-                  fontWeight: '600',
                   fontSize: '14px',
+                  fontWeight: '600',
+                  color: "#232425",
+                  backgroundColor: '#f4f7fc',
                   padding: '5px'
                 }}
                 onClick={() => handleSort(col.key)}
@@ -99,18 +99,22 @@ function OutOfStockTable({ data, getBadgeStyle }) {
               >
                 {/* Item details */}
                 <div>
-                  <div style={{ fontWeight: "500", color: '#171c26', fontSize: "14px", }}>
+                  <div style={{
+                    fontSize: '14px',
+                    fontWeight: '600',
+                    color: "#232425",
+                  }}>
                     {item.name}
                   </div>
                   <div
                     style={{
                       fontSize: "12px",
                       fontWeight: '400',
-                      color: "#687182",
                       display: "flex",
                       gap: "0.2rem",
                       flexWrap: "wrap",
                     }}
+                    className="text-muted"
                   >
                     <span>{item.category}</span>
                     <span>•</span>
@@ -120,10 +124,10 @@ function OutOfStockTable({ data, getBadgeStyle }) {
                   </div>
                   <div
                     style={{
-                      fontSize: "0.8rem",
-                      color: "#777",
+                      fontSize: "12px",
                       marginTop: "2px",
                     }}
+                    className="text-muted"
                   >
                     Closing: {item.closing}
                   </div>
@@ -131,7 +135,11 @@ function OutOfStockTable({ data, getBadgeStyle }) {
 
                 {/* MOQ */}
                 <div
-                  style={{ textAlign: "center", cursor: "pointer" }}
+                  style={{
+                    textAlign: "center", cursor: "pointer",
+                    fontSize: '14px',
+                    fontWeight: '500'
+                  }}
                   onClick={() =>
                     handleNavigation({
                       router,
@@ -145,15 +153,13 @@ function OutOfStockTable({ data, getBadgeStyle }) {
                   }
                 >
                   <div style={{
-                    fontWeight: '700',
                     fontSize: '14px',
-                    color: '#464f60'
+                    fontWeight: '500'
                   }}>{Number(item.moq.split(' ')[0])?.toLocaleString()}</div>
                   <div
                     style={{
-                      fontWeight: '500',
-                      color: '#464f60',
-                      fontSize: '12px'
+                      fontWeight: '400',
+                      fontSize: '12px',
                     }}>{item.moq.split(' ')[1]?.toLowerCase()}</div>
 
                 </div>
@@ -169,16 +175,14 @@ function OutOfStockTable({ data, getBadgeStyle }) {
                   }}
                 >
                   <div style={{
-                    fontWeight: '700',
                     fontSize: '14px',
-                    color: '#464f60'
+                    fontWeight: '500',
                   }}>{Number(item.stock.split(' ')[0])?.toLocaleString()}</div>
                   <div
                     style={{
-                      fontWeight: '500',
-                      color: '#464f60',
-                      fontSize: '12px'
-                    }}>{item.stock.split(' ')[1]?.toLowerCase()}</div>
+                      fontWeight: '400',
+                      fontSize: '12px',
+                    }} className="text-muted">{item.stock.split(' ')[1]?.toLowerCase()}</div>
                   {/* <div>{item.stock}</div> */}
                 </div>
                 <div
@@ -188,6 +192,8 @@ function OutOfStockTable({ data, getBadgeStyle }) {
                     flexDirection: "column",
                     alignItems: "center",
                     gap: "4px",
+                    fontSize: '14px',
+                    fontWeight: '500',
                   }}
                 >
                   <span style={{ ...getBadgeStyle(item.status), backgroundColor: 'rgba(250, 212, 212, 1)', color: 'red' }}>{item.status}</span>

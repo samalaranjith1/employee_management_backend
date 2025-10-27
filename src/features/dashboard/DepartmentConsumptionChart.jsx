@@ -226,7 +226,7 @@ export default function DepartmentConsumptionChart() {
                   </div>
                   <div style={styles.total}>
                     <span className="c_small_text_extra_bold" style={{ fontSize: "18px" }}>Total Consumption</span>
-                    <span style={{ paddingRight: "1vw", fontSize: "18px" }} className="c_small_text_extra_bold" >
+                    <span style={{ paddingRight: "3vw", fontSize: "18px" }} className="c_small_text_extra_bold" >
                       ₹{total?.toLocaleString()}
                     </span>
                   </div>

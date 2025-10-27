@@ -915,7 +915,7 @@ export const itemConsumptionEfficiencyDataFormatter = (data) => {
       costImpact: Number(item.burn || 0).toLocaleString(),
       status: item.status || "green",
       price: item.item?.price || 0,
-      subline: `${item.item.categoryName} . ${item.item.unitQuantity}  ${item.item.unit} . ₹${item.item.unitPrice}  `
+      subline: `${item.item.categoryName} • ${item.item.unitQuantity} • ${item.item.unit} • ₹${item.item.unitPrice}  `
     })),
   };
 };

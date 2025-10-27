@@ -95,10 +95,10 @@ export default function ItemsDepartmentAnalyticsTable({
               style={{
                 fontSize: "16px",
                 color: "#1A1A1A",
-                fontWeight:700
+                fontWeight: 700
               }}
             >
-              Daily Analytics Table 
+              Daily Analytics Table
             </h5>
             {/* <p
               className="text-muted mb-0"
@@ -151,47 +151,47 @@ export default function ItemsDepartmentAnalyticsTable({
           </ButtonGroup>}
 
         </div>
-        
+
       </div>
       {isMobile &&
-          <div style={{ display: "flex", justifyContent: "center" , marginTop:'-10px', backgroundColor:'#ecfbf7ff'}}>
-            <ButtonGroup
-              style={{
-                backgroundColor: "#eee",
-                borderRadius: 20,
-                userSelect: "none",
-              }}
-            >
-              {["Daily", "Same Days", "Weekly", "Monthly"].map((label) => (
-                <ToggleButton
-                  key={label}
-                  id={`filter-${label}`}
-                  type="radio"
-                  value={label.toLowerCase().replace(" ", "")}
-                  checked={filter === label.toLowerCase().replace(" ", "")}
-                  onChange={(e) => setFilter(e.currentTarget.value)}
-                  className="rounded-pill px-3"
-                  style={{
-                    fontSize: "13px",
-                    backgroundColor:
-                      filter === label.toLowerCase().replace(" ", "")
-                        ? "#fff"
-                        : "transparent",
-                    color:
-                      filter === label.toLowerCase().replace(" ", "")
-                        ? "#FF5B22"
-                        : "#6C757D",
-                    border:
-                      filter === label.toLowerCase().replace(" ", "")
-                        ? "1px solid #dee2e6"
-                        : "1px solid #dee2e6",
-                  }}
-                >
-                  {label}
-                </ToggleButton>
-              ))}
-            </ButtonGroup>
-          </div>}
+        <div style={{ display: "flex", justifyContent: "center", marginTop: '-10px', backgroundColor: '#ecfbf7ff' }}>
+          <ButtonGroup
+            style={{
+              backgroundColor: "#eee",
+              borderRadius: 20,
+              userSelect: "none",
+            }}
+          >
+            {["Daily", "Same Days", "Weekly", "Monthly"].map((label) => (
+              <ToggleButton
+                key={label}
+                id={`filter-${label}`}
+                type="radio"
+                value={label.toLowerCase().replace(" ", "")}
+                checked={filter === label.toLowerCase().replace(" ", "")}
+                onChange={(e) => setFilter(e.currentTarget.value)}
+                className="rounded-pill px-3"
+                style={{
+                  fontSize: "13px",
+                  backgroundColor:
+                    filter === label.toLowerCase().replace(" ", "")
+                      ? "#fff"
+                      : "transparent",
+                  color:
+                    filter === label.toLowerCase().replace(" ", "")
+                      ? "#FF5B22"
+                      : "#6C757D",
+                  border:
+                    filter === label.toLowerCase().replace(" ", "")
+                      ? "1px solid #dee2e6"
+                      : "1px solid #dee2e6",
+                }}
+              >
+                {label}
+              </ToggleButton>
+            ))}
+          </ButtonGroup>
+        </div>}
 
       {/* Table wrapper with scroll */}
       <div
@@ -216,15 +216,13 @@ export default function ItemsDepartmentAnalyticsTable({
                   onClick={() => handleSort(col.key)}
                   style={{
                     cursor: "pointer",
-                    background: "#f4f7fc",
-                    fontWeight: 700,
-                    fontSize: "14px",
-                    textTransform: "uppercase",
-                    color: "#000",
                     position: "sticky",
                     top: 0,
                     zIndex: 10,
-                    padding: "12px 16px",
+                    fontSize: '14px',
+                    fontWeight: '600',
+                    color: "#232425", 
+                    background: '#f4f7fc'
                   }}
                 >
                   {col.label}
@@ -243,10 +241,10 @@ export default function ItemsDepartmentAnalyticsTable({
 
                     if (col.key === "date") {
                       return (
-                        <td key={col.key} className="text-start " style={{fontWeight:600, fontSize:"14px", color:"#232425"}}>
+                        <td key={col.key} className="text-center " style={{ fontWeight: 600, fontSize: "14px", color: "#232425" }}>
                           {row.date}
                           {row.day && (
-                            <div className="" style={{fontWeight:500, fontSize:"12px", color:"#717182"}}>{row.day}</div>
+                            <div className="" style={{ fontWeight: 500, fontSize: "12px", color: "#717182" }}>{row.day}</div>
                           )}
                         </td>
                       );
@@ -254,14 +252,14 @@ export default function ItemsDepartmentAnalyticsTable({
 
                     if (col.key === "burn") {
                       return (
-                        <td key={col.key} className=" position-relative" style={{fontWeight:600, fontSize:"14px", color:"#232425"}}>
+                        <td key={col.key} className=" position-relative" style={{ fontWeight: 600, fontSize: "14px", color: "#232425" }}>
                           {isColored ? (
                             <div className={`cell-bg ${col.bgClass}`}></div>
                           ) : null}
                           <div className="position-relative" style={{ zIndex: 2 }}>
                             {cell?.qty || ""}
                             {cell?.percentage && (
-                              <div className="" style={{fontWeight:500, fontSize:"12px", color:"#717182"}}>
+                              <div className="" style={{ fontWeight: 500, fontSize: "12px", color: "#717182" }}>
                                 {cell.percentage}
                               </div>
                             )}
@@ -271,14 +269,14 @@ export default function ItemsDepartmentAnalyticsTable({
                     }
 
                     return (
-                      <td key={col.key} className="position-relative" style={{fontWeight:600, fontSize:"14px", color:"#232425"}}>
+                      <td key={col.key} className="position-relative" style={{ fontWeight: 600, fontSize: "14px", color: "#232425" }}>
                         {isColored ? (
                           <div className={`cell-bg ${col.bgClass}`}></div>
                         ) : null}
                         <div className="position-relative" style={{ zIndex: 2 }}>
                           {cell?.qty || ""}
                           {cell?.price && (
-                            <div className="" style={{fontWeight:500, fontSize:"12px",color:"#717182"}}>{cell.price}</div>
+                            <div className="" style={{ fontWeight: 500, fontSize: "12px", color: "#717182" }}>{cell.price}</div>
                           )}
                         </div>
                       </td>

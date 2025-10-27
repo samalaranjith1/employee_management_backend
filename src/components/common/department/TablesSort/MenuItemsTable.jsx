@@ -10,12 +10,12 @@ import { TableControls } from "@/components/common/TableControls";
 function MenuItemsTable({ data }) {
   // 🔹 Columns definition
   const columns = [
-    { key: "item", label: "ITEM" },
-    { key: "price", label: "SELLING PRICE" },
-    { key: "makingCost", label: "MAKING COST" },
-    { key: "margin", label: "MARGIN" },
-    { key: "marginPercentage", label: "MARGIN %" },
-    { key: "pieces", label: "PIECES" },
+    { key: "item", label: "Item" },
+    { key: "price", label: "Selling Price" },
+    { key: "makingCost", label: "Making Cost" },
+    { key: "margin", label: "Margin" },
+    { key: "marginPercentage", label: "Margin %" },
+    { key: "pieces", label: "Pieces" },
   ];
 
   // 🔹 Sorting hook
@@ -25,9 +25,9 @@ function MenuItemsTable({ data }) {
     sortKey === key ? (direction === "asc" ? " ↑" : " ↓") : "";
 
   // 🔹 Filters config: filter by item
-const filtersConfig = {
-  name: ["All", ...Array.from(new Set(data.map((d) => d.name)))],
-};
+  const filtersConfig = {
+    name: ["All", ...Array.from(new Set(data.map((d) => d.name)))],
+  };
 
 
   // 🔹 Table controls: search, filter, export
@@ -90,16 +90,14 @@ const filtersConfig = {
                   key={col.key}
                   onClick={() => handleSort(col.key)}
                   style={{
-                    background: "#f4f7fc",
-                    fontWeight: 700,
-                    fontSize: "0.85rem",
-                    textTransform: "uppercase",
-                    color: "#464f60",
+                    fontSize: '14px',
+                    fontWeight: '600',
+                    color: "#232425",
+                    textAlign: "left",
+                    background: '#f4f7fc',
                     position: "sticky",
                     top: 0,
                     zIndex: 2,
-                    cursor: "pointer",
-                    padding: "12px 16px",
                   }}
                 >
                   {col.label}
@@ -113,8 +111,13 @@ const filtersConfig = {
               filteredData.map((item) => (
                 <tr key={item.id} style={{ borderBottom: "1px solid #eee" }}>
                   {/* Item */}
-                  <td style={{ padding: "14px 16px" }}>
-                    <div style={{ fontWeight: 600, color: "#171c26",fontSize:"14px" }}>
+                  <td>
+                    <div style={{
+                      fontSize: '14px',
+                      fontWeight: '600',
+                      color: "#232425",
+                      textAlign: "left",
+                    }}>
                       {item.name}
                     </div>
                     <div className="d-flex gap-2 mt-2">
@@ -123,10 +126,9 @@ const filtersConfig = {
                         text="dark"
                         style={{
                           border: "1px solid #ddd",
-                          padding: "2px 4px",
-                          borderRadius: "6px",
-                          color:'#37383b',
-                          fontSize:"12px"
+                          fontSize: '12px',
+                          fontWeight: '500',
+                          textAlign: "left",
                         }}
                       >
                         {item.variation}
@@ -135,10 +137,11 @@ const filtersConfig = {
                         bg={item.veg ? "success" : "warning"}
                         text="dark"
                         style={{
-                          backgroundColor:item.veg?"#eaffea":'#f9f0e2',
-                          color:item.veg?"#5d9d4a":'#cd861b',
-                          fontSize: "12px",
-                          fontWeight:'500',
+                          backgroundColor: item.veg ? "#eaffea" : '#f9f0e2',
+                          color: item.veg ? "#5d9d4a" : '#cd861b',
+                          fontSize: '12px',
+                          fontWeight: '500',
+                          textAlign: "left",
                           padding: "2px 4px",
                           borderRadius: "6px",
                         }}
@@ -152,21 +155,29 @@ const filtersConfig = {
                   <td
                     style={{
                       fontWeight: 700,
-                      color: "#464f60",
-                      fontSize: "14px",
-                      padding: "14px 16px",
+                      fontSize: '14px',
+                      fontWeight: '500',
+                      textAlign: "left",
                     }}
                   >
                     {item.price}
                   </td>
 
                   {/* Making Cost */}
-                  <td style={{ color: "#464f60", padding: "14px 16px" ,fontSize:'14px',fontWeight:'500'}}>
+                  <td style={{
+                    fontSize: '14px',
+                    fontWeight: '500',
+                    textAlign: "left",
+                  }}>
                     {item.makingCost}
                   </td>
 
                   {/* Margin */}
-                  <td style= {{ color: "#464f60", padding: "14px 16px" ,fontSize:'14px',fontWeight:'500'}}>
+                  <td style={{
+                    fontSize: '14px',
+                    fontWeight: '500',
+                    textAlign: "left",
+                  }}>
                     {item.margin}
                   </td>
 
@@ -187,8 +198,12 @@ const filtersConfig = {
 
                   {/* Pieces */}
                   <td style={{ padding: "14px 16px" }}>
-                    <div style={{ fontWeight: 500,fontSize:'14px',color:"#464f60"}}>{item.pieces.count}</div>
-                    <div style={{ fontSize: "12px", color: "#14px",fontWeight:500 }}>
+                    <div style={{
+                      fontSize: '14px',
+                      fontWeight: '500',
+                      textAlign: "left",
+                    }}>{item.pieces.count}</div>
+                    <div className="text-muted" style={{ fontSize: "12px", fontWeight: 400 }}>
                       {item.pieces.label}
                     </div>
                   </td>

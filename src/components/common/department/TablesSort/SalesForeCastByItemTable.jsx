@@ -11,12 +11,12 @@ import { useTableControls } from "@/components/hooks/useTableControls";
 export default function SalesForeCastByItemTable({ tableData = [] }) {
   // 🔹 Columns for table + Excel export
   const columns = [
-    { key: "day", header: "DAY", width: 20 },
-    { key: "item", header: "ITEM", width: 25 },
-    { key: "orders", header: "ORDERS", width: 15 },
-    { key: "itemsSold", header: "ITEMS SOLD", width: 15 },
-    { key: "netSales", header: "NET SALES", width: 15 },
-    { key: "discount", header: "DISCOUNT", width: 10 },
+    { key: "day", header: "Day", width: 20 },
+    { key: "item", header: "Item", width: 25 },
+    { key: "orders", header: "Orders", width: 15 },
+    { key: "itemsSold", header: "Items Sold", width: 15 },
+    { key: "netSales", header: "Net Sales", width: 15 },
+    { key: "discount", header: "Discount", width: 10 },
   ];
 
   // 🔹 Table sorting
@@ -103,20 +103,21 @@ export default function SalesForeCastByItemTable({ tableData = [] }) {
                     onClick={() => handleSort(col.key)}
                     className="sticky-header"
                     style={{
-                      fontWeight: 700,
-                      fontSize: "14px",
-                      textTransform: "uppercase",
-                      color: "#464f60",
                       cursor: "pointer",
-                      padding: "12px 16px",
+                      fontSize: '14px',
+                      fontWeight: '600',
+                      color: "#232425",
+                      textAlign: "left",
+                      background: '#f4f7fc',
+                      textAlign: "left",
+                      background: '#f4f7fc',
                       minWidth: col.width ? `${col.width}%` : "120px",
-                      borderBottom: "1px solid #eee",
-                      backgroundColor:"#f4f7fc"
+                      backgroundColor: "#f4f7fc"
                     }}
                   >
                     {col.key === "day" ? (
                       <>
-                         DAY
+                        DAY
                       </>
                     ) : (
                       col.header
@@ -131,12 +132,37 @@ export default function SalesForeCastByItemTable({ tableData = [] }) {
               {filteredData.length > 0 ? (
                 filteredData.map((row, idx) => (
                   <tr key={idx} style={{ borderBottom: "1px solid #eee" }}>
-                    <td style={{ padding: "14px 16px",fontWeight:700, fontSize:"14px", color:"#171c26" }}>{row.day}</td>
-                    <td style={{ padding: "14px 16px", fontWeight:700, fontSize:"14px", color:"#171c26" }}>{row.item}</td>
-                    <td style={{ padding: "14px 16px",fontWeight:500, fontSize:"14px", color:"#171c26" }}>{row.orders}</td>
-                    <td style={{ padding: "14px 16px",fontWeight:500, fontSize:"14px", color:"#171c26" }}>{row.itemsSold}</td>
-                    <td style={{ padding: "14px 16px",fontWeight:700, fontSize:"14px", color:"#171c26" }}>{row.netSales}</td>
-                    <td style={{ padding: "14px 16px",fontWeight:500, fontSize:"14px", color:"#171c26" }}>{row.discount}</td>
+                    <td style={{
+                      fontSize: '14px',
+                      fontWeight: '600',
+                      color: "#232425",
+                      textAlign: "left",
+                    }}>{row.day}</td>
+                    <td style={{
+                      fontSize: '14px',
+                      fontWeight: '500',
+                      textAlign: "left",
+                    }}>{row.item}</td>
+                    <td style={{
+                      fontSize: '14px',
+                      fontWeight: '500',
+                      textAlign: "left",
+                    }}>{row.orders}</td>
+                    <td style={{
+                      fontSize: '14px',
+                      fontWeight: '500',
+                      textAlign: "left",
+                    }}>{row.itemsSold}</td>
+                    <td style={{
+                      fontSize: '14px',
+                      fontWeight: '500',
+                      textAlign: "left",
+                    }}>{row.netSales}</td>
+                    <td style={{
+                      fontSize: '14px',
+                      fontWeight: '500',
+                      textAlign: "left",
+                    }}>{row.discount}</td>
                   </tr>
                 ))
               ) : (

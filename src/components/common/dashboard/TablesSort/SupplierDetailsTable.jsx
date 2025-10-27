@@ -53,9 +53,12 @@ export default function SupplierDetailsTable({ supplierData }) {
                 <th
                   key={col.key}
                   style={{
-                    fontWeight: 600, cursor: "pointer",
-                    backgroundColor: "#f4f7fc",
-                    color: "#464f60"
+                    cursor: "pointer",
+                    fontSize: '14px',
+                    fontWeight: '600',
+                    color: "#232425",
+                    textAlign: "left",
+                    backgroundColor: '#f4f7fc'
                   }}
                   onClick={() => sort.handleSort(col.key)}
                 >
@@ -70,33 +73,34 @@ export default function SupplierDetailsTable({ supplierData }) {
               <tr key={idx}>
                 <td>
                   <div style={{
-                    fontWeight: 500,
                     fontSize: '14px',
-                    color: '#171c26'
+                    fontWeight: '600',
+                    color: "#232425",
+                    textAlign: "left",
                   }}>{row.supplier}</div>
                   <div className="d-flex gap-1">
                     <div style={{
-                      fontWeight: 400,
                       fontSize: '12px',
-                      color: '#687182'
-                    }}>
+                      fontWeight: '600',
+                      textAlign: "left",
+                    }} className="text-muted">
                       {row.category}
                     </div>
                     <span style={{
                       fontWeight: 400,
                       fontSize: '12px',
                       color: '#687182'
-                    }}>
-                      {row.location}
+                    }}
+                    className="text-muted">
+                     • {row.location}
                     </span>
                   </div>
                 </td>
                 <td
                   style={{
-                    fontWeight: 700,
+                    fontWeight: 500,
                     cursor: "pointer",
-                    fontSize: "14px",
-                    color: "#464f60"
+                    fontSize: "14px", 
                   }}
                   onClick={() =>
                     handleNavigation({

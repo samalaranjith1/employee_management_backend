@@ -39,7 +39,7 @@ const SuppliersItemsTable = ({ items = [] }) => {
         overflowX: "auto",
       }}
     >
-      <Table borderless style={{ marginBottom: 0, minWidth: "600px" }}>
+      <Table style={{ marginBottom: 0, minWidth: "600px" }}>
         <thead>
           <tr>
             {columns.map((col) => (

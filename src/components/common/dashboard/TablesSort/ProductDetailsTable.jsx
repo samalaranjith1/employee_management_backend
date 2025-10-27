@@ -75,7 +75,14 @@ export default function ProductDetailsTable({ rowsData, styles }) {
                 <th
                   key={col.key}
                   onClick={() => handleSort(col.key)}
-                  style={styles?.stickyTh}
+                  style={{
+                    ...styles?.stickyTh,
+                    fontSize: '14px',
+                    fontWeight: '600',
+                    color: "#232425",
+                    textAlign: "left",
+                    backgroundColor: '#f4f7fc'
+                  }}
                 >
                   {col.label}
                   {renderSortArrow(col.key)}
@@ -92,9 +99,10 @@ export default function ProductDetailsTable({ rowsData, styles }) {
                       className="fw-bold"
                       style={{
                         cursor: "pointer",
-                        fontSize: "14px",
-                        fontWeight: '500',
-                        color: '#171c26'
+                        fontSize: '14px',
+                        fontWeight: '600',
+                        color: "#232425",
+                        textAlign: "left",
                       }}
                       onClick={() =>
                         handleNavigation({
@@ -108,22 +116,24 @@ export default function ProductDetailsTable({ rowsData, styles }) {
                     </div>
                     <small style={{
                       cursor: "pointer",
-                      fontSize: "12px",
-                      fontWeight: '400',
-                      color: '#687182'
+                      fontSize: '12px',
+                      fontWeight: '500',
+                      color: "#212529BF",
+                      textAlign: "left",
                     }}>{row.details}</small>
                   </td>
                   <td style={{
-                    fontSize: "14px",
-                    fontWeight: 600,
-                    color: '#464f60'
+                    fontSize: '14px',
+                    fontWeight: '500',
+                    textAlign: "left",
                   }}>{row.items}</td>
                   <td
-                    className="text-success fw-bold"
+                    className="text-success"
                     style={{
                       cursor: "pointer",
                       fontSize: '14px',
-                      fontWeight: "700",
+                      fontWeight: '500',
+                      textAlign: "left",
                       color: "#288128"
                     }}
                     onClick={() =>
@@ -141,22 +151,28 @@ export default function ProductDetailsTable({ rowsData, styles }) {
                     {row.netSales}
                   </td>
                   <td style={{
-                    fontWeight: '700',
-                    fontSize: "14px",
+                    fontSize: '14px',
+                    fontWeight: '500',
+                    textAlign: "left",
                     color: '#c32924'
                   }}>{row.discount}</td>
                   <td style={{
-                    fontSize: "14px",
-                    fontWeight: 600,
-                    color: '#464f60'
+                    fontSize: '14px',
+                    fontWeight: '500',
+                    textAlign: "left",
                   }}>{row.tax}</td>
                   <td style={{
-                    fontWeight: '700',
-                    fontSize: "14px",
+                    fontSize: '14px',
+                    fontWeight: '500',
+                    textAlign: "left",
                     color: '#c32924'
                   }}>{row.makingCost}</td>
                   <td>
-                    <div className="text-success fw-bold">{row.margin}</div>
+                    <div className="text-success" style={{
+                      fontSize: '14px',
+                      fontWeight: '500',
+                      textAlign: "left",
+                    }}>{row.margin}</div>
                     <span
                       style={{
                         ...styles?.badge,

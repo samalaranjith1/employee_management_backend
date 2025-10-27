@@ -21,14 +21,14 @@ export default function ItemConsumptionEfficiencyTable({ tableData = [] }) {
   const router = useRouter();
   const { startDate, endDate } = useDepartmentContext();
   const columns = [
-    { key: "name", label: "ITEM DETAILS" },
+    { key: "name", label: "Item Details" },
     // { key: "department", label: "DEPARTMENT" },
-    { key: "consumed", label: "CONSUMED" },
-    { key: "sales", label: "SALES QUANTITY" },
-    { key: "difference", label: "DIFFERENCE" },
-    { key: "waste", label: "WASTE %" },
-    { key: "costImpact", label: "COST IMPACT" },
-    { key: "status", label: "STATUS" },
+    { key: "consumed", label: "Consumed" },
+    { key: "sales", label: "Sales Quantity" },
+    { key: "difference", label: "Difference" },
+    { key: "waste", label: "Waste %" },
+    { key: "costImpact", label: "Cost Impact" },
+    { key: "status", label: "Status" },
   ];
 
   const filtersConfig = {
@@ -113,13 +113,11 @@ export default function ItemConsumptionEfficiencyTable({ tableData = [] }) {
                     onClick={() => handleSort(col.key)}
                     style={{
                       cursor: "pointer",
-                      fontWeight: 700,
-                      color: "#595959",
-                      padding: "10px 16px",
-                      textTransform: "uppercase",
-                      fontSize: ".77rem",
-                      background: "#F8F9FC",
-                      borderBottom: "1px solid #f0f0f1",
+                      fontSize: '14px',
+                      fontWeight: '600',
+                      color: "#232425",
+                      textAlign: "left",
+                      background: '#f4f7fc'
                     }}
                   >
                     {col.label}
@@ -137,7 +135,13 @@ export default function ItemConsumptionEfficiencyTable({ tableData = [] }) {
                       <div className="fw-bold d-flex flex-column">
                         <div
                           className=""
-                          style={{ fontWeight: "700", cursor: "pointer", fontSize:"14px", color:"#171c26" }}
+                          style={{
+                            cursor: "pointer",
+                            fontSize: '14px',
+                            fontWeight: '600',
+                            color: "#232425",
+                            textAlign: "left",
+                          }}
                           onClick={() =>
                             handleNavigation({
                               router,
@@ -152,15 +156,19 @@ export default function ItemConsumptionEfficiencyTable({ tableData = [] }) {
                         >
                           {row.name}
                         </div>
-                        <div className="text-muted fw-normal"style={{fontWeight:400, fontSize:"12px", color:"#687182"}}>
+                        <div className="text-muted" style={{
+                          fontSize: '12px',
+                          fontWeight: '500',
+                          textAlign: "left",
+                        }}>
                           {row.subline}
                         </div>
                       </div>
                       <div
                         style={{
-                          color: "#888",
-                          fontSize: "13px",
-                          marginTop: 1,
+                          fontSize: '12px',
+                          fontWeight: '500',
+                          textAlign: "left",
                         }}
                       >
                         {row.consumedUnit && row.price
@@ -187,10 +195,10 @@ export default function ItemConsumptionEfficiencyTable({ tableData = [] }) {
                     {/* CONSUMED */}
                     <td
                       style={{
-                        fontWeight: 700,
-                        color: "#464f60",
                         cursor: "pointer",
-                        fontSize:"14px"
+                        fontSize: '14px',
+                        fontWeight: '500',
+                        textAlign: "left",
                       }}
                       onClick={() =>
                         handleNavigation({
@@ -205,7 +213,7 @@ export default function ItemConsumptionEfficiencyTable({ tableData = [] }) {
                       }
                     >
                       <div>{row.consumed.toLocaleString()}</div>
-                      <span style={{ color: "#464f60", fontWeight: 500, fontSize:"12px" }}>
+                      <span style={{ fontWeight: 400, fontSize: "12px" }} className="text-muted">
                         {row.consumedUnit.toLowerCase()}
                       </span>
                     </td>
@@ -216,7 +224,9 @@ export default function ItemConsumptionEfficiencyTable({ tableData = [] }) {
                         color: "#288128",
                         fontWeight: 700,
                         cursor: "pointer",
-                        fontSize:"14px"
+                        fontSize: '14px',
+                        fontWeight: '500',
+                        textAlign: "left",
                       }}
                       onClick={() =>
                         handleNavigation({
@@ -231,15 +241,19 @@ export default function ItemConsumptionEfficiencyTable({ tableData = [] }) {
                       }
                     >
                       <div>{row.sales.toLocaleString()}</div>
-                      <span style={{ color: "#288128", fontWeight: 500, fontSize:"12px" }}>
+                      <span style={{ fontWeight: 400, fontSize: "12px" }} className="text-muted">
                         {row.salesUnit.toLowerCase()}
                       </span>
                     </td>
 
                     {/* DIFFERENCE */}
-                    <td style={{ color: "#dc2620", fontWeight: 700, fontSize:"14px" }}>
+                    <td style={{
+                      color: "#dc2620", fontSize: '14px',
+                      fontWeight: '500',
+                      textAlign: "left",
+                    }}>
                       <div>+{row.difference.toLocaleString()}{" "}</div>
-                      <span style={{ fontWeight: 500, color: "#fd4137", fontSize:"12px" }}>
+                      <span style={{ fontWeight: 400, fontSize: "12px" }} className="text-muted">
                         {row.differenceUnit.toLowerCase()}
                       </span>
                     </td>
@@ -250,8 +264,9 @@ export default function ItemConsumptionEfficiencyTable({ tableData = [] }) {
                         className="px-3 py-1 rounded-pill"
                         style={{
                           ...getBadgeStyle("waste", row.waste),
-                          fontWeight: 600,
                           fontSize: "14px",
+                          fontWeight: '500',
+                          textAlign: "left",
                         }}
                       >
                         {row.waste ?? "-"}%
@@ -259,7 +274,11 @@ export default function ItemConsumptionEfficiencyTable({ tableData = [] }) {
                     </td>
 
                     {/* COST IMPACT */}
-                    <td style={{ color: "#DC2620", fontWeight: 700, fontSize:"14px" }}>
+                    <td style={{
+                      color: "#DC2620", fontSize: '14px',
+                      fontWeight: '500',
+                      textAlign: "left",
+                    }}>
                       ₹{row.costImpact}{" "}
                       {/* <span
                         style={{
@@ -279,15 +298,16 @@ export default function ItemConsumptionEfficiencyTable({ tableData = [] }) {
                         className="px-3 py-1 rounded-pill"
                         style={{
                           ...getBadgeStyle("status", row.status),
-                          fontWeight: 500,
-                          fontSize: "14px",
+                          fontSize: '14px',
+                          fontWeight: '500',
+                          textAlign: "left",
                         }}
                       >
                         {row.status === "red"
                           ? "Critical"
                           : row.status === "orange"
-                          ? "Monitor"
-                          : "Monitor"}
+                            ? "Monitor"
+                            : "Monitor"}
                       </span>
                     </td>
                   </tr>
