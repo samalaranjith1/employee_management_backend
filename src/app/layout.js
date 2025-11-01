@@ -44,10 +44,10 @@ export default function RootLayout({ children }) {
           maxWidth: "1280px", // limit the width
           margin: "0 auto",   // center horizontally
           width: "100%",      // make it responsive for smaller screens
-          padding: "0 16px",  // optional inner padding
+          // padding: "0 16px",  // optional inner padding
         }}>
           <GlobalDashboardProvider>
-            <>
+            <div className="px-md-3">
               <div style={{
                 position: "fixed",
                 top: 0,
@@ -66,8 +66,7 @@ export default function RootLayout({ children }) {
               <main style={{ paddingTop: '64px' }}>
                 {children}
               </main>
-            </>
-
+            </div>
           </GlobalDashboardProvider>
         </div>
       </body>

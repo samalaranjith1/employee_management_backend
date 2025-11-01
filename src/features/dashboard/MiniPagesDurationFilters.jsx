@@ -11,12 +11,13 @@ import { FaFilter } from "react-icons/fa";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useDashboardContext } from "@/contexts/DashboardContext";
-import { handleCustomChange, handlePreset } from "@/utils";
+import { formatDate, handleCustomChange, handlePreset } from "@/utils";
 import { presetOptions } from "@/constants";
 import "./css/datefilter.module.css";
 import { usePathname } from "next/navigation";
+import { createPortal } from "react-dom";
 
-export default function MiniPagesDurationFilters({useAppContext}) {
+export default function MiniPagesDurationFilters({ useAppContext }) {
   // const { startDate, endDate, setStartDate, setEndDate } =
   //   useDashboardContext();
   const { startDate, endDate, setStartDate, setEndDate } =
@@ -25,8 +26,40 @@ export default function MiniPagesDurationFilters({useAppContext}) {
   const [showCalendar, setShowCalendar] = useState(false);
   const [isCompact, setIsCompact] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [dropdownContainer, setDropdownContainer] = useState(null);
+
+  const [calendarContainer, setCalendarContainer] = useState(null);
+
+  const [tempStart, setTempStart] = useState(startDate);
+  const [tempEnd, setTempEnd] = useState(endDate);
+
+  function getCalendarPosition(rect) {
+    const calendarWidth = 600; // match .custom-range-container-popup min-width
+    const windowWidth = window.innerWidth;
+    let left = rect.left + window.scrollX;
+    let top = rect.bottom + window.scrollY + 8;
+
+    if (left + calendarWidth > windowWidth - 20) {
+      left = windowWidth - calendarWidth - 20;
+      if (left < 12) left = 12;
+    }
+    return { top, left };
+  }
+
+  useEffect(() => {
+    const el = document.createElement("div");
+    document.body.appendChild(el);
+    setDropdownContainer(el);
+    const cal = document.createElement("div");
+    document.body.appendChild(cal);
+    setCalendarContainer(cal);
+    return () => {
+      document.body.removeChild(el);
+      document.body.removeChild(cal);
+    };
+  }, []);
   const location = usePathname()
-  const isEndDF = ['/products','/departments','/items','/dashboard','/suppliers'].includes(location)
+  const isEndDF = ['/products', '/departments', '/items', '/dashboard', '/suppliers'].includes(location)
 
   const containerRef = useRef(null);
 
@@ -43,31 +76,31 @@ export default function MiniPagesDurationFilters({useAppContext}) {
   // }, []);
   useEffect(() => {
     if (!startDate || !endDate) return;
-  
+
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-  
+
     const yesterday = new Date(today);
     yesterday.setDate(today.getDate() - 1);
-  
+
     const start = new Date(startDate);
     const end = new Date(endDate);
     start.setHours(0, 0, 0, 0);
     end.setHours(0, 0, 0, 0);
-  
+
     const isSameDay = (d1, d2) =>
       d1.getFullYear() === d2.getFullYear() &&
       d1.getMonth() === d2.getMonth() &&
       d1.getDate() === d2.getDate();
-  
+
     // Monday as start of week
     const day = today.getDay(); // 0 = Sunday, 1 = Monday ...
     const diff = day === 0 ? -6 : 1 - day;
     const startOfWeek = new Date(today);
     startOfWeek.setDate(today.getDate() + diff);
-  
+
     const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
-  
+
     if (isSameDay(start, today) && isSameDay(end, today)) {
       setActive("today");
     } else if (isSameDay(start, yesterday) && isSameDay(end, yesterday)) {
@@ -80,7 +113,7 @@ export default function MiniPagesDurationFilters({useAppContext}) {
       setActive("custom");
     }
   }, [startDate, endDate]);
-  
+
 
   // Auto-switch between button group and modal based on width
   useEffect(() => {
@@ -99,7 +132,6 @@ export default function MiniPagesDurationFilters({useAppContext}) {
 
   const handleSelect = (key) => {
     handlePreset(key, stateChanges);
-    console.log('ramarama')
 
     // ✅ If "custom", keep modal open for date picking
     if (key === "custom") {
@@ -108,6 +140,86 @@ export default function MiniPagesDurationFilters({useAppContext}) {
       setShowModal(false); // close for other options
     }
   };
+
+  const handleApplyClick = () => {
+    // if (typeof handleApply === "function") {
+    //   handleApply({ startDate: tempStart, endDate: tempEnd });
+    // }
+    setStartDate(formatDate(tempStart));
+    setEndDate(formatDate(tempEnd));
+    setShowCalendar(false);
+  };
+  const renderCalendar = () => {
+    if (
+      !(active === "custom" && showCalendar) ||
+      !calendarContainer ||
+      !containerRef.current
+    )
+      return null;
+
+    const rect = containerRef.current.getBoundingClientRect();
+    const { top, left } = getCalendarPosition(rect);
+    return createPortal(
+      <div
+        className="custom-range-container-popup card"
+        style={{
+          position: "absolute",
+          top,
+          left,
+          zIndex: 10000,
+        }}
+      >
+        <div className="custom-calendar-wrapper side-by-side">
+          <DatePicker
+            selectsRange
+            startDate={tempStart ? new Date(tempStart) : null}
+            endDate={tempEnd ? new Date(tempEnd) : null}
+            onChange={(dates) => {
+              const [start, end] = dates;
+              setTempStart(start);
+              setTempEnd(end);
+            }}
+            inline
+            monthsShown={2}
+            calendarClassName="side-by-side-datepicker"
+          />
+        </div>
+
+        <div className="custom-range-footer side-by-side">
+          <div className="date-range-display">
+            <span className="start-date">
+              {tempStart
+                ? new Date(tempStart).toLocaleDateString("en-GB")
+                : "Start Date"}
+            </span>
+            <span className="separator"> - </span>
+            <span className="end-date">
+              {tempEnd
+                ? new Date(tempEnd).toLocaleDateString("en-GB")
+                : "End Date"}
+            </span>
+          </div>
+          <div className="action-buttons">
+            <Button
+              variant="outline-secondary"
+              className="cancel-btn"
+              onClick={() => setShowCalendar(false)}
+            >
+              Cancel
+            </Button>
+            <Button
+              variant="danger"
+              className="apply-btn"
+              onClick={handleApplyClick}
+            >
+              Apply
+            </Button>
+          </div>
+        </div>
+      </div>,
+      calendarContainer
+    );
+  }
 
   return (
     <Container fluid ref={containerRef}>
@@ -142,9 +254,8 @@ export default function MiniPagesDurationFilters({useAppContext}) {
                       label={label}
                       checked={active === key}
                       onChange={() => handleSelect(key)}
-                      className={`mb-2 ${
-                        active === key ? "text-orange fw-bold" : "text-dark"
-                      }`}
+                      className={`mb-2 ${active === key ? "text-orange fw-bold" : "text-dark"
+                        }`}
                     />
                   ))}
                 </Form>
@@ -226,7 +337,9 @@ export default function MiniPagesDurationFilters({useAppContext}) {
                   </Button>
                 );
               })}
-
+              {active === "custom" &&
+                renderCalendar()}
+{/* 
               {active === "custom" && showCalendar && (
                 <div
                   className="mt-3"
@@ -244,15 +357,15 @@ export default function MiniPagesDurationFilters({useAppContext}) {
                       handleCustomChange(dates, stateChanges);
                       if (dates) {
                         const [start, end] = dates;
-                        if (start && end) setShowCalendar(false);
+                        if (start && !end == null) setShowCalendar(false);
                       }
                     }}
                     inline
                   />
                 </div>
-              )}
+              )} */}
             </ButtonGroup>
-            </div>
+          </div>
         )}
       </div>
     </Container>

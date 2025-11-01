@@ -72,6 +72,7 @@ export default function Page() {
       </div>
   
       <SecondNavBar tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} useAppContext={useAppContext} />
+      <div className="mt-5 p-1"></div>
  
       {/* ✅ Tab Content */ }
       <div className="mt-2">

@@ -104,8 +104,9 @@ export default function RecipeInsights() {
       borderRadius: 22,
       boxShadow: "0 8px 36px rgba(44,37,68,0.07)",
       padding: "34px 40px",
+      padding: isMobile?"34px 10px 0px 10px":"34px 40px",
       marginTop: "-60px",
-      marginBottom: 46,
+      marginBottom: 10,
     },
     pillRow: { fontWeight: 600 },
     datePill: (active) => ({

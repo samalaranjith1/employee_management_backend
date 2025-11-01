@@ -10,7 +10,19 @@ import { AuthProvider } from "./AuthContext";
 import { RoleProvider } from "./RoleContext";
 
 export function GlobalDashboardProvider({ children }) {
-  const [queryClient] = useState(() => new QueryClient());
+  const [queryClient] = useState(() => new QueryClient({
+    defaultOptions: {
+      queries: {
+        staleTime: 5 * 60 * 1000, // 5 min
+        cacheTime: 10 * 60 * 1000, // 10 min
+        retry: 1,
+        keepPreviousData: true,
+        refetchOnMount: false,
+        refetchOnWindowFocus: false,
+        keepPreviousData: true,
+      },
+    },
+  }));
 
   return (
     <QueryClientProvider client={queryClient}>

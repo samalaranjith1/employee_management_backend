@@ -12,6 +12,7 @@ import DOMPurify from "dompurify";
 import DurationFilters from "@/features/dashboard/DurationFilters";
 import SecondNavBar from "@/app/(routes)/dashboard/@Navbar/page";
 import MiniPagesDurationFilters from "@/features/dashboard/MiniPagesDurationFilters";
+import { useDashboardContext } from "@/contexts/DashboardContext";
 
 export default function AnalyticsPage({
   title,
@@ -43,6 +44,7 @@ export default function AnalyticsPage({
   onEndDateChange,
 }) {
   const pathname = usePathname();
+  const {isMobile} = useDashboardContext()
   const showOnlyTable = pathname === "/" || pathname === "/dashboard";
 
   // Date picker state
@@ -138,7 +140,7 @@ export default function AnalyticsPage({
   });
 
   return (
-    <div style={{ position: "relative", top: "-80px" }}>
+    <div style={{ position: "relative", top: showOnlyTable ?"-55px":"-80px" }}>
       <>
         {!showOnlyTable && (
           <Container
@@ -271,7 +273,80 @@ export default function AnalyticsPage({
               </Col>
             ))}
           </Row> */}
-        <Row className="mb-4 justify-content-evenly">
+          <Row
+  className="mb-4 justify-content-evenly"
+  style={{
+    flexWrap: isMobile ? "nowrap" : "wrap",
+    overflowX: isMobile ? "auto" : "visible",
+    scrollbarWidth: "none", // Firefox
+    msOverflowStyle: "none", // IE/Edge
+  }}
+  // Hide scrollbar (WebKit)
+  onScroll={(e) => {
+    e.currentTarget.style.scrollbarWidth = "none";
+  }}
+>
+  {summaryCards.map((card, index) => (
+    <Col
+      key={card.id}
+      md={summaryCards.length === 2 ? 6 : 4}
+      className="d-flex justify-content-center"
+      style={{
+        flex: isMobile ? "0 0 auto" : "1 0 auto",
+        width: isMobile
+          ? "98vw"
+          : summaryCards.length === 2
+          ? "50%"
+          : "32%",
+        minWidth: !isMobile ? "300px" : undefined,
+        maxWidth: !isMobile
+          ? summaryCards.length === 2
+            ? "50%"
+            : "32%"
+          : undefined,
+        marginRight: isMobile ? "12px" : 0, // space between cards on mobile
+      }}
+    >
+      <Card
+        style={{
+          ...summaryCard(card.bgColor),
+          width: "100%",
+          border:'1px solid #eee'
+        }}
+      >
+        <Card.Body style={{ padding: "18px 22px" }}>
+          <div style={{ display: "flex", alignItems: "center" }}>
+            {card.icon && (
+              <div style={iconCircle(card.iconBg)}>{card.icon}</div>
+            )}
+            <div>
+              <div
+                style={{
+                  color: "#6d6d6d",
+                  fontWeight: "600",
+                  fontSize: "14px",
+                }}
+              >
+                {card.title}
+              </div>
+              <div
+                style={{
+                  color: "#232425",
+                  fontWeight: "800",
+                  fontSize: "24px",
+                }}
+              >
+                {card.value}
+              </div>
+            </div>
+          </div>
+        </Card.Body>
+      </Card>
+    </Col>
+  ))}
+</Row>
+
+        {/* <Row className="mb-4 justify-content-evenly">
           {summaryCards.map((card, index) => (
             <Col
               key={card.id}
@@ -296,7 +371,7 @@ export default function AnalyticsPage({
               </Card>
             </Col>
           ))}
-        </Row>
+        </Row> */}
       </>
       {/* )} */}
 
@@ -522,7 +597,13 @@ export default function AnalyticsPage({
                     <th
                       key={col.key}
                       onClick={() => handleSort(col.key)}
-                      style={{ ...tableHeader, cursor: "pointer", fontSize: 14, fontWeight: 600, color: '#232425' }}
+                      style={{
+                        ...tableHeader, cursor: "pointer", fontSize: '14px',
+                        fontWeight: '600',
+                        color: "#232425",
+                        textAlign: "left",
+                        backgroundColor: '#f4f7fc'
+                      }}
                     >
                       {col.label}
                       {sortKey === col.key
@@ -538,14 +619,41 @@ export default function AnalyticsPage({
                 {filteredData.length > 0 ? (
                   filteredData.map((row, idx) => (
                     <tr key={idx}>
-                      {table.columns.map((col) => (
-                        <td
+                      {table.columns.map((col, index) =>
+                        index === 0 ? (
+                          <td
+                            key={col.key}
+                            style={{
+                              fontSize: '14px',
+                              fontWeight: '600',
+                              color: "#232425",
+                              textAlign: "left",
+                            }}
+                          >
+                            {row[col.key]}
+                          </td>
+                        ) : (
+                          <td
+                            key={col.key}
+                            style={{
+                              fontSize: '14px',
+                              fontWeight: '500',
+                              textAlign: "left",
+                            }}
+                          >
+                            {row[col.key]}
+                          </td>
+                        )
+                      )}
+
+                      {/* {table.columns.map((col,index) => (
+                        {index ==0 && (<td
                           key={col.key}
                           style={{ fontSize: 14, fontWeight: 600, color: '#464F60' }}
                         >
                           {row[col.key]}
-                        </td>
-                      ))}
+                        </td>)}
+                      ))} */}
                     </tr>
                   ))
                 ) : (

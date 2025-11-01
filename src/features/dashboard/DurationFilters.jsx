@@ -4,7 +4,7 @@ import { createPortal } from "react-dom";
 import { Button, Container } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { handleCustomChange, handlePreset } from "@/utils";
+import { formatDate, handleCustomChange, handlePreset } from "@/utils";
 import { presetOptions } from "@/constants";
 import "./css/datefilter.module.css";
 import { IconCaretDown } from "@tabler/icons-react";
@@ -17,6 +17,50 @@ export default function DurationFilters({ useAppContext }) {
   const containerRef = useRef(null);
   const [dropdownContainer, setDropdownContainer] = useState(null);
   const [calendarContainer, setCalendarContainer] = useState(null);
+
+  const [tempStart, setTempStart] = useState(startDate);
+  const [tempEnd, setTempEnd] = useState(endDate);
+
+      useEffect(() => {
+        if (!startDate || !endDate) return;
+
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        const yesterday = new Date(today);
+        yesterday.setDate(today.getDate() - 1);
+
+        const start = new Date(startDate);
+        const end = new Date(endDate);
+        start.setHours(0, 0, 0, 0);
+        end.setHours(0, 0, 0, 0);
+
+        const isSameDay = (d1, d2) =>
+            d1.getFullYear() === d2.getFullYear() &&
+            d1.getMonth() === d2.getMonth() &&
+            d1.getDate() === d2.getDate();
+
+        // Monday as start of week
+        const day = today.getDay(); // 0 = Sunday, 1 = Monday ...
+        const diff = day === 0 ? -6 : 1 - day;
+        const startOfWeek = new Date(today);
+        startOfWeek.setDate(today.getDate() + diff);
+
+        const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+
+        if (isSameDay(start, today) && isSameDay(end, today)) {
+            setActive("today");
+        } else if (isSameDay(start, yesterday) && isSameDay(end, yesterday)) {
+            setActive("yesterday");
+        } else if (isSameDay(start, startOfWeek) && isSameDay(end, today)) {
+            setActive("thisweek");
+        } else if (isSameDay(start, startOfMonth) && isSameDay(end, today)) {
+            setActive("thismonth");
+        } else {
+            setActive("custom");
+        }
+    }, [startDate, endDate]);
+
 
   useEffect(() => {
     const el = document.createElement("div");
@@ -44,6 +88,16 @@ export default function DurationFilters({ useAppContext }) {
     }
     return { top, left };
   }
+
+  
+const handleApplyClick = () => {
+  if (typeof handleApply === "function") {
+    handleApply({ startDate: tempStart, endDate: tempEnd });
+  }
+  setStartDate(formatDate(tempStart));
+  setEndDate(formatDate(tempEnd));
+  setShowCalendar(false);
+};
 
   const handleSelect = (key) => {
     handlePreset(key, { setActive, setShowCalendar, setStartDate, setEndDate });
@@ -121,6 +175,66 @@ export default function DurationFilters({ useAppContext }) {
 
     const rect = containerRef.current.getBoundingClientRect();
     const { top, left } = getCalendarPosition(rect);
+    return createPortal(
+  <div
+    className="custom-range-container-popup card"
+    style={{
+      position: "absolute",
+      top,
+      left,
+      zIndex: 10000,
+    }}
+  >
+    <div className="custom-calendar-wrapper side-by-side">
+      <DatePicker
+        selectsRange
+        startDate={tempStart ? new Date(tempStart) : null}
+        endDate={tempEnd ? new Date(tempEnd) : null}
+        onChange={(dates) => {
+          const [start, end] = dates;
+          setTempStart(start);
+          setTempEnd(end);
+        }}
+        inline
+        monthsShown={2}
+        calendarClassName="side-by-side-datepicker"
+      />
+    </div>
+
+    <div className="custom-range-footer side-by-side">
+      <div className="date-range-display">
+        <span className="start-date">
+          {tempStart
+            ? new Date(tempStart).toLocaleDateString("en-GB")
+            : "Start Date"}
+        </span>
+        <span className="separator"> - </span>
+        <span className="end-date">
+          {tempEnd
+            ? new Date(tempEnd).toLocaleDateString("en-GB")
+            : "End Date"}
+        </span>
+      </div>
+          <div className="action-buttons">
+        <Button
+          variant="outline-secondary"
+          className="cancel-btn"
+          onClick={() => setShowCalendar(false)}
+        >
+          Cancel
+        </Button>
+        <Button
+          variant="danger"
+          className="apply-btn"
+          onClick={handleApplyClick}
+        >
+          Apply
+        </Button>
+      </div>
+    </div>
+  </div>,
+  calendarContainer
+);
 
     return createPortal(
       <div
@@ -298,7 +412,6 @@ export default function DurationFilters({ useAppContext }) {
 
 //   const handleSelect = (key) => {
 //     handlePreset(key, stateChanges);
-//     console.log('ramarama')
 
 //     // ✅ If "custom", keep modal open for date picking
 //     if (key === "custom") {

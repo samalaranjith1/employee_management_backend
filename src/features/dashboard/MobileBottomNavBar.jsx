@@ -42,6 +42,7 @@ import DepartmentConsumptionChart from "./DepartmentConsumptionChart";
 import TopConsumedItems from "./TopConsumedItems";
 import ItemConsumptionDistribution from "./ItemConsumptionDistribution";
 import { useDashboardContext } from "@/contexts/DashboardContext";
+import ActionableVerticalCards from "@/components/common/dashboard/card/ActionableVerticalCards";
 
 export default function MobileBottomNav() {
   // const [activeTab, setActiveTab] = useState("home");
@@ -143,7 +144,7 @@ export default function MobileBottomNav() {
         key: "actionable",
         content: (
           <MainComponentHoldingCard>
-            <ActionableInsights />
+            <ActionableInsights vertical={"actionable"}/>
           </MainComponentHoldingCard>
         ),
       },

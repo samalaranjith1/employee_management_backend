@@ -110,6 +110,8 @@ export function useApiQuery({
     },
     staleTime: 300000, // 5 minutes
     cacheTime: 600000, // 10 minutes
+    refetchOnMount: false,       // ✅ prevents refetch on back/forward
+    refetchOnWindowFocus: false, // 
     // refetchOnWindowFocus: true, // Refetch on window focus
     keepPreviousData: true,
     // enabled: Boolean(params.startdt && params.enddt), // ✅ Prevents UI flicker when params change
@@ -247,9 +249,6 @@ export function useApiQuery({
 //   config = {},
 //   options = {},
 // }) {
-//   console.log(params,'ramarama params');
-//   console.log(config, "ramarama configarams");
-//   console.log(options, "ramarama options");
 
 //   const queryClient = useQueryClient();
 //   const stableKey = [...key, JSON.stringify(params)];

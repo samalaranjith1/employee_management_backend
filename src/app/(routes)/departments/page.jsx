@@ -108,6 +108,7 @@ useEffect(() => {
 
   return (
     <div style={{ background: "#f9fafc", minHeight: "100vh",width:'99.5%' }} className="mt-1">
+      <div className="mt-5 pt-1"></div>
       <DepartmentHeader
         departmentId={2}
         onManageClick={() => setShowCanvas(true)}
@@ -115,7 +116,7 @@ useEffect(() => {
       {/* <div className="p-2 d-md-none">
         <DurationFilters useAppContext={useAppContext} />
       </div> */}
-      <Container fluid className="mt-2">
+      <Container fluid >
         {/* <DepartmentCards cards={rawData.cards} /> */}
         {/* <DepartmentFilters
           durationFilter={durationFilter}

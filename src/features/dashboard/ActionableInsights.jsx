@@ -12,8 +12,8 @@ import { usePathname, useRouter } from "next/navigation"; // ✅ For route detec
 import { handleNavigation } from "@/utils";
 import { IconBulb } from "@tabler/icons-react";
 
-const ActionableInsights = () => {
-  const { startDate, endDate, dashboardFilter } = useDashboardContext();
+const ActionableInsights = ({vertical=''}) => {
+  const { startDate, endDate, dashboardFilter,isMobile } = useDashboardContext();
   const myScrollRef = useRef(null);
   const router = useRouter();
   const pathname = usePathname(); // ✅ get current path
@@ -89,7 +89,7 @@ const ActionableInsights = () => {
               >
                 <div
                   ref={myScrollRef}
-                  className={`d-flex mt-2 gap-2 mb-2 ${!isDashboardRoute ? "flex-column" : ""
+                  className={`d-flex mt-2 gap-2 mb-2 ${!isDashboardRoute || vertical ? "flex-column" : ""
                     }`}
                   style={{
                     gap: `1rem`,

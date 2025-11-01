@@ -65,7 +65,7 @@ export default function ItemsSupplierProductsHeader({
   };
 
   return (
-    <>
+    <div className="mt-5 pt-1">
       {/* Top Header Section */}
       <div
         className="p-4"
@@ -313,7 +313,7 @@ export default function ItemsSupplierProductsHeader({
           </Dropdown>
         </div>
       </div> */}
-    </>
+    </div>
   );
 }
 

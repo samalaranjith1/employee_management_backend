@@ -67,6 +67,7 @@ console.log(departmentId)
             padding: "1.5rem 2rem",
             borderBottomLeftRadius: "12px",
             borderBottomRightRadius: "12px",
+            margin:'0 5px'
           }}
         >
           <Container fluid>

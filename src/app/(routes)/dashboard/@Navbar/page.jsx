@@ -32,7 +32,7 @@ const SecondNavBar = ({ tabs, activeTab, setActiveTab, useAppContext }) => {
         margin: "0 auto",
         whiteSpace: "nowrap",
         msOverflowStyle: "none",
-        boxShadow: "0 2px 6px rgba(0,0,0,0.15)",
+        boxShadow: "0 2px 2px rgba(0,0,0,0.15)",
         padding: "0 8px",
       }}
     >

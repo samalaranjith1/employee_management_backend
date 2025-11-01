@@ -180,11 +180,11 @@ export const consumptionHistoryFormatter = (apiData) => {
   // --- Table Data ---
   const tableData = {
     columns: [
-      { key: "date", label: "DATE" },
-      { key: "department", label: "DEPARTMENT" },
-      { key: "item", label: "ITEM DETAILS" },
-      { key: "qty", label: "QUANTITY" },
-      { key: "totalPrice", label: "TOTAL PRICE" },
+      { key: "date", label: "Date" },
+      { key: "department", label: "Department" },
+      { key: "item", label: "Item Details" },
+      { key: "qty", label: "Quantity" },
+      { key: "totalPrice", label: "Total Price" },
     ],
     rows: apiData.list?.map((entry) => ({
       date: new Date(entry.dt).toLocaleDateString("en-GB", {
