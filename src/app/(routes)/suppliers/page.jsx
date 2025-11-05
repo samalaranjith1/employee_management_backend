@@ -129,12 +129,12 @@ function SuppliersPage() {
         useAppContext={useAppContext}
       />
       </div>
-      <Container fluid className="mt-2">
+      <div fluid className="mt-2">
         <SuppliersContent
           activeTab={activeTab}
           durationFilter={durationFilter}
         />
-      </Container>
+      </div>
     </div>
   );
 }

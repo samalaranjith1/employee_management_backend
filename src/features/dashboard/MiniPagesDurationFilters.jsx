@@ -339,6 +339,8 @@ export default function MiniPagesDurationFilters({ useAppContext }) {
               })}
               {active === "custom" &&
                 renderCalendar()}
+                <span></span>
+                {active === "custom" && `Start Date :${formatDate(startDate)} - End Date : ${formatDate(endDate)} `}
 {/* 
               {active === "custom" && showCalendar && (
                 <div

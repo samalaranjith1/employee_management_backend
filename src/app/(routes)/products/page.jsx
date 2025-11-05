@@ -69,36 +69,59 @@ function ProductsPage() {
     }
   }, [startDate, endDate]);
 
-    const { data: productsData, error } = useProduct(74, {
-      outlet: 1,
-      userId: 7,
-    });
-  
-    // Format the header data when productsData changes
-    useEffect(() => {
-      // if (!productsData ) return;
-      const formatted = {
-        title: productsData?.name,
-        subtitle: `${productsData?.departmentName} • ${
-          productsData?.masterProductName
-        } ${productsData?.variation} ₹${productsData?.price.toFixed(1)}`,
-        price: <div>{`Margin Cost:₹${productsData?.margin?.toFixed(
-          1
-        )} • Margin:${productsData?.marginPercentage?.toFixed(
-          2
-        )}% • Prep Time:${productsData?.preparationTime} Mins • Pieces:${
-          productsData?.pieceCount
-        } (${productsData?.pieceQuantity} ${productsData?.pieceUnit} Each)`}</div>,
-      };
-      setProductsHeaderData(formatted); // Assuming you want only the first item
-    }, [productsData]);
-    if (error) console.error("Error fetching items:", error);
+  const { data: productsData, error } = useProduct(74, {
+    outlet: 1,
+    userId: 7,
+  });
+
+  // Format the header data when productsData changes
+  useEffect(() => {
+    // if (!productsData ) return;
+    const formatted = {
+      title: productsData?.name,
+      subtitle: (
+        <>
+          {productsData?.departmentName} • {productsData?.masterProductName} {productsData?.variation}{" "}
+          <span style={{ fontWeight: 600 }}>
+            ₹{productsData?.price.toFixed(1)}
+          </span>
+        </>
+      ),
+      price: (
+        <div>
+          Margin Cost:
+          <span style={{ fontWeight: 600 }}>
+            ₹{productsData?.margin?.toFixed(1)}
+          </span>
+          {" • "}Margin:
+          <span style={{ fontWeight: 600 }}>
+            {productsData?.marginPercentage?.toFixed(2)}%
+          </span>
+          {" • "}Prep Time:
+          <span style={{ fontWeight: 600 }}>
+            {productsData?.preparationTime} Mins
+          </span>
+          {" • "}Pieces:
+          <span style={{ fontWeight: 600 }}>
+            {productsData?.pieceCount}
+          </span>
+          {" ("}
+          <span style={{ fontWeight: 600 }}>
+            {productsData?.pieceQuantity} {productsData?.pieceUnit}
+          </span>
+          {" Each)"}
+        </div>
+      )
+    };
+    setProductsHeaderData(formatted); // Assuming you want only the first item
+  }, [productsData]);
+  if (error) console.error("Error fetching items:", error);
 
   const navTabs = ["Home", "Sales", "Ingredients", "Cost"];
   const filters = ["Today", "Yesterday", "This Week", "This Month", "Custom"];
 
   return (
-    <div style={{ background: "#f9fafc", minHeight: "100vh",width:'99.5%' }} className="mt-1">
+    <div style={{ background: "#f9fafc", minHeight: "100vh", width: '99.5%' }}>
       {productsHeaderData?.title ? (
         <ItemsSupplierProductsHeader
           title={productsHeaderData?.title}
@@ -130,21 +153,21 @@ function ProductsPage() {
       {/* <div className="p-2 d-md-none">
         <DurationFilters useAppContext={useAppContext} />
       </div> */}
-      <div className="mt-2">
-      <SecondNavBar
-        tabs={navTabs}
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
-        useAppContext={useAppContext}
-      />
+      <div >
+        <SecondNavBar
+          tabs={navTabs}
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+          useAppContext={useAppContext}
+        />
       </div>
 
-      <Container fluid className="mt-2">
+      <div fluid className="mt-2 p-0 m-0">
         <ProdcutsContent
           activeTab={activeTab}
           durationFilter={durationFilter}
         />
-      </Container>
+      </div>
     </div>
   );
 }

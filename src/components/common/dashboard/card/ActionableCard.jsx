@@ -58,7 +58,7 @@ export default function ActionableCard({
             color: priorityTextColor[data.priority],
           }}
         >
-          <FaExclamationTriangle className="m-1" />
+          <FaExclamationTriangle className="m-1" size={10}/>
           {data.priority?.charAt(0).toUpperCase() +
             data.priority?.slice(1)}{" "}
           Priority

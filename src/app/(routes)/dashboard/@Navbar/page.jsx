@@ -6,7 +6,7 @@ import "@/app/globals.css";
 import MobileDurationFilters from "@/features/dashboard/MobileDurationFilter";
 import { useDashboardContext } from "@/contexts/DashboardContext";
 
-const SecondNavBar = ({ tabs, activeTab, setActiveTab, useAppContext }) => {
+const SecondNavBar = ({ tabs, activeTab, setActiveTab, useAppContext, isAtTop = false }) => {
   const { isMobile } = useDashboardContext();
 
   // adjust this to match your top navbar’s height
@@ -16,24 +16,22 @@ const SecondNavBar = ({ tabs, activeTab, setActiveTab, useAppContext }) => {
     <div
       className="scrollmenu"
       style={{
-        position: "fixed",
-        top: `${MAIN_NAVBAR_HEIGHT}px`,  // ✅ fixed below main navbar
-        left: 0,
-        right: 0,
-        zIndex: 500,                   // slightly below or equal to main navbar’s z-index
+        position: isAtTop ? "fixed" : 'relative',
+        top: isAtTop ? `${MAIN_NAVBAR_HEIGHT}px` : '0px',  // below main navbar
+        left: "50%",                     // center reference point
+        transform: "translateX(-50%)",   // move element back by 50% of its width
+        zIndex: 500,
         backgroundColor: "#fff",
         display: "flex",
         overflowX: "auto",
         WebkitOverflowScrolling: "touch",
         scrollbarWidth: "none",
         scrollBehavior: "smooth",
-        width: "97%",
-        maxWidth: "1240px",
-        margin: "0 auto",
+        width: "100%",                     // desired width
+        maxWidth: "1240px",               // constrain max width
         whiteSpace: "nowrap",
         msOverflowStyle: "none",
-        boxShadow: "0 2px 2px rgba(0,0,0,0.15)",
-        padding: "0 8px",
+        // boxShadow: "0 2px 2px rgba(0,0,0,0.15)",
       }}
     >
       {/* ✅ Tabs container */}
@@ -50,11 +48,10 @@ const SecondNavBar = ({ tabs, activeTab, setActiveTab, useAppContext }) => {
           <div
             key={label}
             onClick={() => setActiveTab(label)}
-            className={`dashboard-tab ${
-              activeTab === label
+            className={`dashboard-tab ${activeTab === label
                 ? "c_normal_text_extra_bold c_black_1"
                 : "c_normal_text_regular c_gray_3"
-            }`}
+              }`}
             aria-pressed={activeTab === label}
             type="button"
             style={{

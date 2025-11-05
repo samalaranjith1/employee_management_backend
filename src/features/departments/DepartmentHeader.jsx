@@ -18,9 +18,9 @@ export default function DepartmentHeader({ departmentId =2, onManageClick }) {
         style={{
           background: "linear-gradient(135deg, #F56A2A, #F23C13)",
           color: "#fff",
-          padding: "1.5rem 2rem",
-          borderBottomLeftRadius: "12px",
-          borderBottomRightRadius: "12px",
+          padding: "1.5rem 0px",
+          // borderBottomLeftRadius: "12px",
+          // borderBottomRightRadius: "12px",
         }}
       >
         <Container fluid>
@@ -65,9 +65,9 @@ console.log(departmentId)
             background: "linear-gradient(135deg, #F56A2A, #F23C13)",
             color: "#fff",
             padding: "1.5rem 2rem",
-            borderBottomLeftRadius: "12px",
-            borderBottomRightRadius: "12px",
-            margin:'0 5px'
+            // borderBottomLeftRadius: "12px",
+            // borderBottomRightRadius: "12px",
+            // margin:'0 5px'
           }}
         >
           <Container fluid>
@@ -115,20 +115,20 @@ console.log(departmentId)
 
                 <div
                   style={{
-                    fontSize: "0.95rem",
+                    fontSize: "14px",
                     fontWeight: "500",
                     opacity: 0.95,
                   }}
                 >
                   <span>
                     Goal:{" "}
-                    <strong>
-                      {headerData?.costToSalePercentageGoal ?? 0}% of Sale
+                    <strong className="fw-bold">
+                      {headerData?.costToSalePercentageGoal ?? 0}% <span className="fw-normal">of Sale</span>
                     </strong>
                   </span>{" "}
-                  • <span>Products: {headerData?.productsCount ?? 0}</span> •{" "}
-                  <span>Team: {headerData?.teamSize ?? 0}</span> •{" "}
-                  <span>Type: {headerData?.type ?? "-"}</span>
+                  • <span>Products: <span className="fw-bold">{headerData?.productsCount ?? 0}</span></span> •{" "}
+                  <span>Team: <span className="fw-bold">{headerData?.teamSize ?? 0}</span></span> •{" "}
+                  <span>Type: <span className="fw-bold">{headerData?.type ?? "-"}</span></span>
                 </div>
               </div>
 

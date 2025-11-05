@@ -6,7 +6,7 @@ export default function CommonCard({
   children,
   bgColor = "#fff",
   textColor = "#000",
-  widthDesktop = "23vw",
+  widthDesktop = "23%",
   widthMobile = "94vw",
   minWidth = "250px",
   borderRadius = "12px",

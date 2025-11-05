@@ -144,6 +144,7 @@ const handleApplyClick = () => {
     width: rect.width,
     zIndex: 10000,
   }}
+  onMouseLeave={() => setShowDropdown(!showDropdown)}
 >
   {presetOptions.map(({ key, label }) => (
     <div
@@ -215,11 +216,12 @@ const handleApplyClick = () => {
             : "End Date"}
         </span>
       </div>
-          <div className="action-buttons">
+          <div className="action-buttons" >
         <Button
           variant="outline-secondary"
           className="cancel-btn"
           onClick={() => setShowCalendar(false)}
+          style={{marginRight:'10px'}}
         >
           Cancel
         </Button>
@@ -301,7 +303,8 @@ const handleApplyClick = () => {
         <div
           // variant="outline-light"
           // className="date-dropdown-btn"
-          onClick={() => setShowDropdown(!showDropdown)}
+          onClick={() => {setShowDropdown(!showDropdown);
+          }}
         >
           {presetOptions.find((o) => o.key === active)?.label || "Select Date"} <span style={{marginLeft:'20px'}}><IconCaretDown size={16} /></span> 
         </div>

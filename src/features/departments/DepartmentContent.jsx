@@ -16,12 +16,13 @@ function DepartmentContent({ activeKey, dateFilter }) {
   const { startDate, endDate } = useDepartmentContext();
 
   return (
-    <div
+    <div 
       style={{
-        // background: "#fdfdfd",
+        background: "#ffffff",
         borderRadius: "12px",
         marginTop: "0.08rem",
-        boxShadow: "0 2px 6px rgba(0,0,0,0.06)",
+        // boxShadow: "0 2px 6px rgba(0,0,0,0.06)",
+        // border:'none',
         display: "flex",
         flexDirection: "column",
         width: "100%",

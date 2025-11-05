@@ -120,7 +120,7 @@ export default function Header() {
         left: 0,
         right: 0,
         background: "#fff",
-        zIndex: 1050,
+        zIndex: 2000,
         border: "1px solid #ddd",
         maxHeight: "300px",
         overflowY: "auto",
@@ -332,7 +332,7 @@ export default function Header() {
                 <Dropdown.Item>Outlet 3</Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
-
+{/* 
             <Button
               variant="link"
               className={`${styles.buttonIcon} me-2 p-0 d-none d-lg-flex`}
@@ -343,10 +343,10 @@ export default function Header() {
                 border: '1px solid #eee',
                 borderRadius: '50%',
               }}>
-                {/* <span className={styles.outletDot} /> */}
+                 <span className={styles.outletDot} /> 
                 <IconBell size={24} stroke={2} />
               </div>
-            </Button>
+            </Button> */}
 
             {/* <Button
               variant="link"
@@ -366,11 +366,11 @@ export default function Header() {
             className={styles.mobileSearchBar}
             style={{
               position: "absolute",
-              top: "56px", // just below navbar
+              top: "30px", // just below navbar
               // left: 0,
               // right: 0,
               background: "#fff",
-              zIndex: 1100,
+              zIndex: 9000,
               padding: "8px 16px",
               boxShadow: "0 2px 6px rgba(0,0,0,0.2)",
             }}
@@ -385,12 +385,14 @@ export default function Header() {
                 onFocus={() => setShowResults(true)}
                 onBlur={() => setShowMobileSearch(false)}
               />
-              <Button
+             <div style={{marginLeft:'10px'}}>
+               <Button
                 variant="outline-secondary"
                 onClick={() => setShowMobileSearch(false)}
               >
                 Close
               </Button>
+             </div>
             </Form>
             {showResults && renderSearchResults()}
           </div>

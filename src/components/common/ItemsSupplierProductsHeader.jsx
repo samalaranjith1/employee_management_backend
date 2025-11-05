@@ -65,14 +65,14 @@ export default function ItemsSupplierProductsHeader({
   };
 
   return (
-    <div className="mt-5 pt-1">
+    <div>
       {/* Top Header Section */}
       <div
         className="p-4"
         style={{
           background: "linear-gradient(90deg, #D75D1D 0%, #D94637 100%)",
-          borderBottomLeftRadius: "12px",
-          borderBottomRightRadius: "12px",
+          // borderBottomLeftRadius: "12px",
+          // borderBottomRightRadius: "12px",
           color: "white",
         }}
       >
@@ -87,7 +87,7 @@ export default function ItemsSupplierProductsHeader({
                   <div style={{ fontSize: "14px", color: "#FBE9E7" }}>
                     {subtitle} 
                     {price && (
-                      <span className="fw-semibold text-white">• {price}</span>
+                      <span className="text-white">• {price}</span>
                     )}
                   </div>
                 </div>

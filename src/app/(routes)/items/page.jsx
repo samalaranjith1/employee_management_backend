@@ -78,8 +78,18 @@ function ItemsPage() {
     // if (!itemsData ) return;
     const formatted = {
       title: itemsData?.name,
-      subtitle: `${itemsData?.categoryName} • ${itemsData?.unitQuantity} ${itemsData?.unit}`,
-      price: `₹${itemsData?.unitPrice.toFixed(1)}`,
+      subtitle: (
+        <>
+          {itemsData?.categoryName} • <span style={{ fontWeight: 600 }}>
+            {itemsData?.unitQuantity} {itemsData?.unit}
+          </span>
+        </>
+      ),
+      price: (
+        <span style={{ fontWeight: 600 }}>
+          ₹{itemsData?.unitPrice.toFixed(1)}
+        </span>
+      )
     };
     setItemsHeaderData(formatted); // Assuming you want only the first item
   }, [itemsData]);
@@ -121,23 +131,23 @@ function ItemsPage() {
             width: "100vw",
           }}
         >
-            Loading...
+          Loading...
         </div>
       )}
       {/* <div className="p-2 d-md-none">
         <DurationFilters useAppContext={useAppContext} />
       </div> */}
       <div className="mt-2">
-      <SecondNavBar
-        tabs={navTabs}
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
-        useAppContext={useAppContext}
-      />
+        <SecondNavBar
+          tabs={navTabs}
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+          useAppContext={useAppContext}
+        />
       </div>
-      <Container fluid className="mt-2">
+      <div fluid className="mt-2">
         <ItemsContent activeTab={activeTab} durationFilter={durationFilter} />
-      </Container>
+      </div>
     </div>
   );
 }

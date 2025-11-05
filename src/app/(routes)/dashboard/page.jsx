@@ -70,8 +70,8 @@ export default function Page() {
         {/* <DurationFilters useAppContext={useAppContext}/> */}
         {/* <MobileDurationFilters useAppContext={useAppContext} /> */}
       </div>
-  
-      <SecondNavBar tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} useAppContext={useAppContext} />
+      <SecondNavBar tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} useAppContext={useAppContext} isAtTop={true} />
+
       <div className="mt-5 p-1"></div>
  
       {/* ✅ Tab Content */ }
