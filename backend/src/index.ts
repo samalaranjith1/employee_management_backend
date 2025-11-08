@@ -1,0 +1,109 @@
+import express, { Application, Request, Response, NextFunction } from "express";
+import cors from "cors";
+import helmet from "helmet";
+import compression from "compression";
+import morgan from "morgan";
+import dotenv from "dotenv";
+
+// Load environment variables
+dotenv.config();
+
+// Import routes
+import healthRoutes from "./routes/health";
+
+class Server {
+  public app: Application;
+  private readonly port: number;
+
+  constructor() {
+    this.app = express();
+    this.port = parseInt(process.env.PORT || "3000", 10);
+
+    this.initializeMiddleware();
+    this.initializeRoutes();
+    this.initializeErrorHandling();
+  }
+
+  private initializeMiddleware(): void {
+    // Security middleware
+    this.app.use(helmet());
+
+    // CORS configuration
+    this.app.use(
+      cors({
+        origin: process.env.FRONTEND_URL || "http://localhost:5173",
+        credentials: true,
+        optionsSuccessStatus: 200
+      })
+    );
+
+    // Compression middleware
+    this.app.use(compression());
+
+    // Logging middleware
+    this.app.use(
+      morgan(process.env.NODE_ENV === "production" ? "combined" : "dev")
+    );
+
+    // Body parsing middleware
+    this.app.use(express.json({ limit: "10mb" }));
+    this.app.use(express.urlencoded({ extended: true, limit: "10mb" }));
+  }
+
+  private initializeRoutes(): void {
+    // Health check route
+    this.app.use("/api/health", healthRoutes);
+
+    // API routes will be added here
+    this.app.get("/", (req: Request, res: Response) => {
+      res.json({
+        message: "CareMe API Server is running!",
+        version: "1.0.0",
+        environment: process.env.NODE_ENV || "development",
+        timestamp: new Date().toISOString()
+      });
+    });
+
+    // 404 handler
+    this.app.use("*", (req: Request, res: Response) => {
+      res.status(404).json({
+        success: false,
+        message: `Route ${req.originalUrl} not found`,
+        error: "Not Found"
+      });
+    });
+  }
+
+  private initializeErrorHandling(): void {
+    // Global error handler
+    this.app.use(
+      (error: Error, req: Request, res: Response, next: NextFunction) => {
+        console.error("Error:", error);
+
+        const status =
+          (error as any).status || (error as any).statusCode || 500;
+        const message = error.message || "Internal Server Error";
+
+        res.status(status).json({
+          success: false,
+          message,
+          ...(process.env.NODE_ENV === "development" && { stack: error.stack })
+        });
+      }
+    );
+  }
+
+  public listen(): void {
+    this.app.listen(this.port, () => {
+      console.log(`🚀 CareMe API Server running on port ${this.port}`);
+      console.log(`📝 Environment: ${process.env.NODE_ENV || "development"}`);
+      console.log(`🌐 Access URL: http://localhost:${this.port}`);
+    });
+  }
+}
+
+// Create and start server
+const server = new Server();
+server.listen();
+
+export default server.app;
