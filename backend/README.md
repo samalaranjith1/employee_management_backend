@@ -47,11 +47,13 @@ backend/
 ### Installation
 
 1. Install dependencies:
+
    ```bash
    npm install
    ```
 
 2. Copy environment variables:
+
    ```bash
    cp .env.example .env
    ```
@@ -61,6 +63,7 @@ backend/
 ### Development
 
 Start the development server:
+
 ```bash
 npm run dev
 ```
@@ -70,6 +73,7 @@ The server will start on `http://localhost:3000` (or your configured PORT)
 ### Production
 
 1. Build the project:
+
    ```bash
    npm run build
    ```
@@ -91,6 +95,7 @@ The server will start on `http://localhost:3000` (or your configured PORT)
 ## API Endpoints
 
 ### Health Check
+
 - `GET /` - Basic server info
 - `GET /api/health` - Health check endpoint
 - `GET /api/health/detailed` - Detailed health check with system info
@@ -100,6 +105,7 @@ The server will start on `http://localhost:3000` (or your configured PORT)
 See `.env.example` for all available environment variables.
 
 Key variables:
+
 - `PORT` - Server port (default: 3000)
 - `NODE_ENV` - Environment (development/production)
 - `FRONTEND_URL` - Frontend application URL
