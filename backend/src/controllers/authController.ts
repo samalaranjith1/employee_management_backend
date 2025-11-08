@@ -2,34 +2,7 @@ import { Request, Response } from "express";
 import { JWTUtils } from "../utils/jwt";
 import { PasswordUtils } from "../utils/password";
 import { ApiResponse, UserRole } from "../types";
-
-// Simple in-memory user store for demo (in real app, use database)
-const users = [
-  {
-    id: "1",
-    email: "admin@careme.com",
-    password: "$2a$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewKyNiYlU.4xDdlW", // password123
-    firstName: "Admin",
-    lastName: "User",
-    role: UserRole.ADMIN
-  },
-  {
-    id: "2",
-    email: "doctor@careme.com",
-    password: "$2a$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewKyNiYlU.4xDdlW", // password123
-    firstName: "Dr. John",
-    lastName: "Doe",
-    role: UserRole.DOCTOR
-  },
-  {
-    id: "3",
-    email: "patient@careme.com",
-    password: "$2a$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewKyNiYlU.4xDdlW", // password123
-    firstName: "Jane",
-    lastName: "Smith",
-    role: UserRole.PATIENT
-  }
-];
+import User from "../models/User";
 
 export class AuthController {
   /**
@@ -50,10 +23,12 @@ export class AuthController {
         return;
       }
 
-      // Find user
-      const user = users.find(
-        (u) => u.email.toLowerCase() === email.toLowerCase()
-      );
+      // Find user in database
+      const user = await User.findOne({ 
+        email: email.toLowerCase(),
+        isActive: true 
+      });
+
       if (!user) {
         const response: ApiResponse = {
           success: false,
@@ -131,8 +106,8 @@ export class AuthController {
         return;
       }
 
-      // Find user details
-      const user = users.find((u) => u.id === req.user?.userId);
+      // Find user in database
+      const user = await User.findById(req.user.userId);
       if (!user) {
         const response: ApiResponse = {
           success: false,
@@ -151,7 +126,10 @@ export class AuthController {
           email: user.email,
           firstName: user.firstName,
           lastName: user.lastName,
-          role: user.role
+          role: user.role,
+          isActive: user.isActive,
+          createdAt: user.createdAt,
+          updatedAt: user.updatedAt
         }
       };
 
@@ -163,6 +141,56 @@ export class AuthController {
         error: error instanceof Error ? error.message : "Unknown error"
       };
       res.status(500).json(response);
+    }
+  }
+
+  /**
+   * Create some initial test users
+   */
+  public static async seedUsers(): Promise<void> {
+    try {
+      // Check if users already exist
+      const userCount = await User.countDocuments();
+      if (userCount > 0) {
+        console.log('🌱 Users already exist, skipping seed');
+        return;
+      }
+
+      // Create test users
+      const hashedPassword = await PasswordUtils.hashPassword('password123');
+      
+      const testUsers = [
+        {
+          email: 'admin@careme.com',
+          password: hashedPassword,
+          firstName: 'Admin',
+          lastName: 'User',
+          role: UserRole.ADMIN
+        },
+        {
+          email: 'doctor@careme.com',
+          password: hashedPassword,
+          firstName: 'Dr. John',
+          lastName: 'Doe',
+          role: UserRole.DOCTOR
+        },
+        {
+          email: 'patient@careme.com',
+          password: hashedPassword,
+          firstName: 'Jane',
+          lastName: 'Smith',
+          role: UserRole.PATIENT
+        }
+      ];
+
+      await User.insertMany(testUsers);
+      console.log('🌱 Test users created successfully');
+      console.log('📧 Login credentials:');
+      testUsers.forEach(user => {
+        console.log(`   ${user.role}: ${user.email} / password123`);
+      });
+    } catch (error) {
+      console.error('❌ Error seeding users:', error);
     }
   }
 }

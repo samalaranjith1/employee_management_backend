@@ -21,6 +21,7 @@
   "author": "CareMe Team",
   "license": "MIT",
   "dependencies": {
+    "@types/mongoose": "^5.11.97",
     "bcryptjs": "^2.4.3",
     "compression": "^1.7.4",
     "cors": "^2.8.5",
@@ -29,6 +30,7 @@
     "helmet": "^7.1.0",
     "joi": "^17.11.0",
     "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.19.3",
     "morgan": "^1.10.0"
   },
   "devDependencies": {

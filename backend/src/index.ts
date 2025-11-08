@@ -8,10 +8,12 @@ import dotenv from "dotenv";
 // Load environment variables
 dotenv.config();
 
-// Import routes
+// Import database and routes
+import Database from "./config/database";
 import healthRoutes from "./routes/health";
 import authRoutes from "./routes/auth";
 import { authenticateToken } from "./middleware/auth";
+import { AuthController } from "./controllers/authController";
 
 class Server {
   public app: Application;
@@ -21,9 +23,23 @@ class Server {
     this.app = express();
     this.port = parseInt(process.env.PORT || "8000", 10);
 
+    this.initializeDatabase();
     this.initializeMiddleware();
     this.initializeRoutes();
     this.initializeErrorHandling();
+  }
+
+  private async initializeDatabase(): Promise<void> {
+    try {
+      const db = Database.getInstance();
+      await db.connect();
+      
+      // Seed initial users
+      await AuthController.seedUsers();
+    } catch (error) {
+      console.error('❌ Failed to initialize database:', error);
+      process.exit(1);
+    }
   }
 
   private initializeMiddleware(): void {
