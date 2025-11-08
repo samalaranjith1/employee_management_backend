@@ -69,7 +69,7 @@ class Server {
 
   private initializeRoutes(): void {
     // Health check route
-    this.app.use("/api/health", healthRoutes);
+    // this.app.use("/api/health", healthRoutes);
 
     // Authentication routes
     this.app.use("/api/auth", authRoutes);
