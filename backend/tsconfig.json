@@ -39,6 +39,10 @@
         "**/*.test.ts"
     ],
     "ts-node": {
-        "esm": true
+        "transpileOnly": true,
+        "files": true,
+        "compilerOptions": {
+            "module": "commonjs"
+        }
     }
 }
