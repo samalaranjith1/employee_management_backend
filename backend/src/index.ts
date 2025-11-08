@@ -10,6 +10,8 @@ dotenv.config();
 
 // Import routes
 import healthRoutes from "./routes/health";
+import authRoutes from "./routes/auth";
+import { authenticateToken } from "./middleware/auth";
 
 class Server {
   public app: Application;
@@ -53,6 +55,22 @@ class Server {
   private initializeRoutes(): void {
     // Health check route
     this.app.use("/api/health", healthRoutes);
+
+    // Authentication routes
+    this.app.use("/api/auth", authRoutes);
+
+    // Protected route example
+    this.app.get(
+      "/api/protected",
+      authenticateToken,
+      (req: Request, res: Response) => {
+        res.json({
+          success: true,
+          message: "This is a protected route",
+          user: req.user
+        });
+      }
+    );
 
     // API routes will be added here
     this.app.get("/", (req: Request, res: Response) => {
