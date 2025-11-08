@@ -24,9 +24,9 @@ export class AuthController {
       }
 
       // Find user in database
-      const user = await User.findOne({ 
+      const user = await User.findOne({
         email: email.toLowerCase(),
-        isActive: true 
+        isActive: true
       });
 
       if (!user) {
@@ -152,45 +152,45 @@ export class AuthController {
       // Check if users already exist
       const userCount = await User.countDocuments();
       if (userCount > 0) {
-        console.log('🌱 Users already exist, skipping seed');
+        console.log("🌱 Users already exist, skipping seed");
         return;
       }
 
       // Create test users
-      const hashedPassword = await PasswordUtils.hashPassword('password123');
-      
+      const hashedPassword = await PasswordUtils.hashPassword("password123");
+
       const testUsers = [
         {
-          email: 'admin@careme.com',
+          email: "admin@careme.com",
           password: hashedPassword,
-          firstName: 'Admin',
-          lastName: 'User',
+          firstName: "Admin",
+          lastName: "User",
           role: UserRole.ADMIN
         },
         {
-          email: 'doctor@careme.com',
+          email: "doctor@careme.com",
           password: hashedPassword,
-          firstName: 'Dr. John',
-          lastName: 'Doe',
+          firstName: "Dr. John",
+          lastName: "Doe",
           role: UserRole.DOCTOR
         },
         {
-          email: 'patient@careme.com',
+          email: "patient@careme.com",
           password: hashedPassword,
-          firstName: 'Jane',
-          lastName: 'Smith',
+          firstName: "Jane",
+          lastName: "Smith",
           role: UserRole.PATIENT
         }
       ];
 
       await User.insertMany(testUsers);
-      console.log('🌱 Test users created successfully');
-      console.log('📧 Login credentials:');
-      testUsers.forEach(user => {
+      console.log("🌱 Test users created successfully");
+      console.log("📧 Login credentials:");
+      testUsers.forEach((user) => {
         console.log(`   ${user.role}: ${user.email} / password123`);
       });
     } catch (error) {
-      console.error('❌ Error seeding users:', error);
+      console.error("❌ Error seeding users:", error);
     }
   }
 }

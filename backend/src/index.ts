@@ -23,7 +23,6 @@ class Server {
     this.app = express();
     this.port = parseInt(process.env.PORT || "8000", 10);
 
-    this.initializeDatabase();
     this.initializeMiddleware();
     this.initializeRoutes();
     this.initializeErrorHandling();
@@ -33,11 +32,11 @@ class Server {
     try {
       const db = Database.getInstance();
       await db.connect();
-      
+
       // Seed initial users
       await AuthController.seedUsers();
     } catch (error) {
-      console.error('❌ Failed to initialize database:', error);
+      console.error("❌ Failed to initialize database:", error);
       process.exit(1);
     }
   }
@@ -127,17 +126,25 @@ class Server {
     );
   }
 
-  public listen(): void {
-    this.app.listen(this.port, () => {
-      console.log(`🚀 CareMe API Server running on port ${this.port}`);
-      console.log(`📝 Environment: ${process.env.NODE_ENV || "development"}`);
-      console.log(`🌐 Access URL: http://localhost:${this.port}`);
-    });
+  public async start(): Promise<void> {
+    try {
+      await this.initializeDatabase();
+
+      this.app.listen(this.port, () => {
+        console.log(`🚀 CareMe API Server running on port ${this.port}`);
+        console.log(`📝 Environment: ${process.env.NODE_ENV || "development"}`);
+        console.log(`🌐 Access URL: http://localhost:${this.port}`);
+        console.log("✅ Server started successfully");
+      });
+    } catch (error) {
+      console.error("❌ Failed to start server:", error);
+      process.exit(1);
+    }
   }
 }
 
 // Create and start server
 const server = new Server();
-server.listen();
+server.start();
 
 export default server.app;
