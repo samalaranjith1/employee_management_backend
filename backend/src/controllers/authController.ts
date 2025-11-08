@@ -145,7 +145,7 @@ export class AuthController {
   }
 
   /**
-   * Create some initial test users
+   * Create healthcare portal test users for hackathon
    */
   public static async seedUsers(): Promise<void> {
     try {
@@ -156,41 +156,163 @@ export class AuthController {
         return;
       }
 
-      // Create test users
-      const hashedPassword = await PasswordUtils.hashPassword("password123");
+      // Create test password (simple for hackathon)
+      const hashedPassword = await PasswordUtils.hashPassword("demo123");
 
       const testUsers = [
+        // Admin User
         {
           email: "admin@careme.com",
           password: hashedPassword,
-          firstName: "Admin",
-          lastName: "User",
+          firstName: "System",
+          lastName: "Administrator",
           role: UserRole.ADMIN
         },
+
+        // Healthcare Providers
         {
-          email: "doctor@careme.com",
+          email: "dr.smith@careme.com",
           password: hashedPassword,
-          firstName: "Dr. John",
-          lastName: "Doe",
-          role: UserRole.DOCTOR
+          firstName: "Dr. Emily",
+          lastName: "Smith",
+          role: UserRole.HEALTHCARE_PROVIDER
         },
         {
-          email: "patient@careme.com",
+          email: "dr.johnson@careme.com",
+          password: hashedPassword,
+          firstName: "Dr. Michael",
+          lastName: "Johnson",
+          role: UserRole.HEALTHCARE_PROVIDER
+        },
+        {
+          email: "nurse.wilson@careme.com",
+          password: hashedPassword,
+          firstName: "Sarah",
+          lastName: "Wilson",
+          role: UserRole.HEALTHCARE_PROVIDER
+        },
+
+        // Patients
+        {
+          email: "john.doe@email.com",
+          password: hashedPassword,
+          firstName: "John",
+          lastName: "Doe",
+          role: UserRole.PATIENT
+        },
+        {
+          email: "jane.smith@email.com",
           password: hashedPassword,
           firstName: "Jane",
           lastName: "Smith",
+          role: UserRole.PATIENT
+        },
+        {
+          email: "robert.brown@email.com",
+          password: hashedPassword,
+          firstName: "Robert",
+          lastName: "Brown",
+          role: UserRole.PATIENT
+        },
+        {
+          email: "mary.davis@email.com",
+          password: hashedPassword,
+          firstName: "Mary",
+          lastName: "Davis",
+          role: UserRole.PATIENT
+        },
+        {
+          email: "david.wilson@email.com",
+          password: hashedPassword,
+          firstName: "David",
+          lastName: "Wilson",
           role: UserRole.PATIENT
         }
       ];
 
       await User.insertMany(testUsers);
-      console.log("🌱 Test users created successfully");
-      console.log("📧 Login credentials:");
-      testUsers.forEach((user) => {
-        console.log(`   ${user.role}: ${user.email} / password123`);
-      });
+      console.log("🌱 Healthcare portal users created successfully!");
+      console.log("📧 Login credentials (Password: demo123):");
+      console.log("\n👨‍💼 Admin:");
+      console.log("   admin@careme.com");
+      console.log("\n👩‍⚕️ Healthcare Providers:");
+      console.log("   dr.smith@careme.com");
+      console.log("   dr.johnson@careme.com");
+      console.log("   nurse.wilson@careme.com");
+      console.log("\n🏥 Patients:");
+      console.log("   john.doe@email.com");
+      console.log("   jane.smith@email.com");
+      console.log("   robert.brown@email.com");
+      console.log("   mary.davis@email.com");
+      console.log("   david.wilson@email.com");
+      console.log("\n🔑 All passwords: demo123");
     } catch (error) {
       console.error("❌ Error seeding users:", error);
+    }
+  }
+
+  /**
+   * Get users by role (for healthcare providers to see patients)
+   */
+  public static async getUsersByRole(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    try {
+      if (!req.user) {
+        const response: ApiResponse = {
+          success: false,
+          message: "User not authenticated",
+          error: "Unauthorized"
+        };
+        res.status(401).json(response);
+        return;
+      }
+
+      // Only healthcare providers and admins can view user lists
+      if (
+        req.user.role !== UserRole.HEALTHCARE_PROVIDER &&
+        req.user.role !== UserRole.ADMIN
+      ) {
+        const response: ApiResponse = {
+          success: false,
+          message: "Access denied. Insufficient permissions.",
+          error: "Forbidden"
+        };
+        res.status(403).json(response);
+        return;
+      }
+
+      const { role } = req.query;
+      let users;
+
+      if (role) {
+        users = await User.find({ role, isActive: true }).select("-password");
+      } else {
+        // If no role specified, show patients for healthcare providers
+        users = await User.find({
+          role: UserRole.PATIENT,
+          isActive: true
+        }).select("-password");
+      }
+
+      const response: ApiResponse = {
+        success: true,
+        message: "Users retrieved successfully",
+        data: {
+          users,
+          count: users.length
+        }
+      };
+
+      res.status(200).json(response);
+    } catch (error) {
+      const response: ApiResponse = {
+        success: false,
+        message: "Failed to get users",
+        error: error instanceof Error ? error.message : "Unknown error"
+      };
+      res.status(500).json(response);
     }
   }
 }
