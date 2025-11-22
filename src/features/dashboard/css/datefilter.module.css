@@ -1,0 +1,43 @@
+/* Bottom modal styling */
+.bottom-modal {
+  position: fixed !important;
+  bottom: 0 !important;          /* align to bottom */
+  left: 0;
+  right: 0;
+  margin: 0;
+  width: 100%;
+  max-height: 80vh !important;   /* limit max height */
+  height: auto !important;       /* grow with content */
+  animation: slideUp 0.3s ease;
+}
+
+/* Modal content */
+.bottom-modal-content {
+  border-radius: 12px 12px 0 0;
+  background: white;
+  max-height: 80vh;
+  height: auto;                  /* allow content to grow */
+  overflow-y: visible !important;/* no internal scroll */
+  padding-bottom: 20px;
+}
+
+/* Backdrop */
+.bottom-backdrop {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+/* Slide-up animation */
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+/* Active radio styles */
+.text-orange {
+  color: orange !important;
+  font-weight: 600;
+}

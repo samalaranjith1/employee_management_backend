@@ -1,0 +1,330 @@
+"use client";
+import React from "react";
+import BaseSurface from "./BaseSurface";
+import { useTableSort } from "@/components/hooks/useTableSort";
+import { useRouter } from "next/navigation";
+import { useDashboardContext } from "@/contexts/DashboardContext";
+import { handleNavigation } from "@/utils";
+
+function RecipesTable({ title, data, bgColor }) {
+  const router = useRouter()
+  const {
+    dashboardFilter,
+    startDate: startDate,
+    endDate: endDate,
+  } = useDashboardContext();
+  // ✅ Sorting hook
+  const sort = useTableSort(data || []);
+
+  // ✅ Render sort arrow
+  const renderSortArrow = (key) =>
+    sort.sortKey === key ? (sort.direction === "asc" ? " ↑" : " ↓") : "";
+
+  // ✅ Columns definition
+  const columns = [
+    { key: "product", label: "Product", spanKey: "subtitle" },
+    { key: "items", label: "Items", spanKey: "stock" },
+    { key: "cost", label: "Cost" },
+    { key: "sales", label: "Sales" },
+    { key: "costPct", label: "Cost %" },
+  ];
+
+  return (
+    <div
+      title={title}
+      style={{
+        background: bgColor,
+        // padding: "0 1rem",
+        maxHeight: "65vh",
+        display: "flex",
+        flexDirection: "column",
+        // width: "110%",
+        // marginLeft: "20px",
+      }}
+    // style={{
+    //   flexGrow: 1,
+    //   overflow: "auto", // prevent double scrollbars
+    // }}
+    >
+      {/* ✅ Scrollable wrapper */}
+      <div
+        style={{
+          flexGrow: 1,
+          overflowX: "auto",
+          overflowY: "auto",
+        }}
+      >
+        <div
+          style={{
+            width: "100%",
+            maxHeight: "60vh", // fixed height needed for vertical scroll
+            overflow: "auto", // vertical scroll
+            border: "1px solid #ccc",
+            borderRadius: "15px",
+          }}
+        >
+          {/* Sticky Header */}
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "2fr 1fr 1fr 1fr 1fr",
+              fontWeight: 600,
+              // padding: "0.5rem 1rem",
+              background: "#fff",
+              position: "sticky",
+              top: 0,
+              zIndex: 1000,
+            }}
+          >
+            {columns.map((col) => (
+              <div
+                key={col.key}
+                style={{
+                  textAlign:
+                    col.key === "product"
+                      ? "left"
+                      : col.key === "items"
+                        ? "center"
+                        : "right",
+                  cursor: "pointer",
+                  backgroundColor: '#f5f5f5',
+                  padding: '8px 0px',
+                  fontSize: '14px',
+                  fontWeight: '600',
+                  color: "#232425",
+                  padding: '10px',
+                  // textAlign: "left",
+                }}
+                onClick={() => sort.handleSort(col.key)}
+              >
+                {col.label}
+                {renderSortArrow(col.key)}
+              </div>
+            ))}
+          </div>
+
+          {/* ✅ Table body rows */}
+          {sort.sortedData?.map((item, idx) => (
+            <div
+              key={idx}
+              style={{
+                display: "grid",
+                gridTemplateColumns: "2fr 1fr 1fr 1fr 1fr", // match header
+                padding: "0.75rem 1rem",
+                alignItems: "center",
+                // background: idx % 2 === 0 ? "#fafafa" : "#fff",
+                borderBottom: "1px solid #f0f0f0",
+              }}
+            >
+              <div>
+                <div style={{ fontWeight: 600, color: '#171c26', fontSize: '14px' }}>{item.product}</div>
+                {item.subtitle && (
+                  <div style={{
+                    ontSize: '12px',
+                    fontWeight: '500',
+                    color: "#212529BF",
+                  }}>
+                    {item.subtitle}
+                  </div>
+                )}
+              </div>
+              <div style={{ textAlign: 'center', fontSize: '14px', fontWeight: '700', color: '#464f60' }}>
+                <div style={{
+                  fontSize: '14px',
+                  fontWeight: '500',
+                }}>{item.items}</div>
+                {item.stock && (
+                  <div style={{
+                    fontSize: '14px',
+                    fontWeight: '500',
+                    textAlign: "left",
+                  }}>
+                    {item.stock}
+                  </div>
+                )}
+              </div>
+              <div
+                style={{
+                  textAlign: "right", cursor: "pointer", fontSize: '14px',
+                  fontWeight: '500',
+                }}
+                onClick={() =>
+                  handleNavigation({
+                    router,
+                    url: "sp/reciepe_analytics",
+                    params: {
+                      startDate: startDate,
+                      endDate: endDate,
+                      products: item?.productId,
+                    },
+                  })
+                }
+              >
+                {item.cost}
+              </div>
+              <div
+                style={{
+                  textAlign: "right", cursor: "pointer", fontSize: '14px',
+                  fontWeight: '500',
+                }}
+                onClick={() =>
+                  handleNavigation({
+                    router,
+                    url: "sp/reciepe_analytics",
+                    params: {
+                      startDate: startDate,
+                      endDate: endDate,
+                      products: item?.productId,
+                    },
+                  })
+                }
+              >
+                {item.sales}
+              </div>
+              <div style={{ textAlign: "right" }}>
+                <span
+                  style={{
+                    background: `${item.costPctColor}20`,
+                    color: item.costPctColor,
+                    padding: "4px 8px",
+                    borderRadius: "6px",
+                    fontSize: '14px',
+                    fontWeight: '500',
+                  }}
+                >
+                  {item.costPct}
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default RecipesTable;
+
+// "use client";
+// import React from "react";
+// import BaseSurface from "./BaseSurface";
+// import { useTableSort } from "@/components/hooks/useTableSort";
+
+// function RecipesTable({ title, data, bgColor }) {
+//   // ✅ Sorting hook
+//   const sort = useTableSort(data || []);
+
+//   // ✅ Render sort arrow
+//   const renderSortArrow = (key) =>
+//     sort.sortKey === key ? (sort.direction === "asc" ? " ↑" : " ↓") : "";
+
+//   // ✅ Columns definition
+//   const columns = [
+//     { key: "product", label: "Product", spanKey: "subtitle" },
+//     { key: "items", label: "Items", spanKey: "stock" },
+//     { key: "cost", label: "Cost" },
+//     { key: "costPct", label: "Cost %" },
+//     { key: "sales", label: "Sales" },
+//   ];
+
+//   return (
+//     <BaseSurface
+//       title={title}
+//       containerStyle={{
+//         border: "none",
+//         background: bgColor,
+//         borderRadius: "12px",
+//         padding: "1rem",
+//         height: "65vh",
+//         display: "flex",
+//         flexDirection: "column",
+//         width: "110%",
+//         marginLeft: "-20px",
+//       }}
+//       bodyStyle={{ flexGrow: 1, overflowY: "auto" }}
+//     >
+//       {/* Fixed header */}
+//       <div
+//         style={{
+//           display: "grid",
+//           gridTemplateColumns: "2fr 1fr 1fr 1fr",
+//           fontWeight: 600,
+//           padding: "0.5rem 1rem",
+//           background: "#fff",
+//           position: "sticky",
+//           top: 0,
+//           zIndex: 2,
+//           borderBottom: "1px solid #ddd",
+//         }}
+//       >
+//         {columns.map((col) => (
+//           <div
+//             key={col.key}
+//             style={{
+//               textAlign:
+//                 col.key === "product"
+//                   ? "left"
+//                   : col.key === "items"
+//                   ? "center"
+//                   : "right",
+//               cursor: "pointer",
+//             }}
+//             onClick={() => sort.handleSort(col.key)}
+//           >
+//             {col.label}
+//             {renderSortArrow(col.key)}
+//           </div>
+//         ))}
+//       </div>
+
+//       {/* Table body rows */}
+//       {sort.sortedData?.map((item, idx) => (
+//         <div
+//           key={idx}
+//           style={{
+//             display: "grid",
+//             gridTemplateColumns: "2fr 1fr 1fr 1fr",
+//             padding: "0.75rem 1rem",
+//             alignItems: "center",
+//             background: idx % 2 === 0 ? "#fafafa" : "#fff",
+//             borderBottom: "1px solid #f0f0f0",
+//           }}
+//         >
+//           <div>
+//             <div style={{ fontWeight: 500 }}>{item.product}</div>
+//             {item.subtitle && (
+//               <div style={{ fontSize: "0.85rem", color: "#666" }}>
+//                 {item.subtitle}
+//               </div>
+//             )}
+//           </div>
+//           <div style={{ textAlign: "center" }}>
+//             <div>{item.items}</div>
+//             {item.stock && (
+//               <div style={{ fontSize: "0.8rem", color: "#999" }}>
+//                 {item.stock}
+//               </div>
+//             )}
+//           </div>
+//           <div style={{ textAlign: "right" }}>{item.cost}</div>
+//           <div style={{ textAlign: "right" }}>
+//             <span
+//               style={{
+//                 background: `${item.costPctColor}20`,
+//                 color: item.costPctColor,
+//                 padding: "4px 8px",
+//                 borderRadius: "6px",
+//                 fontSize: "0.85rem",
+//                 fontWeight: 500,
+//               }}
+//             >
+//               {item.costPct}
+//             </span>
+//           </div>
+//         </div>
+//       ))}
+//     </BaseSurface>
+//   );
+// }
+
+// export default RecipesTable;

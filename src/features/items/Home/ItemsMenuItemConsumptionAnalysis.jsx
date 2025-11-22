@@ -1,0 +1,2485 @@
+"use client";
+
+import React from "react";
+import { Card, Col, Row } from "react-bootstrap";
+import { menuItemConsumptionAnalysisDataFormatter } from "@/utils/data_formatters/itemsPageDataFormatter";
+import { useItemProductsList } from "@/services/item-service";
+import { useItemsContext } from "@/contexts/ItemsContext";
+import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer";
+import ItemsMenuItemConsumptionAnalysisGraph from "@/components/common/items/GraphWrapper/ItemsMenuItemConsumptionAnalysisGraph";
+import ItemsMenuItemConsumptionAnalysisTable from "@/components/common/items/TableSort/ItemsMenuItemConsumptionAnalysisTable";
+import { IconPackage } from "@tabler/icons-react";
+
+export default function ItemsMenuItemConsumptionAnalysis() {
+  const { startDate, endDate } = useItemsContext();
+
+  return (
+    <Card className="p-3 pt-0 border-0 shadow-sm">
+      <Row className="align-items-center mb-3 p-2" style={{
+        backgroundColor: "#FFF9EC",
+        // margin: "10px"
+      }}>
+        {/* ✅ Column 1: Icon */}
+        <Col xs="auto">
+          <div
+            style={{
+              background: '#FA9600', // Figma-style strong orange
+              borderRadius: '12px',
+              padding: '12px',
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <IconPackage stroke={2} color="#fff" size={24} />
+          </div>
+        </Col>
+
+        {/* ✅ Column 2: Text content */}
+        <Col style={{ paddingleft: "-50px" }}>
+          <div
+            //sName="p-3"
+            style={{
+              borderRadius: "12px",
+            }}
+          >
+            <h5 className="mb-2" style={{ fontWeight: 700, fontSize: "18px", color: "#232425", }}>Menu Item Consumption Analysis</h5>
+            {/* <p className="text-muted small mb-0">
+                    Item consumption breakdown by menu items with quantity distribution
+                  </p> */}
+          </div>
+        </Col>
+      </Row>
+      <ServiceRenderer
+        queryHook={useItemProductsList}
+        queryKey={["itemProductsList", { startdt: startDate, enddt: endDate }]}
+        queryFn={() =>
+          useItemProductsList({
+            startdt: startDate,
+            enddt: endDate,
+          }).queryFn
+        }
+        queryArgs={[74, { startdt: startDate, enddt: endDate, outlet: 1, userId: 7 }]}
+        formatter={menuItemConsumptionAnalysisDataFormatter}
+        shimmerCount={1}
+      >
+        {(formattedData) => {
+          const chartData = formattedData.map((d) => ({
+            name: d.name,
+            value: parseInt(d.totalConsumption),
+          }));
+
+          return (
+            <Card
+              className="p-0 shadow-sm border-0"
+              style={{ borderRadius: "12px", background: "#fff" }}
+            >
+
+              <Row className="p-2">
+                <ItemsMenuItemConsumptionAnalysisTable
+                  formattedData={formattedData}
+                />
+                <ItemsMenuItemConsumptionAnalysisGraph chartData={chartData} />
+              </Row>
+            </Card>
+          );
+        }}
+      </ServiceRenderer>
+    </Card>
+  );
+}
+// "use client";
+
+// import React from "react";
+// import { Card, Row, Col, Table, Badge } from "react-bootstrap";
+// import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
+// import { menuItemConsumptionAnalysisDataFormatter } from "@/utils/data_formatters/itemsPageDataFormatter";
+// import { useItemProductsList } from "@/services/item-service";
+// import { useItemsContext } from "@/contexts/ItemsContext";
+// import ServiceRenderer from "@/components/common/ServiceRenderer/ServiceRenderer";
+
+// export default function ItemsMenuItemConsumptionAnalysis() {
+//   const { startDate, endDate } = useItemsContext();
+
+//   return (
+//     <ServiceRenderer
+//       queryHook={useItemProductsList}
+//       queryKey={["itemProductsList", { startdt: startDate, enddt: endDate }]}
+//       queryFn={() =>
+//         useItemProductsList({
+//           startdt: startDate,
+//           enddt: endDate,
+//         }).queryFn
+//       }
+//       queryArgs={[75,{ startdt: startDate, enddt: endDate,outlet:1,userId:7 }]}
+//       formatter={menuItemConsumptionAnalysisDataFormatter}
+//       shimmerCount={1}
+//     >
+//       {(formattedData) => {
+//         // Prepare chart data
+//         const chartData = formattedData.map((d) => ({
+//           name: d.name,
+//           value: parseInt(d.totalConsumption),
+//         }));
+
+//         const COLORS = [
+//           "#4e79a7",
+//           "#59a14f",
+//           "#f28e2c",
+//           "#e15759",
+//           "#76b7b2",
+//           "#edc949",
+//         ];
+
+//         return (
+//           <Card
+//             className="p-3 shadow-sm"
+//             style={{ borderRadius: "12px", background: "#fff" }}
+//           >
+//             <h5 className="fw-bold mb-2">Menu Item Consumption Analysis</h5>
+//             <p className="text-muted small">
+//               Item consumption breakdown by menu items with quantity distribution
+//             </p>
+
+//             <Row>
+//               {/* Left Section - Table */}
+//               <Col md={7}>
+//                 <Table hover responsive className="align-middle">
+//                   <thead className="bg-light">
+//                     <tr>
+//                       <th>Menu Item</th>
+//                       <th>Recipe</th>
+//                       <th>Total Consumption</th>
+//                     </tr>
+//                   </thead>
+//                   <tbody>
+//                     {formattedData.map((item) => (
+//                       <tr key={item.id}>
+//                         <td>
+//                           <div className="d-flex align-items-center">
+//                             {item.icon}
+//                             <span className="ms-2">{item.name}</span>
+//                             <Badge bg="light" text="secondary" className="ms-2">
+//                               {item.itemsSold} items
+//                             </Badge>
+//                           </div>
+//                         </td>
+//                         <td>
+//                           <div>
+//                             <span className="fw-bold text-primary">
+//                               {item.recipeQty}
+//                             </span>
+//                             <div className="text-muted small">
+//                               {item.recipePrice}
+//                             </div>
+//                           </div>
+//                         </td>
+//                         <td>
+//                           <div>
+//                             <span className="fw-bold text-success">
+//                               {item.totalConsumption}
+//                             </span>
+//                             <div className="text-muted small">
+//                               {item.totalConsumptionPrice}
+//                             </div>
+//                           </div>
+//                         </td>
+//                       </tr>
+//                     ))}
+//                   </tbody>
+//                 </Table>
+//               </Col>
+
+//               {/* Right Section - Chart */}
+//               <Col md={5} className="d-flex flex-column align-items-center">
+//                 <h6 className="fw-bold">Consumption Distribution</h6>
+//                 <ResponsiveContainer width="100%" height={250}>
+//                   <PieChart>
+//                     <Pie
+//                       data={chartData}
+//                       cx="50%"
+//                       cy="50%"
+//                       labelLine={false}
+//                       outerRadius={90}
+//                       dataKey="value"
+//                     >
+//                       {chartData.map((entry, index) => (
+//                         <Cell
+//                           key={`cell-${index}`}
+//                           fill={COLORS[index % COLORS.length]}
+//                         />
+//                       ))}
+//                     </Pie>
+//                     <Tooltip />
+//                   </PieChart>
+//                 </ResponsiveContainer>
+//                 <div className="mt-3 w-100">
+//                   {chartData.map((d, i) => (
+//                     <div
+//                       key={i}
+//                       className="d-flex justify-content-between small"
+//                     >
+//                       <span>
+//                         <span
+//                           style={{
+//                             display: "inline-block",
+//                             width: 10,
+//                             height: 10,
+//                             borderRadius: "50%",
+//                             backgroundColor: COLORS[i % COLORS.length],
+//                             marginRight: 6,
+//                           }}
+//                         />
+//                         {d.name}
+//                       </span>
+//                       <span>{d.value} gm</span>
+//                     </div>
+//                   ))}
+//                 </div>
+//               </Col>
+//             </Row>
+//           </Card>
+//         );
+//       }}
+//     </ServiceRenderer>
+//   );
+// }
+
+// // import React from "react";
+// // import { Card, Row, Col, Table, Badge } from "react-bootstrap";
+// // import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
+// // import { menuItemConsumptionAnalysisDataFormatter } from "@/utils/data_formatters/itemsPageDataFormatter";
+
+// // export default function ItemsMenuItemCnnsumptionAnalysis({
+// //   apiResponse = {
+// //     etag: "396775277",
+// //     itemId: "75",
+// //     item: {
+// //       id: "75",
+// //       outletId: "1",
+// //       name: "HALDI",
+// //       unit: "GM",
+// //       unitQuantity: "500",
+// //       unitPrice: 127,
+// //       categoryId: 7,
+// //       categoryName: "Indian Grocery",
+// //       disabled: false,
+// //       alias: "HALDI - 500GM",
+// //       moq: 733,
+// //       itemTypeId: 1,
+// //       itemType: "Store Item",
+// //       itemDescription: null,
+// //       perishable: false,
+// //       shelfLifeDays: 0,
+// //       hsnCode: null,
+// //       brandName: null,
+// //       storageLocation: null,
+// //       createdBy: null,
+// //       updatedBy: null,
+// //     },
+// //     list: [
+// //       {
+// //         productId: "78",
+// //         product: {
+// //           id: "78",
+// //           outletId: "1",
+// //           name: "Paneer Butter Masala (Half)",
+// //           departmentId: 2,
+// //           departmentName: "NORTH INDIAN",
+// //           masterProductId: 77,
+// //           masterProductName: "Paneer Butter Masala",
+// //           categoryId: 0,
+// //           categoryName: null,
+// //           price: 249,
+// //           makingCost: 80,
+// //           costPercentage: 32.13,
+// //           marginPercentage: 67.87,
+// //           veg: false,
+// //           imageUrl: null,
+// //           preparationTime: 0,
+// //           variation: "FULL",
+// //           displayOrder: 0,
+// //           description: null,
+// //           pieceCount: 1,
+// //           pieceQuantity: 1,
+// //           pieceUnit: "GM",
+// //           disabled: false,
+// //           createdTs: null,
+// //           updatedTs: null,
+// //           createdBy: null,
+// //           updatedBy: null,
+// //         },
+// //         sales: {
+// //           orders: 2,
+// //           netSales: 627,
+// //           discount: 0,
+// //           tax: 29,
+// //           itemsSold: 2,
+// //           totalSales: 0,
+// //         },
+// //         originalMakingCost: 0,
+// //         totalMakingCost: 0,
+// //         margin: 0,
+// //         marginPercentage: 0,
+// //         recipe: {
+// //           unitQuantity: 5,
+// //           unitPrice: 1,
+// //           totalQuantity: 10,
+// //           totalPrice: 2,
+// //         },
+// //         status: null,
+// //         efficiency: 0,
+// //       },
+// //       {
+// //         productId: "80",
+// //         product: {
+// //           id: "80",
+// //           outletId: "1",
+// //           name: "Kaju Paneer (Half)",
+// //           departmentId: 2,
+// //           departmentName: "NORTH INDIAN",
+// //           masterProductId: 79,
+// //           masterProductName: "Kaju Paneer",
+// //           categoryId: 0,
+// //           categoryName: null,
+// //           price: 249,
+// //           makingCost: 111,
+// //           costPercentage: 44.58,
+// //           marginPercentage: 55.42,
+// //           veg: false,
+// //           imageUrl: null,
+// //           preparationTime: 0,
+// //           variation: "FULL",
+// //           displayOrder: 0,
+// //           description: null,
+// //           pieceCount: 1,
+// //           pieceQuantity: 1,
+// //           pieceUnit: "GM",
+// //           disabled: false,
+// //           createdTs: null,
+// //           updatedTs: null,
+// //           createdBy: null,
+// //           updatedBy: null,
+// //         },
+// //         sales: {
+// //           orders: 1,
+// //           netSales: 366,
+// //           discount: 0,
+// //           tax: 17,
+// //           itemsSold: 1,
+// //           totalSales: 0,
+// //         },
+// //         originalMakingCost: 0,
+// //         totalMakingCost: 0,
+// //         margin: 0,
+// //         marginPercentage: 0,
+// //         recipe: {
+// //           unitQuantity: 4,
+// //           unitPrice: 1,
+// //           totalQuantity: 4,
+// //           totalPrice: 1,
+// //         },
+// //         status: null,
+// //         efficiency: 0,
+// //       },
+// //       {
+// //         productId: "81",
+// //         product: {
+// //           id: "81",
+// //           outletId: "1",
+// //           name: "Kaju Paneer (Full)",
+// //           departmentId: 2,
+// //           departmentName: "NORTH INDIAN",
+// //           masterProductId: 79,
+// //           masterProductName: "Kaju Paneer",
+// //           categoryId: 0,
+// //           categoryName: null,
+// //           price: 369,
+// //           makingCost: 164,
+// //           costPercentage: 44.44,
+// //           marginPercentage: 55.56,
+// //           veg: false,
+// //           imageUrl: null,
+// //           preparationTime: 0,
+// //           variation: "FULL",
+// //           displayOrder: 0,
+// //           description: null,
+// //           pieceCount: 1,
+// //           pieceQuantity: 1,
+// //           pieceUnit: "GM",
+// //           disabled: false,
+// //           createdTs: null,
+// //           updatedTs: null,
+// //           createdBy: null,
+// //           updatedBy: null,
+// //         },
+// //         sales: {
+// //           orders: 1,
+// //           netSales: 471,
+// //           discount: 0,
+// //           tax: 22,
+// //           itemsSold: 1,
+// //           totalSales: 0,
+// //         },
+// //         originalMakingCost: 0,
+// //         totalMakingCost: 0,
+// //         margin: 0,
+// //         marginPercentage: 0,
+// //         recipe: {
+// //           unitQuantity: 6,
+// //           unitPrice: 1,
+// //           totalQuantity: 6,
+// //           totalPrice: 1,
+// //         },
+// //         status: null,
+// //         efficiency: 0,
+// //       },
+// //       {
+// //         productId: "86",
+// //         product: {
+// //           id: "86",
+// //           outletId: "1",
+// //           name: "Mushroom Masala (Half)",
+// //           departmentId: 2,
+// //           departmentName: "NORTH INDIAN",
+// //           masterProductId: 84,
+// //           masterProductName: "Mushroom Masala",
+// //           categoryId: 0,
+// //           categoryName: null,
+// //           price: 199,
+// //           makingCost: 81,
+// //           costPercentage: 40.7,
+// //           marginPercentage: 59.3,
+// //           veg: false,
+// //           imageUrl: null,
+// //           preparationTime: 0,
+// //           variation: "FULL",
+// //           displayOrder: 0,
+// //           description: null,
+// //           pieceCount: 1,
+// //           pieceQuantity: 1,
+// //           pieceUnit: "GM",
+// //           disabled: false,
+// //           createdTs: null,
+// //           updatedTs: null,
+// //           createdBy: null,
+// //           updatedBy: null,
+// //         },
+// //         sales: {
+// //           orders: 1,
+// //           netSales: 282,
+// //           discount: 0,
+// //           tax: 13,
+// //           itemsSold: 1,
+// //           totalSales: 0,
+// //         },
+// //         originalMakingCost: 0,
+// //         totalMakingCost: 0,
+// //         margin: 0,
+// //         marginPercentage: 0,
+// //         recipe: {
+// //           unitQuantity: 5,
+// //           unitPrice: 1,
+// //           totalQuantity: 5,
+// //           totalPrice: 1,
+// //         },
+// //         status: null,
+// //         efficiency: 0,
+// //       },
+// //       {
+// //         productId: "103",
+// //         product: {
+// //           id: "103",
+// //           outletId: "1",
+// //           name: "Chicken Mughlai (Half)",
+// //           departmentId: 2,
+// //           departmentName: "NORTH INDIAN",
+// //           masterProductId: 96,
+// //           masterProductName: "Chicken Mughlai",
+// //           categoryId: 0,
+// //           categoryName: null,
+// //           price: 279,
+// //           makingCost: 101,
+// //           costPercentage: 36.2,
+// //           marginPercentage: 63.8,
+// //           veg: false,
+// //           imageUrl: null,
+// //           preparationTime: 0,
+// //           variation: "FULL",
+// //           displayOrder: 0,
+// //           description: null,
+// //           pieceCount: 1,
+// //           pieceQuantity: 1,
+// //           pieceUnit: "GM",
+// //           disabled: false,
+// //           createdTs: null,
+// //           updatedTs: null,
+// //           createdBy: null,
+// //           updatedBy: null,
+// //         },
+// //         sales: {
+// //           orders: 1,
+// //           netSales: 219,
+// //           discount: 150,
+// //           tax: 10,
+// //           itemsSold: 1,
+// //           totalSales: 0,
+// //         },
+// //         originalMakingCost: 0,
+// //         totalMakingCost: 0,
+// //         margin: 0,
+// //         marginPercentage: 0,
+// //         recipe: {
+// //           unitQuantity: 8,
+// //           unitPrice: 2,
+// //           totalQuantity: 8,
+// //           totalPrice: 2,
+// //         },
+// //         status: null,
+// //         efficiency: 0,
+// //       },
+// //       {
+// //         productId: "106",
+// //         product: {
+// //           id: "106",
+// //           outletId: "1",
+// //           name: "Chicken (murgh) Masala (Full)",
+// //           departmentId: 2,
+// //           departmentName: "NORTH INDIAN",
+// //           masterProductId: 97,
+// //           masterProductName: "Chicken",
+// //           categoryId: 0,
+// //           categoryName: null,
+// //           price: 369,
+// //           makingCost: 109,
+// //           costPercentage: 29.54,
+// //           marginPercentage: 70.46,
+// //           veg: false,
+// //           imageUrl: null,
+// //           preparationTime: 0,
+// //           variation: "FULL",
+// //           displayOrder: 0,
+// //           description: null,
+// //           pieceCount: 1,
+// //           pieceQuantity: 1,
+// //           pieceUnit: "GM",
+// //           disabled: false,
+// //           createdTs: null,
+// //           updatedTs: null,
+// //           createdBy: null,
+// //           updatedBy: null,
+// //         },
+// //         sales: {
+// //           orders: 2,
+// //           netSales: 837,
+// //           discount: 0,
+// //           tax: 39,
+// //           itemsSold: 2,
+// //           totalSales: 0,
+// //         },
+// //         originalMakingCost: 0,
+// //         totalMakingCost: 0,
+// //         margin: 0,
+// //         marginPercentage: 0,
+// //         recipe: {
+// //           unitQuantity: 5,
+// //           unitPrice: 1,
+// //           totalQuantity: 10,
+// //           totalPrice: 2,
+// //         },
+// //         status: null,
+// //         efficiency: 0,
+// //       },
+// //       {
+// //         productId: "193",
+// //         product: {
+// //           id: "193",
+// //           outletId: "1",
+// //           name: "Kadai Veg (Half)",
+// //           departmentId: 2,
+// //           departmentName: "NORTH INDIAN",
+// //           masterProductId: 80,
+// //           masterProductName: "Kadai Veg",
+// //           categoryId: 0,
+// //           categoryName: null,
+// //           price: 199,
+// //           makingCost: 49,
+// //           costPercentage: 24.62,
+// //           marginPercentage: 75.38,
+// //           veg: false,
+// //           imageUrl: null,
+// //           preparationTime: 0,
+// //           variation: "FULL",
+// //           displayOrder: 0,
+// //           description: null,
+// //           pieceCount: 1,
+// //           pieceQuantity: 1,
+// //           pieceUnit: "GM",
+// //           disabled: false,
+// //           createdTs: null,
+// //           updatedTs: null,
+// //           createdBy: null,
+// //           updatedBy: null,
+// //         },
+// //         sales: {
+// //           orders: 2,
+// //           netSales: 507,
+// //           discount: 65,
+// //           tax: 24,
+// //           itemsSold: 2,
+// //           totalSales: 0,
+// //         },
+// //         originalMakingCost: 0,
+// //         totalMakingCost: 0,
+// //         margin: 0,
+// //         marginPercentage: 0,
+// //         recipe: {
+// //           unitQuantity: 4,
+// //           unitPrice: 1,
+// //           totalQuantity: 8,
+// //           totalPrice: 2,
+// //         },
+// //         status: null,
+// //         efficiency: 0,
+// //       },
+// //       {
+// //         productId: "204",
+// //         product: {
+// //           id: "204",
+// //           outletId: "1",
+// //           name: "Kadai Paneer (Full)",
+// //           departmentId: 2,
+// //           departmentName: "NORTH INDIAN",
+// //           masterProductId: 78,
+// //           masterProductName: "Kadai Paneer",
+// //           categoryId: 0,
+// //           categoryName: null,
+// //           price: 349,
+// //           makingCost: 120,
+// //           costPercentage: 34.38,
+// //           marginPercentage: 65.62,
+// //           veg: false,
+// //           imageUrl: null,
+// //           preparationTime: 0,
+// //           variation: "FULL",
+// //           displayOrder: 0,
+// //           description: null,
+// //           pieceCount: 1,
+// //           pieceQuantity: 1,
+// //           pieceUnit: "GM",
+// //           disabled: false,
+// //           createdTs: null,
+// //           updatedTs: null,
+// //           createdBy: null,
+// //           updatedBy: null,
+// //         },
+// //         sales: {
+// //           orders: 1,
+// //           netSales: 398,
+// //           discount: 0,
+// //           tax: 19,
+// //           itemsSold: 1,
+// //           totalSales: 0,
+// //         },
+// //         originalMakingCost: 0,
+// //         totalMakingCost: 0,
+// //         margin: 0,
+// //         marginPercentage: 0,
+// //         recipe: {
+// //           unitQuantity: 7,
+// //           unitPrice: 1,
+// //           totalQuantity: 7,
+// //           totalPrice: 1,
+// //         },
+// //         status: null,
+// //         efficiency: 0,
+// //       },
+// //       {
+// //         productId: "211",
+// //         product: {
+// //           id: "211",
+// //           outletId: "1",
+// //           name: "Butter Chicken (Full)",
+// //           departmentId: 2,
+// //           departmentName: "NORTH INDIAN",
+// //           masterProductId: 93,
+// //           masterProductName: "Butter Chicken",
+// //           categoryId: 0,
+// //           categoryName: null,
+// //           price: 399,
+// //           makingCost: 165,
+// //           costPercentage: 41.35,
+// //           marginPercentage: 58.65,
+// //           veg: false,
+// //           imageUrl: null,
+// //           preparationTime: 0,
+// //           variation: "FULL",
+// //           displayOrder: 0,
+// //           description: null,
+// //           pieceCount: 1,
+// //           pieceQuantity: 1,
+// //           pieceUnit: "GM",
+// //           disabled: false,
+// //           createdTs: null,
+// //           updatedTs: null,
+// //           createdBy: null,
+// //           updatedBy: null,
+// //         },
+// //         sales: {
+// //           orders: 1,
+// //           netSales: 450,
+// //           discount: 0,
+// //           tax: 21,
+// //           itemsSold: 1,
+// //           totalSales: 0,
+// //         },
+// //         originalMakingCost: 0,
+// //         totalMakingCost: 0,
+// //         margin: 0,
+// //         marginPercentage: 0,
+// //         recipe: {
+// //           unitQuantity: 6,
+// //           unitPrice: 1,
+// //           totalQuantity: 6,
+// //           totalPrice: 1,
+// //         },
+// //         status: null,
+// //         efficiency: 0,
+// //       },
+// //       {
+// //         productId: "513",
+// //         product: {
+// //           id: "513",
+// //           outletId: "1",
+// //           name: "Dal Fry (Half)",
+// //           departmentId: 2,
+// //           departmentName: "NORTH INDIAN",
+// //           masterProductId: 40,
+// //           masterProductName: "Dal Fry",
+// //           categoryId: 0,
+// //           categoryName: null,
+// //           price: 179,
+// //           makingCost: 36,
+// //           costPercentage: 20.11,
+// //           marginPercentage: 79.89,
+// //           veg: false,
+// //           imageUrl: null,
+// //           preparationTime: 0,
+// //           variation: "FULL",
+// //           displayOrder: 0,
+// //           description: null,
+// //           pieceCount: 1,
+// //           pieceQuantity: 1,
+// //           pieceUnit: "GM",
+// //           disabled: false,
+// //           createdTs: null,
+// //           updatedTs: null,
+// //           createdBy: null,
+// //           updatedBy: null,
+// //         },
+// //         sales: {
+// //           orders: 1,
+// //           netSales: 208,
+// //           discount: 0,
+// //           tax: 9,
+// //           itemsSold: 1,
+// //           totalSales: 0,
+// //         },
+// //         originalMakingCost: 0,
+// //         totalMakingCost: 0,
+// //         margin: 0,
+// //         marginPercentage: 0,
+// //         recipe: {
+// //           unitQuantity: 4,
+// //           unitPrice: 1,
+// //           totalQuantity: 4,
+// //           totalPrice: 1,
+// //         },
+// //         status: null,
+// //         efficiency: 0,
+// //       },
+// //       {
+// //         productId: "517",
+// //         product: {
+// //           id: "517",
+// //           outletId: "1",
+// //           name: "Dal Palak (Half)",
+// //           departmentId: 2,
+// //           departmentName: "NORTH INDIAN",
+// //           masterProductId: 44,
+// //           masterProductName: "Dal Palak",
+// //           categoryId: 0,
+// //           categoryName: null,
+// //           price: 179,
+// //           makingCost: 37,
+// //           costPercentage: 20.67,
+// //           marginPercentage: 79.33,
+// //           veg: false,
+// //           imageUrl: null,
+// //           preparationTime: 0,
+// //           variation: "FULL",
+// //           displayOrder: 0,
+// //           description: null,
+// //           pieceCount: 1,
+// //           pieceQuantity: 1,
+// //           pieceUnit: "GM",
+// //           disabled: false,
+// //           createdTs: null,
+// //           updatedTs: null,
+// //           createdBy: null,
+// //           updatedBy: null,
+// //         },
+// //         sales: {
+// //           orders: 1,
+// //           netSales: 208,
+// //           discount: 0,
+// //           tax: 9,
+// //           itemsSold: 1,
+// //           totalSales: 0,
+// //         },
+// //         originalMakingCost: 0,
+// //         totalMakingCost: 0,
+// //         margin: 0,
+// //         marginPercentage: 0,
+// //         recipe: {
+// //           unitQuantity: 2,
+// //           unitPrice: 0,
+// //           totalQuantity: 2,
+// //           totalPrice: 0,
+// //         },
+// //         status: null,
+// //         efficiency: 0,
+// //       },
+// //       {
+// //         productId: "84",
+// //         product: {
+// //           id: "84",
+// //           outletId: "1",
+// //           name: "Paneer Makhani (Half)",
+// //           departmentId: 2,
+// //           departmentName: "NORTH INDIAN",
+// //           masterProductId: 82,
+// //           masterProductName: "Paneer Makhani",
+// //           categoryId: 0,
+// //           categoryName: null,
+// //           price: 249,
+// //           makingCost: 83,
+// //           costPercentage: 33.33,
+// //           marginPercentage: 66.67,
+// //           veg: false,
+// //           imageUrl: null,
+// //           preparationTime: 0,
+// //           variation: "FULL",
+// //           displayOrder: 0,
+// //           description: null,
+// //           pieceCount: 1,
+// //           pieceQuantity: 1,
+// //           pieceUnit: "GM",
+// //           disabled: false,
+// //           createdTs: null,
+// //           updatedTs: null,
+// //           createdBy: null,
+// //           updatedBy: null,
+// //         },
+// //         sales: {
+// //           orders: 2,
+// //           netSales: 612,
+// //           discount: 65,
+// //           tax: 29,
+// //           itemsSold: 2,
+// //           totalSales: 0,
+// //         },
+// //         originalMakingCost: 0,
+// //         totalMakingCost: 0,
+// //         margin: 0,
+// //         marginPercentage: 0,
+// //         recipe: {
+// //           unitQuantity: 1,
+// //           unitPrice: 0,
+// //           totalQuantity: 2,
+// //           totalPrice: 0,
+// //         },
+// //         status: null,
+// //         efficiency: 0,
+// //       },
+// //       {
+// //         productId: "88",
+// //         product: {
+// //           id: "88",
+// //           outletId: "1",
+// //           name: "Paneer Tikka Masala (Half)",
+// //           departmentId: 2,
+// //           departmentName: "NORTH INDIAN",
+// //           masterProductId: 85,
+// //           masterProductName: "Paneer Tikka Masala",
+// //           categoryId: 0,
+// //           categoryName: null,
+// //           price: 249,
+// //           makingCost: 78,
+// //           costPercentage: 31.33,
+// //           marginPercentage: 68.67,
+// //           veg: false,
+// //           imageUrl: null,
+// //           preparationTime: 0,
+// //           variation: "FULL",
+// //           displayOrder: 0,
+// //           description: null,
+// //           pieceCount: 1,
+// //           pieceQuantity: 1,
+// //           pieceUnit: "GM",
+// //           disabled: false,
+// //           createdTs: null,
+// //           updatedTs: null,
+// //           createdBy: null,
+// //           updatedBy: null,
+// //         },
+// //         sales: {
+// //           orders: 1,
+// //           netSales: 314,
+// //           discount: 0,
+// //           tax: 15,
+// //           itemsSold: 1,
+// //           totalSales: 0,
+// //         },
+// //         originalMakingCost: 0,
+// //         totalMakingCost: 0,
+// //         margin: 0,
+// //         marginPercentage: 0,
+// //         recipe: {
+// //           unitQuantity: 1,
+// //           unitPrice: 0,
+// //           totalQuantity: 1,
+// //           totalPrice: 0,
+// //         },
+// //         status: null,
+// //         efficiency: 0,
+// //       },
+// //       {
+// //         productId: "111",
+// //         product: {
+// //           id: "111",
+// //           outletId: "1",
+// //           name: "Veg Biryani (Half)",
+// //           departmentId: 4,
+// //           departmentName: "BIRYANI",
+// //           masterProductId: 101,
+// //           masterProductName: "Veg Biryani",
+// //           categoryId: 0,
+// //           categoryName: null,
+// //           price: 199,
+// //           makingCost: 66,
+// //           costPercentage: 33.17,
+// //           marginPercentage: 66.83,
+// //           veg: false,
+// //           imageUrl: null,
+// //           preparationTime: 0,
+// //           variation: "FULL",
+// //           displayOrder: 0,
+// //           description: null,
+// //           pieceCount: 1,
+// //           pieceQuantity: 1,
+// //           pieceUnit: "GM",
+// //           disabled: false,
+// //           createdTs: null,
+// //           updatedTs: null,
+// //           createdBy: null,
+// //           updatedBy: null,
+// //         },
+// //         sales: {
+// //           orders: 1,
+// //           netSales: 208,
+// //           discount: 0,
+// //           tax: 9,
+// //           itemsSold: 1,
+// //           totalSales: 0,
+// //         },
+// //         originalMakingCost: 0,
+// //         totalMakingCost: 0,
+// //         margin: 0,
+// //         marginPercentage: 0,
+// //         recipe: {
+// //           unitQuantity: 3,
+// //           unitPrice: 1,
+// //           totalQuantity: 3,
+// //           totalPrice: 1,
+// //         },
+// //         status: null,
+// //         efficiency: 0,
+// //       },
+// //       {
+// //         productId: "113",
+// //         product: {
+// //           id: "113",
+// //           outletId: "1",
+// //           name: "Paneer Biryani (Half)",
+// //           departmentId: 4,
+// //           departmentName: "BIRYANI",
+// //           masterProductId: 102,
+// //           masterProductName: "Paneer Biryani",
+// //           categoryId: 0,
+// //           categoryName: null,
+// //           price: 219,
+// //           makingCost: 85,
+// //           costPercentage: 38.81,
+// //           marginPercentage: 61.19,
+// //           veg: false,
+// //           imageUrl: null,
+// //           preparationTime: 0,
+// //           variation: "FULL",
+// //           displayOrder: 0,
+// //           description: null,
+// //           pieceCount: 1,
+// //           pieceQuantity: 1,
+// //           pieceUnit: "GM",
+// //           disabled: false,
+// //           createdTs: null,
+// //           updatedTs: null,
+// //           createdBy: null,
+// //           updatedBy: null,
+// //         },
+// //         sales: {
+// //           orders: 6,
+// //           netSales: 1411,
+// //           discount: 199,
+// //           tax: 67,
+// //           itemsSold: 6,
+// //           totalSales: 0,
+// //         },
+// //         originalMakingCost: 0,
+// //         totalMakingCost: 0,
+// //         margin: 0,
+// //         marginPercentage: 0,
+// //         recipe: {
+// //           unitQuantity: 3,
+// //           unitPrice: 1,
+// //           totalQuantity: 23,
+// //           totalPrice: 6,
+// //         },
+// //         status: null,
+// //         efficiency: 0,
+// //       },
+// //       {
+// //         productId: "114",
+// //         product: {
+// //           id: "114",
+// //           outletId: "1",
+// //           name: "Paneer Biryani (Full)",
+// //           departmentId: 4,
+// //           departmentName: "BIRYANI",
+// //           masterProductId: 102,
+// //           masterProductName: "Paneer Biryani",
+// //           categoryId: 0,
+// //           categoryName: null,
+// //           price: 299,
+// //           makingCost: 113,
+// //           costPercentage: 37.79,
+// //           marginPercentage: 62.21,
+// //           veg: false,
+// //           imageUrl: null,
+// //           preparationTime: 0,
+// //           variation: "FULL",
+// //           displayOrder: 0,
+// //           description: null,
+// //           pieceCount: 1,
+// //           pieceQuantity: 1,
+// //           pieceUnit: "GM",
+// //           disabled: false,
+// //           createdTs: null,
+// //           updatedTs: null,
+// //           createdBy: null,
+// //           updatedBy: null,
+// //         },
+// //         sales: {
+// //           orders: 2,
+// //           netSales: 523,
+// //           discount: 300,
+// //           tax: 25,
+// //           itemsSold: 2,
+// //           totalSales: 0,
+// //         },
+// //         originalMakingCost: 0,
+// //         totalMakingCost: 0,
+// //         margin: 0,
+// //         marginPercentage: 0,
+// //         recipe: {
+// //           unitQuantity: 4,
+// //           unitPrice: 1,
+// //           totalQuantity: 8,
+// //           totalPrice: 2,
+// //         },
+// //         status: null,
+// //         efficiency: 0,
+// //       },
+// //       {
+// //         productId: "117",
+// //         product: {
+// //           id: "117",
+// //           outletId: "1",
+// //           name: "Mushroom Biryani (Half)",
+// //           departmentId: 4,
+// //           departmentName: "BIRYANI",
+// //           masterProductId: 104,
+// //           masterProductName: "Mushroom Biryani",
+// //           categoryId: 0,
+// //           categoryName: null,
+// //           price: 219,
+// //           makingCost: 73,
+// //           costPercentage: 33.33,
+// //           marginPercentage: 66.67,
+// //           veg: false,
+// //           imageUrl: null,
+// //           preparationTime: 0,
+// //           variation: "FULL",
+// //           displayOrder: 0,
+// //           description: null,
+// //           pieceCount: 1,
+// //           pieceQuantity: 1,
+// //           pieceUnit: "GM",
+// //           disabled: false,
+// //           createdTs: null,
+// //           updatedTs: null,
+// //           createdBy: null,
+// //           updatedBy: null,
+// //         },
+// //         sales: {
+// //           orders: 3,
+// //           netSales: 668,
+// //           discount: 230,
+// //           tax: 31,
+// //           itemsSold: 3,
+// //           totalSales: 0,
+// //         },
+// //         originalMakingCost: 0,
+// //         totalMakingCost: 0,
+// //         margin: 0,
+// //         marginPercentage: 0,
+// //         recipe: {
+// //           unitQuantity: 2,
+// //           unitPrice: 0,
+// //           totalQuantity: 8,
+// //           totalPrice: 2,
+// //         },
+// //         status: null,
+// //         efficiency: 0,
+// //       },
+// //       {
+// //         productId: "118",
+// //         product: {
+// //           id: "118",
+// //           outletId: "1",
+// //           name: "Mushroom Biryani (Full)",
+// //           departmentId: 4,
+// //           departmentName: "BIRYANI",
+// //           masterProductId: 104,
+// //           masterProductName: "Mushroom Biryani",
+// //           categoryId: 0,
+// //           categoryName: null,
+// //           price: 299,
+// //           makingCost: 108,
+// //           costPercentage: 36.12,
+// //           marginPercentage: 63.88,
+// //           veg: false,
+// //           imageUrl: null,
+// //           preparationTime: 0,
+// //           variation: "FULL",
+// //           displayOrder: 0,
+// //           description: null,
+// //           pieceCount: 1,
+// //           pieceQuantity: 1,
+// //           pieceUnit: "GM",
+// //           disabled: false,
+// //           createdTs: null,
+// //           updatedTs: null,
+// //           createdBy: null,
+// //           updatedBy: null,
+// //         },
+// //         sales: {
+// //           orders: 2,
+// //           netSales: 691,
+// //           discount: 100,
+// //           tax: 33,
+// //           itemsSold: 2,
+// //           totalSales: 0,
+// //         },
+// //         originalMakingCost: 0,
+// //         totalMakingCost: 0,
+// //         margin: 0,
+// //         marginPercentage: 0,
+// //         recipe: {
+// //           unitQuantity: 4,
+// //           unitPrice: 1,
+// //           totalQuantity: 8,
+// //           totalPrice: 2,
+// //         },
+// //         status: null,
+// //         efficiency: 0,
+// //       },
+// //       {
+// //         productId: "119",
+// //         product: {
+// //           id: "119",
+// //           outletId: "1",
+// //           name: "Egg Biryani (Half)",
+// //           departmentId: 1,
+// //           departmentName: "SOUTH INDIAN",
+// //           masterProductId: 105,
+// //           masterProductName: "Egg Biryani",
+// //           categoryId: 0,
+// //           categoryName: null,
+// //           price: 199,
+// //           makingCost: 72,
+// //           costPercentage: 36.18,
+// //           marginPercentage: 63.82,
+// //           veg: false,
+// //           imageUrl: null,
+// //           preparationTime: 0,
+// //           variation: "FULL",
+// //           displayOrder: 0,
+// //           description: null,
+// //           pieceCount: 1,
+// //           pieceQuantity: 1,
+// //           pieceUnit: "GM",
+// //           disabled: false,
+// //           createdTs: null,
+// //           updatedTs: null,
+// //           createdBy: null,
+// //           updatedBy: null,
+// //         },
+// //         sales: {
+// //           orders: 1,
+// //           netSales: 219,
+// //           discount: 80,
+// //           tax: 10,
+// //           itemsSold: 1,
+// //           totalSales: 0,
+// //         },
+// //         originalMakingCost: 0,
+// //         totalMakingCost: 0,
+// //         margin: 0,
+// //         marginPercentage: 0,
+// //         recipe: {
+// //           unitQuantity: 2,
+// //           unitPrice: 0,
+// //           totalQuantity: 2,
+// //           totalPrice: 0,
+// //         },
+// //         status: null,
+// //         efficiency: 0,
+// //       },
+// //       {
+// //         productId: "121",
+// //         product: {
+// //           id: "121",
+// //           outletId: "1",
+// //           name: "Chicken Dum Biryani (Half)",
+// //           departmentId: 4,
+// //           departmentName: "BIRYANI",
+// //           masterProductId: 106,
+// //           masterProductName: "Chicken Dum Biryani",
+// //           categoryId: 0,
+// //           categoryName: null,
+// //           price: 249,
+// //           makingCost: 79,
+// //           costPercentage: 31.73,
+// //           marginPercentage: 68.27,
+// //           veg: false,
+// //           imageUrl: null,
+// //           preparationTime: 0,
+// //           variation: "FULL",
+// //           displayOrder: 0,
+// //           description: null,
+// //           pieceCount: 1,
+// //           pieceQuantity: 1,
+// //           pieceUnit: "GM",
+// //           disabled: false,
+// //           createdTs: null,
+// //           updatedTs: null,
+// //           createdBy: null,
+// //           updatedBy: null,
+// //         },
+// //         sales: {
+// //           orders: 4,
+// //           netSales: 1129,
+// //           discount: 0,
+// //           tax: 53,
+// //           itemsSold: 4,
+// //           totalSales: 0,
+// //         },
+// //         originalMakingCost: 0,
+// //         totalMakingCost: 0,
+// //         margin: 0,
+// //         marginPercentage: 0,
+// //         recipe: {
+// //           unitQuantity: 0,
+// //           unitPrice: 0,
+// //           totalQuantity: 0,
+// //           totalPrice: 0,
+// //         },
+// //         status: null,
+// //         efficiency: 0,
+// //       },
+// //       {
+// //         productId: "122",
+// //         product: {
+// //           id: "122",
+// //           outletId: "1",
+// //           name: "Chicken Dum Biryani (Full)",
+// //           departmentId: 4,
+// //           departmentName: "BIRYANI",
+// //           masterProductId: 106,
+// //           masterProductName: "Chicken Dum Biryani",
+// //           categoryId: 0,
+// //           categoryName: null,
+// //           price: 389,
+// //           makingCost: 117,
+// //           costPercentage: 30.08,
+// //           marginPercentage: 69.92,
+// //           veg: false,
+// //           imageUrl: null,
+// //           preparationTime: 0,
+// //           variation: "FULL",
+// //           displayOrder: 0,
+// //           description: null,
+// //           pieceCount: 1,
+// //           pieceQuantity: 1,
+// //           pieceUnit: "GM",
+// //           disabled: false,
+// //           createdTs: null,
+// //           updatedTs: null,
+// //           createdBy: null,
+// //           updatedBy: null,
+// //         },
+// //         sales: {
+// //           orders: 2,
+// //           netSales: 838,
+// //           discount: 0,
+// //           tax: 40,
+// //           itemsSold: 2,
+// //           totalSales: 0,
+// //         },
+// //         originalMakingCost: 0,
+// //         totalMakingCost: 0,
+// //         margin: 0,
+// //         marginPercentage: 0,
+// //         recipe: {
+// //           unitQuantity: 0,
+// //           unitPrice: 0,
+// //           totalQuantity: 0,
+// //           totalPrice: 0,
+// //         },
+// //         status: null,
+// //         efficiency: 0,
+// //       },
+// //       {
+// //         productId: "123",
+// //         product: {
+// //           id: "123",
+// //           outletId: "1",
+// //           name: "Boneless Chicken Biryani (Half)",
+// //           departmentId: 4,
+// //           departmentName: "BIRYANI",
+// //           masterProductId: 107,
+// //           masterProductName: "Boneless Chicken Biryani",
+// //           categoryId: 0,
+// //           categoryName: null,
+// //           price: 249,
+// //           makingCost: 92,
+// //           costPercentage: 36.95,
+// //           marginPercentage: 63.05,
+// //           veg: false,
+// //           imageUrl: null,
+// //           preparationTime: 0,
+// //           variation: "FULL",
+// //           displayOrder: 0,
+// //           description: null,
+// //           pieceCount: 1,
+// //           pieceQuantity: 1,
+// //           pieceUnit: "GM",
+// //           disabled: false,
+// //           createdTs: null,
+// //           updatedTs: null,
+// //           createdBy: null,
+// //           updatedBy: null,
+// //         },
+// //         sales: {
+// //           orders: 4,
+// //           netSales: 1467,
+// //           discount: 137,
+// //           tax: 70,
+// //           itemsSold: 5,
+// //           totalSales: 0,
+// //         },
+// //         originalMakingCost: 0,
+// //         totalMakingCost: 0,
+// //         margin: 0,
+// //         marginPercentage: 0,
+// //         recipe: {
+// //           unitQuantity: 2,
+// //           unitPrice: 0,
+// //           totalQuantity: 14,
+// //           totalPrice: 4,
+// //         },
+// //         status: null,
+// //         efficiency: 0,
+// //       },
+// //       {
+// //         productId: "124",
+// //         product: {
+// //           id: "124",
+// //           outletId: "1",
+// //           name: "Boneless Chicken Biryani (Full)",
+// //           departmentId: 4,
+// //           departmentName: "BIRYANI",
+// //           masterProductId: 107,
+// //           masterProductName: "Boneless Chicken Biryani",
+// //           categoryId: 0,
+// //           categoryName: null,
+// //           price: 349,
+// //           makingCost: 156,
+// //           costPercentage: 44.7,
+// //           marginPercentage: 55.3,
+// //           veg: false,
+// //           imageUrl: null,
+// //           preparationTime: 0,
+// //           variation: "FULL",
+// //           displayOrder: 0,
+// //           description: null,
+// //           pieceCount: 1,
+// //           pieceQuantity: 1,
+// //           pieceUnit: "GM",
+// //           disabled: false,
+// //           createdTs: null,
+// //           updatedTs: null,
+// //           createdBy: null,
+// //           updatedBy: null,
+// //         },
+// //         sales: {
+// //           orders: 1,
+// //           netSales: 450,
+// //           discount: 0,
+// //           tax: 21,
+// //           itemsSold: 1,
+// //           totalSales: 0,
+// //         },
+// //         originalMakingCost: 0,
+// //         totalMakingCost: 0,
+// //         margin: 0,
+// //         marginPercentage: 0,
+// //         recipe: {
+// //           unitQuantity: 5,
+// //           unitPrice: 1,
+// //           totalQuantity: 5,
+// //           totalPrice: 1,
+// //         },
+// //         status: null,
+// //         efficiency: 0,
+// //       },
+// //       {
+// //         productId: "125",
+// //         product: {
+// //           id: "125",
+// //           outletId: "1",
+// //           name: "Ulavacharu Chicken Biryani (Half)",
+// //           departmentId: 4,
+// //           departmentName: "BIRYANI",
+// //           masterProductId: 108,
+// //           masterProductName: "Ulavacharu Chicken Biryani",
+// //           categoryId: 0,
+// //           categoryName: null,
+// //           price: 219,
+// //           makingCost: 92,
+// //           costPercentage: 42.01,
+// //           marginPercentage: 57.99,
+// //           veg: false,
+// //           imageUrl: null,
+// //           preparationTime: 0,
+// //           variation: "FULL",
+// //           displayOrder: 0,
+// //           description: null,
+// //           pieceCount: 1,
+// //           pieceQuantity: 1,
+// //           pieceUnit: "GM",
+// //           disabled: false,
+// //           createdTs: null,
+// //           updatedTs: null,
+// //           createdBy: null,
+// //           updatedBy: null,
+// //         },
+// //         sales: {
+// //           orders: 2,
+// //           netSales: 480,
+// //           discount: 150,
+// //           tax: 22,
+// //           itemsSold: 2,
+// //           totalSales: 0,
+// //         },
+// //         originalMakingCost: 0,
+// //         totalMakingCost: 0,
+// //         margin: 0,
+// //         marginPercentage: 0,
+// //         recipe: {
+// //           unitQuantity: 0,
+// //           unitPrice: 0,
+// //           totalQuantity: 0,
+// //           totalPrice: 0,
+// //         },
+// //         status: null,
+// //         efficiency: 0,
+// //       },
+// //       {
+// //         productId: "126",
+// //         product: {
+// //           id: "126",
+// //           outletId: "1",
+// //           name: "Ulavacharu Chicken Biryani (Full)",
+// //           departmentId: 4,
+// //           departmentName: "BIRYANI",
+// //           masterProductId: 108,
+// //           masterProductName: "Ulavacharu Chicken Biryani",
+// //           categoryId: 0,
+// //           categoryName: null,
+// //           price: 349,
+// //           makingCost: 156,
+// //           costPercentage: 44.7,
+// //           marginPercentage: 55.3,
+// //           veg: false,
+// //           imageUrl: null,
+// //           preparationTime: 0,
+// //           variation: "FULL",
+// //           displayOrder: 0,
+// //           description: null,
+// //           pieceCount: 1,
+// //           pieceQuantity: 1,
+// //           pieceUnit: "GM",
+// //           disabled: false,
+// //           createdTs: null,
+// //           updatedTs: null,
+// //           createdBy: null,
+// //           updatedBy: null,
+// //         },
+// //         sales: {
+// //           orders: 1,
+// //           netSales: 293,
+// //           discount: 150,
+// //           tax: 14,
+// //           itemsSold: 1,
+// //           totalSales: 0,
+// //         },
+// //         originalMakingCost: 0,
+// //         totalMakingCost: 0,
+// //         margin: 0,
+// //         marginPercentage: 0,
+// //         recipe: {
+// //           unitQuantity: 0,
+// //           unitPrice: 0,
+// //           totalQuantity: 0,
+// //           totalPrice: 0,
+// //         },
+// //         status: null,
+// //         efficiency: 0,
+// //       },
+// //       {
+// //         productId: "130",
+// //         product: {
+// //           id: "130",
+// //           outletId: "1",
+// //           name: "Kosta Kodi Vepudu Biryani (Full)",
+// //           departmentId: 4,
+// //           departmentName: "BIRYANI",
+// //           masterProductId: 110,
+// //           masterProductName: "Kosta Kodi Vepudu Biryani",
+// //           categoryId: 0,
+// //           categoryName: null,
+// //           price: 349,
+// //           makingCost: 148,
+// //           costPercentage: 42.41,
+// //           marginPercentage: 57.59,
+// //           veg: false,
+// //           imageUrl: null,
+// //           preparationTime: 0,
+// //           variation: "FULL",
+// //           displayOrder: 0,
+// //           description: null,
+// //           pieceCount: 1,
+// //           pieceQuantity: 1,
+// //           pieceUnit: "GM",
+// //           disabled: false,
+// //           createdTs: null,
+// //           updatedTs: null,
+// //           createdBy: null,
+// //           updatedBy: null,
+// //         },
+// //         sales: {
+// //           orders: 3,
+// //           netSales: 825,
+// //           discount: 411,
+// //           tax: 39,
+// //           itemsSold: 3,
+// //           totalSales: 0,
+// //         },
+// //         originalMakingCost: 0,
+// //         totalMakingCost: 0,
+// //         margin: 0,
+// //         marginPercentage: 0,
+// //         recipe: {
+// //           unitQuantity: 4,
+// //           unitPrice: 1,
+// //           totalQuantity: 14,
+// //           totalPrice: 3,
+// //         },
+// //         status: null,
+// //         efficiency: 0,
+// //       },
+// //       {
+// //         productId: "131",
+// //         product: {
+// //           id: "131",
+// //           outletId: "1",
+// //           name: "Chettinadu Chicken Biryani (Half)",
+// //           departmentId: 4,
+// //           departmentName: "BIRYANI",
+// //           masterProductId: 111,
+// //           masterProductName: "Chettinadu Chicken Biryani",
+// //           categoryId: 0,
+// //           categoryName: null,
+// //           price: 219,
+// //           makingCost: 91,
+// //           costPercentage: 41.55,
+// //           marginPercentage: 58.45,
+// //           veg: false,
+// //           imageUrl: null,
+// //           preparationTime: 0,
+// //           variation: "FULL",
+// //           displayOrder: 0,
+// //           description: null,
+// //           pieceCount: 1,
+// //           pieceQuantity: 1,
+// //           pieceUnit: "GM",
+// //           disabled: false,
+// //           createdTs: null,
+// //           updatedTs: null,
+// //           createdBy: null,
+// //           updatedBy: null,
+// //         },
+// //         sales: {
+// //           orders: 3,
+// //           netSales: 721,
+// //           discount: 150,
+// //           tax: 34,
+// //           itemsSold: 3,
+// //           totalSales: 0,
+// //         },
+// //         originalMakingCost: 0,
+// //         totalMakingCost: 0,
+// //         margin: 0,
+// //         marginPercentage: 0,
+// //         recipe: {
+// //           unitQuantity: 3,
+// //           unitPrice: 1,
+// //           totalQuantity: 11,
+// //           totalPrice: 3,
+// //         },
+// //         status: null,
+// //         efficiency: 0,
+// //       },
+// //       {
+// //         productId: "132",
+// //         product: {
+// //           id: "132",
+// //           outletId: "1",
+// //           name: "Chettinadu Chicken Biryani (Full)",
+// //           departmentId: 4,
+// //           departmentName: "BIRYANI",
+// //           masterProductId: 111,
+// //           masterProductName: "Chettinadu Chicken Biryani",
+// //           categoryId: 0,
+// //           categoryName: null,
+// //           price: 329,
+// //           makingCost: 147,
+// //           costPercentage: 44.68,
+// //           marginPercentage: 55.32,
+// //           veg: false,
+// //           imageUrl: null,
+// //           preparationTime: 0,
+// //           variation: "FULL",
+// //           displayOrder: 0,
+// //           description: null,
+// //           pieceCount: 1,
+// //           pieceQuantity: 1,
+// //           pieceUnit: "GM",
+// //           disabled: false,
+// //           createdTs: null,
+// //           updatedTs: null,
+// //           createdBy: null,
+// //           updatedBy: null,
+// //         },
+// //         sales: {
+// //           orders: 2,
+// //           netSales: 563,
+// //           discount: 261,
+// //           tax: 26,
+// //           itemsSold: 2,
+// //           totalSales: 0,
+// //         },
+// //         originalMakingCost: 0,
+// //         totalMakingCost: 0,
+// //         margin: 0,
+// //         marginPercentage: 0,
+// //         recipe: {
+// //           unitQuantity: 5,
+// //           unitPrice: 1,
+// //           totalQuantity: 11,
+// //           totalPrice: 3,
+// //         },
+// //         status: null,
+// //         efficiency: 0,
+// //       },
+// //       {
+// //         productId: "207",
+// //         product: {
+// //           id: "207",
+// //           outletId: "1",
+// //           name: "South Indian Egg Masala Curry (Half)",
+// //           departmentId: 1,
+// //           departmentName: "SOUTH INDIAN",
+// //           masterProductId: 174,
+// //           masterProductName: "South Indian Egg Masala Curry",
+// //           categoryId: 0,
+// //           categoryName: null,
+// //           price: 199,
+// //           makingCost: 67,
+// //           costPercentage: 33.67,
+// //           marginPercentage: 66.33,
+// //           veg: false,
+// //           imageUrl: null,
+// //           preparationTime: 0,
+// //           variation: "FULL",
+// //           displayOrder: 0,
+// //           description: null,
+// //           pieceCount: 1,
+// //           pieceQuantity: 1,
+// //           pieceUnit: "GM",
+// //           disabled: false,
+// //           createdTs: null,
+// //           updatedTs: null,
+// //           createdBy: null,
+// //           updatedBy: null,
+// //         },
+// //         sales: {
+// //           orders: 2,
+// //           netSales: 480,
+// //           discount: 0,
+// //           tax: 22,
+// //           itemsSold: 2,
+// //           totalSales: 0,
+// //         },
+// //         originalMakingCost: 0,
+// //         totalMakingCost: 0,
+// //         margin: 0,
+// //         marginPercentage: 0,
+// //         recipe: {
+// //           unitQuantity: 6,
+// //           unitPrice: 1,
+// //           totalQuantity: 12,
+// //           totalPrice: 3,
+// //         },
+// //         status: null,
+// //         efficiency: 0,
+// //       },
+// //       {
+// //         productId: "212",
+// //         product: {
+// //           id: "212",
+// //           outletId: "1",
+// //           name: "Chettinadu Chicken Curry (Half)",
+// //           departmentId: 1,
+// //           departmentName: "SOUTH INDIAN",
+// //           masterProductId: 296,
+// //           masterProductName: "Chettinadu Chicken",
+// //           categoryId: 0,
+// //           categoryName: null,
+// //           price: 249,
+// //           makingCost: 59,
+// //           costPercentage: 23.69,
+// //           marginPercentage: 76.31,
+// //           veg: false,
+// //           imageUrl: null,
+// //           preparationTime: 0,
+// //           variation: "FULL",
+// //           displayOrder: 0,
+// //           description: null,
+// //           pieceCount: 1,
+// //           pieceQuantity: 1,
+// //           pieceUnit: "GM",
+// //           disabled: false,
+// //           createdTs: null,
+// //           updatedTs: null,
+// //           createdBy: null,
+// //           updatedBy: null,
+// //         },
+// //         sales: {
+// //           orders: 1,
+// //           netSales: 251,
+// //           discount: 59,
+// //           tax: 12,
+// //           itemsSold: 1,
+// //           totalSales: 0,
+// //         },
+// //         originalMakingCost: 0,
+// //         totalMakingCost: 0,
+// //         margin: 0,
+// //         marginPercentage: 0,
+// //         recipe: {
+// //           unitQuantity: 2,
+// //           unitPrice: 0,
+// //           totalQuantity: 2,
+// //           totalPrice: 0,
+// //         },
+// //         status: null,
+// //         efficiency: 0,
+// //       },
+// //       {
+// //         productId: "230",
+// //         product: {
+// //           id: "230",
+// //           outletId: "1",
+// //           name: "Ulavacharu Biryani (Half)",
+// //           departmentId: 4,
+// //           departmentName: "BIRYANI",
+// //           masterProductId: 103,
+// //           masterProductName: "Ulavacharu Veg Biryani",
+// //           categoryId: 0,
+// //           categoryName: null,
+// //           price: 199,
+// //           makingCost: 76,
+// //           costPercentage: 38.19,
+// //           marginPercentage: 61.81,
+// //           veg: false,
+// //           imageUrl: null,
+// //           preparationTime: 0,
+// //           variation: "FULL",
+// //           displayOrder: 0,
+// //           description: null,
+// //           pieceCount: 1,
+// //           pieceQuantity: 1,
+// //           pieceUnit: "GM",
+// //           disabled: false,
+// //           createdTs: null,
+// //           updatedTs: null,
+// //           createdBy: null,
+// //           updatedBy: null,
+// //         },
+// //         sales: {
+// //           orders: 2,
+// //           netSales: 523,
+// //           discount: 0,
+// //           tax: 25,
+// //           itemsSold: 2,
+// //           totalSales: 0,
+// //         },
+// //         originalMakingCost: 0,
+// //         totalMakingCost: 0,
+// //         margin: 0,
+// //         marginPercentage: 0,
+// //         recipe: {
+// //           unitQuantity: 0,
+// //           unitPrice: 0,
+// //           totalQuantity: 0,
+// //           totalPrice: 0,
+// //         },
+// //         status: null,
+// //         efficiency: 0,
+// //       },
+// //       {
+// //         productId: "232",
+// //         product: {
+// //           id: "232",
+// //           outletId: "1",
+// //           name: "Gongura Chicken Biryani (Half)",
+// //           departmentId: 1,
+// //           departmentName: "SOUTH INDIAN",
+// //           masterProductId: 187,
+// //           masterProductName: "Gongura Chicken Biryani",
+// //           categoryId: 0,
+// //           categoryName: null,
+// //           price: 219,
+// //           makingCost: 77,
+// //           costPercentage: 35.16,
+// //           marginPercentage: 64.84,
+// //           veg: false,
+// //           imageUrl: null,
+// //           preparationTime: 0,
+// //           variation: "FULL",
+// //           displayOrder: 0,
+// //           description: null,
+// //           pieceCount: 1,
+// //           pieceQuantity: 1,
+// //           pieceUnit: "GM",
+// //           disabled: false,
+// //           createdTs: null,
+// //           updatedTs: null,
+// //           createdBy: null,
+// //           updatedBy: null,
+// //         },
+// //         sales: {
+// //           orders: 2,
+// //           netSales: 417,
+// //           discount: 200,
+// //           tax: 19,
+// //           itemsSold: 2,
+// //           totalSales: 0,
+// //         },
+// //         originalMakingCost: 0,
+// //         totalMakingCost: 0,
+// //         margin: 0,
+// //         marginPercentage: 0,
+// //         recipe: {
+// //           unitQuantity: 0,
+// //           unitPrice: 0,
+// //           totalQuantity: 0,
+// //           totalPrice: 0,
+// //         },
+// //         status: null,
+// //         efficiency: 0,
+// //       },
+// //       {
+// //         productId: "233",
+// //         product: {
+// //           id: "233",
+// //           outletId: "1",
+// //           name: "Gongura Chicken Biryani (Full)",
+// //           departmentId: 1,
+// //           departmentName: "SOUTH INDIAN",
+// //           masterProductId: 187,
+// //           masterProductName: "Gongura Chicken Biryani",
+// //           categoryId: 0,
+// //           categoryName: null,
+// //           price: 349,
+// //           makingCost: 134,
+// //           costPercentage: 38.4,
+// //           marginPercentage: 61.6,
+// //           veg: false,
+// //           imageUrl: null,
+// //           preparationTime: 0,
+// //           variation: "FULL",
+// //           displayOrder: 0,
+// //           description: null,
+// //           pieceCount: 1,
+// //           pieceQuantity: 1,
+// //           pieceUnit: "GM",
+// //           disabled: false,
+// //           createdTs: null,
+// //           updatedTs: null,
+// //           createdBy: null,
+// //           updatedBy: null,
+// //         },
+// //         sales: {
+// //           orders: 1,
+// //           netSales: 419,
+// //           discount: 0,
+// //           tax: 20,
+// //           itemsSold: 1,
+// //           totalSales: 0,
+// //         },
+// //         originalMakingCost: 0,
+// //         totalMakingCost: 0,
+// //         margin: 0,
+// //         marginPercentage: 0,
+// //         recipe: {
+// //           unitQuantity: 0,
+// //           unitPrice: 0,
+// //           totalQuantity: 0,
+// //           totalPrice: 0,
+// //         },
+// //         status: null,
+// //         efficiency: 0,
+// //       },
+// //       {
+// //         productId: "236",
+// //         product: {
+// //           id: "236",
+// //           outletId: "1",
+// //           name: "Wet Fry Piece Biryani (Half)",
+// //           departmentId: 1,
+// //           departmentName: "SOUTH INDIAN",
+// //           masterProductId: 189,
+// //           masterProductName: "Chicken Fry Piece Biryani",
+// //           categoryId: 0,
+// //           categoryName: null,
+// //           price: 249,
+// //           makingCost: 117,
+// //           costPercentage: 46.99,
+// //           marginPercentage: 53.01,
+// //           veg: false,
+// //           imageUrl: null,
+// //           preparationTime: 0,
+// //           variation: "FULL",
+// //           displayOrder: 0,
+// //           description: null,
+// //           pieceCount: 1,
+// //           pieceQuantity: 1,
+// //           pieceUnit: "GM",
+// //           disabled: false,
+// //           createdTs: null,
+// //           updatedTs: null,
+// //           createdBy: null,
+// //           updatedBy: null,
+// //         },
+// //         sales: {
+// //           orders: 2,
+// //           netSales: 628,
+// //           discount: 0,
+// //           tax: 30,
+// //           itemsSold: 2,
+// //           totalSales: 0,
+// //         },
+// //         originalMakingCost: 0,
+// //         totalMakingCost: 0,
+// //         margin: 0,
+// //         marginPercentage: 0,
+// //         recipe: {
+// //           unitQuantity: 4,
+// //           unitPrice: 1,
+// //           totalQuantity: 9,
+// //           totalPrice: 2,
+// //         },
+// //         status: null,
+// //         efficiency: 0,
+// //       },
+// //       {
+// //         productId: "253",
+// //         product: {
+// //           id: "253",
+// //           outletId: "1",
+// //           name: "Kothimeera Chicken Pulav (Half)",
+// //           departmentId: 1,
+// //           departmentName: "SOUTH INDIAN",
+// //           masterProductId: 197,
+// //           masterProductName: "Kothimeera Chicken Pulav",
+// //           categoryId: 0,
+// //           categoryName: null,
+// //           price: 239,
+// //           makingCost: 88,
+// //           costPercentage: 36.82,
+// //           marginPercentage: 63.18,
+// //           veg: false,
+// //           imageUrl: null,
+// //           preparationTime: 0,
+// //           variation: "FULL",
+// //           displayOrder: 0,
+// //           description: null,
+// //           pieceCount: 1,
+// //           pieceQuantity: 1,
+// //           pieceUnit: "GM",
+// //           disabled: false,
+// //           createdTs: null,
+// //           updatedTs: null,
+// //           createdBy: null,
+// //           updatedBy: null,
+// //         },
+// //         sales: {
+// //           orders: 1,
+// //           netSales: 282,
+// //           discount: 0,
+// //           tax: 13,
+// //           itemsSold: 1,
+// //           totalSales: 0,
+// //         },
+// //         originalMakingCost: 0,
+// //         totalMakingCost: 0,
+// //         margin: 0,
+// //         marginPercentage: 0,
+// //         recipe: {
+// //           unitQuantity: 0,
+// //           unitPrice: 0,
+// //           totalQuantity: 0,
+// //           totalPrice: 0,
+// //         },
+// //         status: null,
+// //         efficiency: 0,
+// //       },
+// //       {
+// //         productId: "254",
+// //         product: {
+// //           id: "254",
+// //           outletId: "1",
+// //           name: "Kothimeera Chicken Pulav (Full)",
+// //           departmentId: 1,
+// //           departmentName: "SOUTH INDIAN",
+// //           masterProductId: 197,
+// //           masterProductName: "Kothimeera Chicken Pulav",
+// //           categoryId: 0,
+// //           categoryName: null,
+// //           price: 369,
+// //           makingCost: 111,
+// //           costPercentage: 30.08,
+// //           marginPercentage: 69.92,
+// //           veg: false,
+// //           imageUrl: null,
+// //           preparationTime: 0,
+// //           variation: "FULL",
+// //           displayOrder: 0,
+// //           description: null,
+// //           pieceCount: 1,
+// //           pieceQuantity: 1,
+// //           pieceUnit: "GM",
+// //           disabled: false,
+// //           createdTs: null,
+// //           updatedTs: null,
+// //           createdBy: null,
+// //           updatedBy: null,
+// //         },
+// //         sales: {
+// //           orders: 1,
+// //           netSales: 418,
+// //           discount: 0,
+// //           tax: 19,
+// //           itemsSold: 1,
+// //           totalSales: 0,
+// //         },
+// //         originalMakingCost: 0,
+// //         totalMakingCost: 0,
+// //         margin: 0,
+// //         marginPercentage: 0,
+// //         recipe: {
+// //           unitQuantity: 0,
+// //           unitPrice: 0,
+// //           totalQuantity: 0,
+// //           totalPrice: 0,
+// //         },
+// //         status: null,
+// //         efficiency: 0,
+// //       },
+// //       {
+// //         productId: "255",
+// //         product: {
+// //           id: "255",
+// //           outletId: "1",
+// //           name: "Raju Gari Kodi Pulav (Half)",
+// //           departmentId: 1,
+// //           departmentName: "SOUTH INDIAN",
+// //           masterProductId: 198,
+// //           masterProductName: "Raju Gari Kodi Pulav",
+// //           categoryId: 0,
+// //           categoryName: null,
+// //           price: 239,
+// //           makingCost: 75,
+// //           costPercentage: 31.38,
+// //           marginPercentage: 68.62,
+// //           veg: false,
+// //           imageUrl: null,
+// //           preparationTime: 0,
+// //           variation: "FULL",
+// //           displayOrder: 0,
+// //           description: null,
+// //           pieceCount: 1,
+// //           pieceQuantity: 1,
+// //           pieceUnit: "GM",
+// //           disabled: false,
+// //           createdTs: null,
+// //           updatedTs: null,
+// //           createdBy: null,
+// //           updatedBy: null,
+// //         },
+// //         sales: {
+// //           orders: 2,
+// //           netSales: 564,
+// //           discount: 0,
+// //           tax: 26,
+// //           itemsSold: 2,
+// //           totalSales: 0,
+// //         },
+// //         originalMakingCost: 0,
+// //         totalMakingCost: 0,
+// //         margin: 0,
+// //         marginPercentage: 0,
+// //         recipe: {
+// //           unitQuantity: 0,
+// //           unitPrice: 0,
+// //           totalQuantity: 0,
+// //           totalPrice: 0,
+// //         },
+// //         status: null,
+// //         efficiency: 0,
+// //       },
+// //       {
+// //         productId: "257",
+// //         product: {
+// //           id: "257",
+// //           outletId: "1",
+// //           name: "Pachmirchi Kodi Pulav (Half)",
+// //           departmentId: 1,
+// //           departmentName: "SOUTH INDIAN",
+// //           masterProductId: 199,
+// //           masterProductName: "Pachmirchi Kodi Pulav",
+// //           categoryId: 0,
+// //           categoryName: null,
+// //           price: 239,
+// //           makingCost: 80,
+// //           costPercentage: 33.47,
+// //           marginPercentage: 66.53,
+// //           veg: false,
+// //           imageUrl: null,
+// //           preparationTime: 0,
+// //           variation: "FULL",
+// //           displayOrder: 0,
+// //           description: null,
+// //           pieceCount: 1,
+// //           pieceQuantity: 1,
+// //           pieceUnit: "GM",
+// //           disabled: false,
+// //           createdTs: null,
+// //           updatedTs: null,
+// //           createdBy: null,
+// //           updatedBy: null,
+// //         },
+// //         sales: {
+// //           orders: 1,
+// //           netSales: 282,
+// //           discount: 0,
+// //           tax: 13,
+// //           itemsSold: 1,
+// //           totalSales: 0,
+// //         },
+// //         originalMakingCost: 0,
+// //         totalMakingCost: 0,
+// //         margin: 0,
+// //         marginPercentage: 0,
+// //         recipe: {
+// //           unitQuantity: 0,
+// //           unitPrice: 0,
+// //           totalQuantity: 0,
+// //           totalPrice: 0,
+// //         },
+// //         status: null,
+// //         efficiency: 0,
+// //       },
+// //       {
+// //         productId: "258",
+// //         product: {
+// //           id: "258",
+// //           outletId: "1",
+// //           name: "Pachmirchi Kodi Pulav (Full)",
+// //           departmentId: 1,
+// //           departmentName: "SOUTH INDIAN",
+// //           masterProductId: 199,
+// //           masterProductName: "Pachmirchi Kodi Pulav",
+// //           categoryId: 0,
+// //           categoryName: null,
+// //           price: 369,
+// //           makingCost: 115,
+// //           costPercentage: 31.17,
+// //           marginPercentage: 68.83,
+// //           veg: false,
+// //           imageUrl: null,
+// //           preparationTime: 0,
+// //           variation: "FULL",
+// //           displayOrder: 0,
+// //           description: null,
+// //           pieceCount: 1,
+// //           pieceQuantity: 1,
+// //           pieceUnit: "GM",
+// //           disabled: false,
+// //           createdTs: null,
+// //           updatedTs: null,
+// //           createdBy: null,
+// //           updatedBy: null,
+// //         },
+// //         sales: {
+// //           orders: 1,
+// //           netSales: 418,
+// //           discount: 0,
+// //           tax: 19,
+// //           itemsSold: 1,
+// //           totalSales: 0,
+// //         },
+// //         originalMakingCost: 0,
+// //         totalMakingCost: 0,
+// //         margin: 0,
+// //         marginPercentage: 0,
+// //         recipe: {
+// //           unitQuantity: 0,
+// //           unitPrice: 0,
+// //           totalQuantity: 0,
+// //           totalPrice: 0,
+// //         },
+// //         status: null,
+// //         efficiency: 0,
+// //       },
+// //       {
+// //         productId: "806",
+// //         product: {
+// //           id: "806",
+// //           outletId: "1",
+// //           name: "Chicken Fry Piece Biryani (Half)",
+// //           departmentId: 1,
+// //           departmentName: "SOUTH INDIAN",
+// //           masterProductId: 189,
+// //           masterProductName: "Chicken Fry Piece Biryani",
+// //           categoryId: 0,
+// //           categoryName: null,
+// //           price: 339,
+// //           makingCost: 108,
+// //           costPercentage: 31.86,
+// //           marginPercentage: 68.14,
+// //           veg: false,
+// //           imageUrl: null,
+// //           preparationTime: 0,
+// //           variation: "FULL",
+// //           displayOrder: 0,
+// //           description: null,
+// //           pieceCount: 1,
+// //           pieceQuantity: 1,
+// //           pieceUnit: "GM",
+// //           disabled: false,
+// //           createdTs: null,
+// //           updatedTs: null,
+// //           createdBy: null,
+// //           updatedBy: null,
+// //         },
+// //         sales: {
+// //           orders: 1,
+// //           netSales: 251,
+// //           discount: 100,
+// //           tax: 12,
+// //           itemsSold: 1,
+// //           totalSales: 0,
+// //         },
+// //         originalMakingCost: 0,
+// //         totalMakingCost: 0,
+// //         margin: 0,
+// //         marginPercentage: 0,
+// //         recipe: {
+// //           unitQuantity: 4,
+// //           unitPrice: 1,
+// //           totalQuantity: 4,
+// //           totalPrice: 1,
+// //         },
+// //         status: null,
+// //         efficiency: 0,
+// //       },
+// //     ],
+// //   },
+// // }) {
+// //   const formattedData = menuItemConsumptionAnalysisDataFormatter(apiResponse);
+
+// //   // Chart data
+// //   const chartData = formattedData.map((d) => ({
+// //     name: d.name,
+// //     value: parseInt(d.totalConsumption),
+// //   }));
+
+// //   const COLORS = [
+// //     "#4e79a7",
+// //     "#59a14f",
+// //     "#f28e2c",
+// //     "#e15759",
+// //     "#76b7b2",
+// //     "#edc949",
+// //   ];
+
+// //   return (
+// //     <Card
+// //       className="p-3 shadow-sm"
+// //       style={{ borderRadius: "12px", background: "#fff" }}
+// //     >
+// //       <h5 className="fw-bold mb-2">Menu Item Consumption Analysis</h5>
+// //       <p className="text-muted small">
+// //         Item consumption breakdown by menu items with quantity distribution
+// //       </p>
+
+// //       <Row>
+// //         {/* Left Section - Table */}
+// //         <Col md={7}>
+// //           <Table hover responsive className="align-middle">
+// //             <thead className="bg-light">
+// //               <tr>
+// //                 <th>Menu Item</th>
+// //                 <th>Recipe</th>
+// //                 <th>Total Consumption</th>
+// //               </tr>
+// //             </thead>
+// //             <tbody>
+// //               {formattedData.map((item, idx) => (
+// //                 <tr key={item.id}>
+// //                   <td>
+// //                     <div className="d-flex align-items-center">
+// //                       {item.icon}
+// //                       <span className="ms-2">{item.name}</span>
+// //                       <Badge bg="light" text="secondary" className="ms-2">
+// //                         {item.itemsSold} items
+// //                       </Badge>
+// //                     </div>
+// //                   </td>
+// //                   <td>
+// //                     <div>
+// //                       <span className="fw-bold text-primary">
+// //                         {item.recipeQty}
+// //                       </span>
+// //                       <div className="text-muted small">{item.recipePrice}</div>
+// //                     </div>
+// //                   </td>
+// //                   <td>
+// //                     <div>
+// //                       <span className="fw-bold text-success">
+// //                         {item.totalConsumption}
+// //                       </span>
+// //                       <div className="text-muted small">
+// //                         {item.totalConsumptionPrice}
+// //                       </div>
+// //                     </div>
+// //                   </td>
+// //                 </tr>
+// //               ))}
+// //             </tbody>
+// //           </Table>
+// //         </Col>
+
+// //         {/* Right Section - Chart */}
+// //         <Col md={5} className="d-flex flex-column align-items-center">
+// //           <h6 className="fw-bold">Consumption Distribution</h6>
+// //           <ResponsiveContainer width="100%" height={250}>
+// //             <PieChart>
+// //               <Pie
+// //                 data={chartData}
+// //                 cx="50%"
+// //                 cy="50%"
+// //                 labelLine={false}
+// //                 outerRadius={90}
+// //                 dataKey="value"
+// //               >
+// //                 {chartData.map((entry, index) => (
+// //                   <Cell
+// //                     key={`cell-${index}`}
+// //                     fill={COLORS[index % COLORS.length]}
+// //                   />
+// //                 ))}
+// //               </Pie>
+// //               <Tooltip />
+// //             </PieChart>
+// //           </ResponsiveContainer>
+// //           <div className="mt-3 w-100">
+// //             {chartData.map((d, i) => (
+// //               <div key={i} className="d-flex justify-content-between small">
+// //                 <span>
+// //                   <span
+// //                     style={{
+// //                       display: "inline-block",
+// //                       width: 10,
+// //                       height: 10,
+// //                       borderRadius: "50%",
+// //                       backgroundColor: COLORS[i % COLORS.length],
+// //                       marginRight: 6,
+// //                     }}
+// //                   />
+// //                   {d.name}
+// //                 </span>
+// //                 <span>{d.value} gm</span>
+// //               </div>
+// //             ))}
+// //           </div>
+// //         </Col>
+// //       </Row>
+// //     </Card>
+// //   );
+// // }

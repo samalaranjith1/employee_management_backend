@@ -1,0 +1,257 @@
+.navbar {
+  background-color: #fff !important;
+  color: #333;
+  box-shadow: 0 2px 4px rgb(0 0 0 / 0.1);
+  padding: 0.5rem 1rem;
+  position: fixed;
+  width:96%;
+  margin: 0 auto;
+  max-width:1240px;
+  top: 0;
+  z-index: 1030;
+  overflow-x: hidden;
+}
+
+.brand {
+  color: rgb(255, 92, 0);
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  white-space: nowrap;
+  font-size: 1.1rem;
+}
+
+.navbarIcon {
+  color: rgb(255, 92, 0);
+  font-size: 1.25rem;
+}
+
+.navLink {
+  cursor: pointer;
+  font-weight: 600;
+  color: #999;
+  border-radius: 20px;
+  padding: 0.25rem 1rem;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  height: 36px;
+  justify-content: center;
+  white-space: nowrap;
+  font-size: 18px;
+  max-width: 12rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.navLink:hover {
+  background-color: #ffe5d0;
+  color: #ff7a30;
+}
+
+.navLinkActive {
+  background-color: rgba(255, 92, 0, 0.08);
+  color: rgb(255, 92, 0) !important;
+  border-radius: 20px;
+  border-bottom: 3px solid rgb(239, 92, 0);
+  box-shadow: none;
+
+  display: flex;          /* make it a flex container */
+  align-items: center;    /* vertically center content */
+  justify-content: center; /* horizontally center content if needed */
+}
+
+
+
+.navLinksContainer {
+  display: flex;
+  gap: 1.2rem;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  flex-wrap: nowrap;
+}
+
+.dropdownWrapper {
+  position: relative !important; /* Ensure menu positions absolutely */
+  flex-shrink: 0;
+}
+
+.dropdownToggle {
+  border: 1px solid #FFE2D1 !important;
+  background-color: #fff !important;
+  color: #1E1E1E !important;
+  font-weight: 600 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+  padding: 0.3rem 1rem !important;
+  border-radius: 20px !important;
+  box-shadow: none !important;
+  white-space: nowrap;
+  font-size: 0.9rem;
+  max-width: 18rem;
+  min-width: 12rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.outletDot {
+  width: 8px;
+  height: 8px;
+  background-color: rgb(255, 92, 0);
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.formControlSearch {
+  background-color: #fff6f0;
+  border: 1px solid #ffbb85;
+  border-radius: 20px;
+  padding: 0.25rem 1rem;
+  width: 100%;
+  max-width: 200px;
+  min-width: 100px;
+  box-sizing: border-box;
+  transition: background-color 0.3s ease;
+  font-size: 0.9rem;
+  flex-shrink: 1;
+}
+
+.formControlSearch:focus {
+  background-color: #fff;
+  border-color: rgb(255, 92, 0);
+  box-shadow: 0 0 5px rgb(255, 92, 0, 0.5);
+  outline: none;
+}
+
+.buttonIcon {
+  color: #555;
+  transition: color 0.2s ease;
+  font-size: 1.2rem;
+}
+
+.buttonIcon:hover {
+  color: rgb(255, 92, 0);
+}
+
+.rightSection {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: nowrap; /* Prevent wrapping */
+  max-width: 100%;
+  overflow-x: visible;
+}
+
+.mobileSearchBar {
+  position: absolute;
+  top: 100%; 
+  right: 0;                /* Align to right edge */
+  width: 100%;             /* Take full width of parent */
+  max-width: 600px;        /* But never exceed 600px */
+  background-color: #fff;
+  padding: 0.5rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  z-index: 100;            /* Ensure it's on top */
+}
+
+/* Dropdown menu overlay fix */
+.dropdown-menu {
+  position: absolute !important;
+  z-index: 1050 !important;
+  max-height: 300px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  white-space: nowrap;
+  overflow-y: scroll; /* enable scrolling */
+  overflow-x: hidden;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;     /* Firefox */
+}
+
+.dropdown-menu.show {
+  max-width: none !important;
+  white-space: nowrap;
+}
+
+@media (max-width: 1200px) {
+  .navLink,
+  .dropdownToggle {
+    font-size: 16px;
+    padding: 0.25rem 0.75rem !important;
+    max-width: 15rem;
+    min-width: 10rem;
+  }
+  .formControlSearch {
+    max-width: 180px;
+    font-size: 0.85rem;
+  }
+  .buttonIcon {
+    font-size: 1.1rem;
+  }
+  .brand {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 992px) {
+  .formControlSearch {
+    max-width: 150px;
+  }
+}
+
+@media (max-width: 768px) {
+  .navLinksContainer {
+    gap: 1rem;
+    flex-wrap: nowrap;
+  }
+  .formControlSearch {
+    max-width: 120px;
+  }
+  .navLink {
+    padding: 0.2rem 0.5rem;
+    font-size: 18;
+    max-width: 10rem;
+  }
+  .dropdownToggle {
+    font-size: 0.8rem;
+    padding: 0.2rem 0.5rem !important;
+    max-width: 14rem;
+    min-width: 10rem;
+  }
+  .buttonIcon {
+    font-size: 1rem;
+  }
+  .brand {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .navLinksContainer {
+    display: none;
+  }
+  .formControlSearch {
+    max-width: 100px;
+  }
+}
+
+/* CSS Modules compatible fix */
+.headerFix :global(header),
+.headerFix :global(.navbar) {
+  overflow: visible !important; /* dropdowns can escape */
+}
+
+.headerFix :global(.dropdown-menu) {
+  position: absolute !important;
+  top: 100% !important;
+  left: 0 !important;
+  z-index: 1050 !important; /* above header */
+}
+
+.headerFix :global(.dropdown) {
+  position: relative !important;
+}
+
