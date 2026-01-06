@@ -1,0 +1,15 @@
+{
+  "name": "bookexpert-monorepo",
+  "private": true,
+  "workspaces": [
+    "EMS",
+    "backend"
+  ],
+  "scripts": {
+    "build": "npm run build --workspace=EMS",
+    "install:all": "npm install"
+  },
+  "dependencies": {
+    "serverless-http": "^4.0.0"
+  }
+}

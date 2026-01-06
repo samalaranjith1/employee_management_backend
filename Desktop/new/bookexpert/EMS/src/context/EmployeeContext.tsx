@@ -1,12 +1,11 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import type { ReactNode } from 'react';
 import type { Employee, EmployeeContextType } from '../types/employee';
-import toast from 'react-hot-toast';
 
 const EmployeeContext = createContext<EmployeeContextType | undefined>(undefined);
 
 // Updated API URL to port 5001
-const API_URL = 'http://localhost:5001/api/employees';
+const API_URL = `${import.meta.env.VITE_API_URL}/employees`;
 
 export function EmployeeProvider({ children }: { children: ReactNode }) {
     const [employees, setEmployees] = useState<Employee[]>([]);
@@ -33,13 +32,19 @@ export function EmployeeProvider({ children }: { children: ReactNode }) {
 
     const addEmployee = async (employeeData: Omit<Employee, 'id'>) => {
         try {
+            // Sanitize data -> convert empty strings to null to avoid CastErrors
+            const payload = { ...employeeData };
+            const nullableFields = ['department', 'designation', 'reportingManager', 'dateOfBirth', 'dateOfJoining'];
+            // @ts-ignore
+            nullableFields.forEach(field => { if (payload[field] === '') payload[field] = null; });
+
             const response = await fetch(API_URL, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${getToken()}`
                 },
-                body: JSON.stringify(employeeData)
+                body: JSON.stringify(payload)
             });
 
             if (!response.ok) {
@@ -58,13 +63,19 @@ export function EmployeeProvider({ children }: { children: ReactNode }) {
 
     const updateEmployee = async (id: string, updates: Partial<Employee>) => {
         try {
+            // Sanitize data
+            const payload = { ...updates };
+            const nullableFields = ['department', 'designation', 'reportingManager', 'dateOfBirth', 'dateOfJoining'];
+            // @ts-ignore
+            nullableFields.forEach(field => { if (payload[field] === '') payload[field] = null; });
+
             const response = await fetch(`${API_URL}/${id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${getToken()}`
                 },
-                body: JSON.stringify(updates)
+                body: JSON.stringify(payload)
             });
             if (response.ok) {
                 const updated = await response.json();
@@ -85,9 +96,13 @@ export function EmployeeProvider({ children }: { children: ReactNode }) {
             });
             if (response.ok) {
                 setEmployees(prev => prev.filter(emp => emp.id !== id));
+            } else {
+                const errorText = await response.text();
+                throw new Error(errorText || response.statusText);
             }
         } catch (error) {
             console.error('Failed to delete employee', error);
+            throw error;
         }
     };
 

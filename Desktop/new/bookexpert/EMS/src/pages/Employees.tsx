@@ -15,6 +15,7 @@ export default function Employees() {
     const { employees, deleteEmployee, addEmployee, updateEmployee } = useEmployee();
     const [searchTerm, setSearchTerm] = useState('');
     const [activeFilter, setActiveFilter] = useState<'All' | 'Active' | 'Inactive'>('All');
+    const [genderFilter, setGenderFilter] = useState<'All' | 'Male' | 'Female' | 'Other'>('All');
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedEmployee, setSelectedEmployee] = useState<Employee | undefined>(undefined);
@@ -28,12 +29,34 @@ export default function Employees() {
             ? true
             : activeFilter === 'Active' ? emp.isActive : !emp.isActive;
 
-        return matchesSearch && matchesActive;
+        const matchesGender = genderFilter === 'All'
+            ? true
+            : emp.gender === genderFilter;
+
+        return matchesSearch && matchesActive && matchesGender;
     });
 
-    const handleDelete = (id: string) => {
+    const handleDelete = async (id: string) => {
         if (window.confirm('Are you sure you want to delete this employee?')) {
-            deleteEmployee(id);
+            try {
+                await deleteEmployee(id);
+                toast.success('Employee deleted successfully');
+            } catch (error: any) {
+                toast.error(error.message || 'Failed to delete employee');
+            }
+        }
+    };
+
+    const handleStatusToggle = async (emp: Employee) => {
+        const newStatus = !emp.isActive;
+        try {
+            await updateEmployee(emp.id, {
+                isActive: newStatus,
+                status: newStatus ? 'Active' : 'Inactive'
+            });
+            toast.success(`Status updated to ${newStatus ? 'Active' : 'Inactive'}`);
+        } catch (error: any) {
+            toast.error('Failed to update status');
         }
     };
 
@@ -94,6 +117,17 @@ export default function Employees() {
                         <option value="Inactive">Inactive</option>
                     </select>
 
+                    <select
+                        className="filter-select"
+                        value={genderFilter}
+                        onChange={(e) => setGenderFilter(e.target.value as any)}
+                    >
+                        <option value="All">All Genders</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                    </select>
+
                     <button
                         className="btn-primary"
                         style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}
@@ -144,7 +178,15 @@ export default function Employees() {
                                         <td>{new Date(emp.dateOfBirth).toLocaleDateString()}</td>
                                         <td>{emp.state}</td>
                                         <td>
-                                            <span className={`badge ${emp.isActive ? 'badge-success' : 'badge-secondary'}`}>
+                                            <label className="switch">
+                                                <input
+                                                    type="checkbox"
+                                                    checked={emp.isActive}
+                                                    onChange={() => handleStatusToggle(emp)}
+                                                />
+                                                <span className="slider round"></span>
+                                            </label>
+                                            <span style={{ marginLeft: '8px', fontSize: '0.85rem', color: emp.isActive ? '#10b981' : 'var(--text-secondary)' }}>
                                                 {emp.isActive ? 'Active' : 'Inactive'}
                                             </span>
                                         </td>
@@ -186,6 +228,49 @@ export default function Employees() {
                 onSubmit={handleFormSubmit}
                 initialData={selectedEmployee}
             />
+
+            <style>{`
+                .switch {
+                    position: relative;
+                    display: inline-block;
+                    width: 34px;
+                    height: 18px;
+                    vertical-align: middle;
+                }
+                .switch input {
+                    opacity: 0;
+                    width: 0;
+                    height: 0;
+                }
+                .slider {
+                    position: absolute;
+                    cursor: pointer;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    background-color: #4b5563; /* Gray-600 */
+                    transition: .4s;
+                    border-radius: 34px;
+                }
+                .slider:before {
+                    position: absolute;
+                    content: "";
+                    height: 14px;
+                    width: 14px;
+                    left: 2px;
+                    bottom: 2px;
+                    background-color: white;
+                    transition: .4s;
+                    border-radius: 50%;
+                }
+                input:checked + .slider {
+                    background-color: #10b981; /* Emerald-500 */
+                }
+                input:checked + .slider:before {
+                    transform: translateX(16px);
+                }
+            `}</style>
         </div>
     );
 }

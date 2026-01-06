@@ -239,6 +239,15 @@ button {
   flex-direction: column;
   gap: 0.5rem;
   flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+  padding-right: 0.5rem; /* Avoid scrollbar covering text */
+}
+
+.sidebar-footer {
+  padding-top: 1rem;
+  margin-top: auto;
+  border-top: 1px solid var(--border-glass);
 }
 
 .nav-item {

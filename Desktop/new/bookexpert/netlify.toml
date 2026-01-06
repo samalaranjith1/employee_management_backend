@@ -1,0 +1,13 @@
+[build]
+  command = "npm run build"
+  publish = "EMS/dist"
+
+[functions]
+  directory = "functions"
+  node_bundler = "esbuild"
+
+[[redirects]]
+  force = true
+  from = "/api/*"
+  to = "/.netlify/functions/api/:splat"
+  status = 200

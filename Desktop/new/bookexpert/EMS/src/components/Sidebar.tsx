@@ -3,8 +3,16 @@ import { useAuth } from '../context/AuthContext';
 import {
     LayoutDashboard,
     Users,
+    UserPlus,
     LogOut,
-    Briefcase
+    Briefcase,
+    Building2,
+    Clock,
+    CalendarDays,
+    Banknote,
+    Zap,
+    FileText,
+    Megaphone
 } from 'lucide-react';
 
 export default function Sidebar() {
@@ -19,6 +27,14 @@ export default function Sidebar() {
     const navItems = [
         { icon: LayoutDashboard, label: 'Dashboard', path: '/' },
         { icon: Users, label: 'Employees', path: '/employees' },
+        { icon: Building2, label: 'Organization', path: '/organization' },
+        { icon: Clock, label: 'Attendance', path: '/attendance' },
+        { icon: CalendarDays, label: 'Leave', path: '/leave' },
+        { icon: Banknote, label: 'Payroll', path: '/payroll' },
+        { icon: Zap, label: 'Performance', path: '/performance' },
+        { icon: FileText, label: 'Documents', path: '/documents' },
+        { icon: UserPlus, label: 'Recruitment', path: '/recruitment' },
+        { icon: Megaphone, label: 'Announcements', path: '/events' },
     ];
 
     return (
