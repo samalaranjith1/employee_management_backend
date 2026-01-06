@@ -147,13 +147,13 @@ const multer = require('multer');
 const pdf = require('pdf-parse');
 const fs = require('fs');
 
-const upload = multer({ dest: 'uploads/' });
+const upload = multer({ storage: multer.memoryStorage() });
 
 router.post('/public/upload-resume', upload.single('resume'), async (req, res) => {
     try {
         if (!req.file) return res.status(400).json({ message: 'No file uploaded' });
 
-        const dataBuffer = fs.readFileSync(req.file.path);
+        const dataBuffer = req.file.buffer;
         const data = await pdf(dataBuffer);
         const text = data.text;
 
@@ -165,8 +165,8 @@ router.post('/public/upload-resume', upload.single('resume'), async (req, res) =
         const possibleSkills = ['React', 'Node.js', 'TypeScript', 'JavaScript', 'Python', 'Java', 'AWS', 'Docker', 'Design', 'Figma'];
         const extractedSkills = possibleSkills.filter(skill => new RegExp(skill, 'i').test(text));
 
-        // Clean up file
-        fs.unlinkSync(req.file.path);
+        // Clean up file - Not needed for memory storage
+        // fs.unlinkSync(req.file.path);
 
         res.json({
             message: 'Resume parsed successfully',
